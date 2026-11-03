@@ -1,0 +1,648 @@
+
+<helmet>
+<style>
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:400;font-display:swap;src:url(./assets/bcc369502f7b45efbd73f6a2c5708ac0.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:500;font-display:swap;src:url(./assets/8202380b16afe7cd17e348573e875494.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:600;font-display:swap;src:url(./assets/82569b647ff348945259fa2b398f1ed0.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:700;font-display:swap;src:url(./assets/66d1a1f409f1d7267b7159f42f977071.ttf) format('truetype')}
+/* Cyberkings DS · dark theme */
+body{margin:0;background:#191919}
+*{box-sizing:border-box}
+p,h1,h2,h3{margin:0}
+.sx{height:100vh;display:grid;grid-template-columns:300px minmax(0,1fr);background:#191919;color:#f8fafc;font-family:'Sarabun',ui-sans-serif,system-ui,-apple-system,"Segoe UI","Leelawadee UI",Tahoma,sans-serif;font-size:14px;line-height:20px;overflow:hidden;position:relative}
+.sx :where(button,input,select){font-family:inherit;font-size:14px;line-height:20px;color:inherit}
+.sx :where(button,select){cursor:pointer}
+.sx button:focus-visible,.sx input:focus-visible,.sx select:focus-visible,.sx a:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.sx svg.ic{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sx svg.sm{width:16px;height:16px}
+.sbar{scrollbar-width:thin;scrollbar-color:#525252 transparent}
+/* sidebar */
+.side{background:#0e0e10;border-right:1px solid #262626;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:0}
+.brandx{display:flex;align-items:center;gap:12px}
+.brandx img{height:44px;width:auto}
+.brandx b{display:block;font-size:16px;line-height:24px;font-weight:600;white-space:nowrap}
+.brandx span{display:block;font-size:12px;line-height:16px;color:#94a3b8}
+.sfld{position:relative}
+.sfld input{width:100%;height:40px;border-radius:6px;border:1px solid #737373;background:#262626;color:#f8fafc;padding:0 12px 0 36px}
+.sfld input::placeholder{color:#a3a3a3}
+.sfld svg{position:absolute;left:10px;top:10px;color:#94a3b8}
+.mi{height:40px;border:0;border-radius:6px;background:transparent;color:#cbd5e1;display:flex;align-items:center;gap:10px;padding:0 10px;width:100%;text-align:left}
+.mi:hover{background:#262626;color:#f8fafc}
+.mgrp{background:#18181b;border:1px solid #262626;border-radius:8px;padding:4px}
+.msub{height:36px;margin:2px 0 2px 22px;border:0;border-left:2px solid #2563eb;border-radius:0 6px 6px 0;background:#172554;color:#bfdbfe;display:flex;align-items:center;padding:0 12px;font-weight:500;width:calc(100% - 22px);text-align:left}
+.msub.off{border-left-color:#404040;background:transparent;color:#cbd5e1;font-weight:400}
+.msub.off:hover{background:#262626;color:#f8fafc}
+.thm{display:flex;gap:2px;padding:3px;border-radius:8px;background:#18181b;border:1px solid #262626}
+.thm button{flex:1;height:32px;border:0;border-radius:6px;background:transparent;color:#94a3b8;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px;line-height:18px}
+.thm button:hover{color:#f8fafc}
+.thm button.on{background:#262626;color:#f8fafc;font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.ubox{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.ucard{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#18181b;border:1px solid #262626}
+.ucard b{display:block;font-weight:500}
+.ucard span{display:block;font-size:12px;line-height:16px;color:#94a3b8}
+.lo{height:40px;border:1px solid #262626;border-radius:8px;background:transparent;color:#cbd5e1;display:flex;align-items:center;gap:8px;padding:0 12px}
+.lo:hover{background:#262626}
+.crumb{font-size:12px;line-height:16px;color:#94a3b8}
+.bc{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:6px;font-size:13px;line-height:18px;color:#94a3b8}
+.bc li{display:flex;align-items:center;gap:6px}
+.bc a{display:inline-flex;align-items:center;gap:4px;color:#94a3b8;text-decoration:none;border-radius:4px}
+.bc a:hover{color:#f8fafc;text-decoration:underline}
+.bc .sep{width:14px;height:14px;color:#525252}
+.bc [aria-current]{color:#f8fafc;font-weight:500}
+.ph-r{display:flex;gap:8px;align-items:center;position:relative}
+.ph-sub{font-size:13px;line-height:18px;color:#94a3b8;margin-top:2px}
+.phx{display:flex;align-items:flex-end;gap:12px}
+.h1x{font-size:24px;line-height:32px;font-weight:600}
+.ttlrow{display:flex;align-items:center;gap:12px;margin-top:8px}
+
+/* LINE notification rules — classes prefixed lr- */
+.lr-main{padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px;min-width:0;min-height:0;overflow:auto}
+.lr-card{background:#0e0e10;border:1px solid #262626;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:12px}
+.lr-head{display:flex;align-items:flex-start;gap:12px}
+.lr-logo{width:44px;height:44px;border-radius:9999px;background:#06c755;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:12px;font-weight:700;letter-spacing:.02em;flex-shrink:0}
+.lr-t{font-size:20px;line-height:28px;font-weight:600}
+.lr-s{font-size:12px;line-height:16px;color:#94a3b8}
+.lr-btn{height:36px;padding:0 14px;border:0;border-radius:6px;background:#2563eb;color:#ffffff;display:inline-flex;align-items:center;gap:6px;font-weight:500;white-space:nowrap}
+.lr-btn:hover{background:#1d4ed8}
+.lr-btn2{height:36px;padding:0 14px;border:1px solid #404040;border-radius:6px;background:#262626;color:#f8fafc;display:inline-flex;align-items:center;gap:6px;font-weight:500;white-space:nowrap}
+.lr-btn2:hover,.lr-btn2.on{background:#404040}
+.lr-lbl{font-size:12px;line-height:16px;font-weight:500;color:#cbd5e1}
+.lr-srch{position:relative;width:320px}
+.lr-srch input{width:100%;height:40px;border-radius:6px;border:1px solid #737373;background:#262626;color:#f8fafc;padding:0 12px 0 36px}
+.lr-srch input::placeholder{color:#a3a3a3}
+.lr-srch svg{position:absolute;left:10px;top:10px;color:#94a3b8;pointer-events:none}
+.lr-chips{display:flex;gap:6px}
+.lr-bar2{display:flex;align-items:center;gap:12px}
+.lr-bar2 .lr-srch{flex:0 1 420px;width:auto}
+.lr-seg{display:flex;gap:2px;padding:3px;background:#18181b;border:1px solid #404040;border-radius:8px}
+.lr-seg button{height:32px;padding:0 12px;border:0;border-radius:6px;background:transparent;color:#cbd5e1;display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}
+.lr-seg button:hover{color:#f8fafc;background:#262626}
+.lr-seg button.on{background:#2563eb;color:#ffffff;font-weight:500}
+.lr-seg small{min-width:20px;height:18px;padding:0 6px;border-radius:9999px;background:rgba(255,255,255,.12);font-size:11px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
+.lr-res{margin-left:auto;font-size:12px;line-height:16px;color:#94a3b8;white-space:nowrap}
+.lr-clear{border:0;background:transparent;color:#93c5fd;font-size:12px;font-weight:500;padding:4px 6px;border-radius:6px}
+.lr-clear:hover{background:#172554}
+.lr-chip{height:32px;padding:0 14px;border:1px solid #404040;border-radius:6px;background:#18181b;color:#cbd5e1;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.lr-chip:hover{background:#262626;color:#f8fafc}
+.lr-chip.on{background:#2563eb;border-color:#2563eb;color:#ffffff;font-weight:500}
+.lr-chip small{font-size:11px;opacity:.8}
+.lr-pop{position:absolute;right:0;top:44px;z-index:6;width:340px;padding:14px;border-radius:10px;background:#27272a;border:1px solid #404040;box-shadow:0 10px 15px -3px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
+.lr-bar{height:8px;border-radius:9999px;background:#404040;overflow:hidden}
+.lr-bar span{display:block;height:100%;background:#22c55e;border-radius:9999px}
+.lr-qt{color:#f8fafc;font-weight:600;font-size:14px}
+.lr-kv{display:flex;justify-content:space-between;font-size:12px;line-height:16px;color:#94a3b8}
+.lr-kv b{color:#f8fafc;font-weight:600;font-variant-numeric:tabular-nums}
+.lr-tw{background:#0e0e10;border:1px solid #262626;border-radius:12px}
+.lr-tb th:first-child{border-radius:11px 0 0 0}
+.lr-tb th:last-child{border-radius:0 11px 0 0}
+.lr-tb{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+.lr-tb th{height:48px;padding:0 16px;background:#262626;text-align:left;font-size:13px;line-height:18px;font-weight:600;color:#e2e8f0;white-space:nowrap}
+.lr-sort{border:0;background:transparent;color:inherit;padding:0;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px}
+.lr-sort svg{color:#94a3b8}
+.lr-sort.on svg{color:#60a5fa}
+.lr-tb td{height:52px;padding:0 16px;border-bottom:1px solid #1f1f22;font-size:13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lr-tb tbody tr:hover td{background:#141416}
+.lr-name{font-weight:500;color:#f8fafc}
+.lr-num{font-variant-numeric:tabular-nums}
+.lr-tags{display:flex;gap:4px;flex-wrap:nowrap;overflow:hidden}
+.lr-tags.ov{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent calc(100% - 36px));mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent calc(100% - 36px))}
+.lr-tb td.lr-tc{overflow:visible;position:relative}
+.lr-tcw{position:relative;outline:none;border-radius:6px}
+.lr-more{position:absolute;right:0;top:50%;transform:translateY(-50%);border-radius:9999px;padding:2px 8px;background:#404040;color:#f8fafc;font-size:12px;line-height:16px;font-weight:600}
+.lr-tip{display:none;position:absolute;left:-8px;top:calc(100% + 8px);z-index:8;min-width:240px;padding:10px 12px;border-radius:8px;background:#27272a;border:1px solid #404040;box-shadow:0 10px 15px -3px rgba(0,0,0,.6);flex-direction:column;gap:6px;white-space:nowrap}
+.lr-tip::before{content:"";position:absolute;left:20px;top:-6px;width:10px;height:10px;background:#27272a;border-left:1px solid #404040;border-top:1px solid #404040;transform:rotate(45deg)}
+.lr-tip p{font-size:12px;line-height:16px;color:#94a3b8}
+.lr-tcw.ov{cursor:help}
+.lr-tcw.ov:hover .lr-tip,.lr-tcw.ov:focus .lr-tip{display:flex}
+.lr-tcw.ov:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.lr-tag{display:inline-flex;align-items:center;gap:4px;border-radius:9999px;padding:2px 8px;font-size:12px;line-height:16px;font-weight:500;white-space:nowrap}
+.lr-tag i{width:6px;height:6px;border-radius:9999px;display:inline-block}
+.lr-t1{background:#2a1f05;color:#fde68a}.lr-t1 i{background:#eab308}
+.lr-t2{background:#2a1405;color:#fed7aa}.lr-t2 i{background:#f97316}
+.lr-t3{background:#2a0f0f;color:#fecaca}.lr-t3 i{background:#ef4444}
+.lr-st{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;padding:0;font-size:13px;color:#94a3b8}
+.lr-st.on{color:#93c5fd}
+.lr-tg{position:relative;width:36px;height:20px;border-radius:9999px;background:#525252;display:inline-block}
+.lr-tg::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:9999px;background:#ffffff;transition:transform 120ms ease}
+.lr-st.on .lr-tg{background:#2563eb}
+.lr-st.on .lr-tg::after{transform:translateX(16px)}
+.lr-acts{display:flex;gap:2px}
+.lr-ib{width:32px;height:32px;border:0;border-radius:6px;background:transparent;color:#cbd5e1;display:flex;align-items:center;justify-content:center}
+.lr-ib:hover{background:#262626;color:#f8fafc}
+.lr-ib.dz{color:#f87171}
+.lr-ib.dz:hover{background:#2a0f0f}
+.lr-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-size:13px;color:#94a3b8}
+.lr-foot b{color:#f8fafc;font-weight:500}
+.lr-pg{display:flex;gap:4px}
+.lr-pb{min-width:32px;height:32px;border-radius:6px;border:1px solid #404040;background:#262626;color:#f8fafc;display:flex;align-items:center;justify-content:center;font-size:13px}
+.lr-pb.on{background:#2563eb;border-color:#2563eb}
+.lr-pb:disabled{color:#525252;cursor:not-allowed}
+.lr-empty{padding:32px;text-align:center;color:#94a3b8}
+.lr-toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:40;padding:10px 12px 10px 16px;border-radius:8px;background:#27272a;border:1px solid #404040;color:#f8fafc;display:flex;align-items:center;gap:12px;box-shadow:0 10px 15px -3px rgba(0,0,0,.6)}
+.lr-toast button{border:0;background:transparent;color:#93c5fd;font-weight:600;padding:4px 6px;border-radius:6px}
+.lr-toast button:hover{background:#404040}
+.lr-scrim{position:absolute;inset:0;z-index:5}
+/* create-rule drawer (cr-) */
+.cr-ovl{position:absolute;inset:0;z-index:30;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:24px}
+.cr-dr{width:720px;max-height:100%;height:960px;background:#141416;border:1px solid #404040;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.7);display:flex;flex-direction:column;overflow:hidden}
+.cr-h{display:flex;align-items:center;gap:12px;padding:20px 24px 12px}
+.cr-t{flex:1;font-size:26px;line-height:34px;font-weight:700}
+.cr-x{width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:#f87171;display:flex;align-items:center;justify-content:center}
+.cr-x:hover{background:#2a0f0f}
+.cr-b{flex:1;min-height:0;overflow:auto;padding:0 24px 16px;display:flex;flex-direction:column;gap:12px}
+.cr-sec{background:#0e0e10;border:1px solid #262626;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.cr-sh{display:flex;align-items:flex-start;gap:12px}
+.cr-n{width:30px;height:30px;border-radius:9999px;background:#172554;color:#93c5fd;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.cr-st{font-size:18px;line-height:26px;font-weight:600}
+.cr-ss{font-size:12px;line-height:16px;color:#94a3b8}
+.cr-f{display:flex;flex-direction:column;gap:6px}
+.cr-l{font-size:13px;line-height:18px;font-weight:500;color:#e2e8f0}
+.cr-l em{color:#f87171;font-style:normal}
+.cr-in,.cr-sel{width:100%;height:42px;border-radius:8px;border:1px solid #737373;background:#262626;color:#f8fafc;padding:0 12px}
+.cr-in::placeholder{color:#a3a3a3}
+.cr-sel{appearance:none;padding-right:36px}
+.cr-in.bad,.cr-sel.bad{border-color:#ef4444}
+.cr-err{font-size:12px;line-height:16px;color:#fca5a5}
+.cr-wrap{position:relative}
+.cr-wrap .r{position:absolute;right:12px;top:11px;color:#94a3b8;pointer-events:none}
+.cr-wrap .l{position:absolute;left:12px;top:11px;color:#94a3b8;pointer-events:none}
+.cr-wrap .cr-in.ps{padding-left:38px}
+.cr-box{border:1px solid #262626;border-radius:10px;background:#141416;overflow:hidden}
+.cr-box-h{display:flex;gap:8px;padding:12px}
+.cr-box-h>*{flex:1}
+.cr-meta{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-top:1px solid #262626;border-bottom:1px solid #262626;font-size:12px;line-height:16px;color:#94a3b8}
+.cr-lk{border:0;background:transparent;color:#93c5fd;padding:0;font-size:12px;font-weight:500}
+.cr-list{max-height:216px;overflow:auto}
+.cr-empty{padding:20px 12px;font-size:13px;color:#94a3b8}
+.cr-row{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;border-bottom:1px solid #1f1f22}
+.cr-row:hover{background:#1c1c20}
+.cr-row input{width:16px;height:16px;accent-color:#2563eb;margin:0}
+.cr-rt{flex:1;min-width:0}
+.cr-rt b{display:block;font-size:13px;line-height:18px;font-weight:500;color:#f8fafc}
+.cr-rt small{display:block;font-size:12px;line-height:16px;color:#94a3b8}
+.cr-cnt{border-radius:9999px;padding:2px 10px;border:1px solid #1e3a8a;background:#0f1a33;color:#93c5fd;font-size:12px;line-height:16px;font-weight:600;white-space:nowrap}
+.cr-sbh{display:flex;align-items:center;gap:8px;padding:12px;background:#18181b}
+.cr-chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
+.cr-chip{display:inline-flex;align-items:center;gap:2px;height:28px;padding:0 4px 0 10px;border-radius:9999px;background:#172554;color:#bfdbfe;font-size:12px;line-height:16px}
+.cr-chip button{width:22px;height:22px;border:0;border-radius:9999px;background:transparent;color:#bfdbfe;display:flex;align-items:center;justify-content:center;padding:0}
+.cr-chip button:hover{background:#1e3a8a}
+.cr-in2{border:1px solid #262626;border-radius:10px;background:#141416;padding:14px;display:flex;flex-direction:column;gap:12px}
+.cr-tgrow{display:flex;align-items:flex-start;gap:12px}
+.cr-tg{position:relative;width:40px;height:22px;flex-shrink:0;border:0;border-radius:9999px;background:#525252;padding:0}
+.cr-tg::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:9999px;background:#ffffff;transition:transform 120ms ease}
+.cr-tg.on{background:#2563eb}
+.cr-tg.on::after{transform:translateX(18px)}
+.cr-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cr-in[type=time]{color-scheme:dark}
+.cr-in:disabled{opacity:.45}
+.cr-ck{display:flex;align-items:center;gap:8px;font-size:13px;line-height:18px;color:#cbd5e1;cursor:pointer}
+.cr-ck input{width:16px;height:16px;accent-color:#2563eb;margin:0}
+.cr-hint{font-size:12px;line-height:16px;color:#fde68a}
+.cr-types{display:flex;flex-direction:column;gap:10px}
+.cr-type{position:relative;display:flex;align-items:center;gap:12px;padding:14px 16px 14px 18px;border-radius:10px;border:1px solid #404040;background:#18181b;cursor:pointer;overflow:hidden}
+.cr-type::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+.cr-type:hover{border-color:var(--c)}
+.cr-type.on{border-color:var(--c);background:linear-gradient(90deg,var(--bg) 0%,#18181b 55%)}
+.cr-tt{flex:1;min-width:0}
+.cr-tt b{display:block;font-size:15px;line-height:22px;font-weight:600;color:#f8fafc}
+.cr-tt small{display:block;font-size:12px;line-height:16px;color:#94a3b8}
+.cr-type input{width:18px;height:18px;margin:0 0 0 auto;accent-color:var(--c)}
+.cr-f2{display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid #262626;background:#0e0e10}
+.cr-ok{flex:1;height:44px;border:0;border-radius:8px;background:#1d4ed8;color:#ffffff;font-weight:600}
+.cr-ok:hover{background:#1e40af}
+.cr-cancel{height:44px;padding:0 16px;border:0;border-radius:8px;background:transparent;color:#e2e8f0;font-weight:500}
+.cr-cancel:hover{background:#262626}
+.dl-box{width:440px;padding:24px;border-radius:16px;background:#141416;border:1px solid #404040;box-shadow:0 25px 50px -12px rgba(0,0,0,.7);display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.dl-ic{width:52px;height:52px;border-radius:9999px;background:#2a0f0f;color:#f87171;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.dl-ic svg.ic{width:26px;height:26px}
+.dl-t{font-size:20px;line-height:28px;font-weight:600}
+.dl-d{font-size:14px;line-height:22px;color:#cbd5e1}
+.dl-d b{color:#f8fafc;font-weight:600}
+.dl-w{font-size:12px;line-height:16px;color:#fde68a;background:#2a1f05;border:1px solid #854d0e;border-radius:6px;padding:4px 10px}
+.dl-f{display:flex;gap:8px;width:100%;margin-top:12px}
+.dl-f button{flex:1}
+.dl-ok{height:44px;border:0;border-radius:8px;background:#dc2626;color:#ffffff;font-weight:600}
+.dl-ok:hover{background:#b91c1c}
+.cr-sum{border-radius:8px;padding:10px 12px;background:#2a0f0f;border:1px solid #991b1b;color:#fecaca;font-size:12px;line-height:16px}
+
+
+/* ===== light theme (root.lt) — generated from the dark rules ===== */
+.lt /* Cyberkings DS · dark theme */
+body{margin:0;background:#f4f4f5}
+.sx.lt{height:100vh;display:grid;grid-template-columns:300px minmax(0,1fr);background:#f4f4f5;color:#0f172a;font-family:'Sarabun',ui-sans-serif,system-ui,-apple-system,"Segoe UI","Leelawadee UI",Tahoma,sans-serif;font-size:14px;line-height:20px;overflow:hidden;position:relative}
+.sx.lt :where(button,.lt input,.lt select){font-family:inherit;font-size:14px;line-height:20px;color:inherit}
+.sx.lt :where(button,.lt select){cursor:pointer}
+.sx.lt button:focus-visible,.sx.lt input:focus-visible,.sx.lt select:focus-visible,.sx.lt a:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+.sx.lt svg.ic{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sx.lt svg.sm{width:16px;height:16px}
+.lt .sbar{scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent}
+.lt /* sidebar */
+.side{background:#ffffff;border-right:1px solid #e4e4e7;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:0}
+.lt .brandx{display:flex;align-items:center;gap:12px}
+.lt .brandx img{height:44px;width:auto}
+.lt .brandx b{display:block;font-size:16px;line-height:24px;font-weight:600;white-space:nowrap}
+.lt .brandx span{display:block;font-size:12px;line-height:16px;color:#64748b}
+.lt .sfld{position:relative}
+.lt .sfld input{width:100%;height:40px;border-radius:6px;border:1px solid #a1a1aa;background:#f4f4f5;color:#0f172a;padding:0 12px 0 36px}
+.lt .sfld input::placeholder{color:#94a3b8}
+.lt .sfld svg{position:absolute;left:10px;top:10px;color:#64748b}
+.lt .mi{height:40px;border:0;border-radius:6px;background:transparent;color:#334155;display:flex;align-items:center;gap:10px;padding:0 10px;width:100%;text-align:left}
+.lt .mi:hover{background:#f4f4f5;color:#0f172a}
+.lt .mgrp{background:#f4f4f5;border:1px solid #e4e4e7;border-radius:8px;padding:4px}
+.lt .msub{height:36px;margin:2px 0 2px 22px;border:0;border-left:2px solid #2563eb;border-radius:0 6px 6px 0;background:#dbeafe;color:#1e40af;display:flex;align-items:center;padding:0 12px;font-weight:500;width:calc(100% - 22px);text-align:left}
+.lt .msub.off{border-left-color:#d4d4d8;background:transparent;color:#334155;font-weight:400}
+.lt .msub.off:hover{background:#f4f4f5;color:#0f172a}
+.lt .thm{display:flex;gap:2px;padding:3px;border-radius:8px;background:#f4f4f5;border:1px solid #e4e4e7}
+.lt .thm button{flex:1;height:32px;border:0;border-radius:6px;background:transparent;color:#64748b;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px;line-height:18px}
+.lt .thm button:hover{color:#0f172a}
+.lt .thm button.on{background:#f4f4f5;color:#0f172a;font-weight:500;box-shadow:0 1px 2px rgba(15,23,42,.15)}
+.lt .ubox{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.lt .ucard{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:#f4f4f5;border:1px solid #e4e4e7}
+.lt .ucard b{display:block;font-weight:500}
+.lt .ucard span{display:block;font-size:12px;line-height:16px;color:#64748b}
+.lt .lo{height:40px;border:1px solid #e4e4e7;border-radius:8px;background:transparent;color:#334155;display:flex;align-items:center;gap:8px;padding:0 12px}
+.lt .lo:hover{background:#f4f4f5}
+.lt .crumb{font-size:12px;line-height:16px;color:#64748b}
+.lt .bc{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:6px;font-size:13px;line-height:18px;color:#64748b}
+.lt .bc li{display:flex;align-items:center;gap:6px}
+.lt .bc a{display:inline-flex;align-items:center;gap:4px;color:#64748b;text-decoration:none;border-radius:4px}
+.lt .bc a:hover{color:#0f172a;text-decoration:underline}
+.lt .bc .sep{width:14px;height:14px;color:#a1a1aa}
+.lt .bc [aria-current]{color:#0f172a;font-weight:500}
+.lt .ph-r{display:flex;gap:8px;align-items:center;position:relative}
+.lt .ph-sub{font-size:13px;line-height:18px;color:#64748b;margin-top:2px}
+.lt .phx{display:flex;align-items:flex-end;gap:12px}
+.lt .h1x{font-size:24px;line-height:32px;font-weight:600}
+.lt .ttlrow{display:flex;align-items:center;gap:12px;margin-top:8px}
+.lt /* LINE notification rules — classes prefixed lr- */
+.lr-main{padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px;min-width:0;min-height:0;overflow:auto}
+.lt .lr-card{background:#ffffff;border:1px solid #e4e4e7;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:12px}
+.lt .lr-head{display:flex;align-items:flex-start;gap:12px}
+.lt .lr-logo{width:44px;height:44px;border-radius:9999px;background:#06c755;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:12px;font-weight:700;letter-spacing:.02em;flex-shrink:0}
+.lt .lr-t{font-size:20px;line-height:28px;font-weight:600}
+.lt .lr-s{font-size:12px;line-height:16px;color:#64748b}
+.lt .lr-btn{height:36px;padding:0 14px;border:0;border-radius:6px;background:#2563eb;color:#ffffff;display:inline-flex;align-items:center;gap:6px;font-weight:500;white-space:nowrap}
+.lt .lr-btn:hover{background:#1d4ed8}
+.lt .lr-btn2{height:36px;padding:0 14px;border:1px solid #d4d4d8;border-radius:6px;background:#f4f4f5;color:#0f172a;display:inline-flex;align-items:center;gap:6px;font-weight:500;white-space:nowrap}
+.lt .lr-btn2:hover,.lt .lr-btn2.on{background:#e4e4e7}
+.lt .lr-lbl{font-size:12px;line-height:16px;font-weight:500;color:#334155}
+.lt .lr-srch{position:relative;width:320px}
+.lt .lr-srch input{width:100%;height:40px;border-radius:6px;border:1px solid #a1a1aa;background:#f4f4f5;color:#0f172a;padding:0 12px 0 36px}
+.lt .lr-srch input::placeholder{color:#94a3b8}
+.lt .lr-srch svg{position:absolute;left:10px;top:10px;color:#64748b;pointer-events:none}
+.lt .lr-chips{display:flex;gap:6px}
+.lt .lr-bar2{display:flex;align-items:center;gap:12px}
+.lt .lr-bar2 .lr-srch{flex:0 1 420px;width:auto}
+.lt .lr-seg{display:flex;gap:2px;padding:3px;background:#f4f4f5;border:1px solid #d4d4d8;border-radius:8px}
+.lt .lr-seg button{height:32px;padding:0 12px;border:0;border-radius:6px;background:transparent;color:#334155;display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}
+.lt .lr-seg button:hover{color:#0f172a;background:#f4f4f5}
+.lt .lr-seg button.on{background:#2563eb;color:#ffffff;font-weight:500}
+.lt .lr-seg small{min-width:20px;height:18px;padding:0 6px;border-radius:9999px;background:rgba(15,23,42,.08);font-size:11px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
+.lt .lr-res{margin-left:auto;font-size:12px;line-height:16px;color:#64748b;white-space:nowrap}
+.lt .lr-clear{border:0;background:transparent;color:#1d4ed8;font-size:12px;font-weight:500;padding:4px 6px;border-radius:6px}
+.lt .lr-clear:hover{background:#dbeafe}
+.lt .lr-chip{height:32px;padding:0 14px;border:1px solid #d4d4d8;border-radius:6px;background:#f4f4f5;color:#334155;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.lt .lr-chip:hover{background:#f4f4f5;color:#0f172a}
+.lt .lr-chip.on{background:#2563eb;border-color:#2563eb;color:#ffffff;font-weight:500}
+.lt .lr-chip small{font-size:11px;opacity:.8}
+.lt .lr-pop{position:absolute;right:0;top:44px;z-index:6;width:340px;padding:14px;border-radius:10px;background:#ffffff;border:1px solid #d4d4d8;box-shadow:0 10px 15px -3px rgba(15,23,42,.35);display:flex;flex-direction:column;gap:10px}
+.lt .lr-bar{height:8px;border-radius:9999px;background:#e4e4e7;overflow:hidden}
+.lt .lr-bar span{display:block;height:100%;background:#22c55e;border-radius:9999px}
+.lt .lr-qt{color:#0f172a;font-weight:600;font-size:14px}
+.lt .lr-kv{display:flex;justify-content:space-between;font-size:12px;line-height:16px;color:#64748b}
+.lt .lr-kv b{color:#0f172a;font-weight:600;font-variant-numeric:tabular-nums}
+.lt .lr-tw{background:#ffffff;border:1px solid #e4e4e7;border-radius:12px}
+.lt .lr-tb th:first-child{border-radius:11px 0 0 0}
+.lt .lr-tb th:last-child{border-radius:0 11px 0 0}
+.lt .lr-tb{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+.lt .lr-tb th{height:48px;padding:0 16px;background:#f4f4f5;text-align:left;font-size:13px;line-height:18px;font-weight:600;color:#1e293b;white-space:nowrap}
+.lt .lr-sort{border:0;background:transparent;color:inherit;padding:0;display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px}
+.lt .lr-sort svg{color:#64748b}
+.lt .lr-sort.on svg{color:#2563eb}
+.lt .lr-tb td{height:52px;padding:0 16px;border-bottom:1px solid #e4e4e7;font-size:13px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lt .lr-tb tbody tr:hover td{background:#fafafa}
+.lt .lr-name{font-weight:500;color:#0f172a}
+.lt .lr-num{font-variant-numeric:tabular-nums}
+.lt .lr-tags{display:flex;gap:4px;flex-wrap:nowrap;overflow:hidden}
+.lt .lr-tags.ov{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent calc(100% - 36px));mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent calc(100% - 36px))}
+.lt .lr-tb td.lr-tc{overflow:visible;position:relative}
+.lt .lr-tcw{position:relative;outline:none;border-radius:6px}
+.lt .lr-more{position:absolute;right:0;top:50%;transform:translateY(-50%);border-radius:9999px;padding:2px 8px;background:#e4e4e7;color:#0f172a;font-size:12px;line-height:16px;font-weight:600}
+.lt .lr-tip{display:none;position:absolute;left:-8px;top:calc(100% + 8px);z-index:8;min-width:240px;padding:10px 12px;border-radius:8px;background:#ffffff;border:1px solid #d4d4d8;box-shadow:0 10px 15px -3px rgba(15,23,42,.35);flex-direction:column;gap:6px;white-space:nowrap}
+.lt .lr-tip::before{content:"";position:absolute;left:20px;top:-6px;width:10px;height:10px;background:#ffffff;border-left:1px solid #d4d4d8;border-top:1px solid #d4d4d8;transform:rotate(45deg)}
+.lt .lr-tip p{font-size:12px;line-height:16px;color:#64748b}
+.lt .lr-tcw.ov{cursor:help}
+.lt .lr-tcw.ov:hover .lr-tip,.lt .lr-tcw.ov:focus .lr-tip{display:flex}
+.lt .lr-tcw.ov:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+.lt .lr-tag{display:inline-flex;align-items:center;gap:4px;border-radius:9999px;padding:2px 8px;font-size:12px;line-height:16px;font-weight:500;white-space:nowrap}
+.lt .lr-tag i{width:6px;height:6px;border-radius:9999px;display:inline-block}
+.lt .lr-t1{background:#fffbeb;color:#92400e}
+.lt .lr-t1 i{background:#eab308}
+.lt .lr-t2{background:#fff7ed;color:#9a3412}
+.lt .lr-t2 i{background:#f97316}
+.lt .lr-t3{background:#fef2f2;color:#991b1b}
+.lt .lr-t3 i{background:#ef4444}
+.lt .lr-st{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;padding:0;font-size:13px;color:#64748b}
+.lt .lr-st.on{color:#1d4ed8}
+.lt .lr-tg{position:relative;width:36px;height:20px;border-radius:9999px;background:#a1a1aa;display:inline-block}
+.lt .lr-tg::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:9999px;background:#ffffff;transition:transform 120ms ease}
+.lt .lr-st.on .lr-tg{background:#2563eb}
+.lt .lr-st.on .lr-tg::after{transform:translateX(16px)}
+.lt .lr-acts{display:flex;gap:2px}
+.lt .lr-ib{width:32px;height:32px;border:0;border-radius:6px;background:transparent;color:#334155;display:flex;align-items:center;justify-content:center}
+.lt .lr-ib:hover{background:#f4f4f5;color:#0f172a}
+.lt .lr-ib.dz{color:#dc2626}
+.lt .lr-ib.dz:hover{background:#fef2f2}
+.lt .lr-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-size:13px;color:#64748b}
+.lt .lr-foot b{color:#0f172a;font-weight:500}
+.lt .lr-pg{display:flex;gap:4px}
+.lt .lr-pb{min-width:32px;height:32px;border-radius:6px;border:1px solid #d4d4d8;background:#f4f4f5;color:#0f172a;display:flex;align-items:center;justify-content:center;font-size:13px}
+.lt .lr-pb.on{background:#2563eb;border-color:#2563eb}
+.lt .lr-pb:disabled{color:#a1a1aa;cursor:not-allowed}
+.lt .lr-empty{padding:32px;text-align:center;color:#64748b}
+.lt .lr-toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:40;padding:10px 12px 10px 16px;border-radius:8px;background:#ffffff;border:1px solid #d4d4d8;color:#0f172a;display:flex;align-items:center;gap:12px;box-shadow:0 10px 15px -3px rgba(15,23,42,.35)}
+.lt .lr-toast button{border:0;background:transparent;color:#1d4ed8;font-weight:600;padding:4px 6px;border-radius:6px}
+.lt .lr-toast button:hover{background:#e4e4e7}
+.lt .lr-scrim{position:absolute;inset:0;z-index:5}
+.lt /* create-rule drawer (cr-) */
+.cr-ovl{position:absolute;inset:0;z-index:30;background:rgba(15,23,42,.35);display:flex;align-items:center;justify-content:center;padding:24px}
+.lt .cr-dr{width:720px;max-height:100%;height:960px;background:#fafafa;border:1px solid #d4d4d8;border-radius:16px;box-shadow:0 25px 50px -12px rgba(15,23,42,.35);display:flex;flex-direction:column;overflow:hidden}
+.lt .cr-h{display:flex;align-items:center;gap:12px;padding:20px 24px 12px}
+.lt .cr-t{flex:1;font-size:26px;line-height:34px;font-weight:700}
+.lt .cr-x{width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:#dc2626;display:flex;align-items:center;justify-content:center}
+.lt .cr-x:hover{background:#fef2f2}
+.lt .cr-b{flex:1;min-height:0;overflow:auto;padding:0 24px 16px;display:flex;flex-direction:column;gap:12px}
+.lt .cr-sec{background:#ffffff;border:1px solid #e4e4e7;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.lt .cr-sh{display:flex;align-items:flex-start;gap:12px}
+.lt .cr-n{width:30px;height:30px;border-radius:9999px;background:#dbeafe;color:#1d4ed8;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.lt .cr-st{font-size:18px;line-height:26px;font-weight:600}
+.lt .cr-ss{font-size:12px;line-height:16px;color:#64748b}
+.lt .cr-f{display:flex;flex-direction:column;gap:6px}
+.lt .cr-l{font-size:13px;line-height:18px;font-weight:500;color:#1e293b}
+.lt .cr-l em{color:#dc2626;font-style:normal}
+.lt .cr-in,.lt .cr-sel{width:100%;height:42px;border-radius:8px;border:1px solid #a1a1aa;background:#f4f4f5;color:#0f172a;padding:0 12px}
+.lt .cr-in::placeholder{color:#94a3b8}
+.lt .cr-sel{appearance:none;padding-right:36px}
+.lt .cr-in.bad,.lt .cr-sel.bad{border-color:#ef4444}
+.lt .cr-err{font-size:12px;line-height:16px;color:#b91c1c}
+.lt .cr-wrap{position:relative}
+.lt .cr-wrap .r{position:absolute;right:12px;top:11px;color:#64748b;pointer-events:none}
+.lt .cr-wrap .l{position:absolute;left:12px;top:11px;color:#64748b;pointer-events:none}
+.lt .cr-wrap .cr-in.ps{padding-left:38px}
+.lt .cr-box{border:1px solid #e4e4e7;border-radius:10px;background:#fafafa;overflow:hidden}
+.lt .cr-box-h{display:flex;gap:8px;padding:12px}
+.lt .cr-box-h>*{flex:1}
+.lt .cr-meta{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-top:1px solid #e4e4e7;border-bottom:1px solid #e4e4e7;font-size:12px;line-height:16px;color:#64748b}
+.lt .cr-lk{border:0;background:transparent;color:#1d4ed8;padding:0;font-size:12px;font-weight:500}
+.lt .cr-list{max-height:216px;overflow:auto}
+.lt .cr-empty{padding:20px 12px;font-size:13px;color:#64748b}
+.lt .cr-row{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;border-bottom:1px solid #e4e4e7}
+.lt .cr-row:hover{background:#f1f5f9}
+.lt .cr-row input{width:16px;height:16px;accent-color:#2563eb;margin:0}
+.lt .cr-rt{flex:1;min-width:0}
+.lt .cr-rt b{display:block;font-size:13px;line-height:18px;font-weight:500;color:#0f172a}
+.lt .cr-rt small{display:block;font-size:12px;line-height:16px;color:#64748b}
+.lt .cr-cnt{border-radius:9999px;padding:2px 10px;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;font-size:12px;line-height:16px;font-weight:600;white-space:nowrap}
+.lt .cr-sbh{display:flex;align-items:center;gap:8px;padding:12px;background:#f4f4f5}
+.lt .cr-chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
+.lt .cr-chip{display:inline-flex;align-items:center;gap:2px;height:28px;padding:0 4px 0 10px;border-radius:9999px;background:#dbeafe;color:#1e40af;font-size:12px;line-height:16px}
+.lt .cr-chip button{width:22px;height:22px;border:0;border-radius:9999px;background:transparent;color:#1e40af;display:flex;align-items:center;justify-content:center;padding:0}
+.lt .cr-chip button:hover{background:#bfdbfe}
+.lt .cr-in2{border:1px solid #e4e4e7;border-radius:10px;background:#fafafa;padding:14px;display:flex;flex-direction:column;gap:12px}
+.lt .cr-tgrow{display:flex;align-items:flex-start;gap:12px}
+.lt .cr-tg{position:relative;width:40px;height:22px;flex-shrink:0;border:0;border-radius:9999px;background:#a1a1aa;padding:0}
+.lt .cr-tg::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:9999px;background:#ffffff;transition:transform 120ms ease}
+.lt .cr-tg.on{background:#2563eb}
+.lt .cr-tg.on::after{transform:translateX(18px)}
+.lt .cr-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lt .cr-in[type=time]{color-scheme:dark}
+.lt .cr-in:disabled{opacity:.45}
+.lt .cr-ck{display:flex;align-items:center;gap:8px;font-size:13px;line-height:18px;color:#334155;cursor:pointer}
+.lt .cr-ck input{width:16px;height:16px;accent-color:#2563eb;margin:0}
+.lt .cr-hint{font-size:12px;line-height:16px;color:#92400e}
+.lt .cr-types{display:flex;flex-direction:column;gap:10px}
+.lt .cr-type{position:relative;display:flex;align-items:center;gap:12px;padding:14px 16px 14px 18px;border-radius:10px;border:1px solid #d4d4d8;background:#f4f4f5;cursor:pointer;overflow:hidden}
+.lt .cr-type::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+.lt .cr-type:hover{border-color:var(--c)}
+.lt .cr-type.on{border-color:var(--c);background:linear-gradient(90deg,var(--bg) 0%,#f4f4f5 55%)}
+.lt .cr-tt{flex:1;min-width:0}
+.lt .cr-tt b{display:block;font-size:15px;line-height:22px;font-weight:600;color:#0f172a}
+.lt .cr-tt small{display:block;font-size:12px;line-height:16px;color:#64748b}
+.lt .cr-type input{width:18px;height:18px;margin:0 0 0 auto;accent-color:var(--c)}
+.lt .cr-f2{display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid #e4e4e7;background:#ffffff}
+.lt .cr-ok{flex:1;height:44px;border:0;border-radius:8px;background:#1d4ed8;color:#ffffff;font-weight:600}
+.lt .cr-ok:hover{background:#1e40af}
+.lt .cr-cancel{height:44px;padding:0 16px;border:0;border-radius:8px;background:transparent;color:#1e293b;font-weight:500}
+.lt .cr-cancel:hover{background:#f4f4f5}
+.lt .dl-box{width:440px;padding:24px;border-radius:16px;background:#fafafa;border:1px solid #d4d4d8;box-shadow:0 25px 50px -12px rgba(15,23,42,.35);display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.lt .dl-ic{width:52px;height:52px;border-radius:9999px;background:#fef2f2;color:#dc2626;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.lt .dl-ic svg.ic{width:26px;height:26px}
+.lt .dl-t{font-size:20px;line-height:28px;font-weight:600}
+.lt .dl-d{font-size:14px;line-height:22px;color:#334155}
+.lt .dl-d b{color:#0f172a;font-weight:600}
+.lt .dl-w{font-size:12px;line-height:16px;color:#92400e;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:4px 10px}
+.lt .dl-f{display:flex;gap:8px;width:100%;margin-top:12px}
+.lt .dl-f button{flex:1}
+.lt .dl-ok{height:44px;border:0;border-radius:8px;background:#dc2626;color:#ffffff;font-weight:600}
+.lt .dl-ok:hover{background:#b91c1c}
+.lt .cr-sum{border-radius:8px;padding:10px 12px;background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;font-size:12px;line-height:16px}
+.mi.on{background:#172554;color:#bfdbfe;font-weight:600}
+.mi.on .ic{color:#60a5fa}
+.mi.on:hover{background:#1e3a8a;color:#dbeafe}
+.sx.lt .mi.on{background:#dbeafe;color:#1e40af}
+.sx.lt .mi.on .ic{color:#2563eb}
+.sx.lt .mi.on:hover{background:#bfdbfe;color:#1e3a8a}
+/* row kebab menu */
+.lr-tb td.lr-kc{overflow:visible;position:relative}
+.lr-kw{position:relative;display:flex;justify-content:center}
+.lr-kb{width:32px;height:32px;border:0;border-radius:6px;background:transparent;color:#cbd5e1;display:flex;align-items:center;justify-content:center}
+.lr-kb:hover,.lr-kb.on{background:#262626;color:#f8fafc}
+.lr-mn{position:absolute;right:4px;top:36px;z-index:7;width:160px;padding:4px;border-radius:8px;background:#27272a;border:1px solid #404040;box-shadow:0 10px 15px -3px rgba(0,0,0,.6);display:flex;flex-direction:column}
+.lr-mn.up{top:auto;bottom:36px}
+.lr-mn button{height:36px;border:0;border-radius:6px;background:transparent;color:#e2e8f0;display:flex;align-items:center;gap:8px;padding:0 10px;text-align:left;font-size:14px}
+.lr-mn button:hover{background:#404040}
+.lr-mn .dz{color:#fca5a5}
+.lr-mn .dz:hover{background:#3f1d1d}
+.lr-mcatch{position:fixed;inset:0;z-index:6}
+.sx.lt .lr-kb{color:#334155}
+.sx.lt .lr-kb:hover,.sx.lt .lr-kb.on{background:#f4f4f5;color:#0f172a}
+.sx.lt .lr-mn{background:#ffffff;border-color:#e4e4e7;box-shadow:0 10px 15px -3px rgba(15,23,42,.15)}
+.sx.lt .lr-mn button{color:#1e293b}
+.sx.lt .lr-mn button:hover{background:#f4f4f5}
+.sx.lt .lr-mn .dz{color:#dc2626}
+.sx.lt .lr-mn .dz:hover{background:#fef2f2}
+</style>
+</helmet>
+<div class="{{rootCls}}">
+<aside class="side" aria-label="เมนูหลัก">
+<div class="brandx"><img src="./assets/b820c1ee4f82dbfcefb07b5f5491f09e.png" alt="ตราสัญลักษณ์ ปภ." width="31" height="44"><span><b>ระบบบริหารจัดการ Sensor</b><span>System Management Sensor</span></span></div>
+<label class="sfld"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหาเมนู</span><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" placeholder="Search..."></label>
+<button class="mi" onClick="{{goMap}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14"></path><path d="M15 6v14"></path></svg>หน้าแผนที่</button>
+<button class="mi" onClick="{{goStations}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8a6 6 0 0 1 0 8.4"></path><path d="M7.8 16.2a6 6 0 0 1 0-8.4"></path><path d="M19.1 4.9a10 10 0 0 1 0 14.2"></path><path d="M4.9 19.1a10 10 0 0 1 0-14.2"></path></svg>รายการสถานี Sensor</button>
+<button class="mi on" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>จัดการการแจ้งเตือนไลน์</button>
+<button class="mi" onClick="{{goCriteria}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="8" cy="6" r="2"></circle><circle cx="16" cy="12" r="2"></circle><circle cx="10" cy="18" r="2"></circle></svg>จัดการเกณฑ์การตรวจวัด</button>
+<div class="ubox">
+<div class="thm" role="radiogroup" aria-label="โหมดการแสดงผล"><button class="{{thLightCls}}" role="radio" aria-checked="{{isLight}}" onClick="{{setLight}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>สว่าง</button><button class="{{thDarkCls}}" role="radio" aria-checked="{{isDark}}" onClick="{{setDark}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"></path></svg>มืด</button></div>
+<div class="ucard"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path><path d="M4 21a8 8 0 0 1 16 0"></path></svg><span><b>ผู้ดูแลระบบ</b><span>Super admin</span></span></div>
+<button class="lo"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>ออกจากระบบ</button>
+</div>
+</aside>
+
+<main class="lr-main">
+<div class="phx">
+<div style="flex: 1;"><nav aria-label="breadcrumb"><ol class="bc"><li><a href="#"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>หน้าแรก</a></li><li><svg class="ic sep" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg><span aria-current="page">จัดการการแจ้งเตือนไลน์</span></li></ol></nav>
+<div class="ttlrow"><div><h1 id="lr-title" class="h1x">จัดการการแจ้งเตือนไลน์</h1><p class="ph-sub">Notification Rules · กฎการส่งแจ้งเตือนเข้ากลุ่ม LINE ตามสถานีและระดับสถานการณ์</p></div></div>
+</div>
+<div class="ph-r">
+<button class="{{quotaCls}}" aria-expanded="{{quotaOpen}}" onClick="{{toggleQuota}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 15v2"></path><path d="M11 11v6"></path><path d="M15 8v9"></path><path d="M19 5v12"></path></svg>แสดง status limit การส่งข้อความ LINE</button>
+<button class="lr-btn" onClick="{{openCreate}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>สร้างกฎใหม่</button>
+<sc-if value="{{quotaOpen}}" hint-placeholder-val="{{false}}">
+<div class="lr-pop" role="dialog" aria-label="สถานะโควตาการส่งข้อความ LINE">
+<div class="lr-kv"><span class="lr-qt">โควตาข้อความ LINE เดือนนี้</span><span>ค่าตัวอย่าง</span></div>
+<div class="lr-bar" role="progressbar" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100" aria-label="ใช้ไปแล้ว 31%"><span style="width: 31%;"></span></div>
+<div class="lr-kv"><span>ส่งไปแล้ว</span><b>1,562 / 5,000 ข้อความ</b></div>
+<div class="lr-kv"><span>คงเหลือ</span><b>3,438 ข้อความ</b></div>
+<div class="lr-kv"><span>รีเซ็ตโควตา</span><b>1 พ.ย. 2569</b></div>
+</div>
+</sc-if>
+</div>
+</div>
+<section class="lr-card" aria-label="ค้นหาและกรองกฎ">
+<div class="lr-bar2">
+<label for="lr-q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหา</label>
+<div class="lr-srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="lr-q" type="search" placeholder="ค้นหาชื่อกฎ / กลุ่มไลน์" value="{{q}}" onInput="{{setQ}}"></div>
+
+<div class="lr-seg" role="radiogroup" aria-label="กรองตามสถานะ">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="3"><button class="{{f.cls}}" role="radio" aria-checked="{{f.on}}" onClick="{{f.pick}}">{{f.label}}<small>{{f.count}}</small></button></sc-for>
+</div>
+<span class="lr-res">{{resultTxt}}</span>
+<sc-if value="{{hasFilter}}" hint-placeholder-val="{{false}}"><button class="lr-clear" onClick="{{clearFilter}}">ล้างตัวกรอง</button></sc-if>
+</div>
+</section>
+
+<section class="lr-tw" aria-label="ตารางกฎการแจ้งเตือน">
+<table class="lr-tb">
+<thead><tr>
+<th scope="col" style="width: 72px;">ลำดับ</th>
+<th scope="col" style="width: 22%;" aria-sort="{{ariaName}}"><button class="{{sortNameCls}}" onClick="{{sortName}}">ชื่อ<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="{{iconName}}"></path></svg></button></th>
+<th scope="col" style="width: 16%;" aria-sort="{{ariaGroup}}"><button class="{{sortGroupCls}}" onClick="{{sortGroup}}">Line Group<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="{{iconGroup}}"></path></svg></button></th>
+<th scope="col" style="width: 9%;">สถานี</th>
+<th scope="col" style="width: 11%;">ช่วงเวลา</th>
+<th scope="col" style="width: 250px;">การแจ้งเตือน</th>
+<th scope="col" style="width: 120px;">สถานะ</th>
+<th scope="col" style="width: 80px; text-align: center;">จัดการ</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<tr>
+<td class="lr-num">{{r.no}}</td>
+<td class="lr-name" title="{{r.name}}">{{r.name}}</td>
+<td title="{{r.group}}">{{r.group}}</td>
+<td class="lr-num">{{r.st}} สถานี</td>
+<td class="lr-num">{{r.time}}</td>
+<td class="lr-tc"><div class="{{r.tcwCls}}" tabindex="{{r.tabIdx}}" aria-label="{{r.tagsAria}}">
+<div class="{{r.tagsCls}}" data-rule-tags="{{r.id}}"><sc-for list="{{r.tags}}" as="t" hint-placeholder-count="2"><span class="{{t.cls}}"><i></i>{{t.label}}</span></sc-for></div>
+<sc-if value="{{r.more}}" hint-placeholder-val="{{false}}"><span class="lr-more" aria-hidden="true">+{{r.more}}</span></sc-if>
+<sc-if value="{{r.more}}" hint-placeholder-val="{{false}}"><div class="lr-tip" role="tooltip"><p>การแจ้งเตือนทั้งหมด ({{r.tagCount}})</p><sc-for list="{{r.tags}}" as="t" hint-placeholder-count="3"><span class="{{t.cls}}" style="align-self: flex-start;"><i></i>{{t.label}}</span></sc-for></div></sc-if>
+</div></td>
+<td><button class="{{r.stCls}}" role="switch" aria-checked="{{r.on}}" aria-label="{{r.stAria}}" onClick="{{r.toggle}}"><span class="lr-tg"></span>{{r.stLabel}}</button></td>
+<td class="lr-kc"><div class="lr-kw">
+<button class="{{r.kbCls}}" aria-label="{{r.kbAria}}" aria-haspopup="menu" aria-expanded="{{r.menu}}" onClick="{{r.openMenu}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+<sc-if value="{{r.menu}}" hint-placeholder-val="{{false}}">
+<div class="{{r.mnCls}}" role="menu">
+<button role="menuitem" aria-label="{{r.edAria}}" onClick="{{r.edit}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="m14 6 4 4"></path></svg>แก้ไข</button>
+<button role="menuitem" class="dz" aria-label="{{r.delAria}}" onClick="{{r.del}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M6 7l1 13h10l1-13"></path><path d="M9 7V4h6v3"></path></svg>ลบ</button>
+</div>
+</sc-if>
+</div></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+<sc-if value="{{rowMenu}}" hint-placeholder-val="{{false}}"><div class="lr-mcatch" aria-hidden="true" onClick="{{closeMenu}}"></div></sc-if>
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}"><p class="lr-empty">ไม่พบกฎที่ตรงกับการค้นหา</p></sc-if>
+<div class="lr-foot">
+<span>กำลังแสดง <b>{{from}}</b> ถึง <b>{{to}}</b> จาก <b>{{total}}</b> รายการ</span>
+<nav class="lr-pg" aria-label="แบ่งหน้า"><button class="lr-pb" aria-label="หน้าก่อน" disabled="{{true}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button><button class="lr-pb on" aria-current="page">1</button><button class="lr-pb" aria-label="หน้าถัดไป" disabled="{{true}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></nav>
+</div>
+</section>
+</main>
+
+<sc-if value="{{quotaOpen}}" hint-placeholder-val="{{false}}"><div class="lr-scrim" onClick="{{toggleQuota}}"></div></sc-if>
+<sc-if value="{{cr.open}}" hint-placeholder-val="{{false}}">
+<div class="cr-ovl" onClick="{{cr.close}}">
+<div class="cr-dr" role="dialog" aria-modal="true" aria-labelledby="cr-title" onClick="{{stop}}">
+<div class="cr-h"><h2 id="cr-title" class="cr-t">{{cr.title}}</h2><button class="cr-x" aria-label="ปิด" onClick="{{cr.close}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div>
+<div class="cr-b sbar">
+
+<section class="cr-sec" aria-labelledby="cr-s1">
+<div class="cr-sh"><span class="cr-n">1</span><div><h3 id="cr-s1" class="cr-st">ปลายทางการแจ้งเตือน</h3><p class="cr-ss">ตั้งค่ากลุ่มปลายทางของ LINE</p></div></div>
+<div class="cr-f"><label class="cr-l" for="cr-name">ชื่อกฎ <em>*</em></label><input id="cr-name" class="{{cr.nameCls}}" placeholder="กรอกชื่อกฎ" value="{{cr.name}}" onInput="{{cr.setName}}"><sc-if value="{{cr.eName}}" hint-placeholder-val="{{false}}"><span class="cr-err">{{cr.eName}}</span></sc-if></div>
+<div class="cr-f"><label class="cr-l" for="cr-group">Line Group <em>*</em></label><div class="cr-wrap"><select id="cr-group" class="{{cr.groupCls}}" onChange="{{cr.setGroup}}"><sc-for list="{{cr.groupOpts}}" as="o" hint-placeholder-count="4"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select><svg class="ic r" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div><sc-if value="{{cr.eGroup}}" hint-placeholder-val="{{false}}"><span class="cr-err">{{cr.eGroup}}</span></sc-if></div>
+</section>
+
+<section class="cr-sec" aria-labelledby="cr-s2">
+<div class="cr-sh"><span class="cr-n">2</span><div><h3 id="cr-s2" class="cr-st">ขอบเขตพื้นที่</h3><p class="cr-ss">เลือกกลุ่มน้ำและสถานี เพื่อส่งเตือนเมื่อมีการตรวจจับสถานการณ์</p></div></div>
+<span class="cr-l">รายการสถานีในขอบเขตที่เลือก <em>*</em></span>
+<div class="cr-box">
+<div class="cr-box-h">
+<div class="cr-wrap"><select class="cr-sel" aria-label="เลือกลุ่มแม่น้ำ" onChange="{{cr.setBasin}}"><sc-for list="{{cr.basinOpts}}" as="o" hint-placeholder-count="5"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select><svg class="ic r" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+<div class="cr-wrap"><svg class="ic l" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input class="cr-in ps" type="search" aria-label="ค้นหาชื่อสถานี / รหัสสถานี" placeholder="ค้นหาชื่อสถานี / รหัสสถานี" value="{{cr.sq}}" onInput="{{cr.setSq}}" disabled="{{cr.noBasin}}"></div>
+</div>
+<div class="cr-meta"><span>รายการสถานีในลุ่มน้ำที่เลือก</span><span style="display: flex; gap: 12px; align-items: center;"><sc-if value="{{cr.hasList}}" hint-placeholder-val="{{false}}"><button class="cr-lk" onClick="{{cr.toggleAll}}">{{cr.allLabel}}</button></sc-if><span>ทั้งหมด {{cr.listCount}} สถานี</span></span></div>
+<sc-if value="{{cr.noBasin}}" hint-placeholder-val="{{true}}"><p class="cr-empty">กรุณาเลือกลุ่มแม่น้ำก่อน</p></sc-if>
+<sc-if value="{{cr.hasList}}" hint-placeholder-val="{{false}}"><div class="cr-list sbar"><sc-for list="{{cr.list}}" as="x" hint-placeholder-count="5"><label class="cr-row"><input type="checkbox" checked="{{x.on}}" onChange="{{x.toggle}}"><span class="cr-rt"><b>{{x.name}}</b><small>{{x.code}} · {{x.loc}}</small></span></label></sc-for></div></sc-if>
+<sc-if value="{{cr.noMatch}}" hint-placeholder-val="{{false}}"><p class="cr-empty">ไม่พบสถานีที่ค้นหา</p></sc-if>
+</div>
+<div class="cr-box">
+<div class="cr-sbh"><div style="flex: 1;"><b style="display: block; font-size: 14px; line-height: 20px;">สถานีที่เลือกแล้ว</b><span class="cr-ss">แสดงรายการที่เลือกทั้งหมด (เลือกข้ามลุ่มน้ำได้)</span></div><span class="cr-cnt">{{cr.selCount}} สถานี</span></div>
+<sc-if value="{{cr.noSel}}" hint-placeholder-val="{{true}}"><p class="cr-empty">ยังไม่ได้เลือกสถานี</p></sc-if>
+<sc-if value="{{cr.hasSel}}" hint-placeholder-val="{{false}}"><div class="cr-chips"><sc-for list="{{cr.sel}}" as="c" hint-placeholder-count="3"><span class="cr-chip">{{c.name}}<button aria-label="{{c.aria}}" onClick="{{c.rm}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></span></sc-for></div></sc-if>
+</div>
+<sc-if value="{{cr.eSt}}" hint-placeholder-val="{{false}}"><span class="cr-err">{{cr.eSt}}</span></sc-if>
+</section>
+
+<section class="cr-sec" aria-labelledby="cr-s3">
+<div class="cr-sh"><span class="cr-n">3</span><div><h3 id="cr-s3" class="cr-st">เงื่อนไขการแจ้งเตือน</h3><p class="cr-ss">กำหนดช่วงเวลาและประเภทการแจ้งเตือนที่ต้องการใช้งาน</p></div></div>
+<div class="cr-in2">
+<div class="cr-tgrow"><div style="flex: 1;"><b style="display: block; font-size: 14px; line-height: 20px;">ช่วงเวลาแจ้งเตือน</b><span class="cr-ss">ถ้าปิด ระบบจะถือว่าส่งได้ตลอด 24 ชั่วโมง</span></div><button class="{{cr.timeTg}}" role="switch" aria-checked="{{cr.timeOn}}" aria-label="ช่วงเวลาแจ้งเตือน" onClick="{{cr.toggleTime}}"></button></div>
+<sc-if value="{{cr.timeOn}}" hint-placeholder-val="{{true}}">
+<div class="cr-2">
+<div class="cr-f"><label class="cr-l" for="cr-from">เวลาเริ่มต้น</label><input id="cr-from" class="cr-in" type="time" value="{{cr.from}}" onInput="{{cr.setFrom}}"></div>
+<div class="cr-f"><label class="cr-l" for="cr-to">เวลาสิ้นสุด</label><input id="cr-to" class="cr-in" type="time" value="{{cr.to}}" onInput="{{cr.setTo}}"></div>
+</div>
+<label class="cr-ck"><input type="checkbox" checked="{{cr.overnight}}" onChange="{{cr.toggleOvernight}}">ข้ามวัน (เวลาสิ้นสุดอยู่ในวันถัดไป)</label>
+<sc-if value="{{cr.timeHint}}" hint-placeholder-val="{{false}}"><span class="cr-hint">{{cr.timeHint}}</span></sc-if>
+</sc-if>
+</div>
+<div class="cr-in2">
+<span class="cr-l">ประเภทการแจ้งเตือน <em>*</em></span>
+<div class="cr-types">
+<sc-for list="{{cr.types}}" as="t" hint-placeholder-count="3"><label class="{{t.cls}}" style="{{t.vars}}"><span class="cr-tt"><b>{{t.label}}</b><small>{{t.desc}}</small></span><input type="checkbox" checked="{{t.on}}" onChange="{{t.toggle}}"></label></sc-for>
+</div>
+<sc-if value="{{cr.eType}}" hint-placeholder-val="{{false}}"><span class="cr-err">{{cr.eType}}</span></sc-if>
+</div>
+<div class="cr-in2">
+<span class="cr-l">สถานะการแจ้งเตือน</span>
+<div class="cr-tgrow" style="align-items: center;"><button class="{{cr.onTg}}" role="switch" aria-checked="{{cr.on}}" aria-label="สถานะการแจ้งเตือน" onClick="{{cr.toggleOn}}"></button><span style="font-size: 14px;">{{cr.onLabel}}</span></div>
+</div>
+</section>
+<sc-if value="{{cr.sum}}" hint-placeholder-val="{{false}}"><div class="cr-sum">{{cr.sum}}</div></sc-if>
+</div>
+<div class="cr-f2"><button class="cr-ok" onClick="{{cr.submit}}">{{cr.okLabel}}</button><button class="cr-cancel" onClick="{{cr.close}}">ยกเลิก</button></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{dl.open}}" hint-placeholder-val="{{false}}">
+<div class="cr-ovl" onClick="{{dl.cancel}}">
+<div class="dl-box" role="alertdialog" aria-modal="true" aria-labelledby="dl-t" aria-describedby="dl-d" onClick="{{stop}}">
+<div class="dl-ic" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M4 7h16"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M6 7l1 13h10l1-13"></path><path d="M9 7V4h6v3"></path></svg></div>
+<h2 id="dl-t" class="dl-t">ลบกฎการแจ้งเตือน?</h2>
+<p id="dl-d" class="dl-d">กฎ <b>"{{dl.name}}"</b> จะถูกลบ และกลุ่ม <b>{{dl.group}}</b> จะไม่ได้รับการแจ้งเตือนจาก {{dl.st}} สถานีตามกฎนี้อีก</p>
+<sc-if value="{{dl.isOn}}" hint-placeholder-val="{{false}}"><p class="dl-w">กฎนี้กำลังเปิดใช้งานอยู่</p></sc-if>
+<div class="dl-f"><button class="cr-cancel" onClick="{{dl.cancel}}">ยกเลิก</button><button class="dl-ok" onClick="{{dl.confirm}}">ลบกฎ</button></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{toast}}" hint-placeholder-val="{{false}}"><div class="lr-toast" role="status"><span>{{toast}}</span><sc-if value="{{canUndo}}" hint-placeholder-val="{{false}}"><button onClick="{{undo}}">เรียกคืน</button></sc-if></div></sc-if>
+</div>

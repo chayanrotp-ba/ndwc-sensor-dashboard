@@ -1,0 +1,1819 @@
+
+<helmet>
+<style>
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:400;font-display:swap;src:url(./assets/bcc369502f7b45efbd73f6a2c5708ac0.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:500;font-display:swap;src:url(./assets/8202380b16afe7cd17e348573e875494.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:600;font-display:swap;src:url(./assets/82569b647ff348945259fa2b398f1ed0.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:700;font-display:swap;src:url(./assets/66d1a1f409f1d7267b7159f42f977071.ttf) format('truetype')}
+/* pixel-matched to the reference screenshot (1920×1080). Classes prefixed ex- */
+body{margin:0;background:#191919}
+.ex{position:relative;width:1920px;height:1080px;overflow:hidden;background:#191919;color:#f8fafc;font-family:'Sarabun',"Leelawadee UI","Noto Sans Thai","Segoe UI",Tahoma,sans-serif;font-size:14px;line-height:20px}
+.ex *{box-sizing:border-box}
+.ex p{margin:0}
+.ex :where(button,select,input){font-family:inherit;color:inherit}
+.ex button{cursor:pointer}
+.ex button:focus-visible,.ex input:focus-visible,.ex select:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.ex svg.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.abs{position:absolute}
+/* header */
+.ex-logo{left:25px;top:25px;width:36px;height:53px;object-fit:contain}
+.ex-ttl{left:77px;top:25px;margin:0;font-size:22px;line-height:28px;font-weight:600;letter-spacing:0}
+.ex-nav-on{left:922px;top:26px;width:120px;height:52px;border-radius:26px;background:#404040;display:flex;align-items:center;justify-content:center;gap:8px;font-size:19px;font-weight:600;color:#f8fafc;border:0}
+.ex-nb{top:26px;width:66px;height:52px;border-radius:26px;background:#262626;border:0;color:#f8fafc;display:flex;align-items:center;justify-content:center}
+.ex-nb:hover{background:#404040}
+.ex-theme{left:1661px;top:26px;width:52px;height:52px;border-radius:9999px;background:#262626;border:0;color:#fbbf24;display:flex;align-items:center;justify-content:center}
+.ex-theme:hover{background:#404040}
+.ex-user{left:1729px;top:27px;width:167px;height:50px;border-radius:10px;background:#262626;border:0;display:flex;align-items:center;gap:10px;padding:0 10px 0 8px;text-align:left}
+.ex-av{width:34px;height:34px;border-radius:9999px;background:#191919;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ex-un{display:block;font-size:14px;line-height:18px;font-weight:600}
+.ex-ur{display:block;font-size:11px;line-height:14px;color:#cbd5e1}
+.ex-out{left:1729px;top:83px;width:167px;height:50px;border-radius:10px;background:#262626;border:0;display:flex;align-items:center;justify-content:center;gap:8px;color:#94a3b8;font-size:14px}
+.ex-out:hover{color:#f8fafc}
+/* filters */
+.ex-f{top:113px;height:44px;border-radius:8px;border:1px solid #404040;background:#262626;display:flex;align-items:center;padding:0 14px;font-size:14px;color:#e2e8f0}
+.ex-f.ph{color:#94a3b8}
+.ex-f select,.ex-f input{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;padding:0 40px 0 14px;font-size:14px;appearance:none;color:inherit;border-radius:8px}
+.ex-f input::placeholder{color:#94a3b8}
+.ex-f option{background:#262626;color:#e2e8f0}
+.ex-f .chev{position:absolute;right:14px;top:12px;color:#cbd5e1;pointer-events:none}
+.ex-go{left:1270px;top:113px;width:56px;height:44px;border-radius:22px;background:#2563eb;border:0;color:#ffffff;display:flex;align-items:center;justify-content:center}
+.ex-go:hover{background:#1d4ed8}
+/* panels */
+.ex-p{top:169px;height:887px;border-radius:14px;background:#262626}
+.ex-left{left:8px;width:374px}
+.ex-mapp{left:393px;width:905px}
+.ex-right{left:1309px;width:585px}
+.ex-col{left:16px;top:17px;width:47px;height:34px;border-radius:8px;background:#ffffff;border:0;color:#262626;display:flex;align-items:center;justify-content:center}
+.ex-h2{margin:0;font-size:20px;line-height:28px;font-weight:700}
+.ex-list{left:16px;top:103px;width:342px;bottom:16px;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:15px}
+.ex-list::-webkit-scrollbar{display:none}
+.ex-card{flex-shrink:0;height:146px;border-radius:12px;background:#404040;border:0;padding:6px 12px 0 12px;text-align:left;display:block;width:100%;color:#f8fafc}
+.ex-card:hover{background:#4a4a4a}
+.ex-card.on{box-shadow:inset 0 0 0 2px #3b82f6}
+.ex-row{display:flex;align-items:center;justify-content:space-between}
+.ex-bd{border-radius:6px;padding:1px 6px;font-size:11px;line-height:16px;font-weight:600;color:#ffffff}
+.ex-time{font-size:12px;line-height:16px;color:#94a3b8}
+.ex-cn{display:block;margin-top:8px;font-size:17px;line-height:22px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-loc{display:block;font-size:14px;line-height:20px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-ag{display:block;font-size:14px;line-height:20px;color:#e2e8f0}
+.ex-v{font-size:17px;line-height:24px;font-weight:600}
+.ex-note{font-size:14px;line-height:20px;color:#f8fafc}
+/* map */
+.ex-map{left:10px;top:10px;width:885px;height:867px;border-radius:8px;overflow:hidden;background:#3a4364 url(./assets/397e3e17a30ffc06e6ccd0e30af4d6b7.jpg) 0 0/885px 867px no-repeat}
+@keyframes exbeat{0%,100%{transform:scale(1);box-shadow:0 0 0 2.5px #ffffff,0 0 14px 4px rgba(255,45,45,.85)}50%{transform:scale(1.3);box-shadow:0 0 0 2.5px #ffffff,0 0 26px 10px rgba(255,45,45,.95)}}
+@keyframes exring{0%{transform:scale(1);opacity:1}100%{transform:scale(4.2);opacity:0}}
+@media (prefers-reduced-motion: reduce){.ex-pin.red,.ex-pin.red::before,.ex-pin.red::after{animation:none}.ex-pin.red::before{transform:scale(1.8);opacity:.7}.ex-pin.red::after{display:none}}
+.ex-mbtn{right:14px;width:48px;height:48px;border-radius:9999px;background:#ffffff;border:0;color:#64748b;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ex-mbtn:hover{color:#111827}
+.ex-mini{right:0;bottom:0;width:112px;height:115px;border:0;padding:0;background:transparent;border-radius:6px}
+/* right */
+.ex-bar{left:17px;top:24px;width:10px;height:26px;border-radius:2px;background:#2563eb}
+.ex-leg{left:17px;top:71px;width:551px;height:300px;border-radius:12px;background:#404040;border:1px solid #2f2f2f}
+.ex-legh{position:absolute;left:12px;right:12px;top:4px;height:48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1f1f1f}
+.ex-hide{height:37px;padding:0 14px 0 16px;border-radius:9999px;background:#2563eb;border:0;color:#ffffff;font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px}
+.ex-hide:hover{background:#2563eb}
+.ex-lr{position:absolute;left:16px;width:455px;height:32px;display:flex;align-items:center;gap:12px;cursor:pointer;color:#e2e8f0;font-size:14px}
+.ex-lr input{position:absolute;opacity:0;width:1px;height:1px}
+.ex-cb{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#ffffff;flex-shrink:0}
+.ex-lr .n{margin-left:auto;color:#94a3b8}
+.ex-lr.off .t{color:#94a3b8;text-decoration:line-through}
+.ex-lr:focus-within .ex-cb{outline:2px solid #60a5fa;outline-offset:2px}
+.ex-arr{top:389px;width:28px;height:42px;border:0;background:transparent;color:#94a3b8;display:flex;align-items:center;justify-content:center}
+.ex-arr:hover{color:#f8fafc}
+.ex-tab{top:389px;width:183px;height:42px;border:0;border-radius:8px;background:transparent;color:#64748b;font-size:16px}
+.ex-tab.on{background:#2563eb;color:#ffffff}
+.ex-th{left:17px;top:438px;width:551px;height:56px;border-radius:8px;background:#404040;font-size:13px;line-height:17px;color:#eef0f2}
+.ex-th > span{position:absolute;display:flex;align-items:center;gap:6px}
+.ex-rows{left:17px;top:494px;width:551px;height:318px;overflow-y:auto;scrollbar-width:none}
+.ex-rows::-webkit-scrollbar{display:none}
+.ex-tr{position:relative;height:84px;border-bottom:1px solid #404040;cursor:pointer}
+.ex-tr:hover{background:#2c2c2c}
+.ex-tr.on{background:#1e2a44}
+.ex-tr .nm{position:absolute;left:15px;top:9px;width:380px;font-size:16px;line-height:22px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-tr .lc{position:absolute;left:15px;top:31px;font-size:14px;line-height:20px;color:#e2e8f0}
+.ex-tr .ag{position:absolute;left:15px;top:53px;font-size:14px;line-height:20px;color:#94a3b8}
+.ex-tr .tm{position:absolute;left:412px;top:32px;font-size:14px;line-height:20px}
+.ex-tr .pl{position:absolute;right:39px;top:31px;min-width:32px;padding:0 6px;border-radius:6px;font-size:13px;line-height:22px;font-weight:600;text-align:center;color:#ffffff}
+.ex-tr .ic{position:absolute;right:13px;top:36px;color:#e2e8f0}
+.ex-pg{left:17px;top:828px;width:551px;height:44px;display:flex;align-items:center;gap:10px;font-size:13px;color:#64748b}
+.ex-sel{position:relative;width:68px;height:42px;border-radius:6px;background:#f8fafc}
+.ex-sel select{width:100%;height:100%;border:0;border-radius:6px;background:transparent;appearance:none;padding:0 0 0 14px;font-size:14px;color:#94a3b8}
+.ex-sel svg{position:absolute;right:10px;top:13px;color:#94a3b8;pointer-events:none}
+.ex-pb{min-width:28px;height:32px;padding:0 8px;border:0;border-radius:6px;background:#191919;color:#f8fafc;font-size:14px;display:flex;align-items:center;justify-content:center}
+.ex-pb.on{background:#2563eb}
+.ex-pb:disabled{color:#525252;cursor:default}
+.ex-tip{position:absolute;z-index:5;transform:translate(-50%,calc(-100% - 12px));padding:6px 10px;border-radius:8px;background:#262626;border:1px solid #404040;font-size:12px;line-height:16px;white-space:nowrap;pointer-events:none;box-shadow:0 10px 15px -3px rgba(0,0,0,.5)}
+
+/* ===== light theme (.ex.lt) ===== */
+.ex.lt{position:relative;width:1920px;height:1080px;overflow:hidden;background:#f1f5f9;color:#0f172a;font-family:'Sarabun',"Leelawadee UI","Noto Sans Thai","Segoe UI",Tahoma,sans-serif;font-size:14px;line-height:20px}
+.ex.lt *{box-sizing:border-box}
+.ex.lt p{margin:0}
+.ex.lt :where(button,.lt select,.lt input){font-family:inherit;color:inherit}
+.ex.lt button{cursor:pointer}
+.ex.lt button:focus-visible,.ex.lt input:focus-visible,.ex.lt select:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+.ex.lt svg.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.lt .abs{position:absolute}
+/* header */
+.lt .ex-logo{left:25px;top:25px;width:36px;height:53px;object-fit:contain}
+.lt .ex-ttl{left:77px;top:25px;margin:0;font-size:22px;line-height:28px;font-weight:600;letter-spacing:0}
+.lt .ex-nav-on{left:922px;top:26px;width:120px;height:52px;border-radius:26px;background:#dbeafe;display:flex;align-items:center;justify-content:center;gap:8px;font-size:19px;font-weight:600;color:#0f172a;border:0}
+.lt .ex-nb{top:26px;width:66px;height:52px;border-radius:26px;background:#ffffff;border:0;color:#0f172a;display:flex;align-items:center;justify-content:center}
+.lt .ex-nb:hover{background:#dbeafe}
+.lt .ex-theme{left:1661px;top:26px;width:52px;height:52px;border-radius:9999px;background:#ffffff;border:0;color:#b45309;display:flex;align-items:center;justify-content:center}
+.lt .ex-theme:hover{background:#dbeafe}
+.lt .ex-user{left:1729px;top:27px;width:167px;height:50px;border-radius:10px;background:#ffffff;border:0;display:flex;align-items:center;gap:10px;padding:0 10px 0 8px;text-align:left}
+.lt .ex-av{width:34px;height:34px;border-radius:9999px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lt .ex-un{display:block;font-size:14px;line-height:18px;font-weight:600}
+.lt .ex-ur{display:block;font-size:11px;line-height:14px;color:#334155}
+.lt .ex-out{left:1729px;top:83px;width:167px;height:50px;border-radius:10px;background:#ffffff;border:0;display:flex;align-items:center;justify-content:center;gap:8px;color:#64748b;font-size:14px}
+.lt .ex-out:hover{color:#0f172a}
+/* filters */
+.lt .ex-f{top:113px;height:44px;border-radius:8px;border:1px solid #cbd5e1;background:#f1f5f9;display:flex;align-items:center;padding:0 14px;font-size:14px;color:#0f172a}
+.lt .ex-f.ph{color:#64748b}
+.lt .ex-f select,.lt .ex-f input{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;padding:0 40px 0 14px;font-size:14px;appearance:none;color:inherit;border-radius:8px}
+.lt .ex-f input::placeholder{color:#64748b}
+.lt .ex-f option{background:#f1f5f9;color:#0f172a}
+.lt .ex-f .chev{position:absolute;right:14px;top:12px;color:#475569;pointer-events:none}
+.lt .ex-go{left:1270px;top:113px;width:56px;height:44px;border-radius:22px;background:#2563eb;border:0;color:#ffffff;display:flex;align-items:center;justify-content:center}
+.lt .ex-go:hover{background:#1d4ed8}
+/* panels */
+.lt .ex-p{top:169px;height:887px;border-radius:14px;background:#f1f5f9}
+.lt .ex-left{left:8px;width:374px}
+.lt .ex-mapp{left:393px;width:905px}
+.lt .ex-right{left:1309px;width:585px}
+.lt .ex-col{left:16px;top:17px;width:47px;height:34px;border-radius:8px;background:#ffffff;border:0;color:#f1f5f9;display:flex;align-items:center;justify-content:center}
+.lt .ex-h2{margin:0;font-size:20px;line-height:28px;font-weight:700}
+.lt .ex-list{left:16px;top:103px;width:342px;bottom:16px;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:15px}
+.lt .ex-list::-webkit-scrollbar{display:none}
+.lt .ex-card{flex-shrink:0;height:146px;border-radius:12px;background:#e2e8f0;border:0;padding:6px 12px 0 12px;text-align:left;display:block;width:100%;color:#0f172a}
+.lt .ex-card:hover{background:#e2e8f0}
+.lt .ex-card.on{box-shadow:inset 0 0 0 2px #3b82f6}
+.lt .ex-row{display:flex;align-items:center;justify-content:space-between}
+.lt .ex-bd{border-radius:6px;padding:1px 6px;font-size:11px;line-height:16px;font-weight:600;color:#ffffff}
+.lt .ex-time{font-size:12px;line-height:16px;color:#64748b}
+.lt .ex-cn{display:block;margin-top:8px;font-size:17px;line-height:22px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lt .ex-loc{display:block;font-size:14px;line-height:20px;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lt .ex-ag{display:block;font-size:14px;line-height:20px;color:#0f172a}
+.lt .ex-v{font-size:17px;line-height:24px;font-weight:600}
+.lt .ex-note{font-size:14px;line-height:20px;color:#0f172a}
+/* map */
+.lt .ex-map{left:10px;top:10px;width:885px;height:867px;border-radius:8px;overflow:hidden;background:#c9d6e8 url(./assets/397e3e17a30ffc06e6ccd0e30af4d6b7.jpg) 0 0/885px 867px no-repeat}
+.lt .ex-mbtn{right:14px;width:48px;height:48px;border-radius:9999px;background:#ffffff;border:0;color:#64748b;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(15,23,42,.15)}
+.lt .ex-mbtn:hover{color:#0f172a}
+.lt .ex-mini{right:0;bottom:0;width:112px;height:115px;border:0;padding:0;background:transparent;border-radius:6px}
+/* right */
+.lt .ex-bar{left:17px;top:24px;width:10px;height:26px;border-radius:2px;background:#2563eb}
+.lt .ex-leg{left:17px;top:71px;width:551px;height:300px;border-radius:12px;background:#e2e8f0;border:1px solid #e2e8f0}
+.lt .ex-legh{position:absolute;left:12px;right:12px;top:4px;height:48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e2e8f0}
+.lt .ex-hide{height:37px;padding:0 14px 0 16px;border-radius:9999px;background:#2563eb;border:0;color:#ffffff;font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px}
+.lt .ex-hide:hover{background:#2563eb}
+.lt .ex-lr{position:absolute;left:16px;width:455px;height:32px;display:flex;align-items:center;gap:12px;cursor:pointer;color:#0f172a;font-size:14px}
+.lt .ex-lr input{position:absolute;opacity:0;width:1px;height:1px}
+.lt .ex-cb{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#ffffff;flex-shrink:0}
+.lt .ex-lr .n{margin-left:auto;color:#64748b}
+.lt .ex-lr.off .t{color:#64748b;text-decoration:line-through}
+.lt .ex-lr:focus-within .ex-cb{outline:2px solid #2563eb;outline-offset:2px}
+.lt .ex-arr{top:389px;width:28px;height:42px;border:0;background:transparent;color:#64748b;display:flex;align-items:center;justify-content:center}
+.lt .ex-arr:hover{color:#0f172a}
+.lt .ex-tab{top:389px;width:183px;height:42px;border:0;border-radius:8px;background:transparent;color:#64748b;font-size:16px}
+.lt .ex-tab.on{background:#2563eb;color:#ffffff}
+.lt .ex-th{left:17px;top:438px;width:551px;height:56px;border-radius:8px;background:#e2e8f0;font-size:13px;line-height:17px;color:#1e293b}
+.lt .ex-th > span{position:absolute;display:flex;align-items:center;gap:6px}
+.lt .ex-rows{left:17px;top:494px;width:551px;height:318px;overflow-y:auto;scrollbar-width:none}
+.lt .ex-rows::-webkit-scrollbar{display:none}
+.lt .ex-tr{position:relative;height:84px;border-bottom:1px solid #cbd5e1;cursor:pointer}
+.lt .ex-tr:hover{background:#f1f5f9}
+.lt .ex-tr.on{background:#dbeafe}
+.lt .ex-tr .nm{position:absolute;left:15px;top:9px;width:380px;font-size:16px;line-height:22px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lt .ex-tr .lc{position:absolute;left:15px;top:31px;font-size:14px;line-height:20px;color:#0f172a}
+.lt .ex-tr .ag{position:absolute;left:15px;top:53px;font-size:14px;line-height:20px;color:#475569}
+.lt .ex-tr .tm{position:absolute;left:412px;top:32px;font-size:14px;line-height:20px}
+.lt .ex-tr .pl{position:absolute;right:39px;top:31px;min-width:32px;padding:0 6px;border-radius:6px;font-size:13px;line-height:22px;font-weight:600;text-align:center;color:#ffffff}
+.lt .ex-tr .ic{position:absolute;right:13px;top:36px;color:#0f172a}
+.lt .ex-pg{left:17px;top:828px;width:551px;height:44px;display:flex;align-items:center;gap:10px;font-size:13px;color:#64748b}
+.lt .ex-sel{position:relative;width:68px;height:42px;border-radius:6px;background:#0f172a}
+.lt .ex-sel select{width:100%;height:100%;border:0;border-radius:6px;background:transparent;appearance:none;padding:0 0 0 14px;font-size:14px;color:#64748b}
+.lt .ex-sel svg{position:absolute;right:10px;top:13px;color:#64748b;pointer-events:none}
+.lt .ex-pb{min-width:28px;height:32px;padding:0 8px;border:0;border-radius:6px;background:#f1f5f9;color:#0f172a;font-size:14px;display:flex;align-items:center;justify-content:center}
+.lt .ex-pb.on{background:#2563eb}
+.lt .ex-pb:disabled{color:#94a3b8;cursor:default}
+.lt .ex-tip{position:absolute;z-index:5;transform:translate(-50%,calc(-100% - 12px));padding:6px 10px;border-radius:8px;background:#ffffff;border:1px solid #cbd5e1;font-size:12px;line-height:16px;white-space:nowrap;pointer-events:none;box-shadow:0 10px 15px -3px rgba(15,23,42,.2)}
+.ex.lt .ex-p{background:#ffffff;box-shadow:0 0 0 1px #e2e8f0,0 1px 2px rgba(15,23,42,.06)}
+.ex.lt .ex-f{background:#ffffff;border-color:#cbd5e1}
+.ex.lt .ex-col{color:#334155;box-shadow:inset 0 0 0 1px #cbd5e1}
+.ex.lt .ex-card{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .ex-card:hover{background:#f1f5f9}
+.ex.lt .ex-card.on{box-shadow:inset 0 0 0 2px #3b82f6}
+.ex.lt .ex-leg{background:#f8fafc;border-color:#e2e8f0}
+.ex.lt .ex-legh{border-bottom-color:#e2e8f0}
+.ex.lt .ex-th{background:#f1f5f9}
+.ex.lt .ex-tr{border-bottom-color:#e2e8f0}
+.ex.lt .ex-tr:hover{background:#f8fafc}
+.ex.lt .ex-sel{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1}
+.ex.lt .ex-pb{background:#f1f5f9;color:#0f172a}
+.ex.lt .ex-pb.on{background:#2563eb;color:#ffffff}
+.ex.lt .ex-pb:disabled{color:#cbd5e1}
+.ex.lt .ex-tab{color:#64748b}
+.ex.lt .ex-tab.on{color:#ffffff}
+.ex.bm-ter .ex-map{background:#e8eef6}
+.ex.bm-ter .ex-map::before{content:"";position:absolute;inset:0;background:url(./assets/397e3e17a30ffc06e6ccd0e30af4d6b7.jpg) 0 0/885px 867px no-repeat;filter:invert(1) hue-rotate(180deg) brightness(1.08) contrast(.88) saturate(.9);pointer-events:none}
+.ex.lt .ex-nav-on{color:#1d4ed8}
+.ex.lt .ex-out{color:#475569}
+.ex.lt .ex-tip{background:#ffffff;border-color:#e2e8f0;color:#0f172a}
+.ex.lt .ex-theme{background:#ffffff;color:#4338ca;box-shadow:0 0 0 1px #e2e8f0}
+.ex.lt .ex-theme:hover{background:#eef2ff}
+.ex.lt .ex-nb:hover{background:#eef2ff}
+.ex-right.lg0 .ex-leg{height:62px}
+.ex-right.lg0 .ex-legh{border-bottom-color:transparent}
+.ex-right.lg0 .ex-arr,.ex-right.lg0 .ex-tab{top:149px}
+.ex-right.lg0 .ex-th{top:198px}
+.ex-right.lg0 .ex-rows{top:254px;height:558px}
+.ex-leg,.ex-arr,.ex-tab,.ex-th,.ex-rows{transition:top 180ms ease,height 180ms ease}
+@media (prefers-reduced-motion: reduce){.ex-leg,.ex-arr,.ex-tab,.ex-th,.ex-rows{transition:none}}
+/* panel collapse: hl = left hidden, hr = right hidden */
+.ex-mbtn.mb1{top:14px}.ex-mbtn.mb2{top:71px}.ex-mbtn.mb3{top:128px}
+.ex.hl .ex-left,.ex.hr .ex-right{display:none}
+.ex.hl .ex-mapp{left:8px;width:calc(1290px + var(--dw,0px))}
+.ex.hr .ex-mapp{width:calc(1501px + var(--dw,0px))}
+.ex.hl.hr .ex-mapp{width:calc(1886px + var(--dw,0px))}
+.ex-fit .ex .ex-map{background-image:var(--mimg);background-size:var(--msz);background-position:var(--mpos);background-repeat:no-repeat}
+.ex-fit .ex.bm-ter .ex-map{background-image:none}
+.ex-fit .ex.bm-ter .ex-map::before{background-image:var(--mimg);background-size:var(--msz);background-position:var(--mpos);background-repeat:no-repeat}
+.ex.hr .ex-mbtn{right:10px}
+.ex.hr .ex-mbtn.mb1{top:62px}.ex.hr .ex-mbtn.mb2{top:119px}.ex.hr .ex-mbtn.mb3{top:176px}
+.ex .ex-col.ex-exl{left:11px;top:6px;width:46px;height:36px;z-index:4;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ex .ex-col.ex-exr{left:auto;right:10px;top:5px;width:46px;height:35px;z-index:4;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ex-col:hover{background:#f1f5f9}
+/* fill mode: scale the 1920×1080 layout to fit any board/viewport size, centered */
+.ex-fit{position:relative;width:100vw;height:100vh;overflow:hidden;background:#191919}
+.ex-fit.lt{background:#f1f5f9}
+.ex-fit>.ex{position:absolute;left:0;top:0;transform-origin:0 0}
+/* fluid width: extra space (--dw) goes to the map; right-side items follow the right edge */
+.ex-fit .ex-navw{position:absolute;left:calc(var(--dw,0px) / 2);top:0}
+.ex-fit .ex-theme{left:calc(1661px + var(--dw,0px))}
+.ex-fit .ex-user,.ex-fit .ex-out{left:calc(1729px + var(--dw,0px))}
+.ex-fit .ex-mapp{width:calc(905px + var(--dw,0px))}
+.ex-fit .ex-right{left:calc(1309px + var(--dw,0px))}
+/* graph button in the right-panel rows + history modal */
+.ex-tr .ex-gb{position:absolute;right:6px;top:27px;width:30px;height:30px;border:0;border-radius:6px;background:transparent;color:#cbd5e1;display:flex;align-items:center;justify-content:center;padding:0}
+.ex-tr .ex-gb:hover{background:#2563eb;color:#ffffff}
+.ex.lt .ex-tr .ex-gb{color:#334155}
+.ex.lt .ex-tr .ex-gb:hover{background:#2563eb;color:#ffffff}
+.hx-ovl{inset:0;z-index:20;background:rgba(0,0,0,.62)}
+.hx{left:calc(50% - 550px);top:204px;width:1100px;height:672px;z-index:21;border-radius:20px;background:#1f1f1f;border:1px solid #404040;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;color:#f8fafc}
+.hx-h{height:94px;flex-shrink:0;display:flex;align-items:center;gap:14px;padding:0 20px 0 24px;background:#2a2a2a;border-bottom:1px solid #404040}
+.hx-h h2{margin:0;font-size:24px;line-height:32px;font-weight:700}
+.hx-h p{margin:2px 0 0;font-size:16px;line-height:22px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hx-ib{width:40px;height:40px;border:0;border-radius:9999px;background:transparent;color:#cbd5e1;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+.hx-ib:hover{background:#404040;color:#ffffff}
+.hx-ib.sm{width:32px;height:32px;border-radius:6px}
+.hx-x{align-self:flex-start;margin-top:18px;width:32px;height:32px;border:0;border-radius:8px;background:#ffffff;color:#dc2626;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+.hx-x:hover{background:#fee2e2}
+.hx-b{flex:1;min-height:0;display:flex;gap:24px;padding:16px}
+.hx-l{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px}
+.hx-sens{display:flex;gap:8px}
+.hx-sens button{height:36px;padding:0 16px;border-radius:9999px;border:0;background:#2f2f2f;color:#f8fafc;font-size:14px;font-weight:600;white-space:nowrap}
+.hx-sens button:hover{background:#404040}
+.hx-sens button.on{background:#2563eb;color:#ffffff}
+.hx-card{flex:1;min-height:0;border-radius:12px;background:#2a2a2a;padding:14px 12px 10px;display:flex;flex-direction:column}
+.hx-card h3,.hx-r h3{margin:0 0 10px;font-size:16px;line-height:22px;font-weight:600}
+.hx-gr{display:flex;border-bottom:2px solid #404040}
+.hx-gr button{flex:1;height:38px;border:0;border-bottom:2px solid transparent;margin-bottom:-2px;background:transparent;color:#94a3b8;font-size:15px;border-radius:6px 6px 0 0}
+.hx-gr button:hover{color:#f8fafc}
+.hx-gr button.on{background:#1f1f1f;color:#ffffff;border-bottom-color:#e2e8f0;font-weight:600}
+.hx-tools{display:flex;align-items:center;gap:6px;height:38px;margin-top:14px}
+.hx-rng{display:flex;gap:2px;padding:4px;border-radius:9999px;background:#fafafa}
+.hx-rng button{height:30px;padding:0 12px;border:0;border-radius:9999px;background:transparent;color:#525252;font-size:13px;white-space:nowrap}
+.hx-rng button:hover{background:#e2e8f0}
+.hx-rng button.on{background:#18181b;color:#ffffff;font-weight:600}
+.hx-cap{font-size:13px;color:#94a3b8;padding:0 4px}
+.hx-chart{flex:1;min-height:0;margin-top:6px}
+.hx-chart svg{display:block}
+.hx-lg{display:flex;justify-content:center;align-items:center;gap:8px;margin:2px 0 0;font-size:13px;color:#cbd5e1}
+.hx-lg i{width:22px;height:10px;border-radius:3px}
+.hx-r{width:350px;flex-shrink:0;border-radius:12px;background:#2a2a2a;padding:14px 8px 12px;display:flex;flex-direction:column}
+.hx-r h3{margin:0 4px 12px}
+.hx-tb{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed}
+.hx-tb th{height:44px;background:#3a3a3a;font-size:14px;font-weight:500;color:#f8fafc;text-align:center;padding:0 8px}
+.hx-tb th:first-child{border-radius:8px 0 0 8px;padding-left:14px}
+.hx-tb th:last-child{border-radius:0 8px 8px 0}
+.hx-tb td{height:56px;border-bottom:1px solid #3a3a3a;font-size:14px;text-align:center;padding:0 8px;white-space:nowrap}
+.hx-tb td:first-child{padding-left:14px}
+.hx-tb td b{display:block;font-weight:600;font-size:14px;line-height:20px}
+.hx-tb td span{display:block;font-size:13px;line-height:18px;color:#94a3b8}
+.hx-pg{display:flex;justify-content:flex-end;gap:6px;margin-top:auto;padding-top:10px}
+.hx-pg button{min-width:30px;height:30px;padding:0 6px;border:0;border-radius:6px;background:#1f1f1f;color:#e2e8f0;font-size:14px;display:flex;align-items:center;justify-content:center}
+.hx-pg button:hover:not(:disabled){background:#404040}
+.hx-pg button.on{background:#2563eb;color:#ffffff;font-weight:600}
+.hx-pg button:disabled{opacity:.45;cursor:default}
+.ex.lt .hx-ovl{background:rgba(15,23,42,.45)}
+.ex.lt .hx{background:#ffffff;border-color:#e2e8f0;color:#0f172a;box-shadow:0 25px 50px -12px rgba(15,23,42,.35)}
+.ex.lt .hx-h{background:#f8fafc;border-bottom-color:#e2e8f0}
+.ex.lt .hx-h p{color:#475569}
+.ex.lt .hx-ib{color:#475569}
+.ex.lt .hx-ib:hover{background:#e2e8f0;color:#0f172a}
+.ex.lt .hx-x{box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .hx-sens button{background:#f1f5f9;color:#1e293b;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .hx-sens button:hover{background:#e2e8f0}
+.ex.lt .hx-sens button.on{background:#2563eb;color:#ffffff;box-shadow:none}
+.ex.lt .hx-card,.ex.lt .hx-r{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .hx-gr{border-bottom-color:#e2e8f0}
+.ex.lt .hx-gr button{color:#64748b}
+.ex.lt .hx-gr button:hover{color:#0f172a}
+.ex.lt .hx-gr button.on{background:#ffffff;color:#0f172a;border-bottom-color:#2563eb}
+.ex.lt .hx-rng{background:#e2e8f0}
+.ex.lt .hx-rng button{color:#475569}
+.ex.lt .hx-rng button:hover{background:#cbd5e1}
+.ex.lt .hx-rng button.on{background:#0f172a;color:#ffffff}
+.ex.lt .hx-cap,.ex.lt .hx-tb td span{color:#64748b}
+.ex.lt .hx-lg{color:#334155}
+.ex.lt .hx-tb th{background:#e2e8f0;color:#0f172a}
+.ex.lt .hx-tb td{border-bottom-color:#e2e8f0}
+.ex.lt .hx-pg button{background:#ffffff;color:#334155;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .hx-pg button:hover:not(:disabled){background:#f1f5f9}
+.ex.lt .hx-pg button.on{background:#2563eb;color:#ffffff;box-shadow:none}
+/* base map picker (independent of the UI theme) */
+.ex-fit .ex .ex-mini{right:8px;bottom:8px;width:103px;height:103px;z-index:9;border:3px solid #ffffff;border-radius:10px;background:#3a4364 var(--mthumb) center/cover no-repeat;box-shadow:0 2px 8px rgba(0,0,0,.35);filter:none}
+.ex-fit .ex .ex-mini:hover{box-shadow:0 0 0 3px #3b82f6,0 2px 8px rgba(0,0,0,.35)}
+.bm-catch{position:absolute;inset:0;z-index:8}
+.bm-pop{right:123px;bottom:8px;z-index:9;display:flex;gap:8px;padding:12px;border-radius:16px;background:#ffffff;box-shadow:0 12px 28px rgba(0,0,0,.4)}
+.bm-op{width:150px;border:1.5px dashed transparent;border-radius:12px;background:transparent;padding:6px 6px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;color:#111827;cursor:pointer}
+.bm-op img{width:136px;height:136px;border-radius:10px;object-fit:cover;display:block}
+.bm-op b{font-size:18px;line-height:26px;font-weight:500;margin-top:6px}
+.bm-op .bm-def{font-style:normal;font-size:15px;line-height:18px;font-weight:600;color:#94a3b8}
+.bm-op:hover{background:#f1f5f9}
+.bm-op.on{border-color:#93c5fd;background:#eff6ff}
+.bm-op.on b{font-weight:700}
+.ex .bm-op,.ex .bm-op b{color:#111827}
+.ex .bm-op .bm-def{color:#94a3b8}
+.ex.lt .bm-pop{box-shadow:0 0 0 1px #e2e8f0,0 12px 28px rgba(15,23,42,.18)}
+/* station data popup */
+.sp{left:calc(50% - 550px);top:230px;width:1100px;height:619px;z-index:21;border-radius:16px;background:#1f1f1f;border:1px solid #404040;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;color:#f8fafc}
+.sp.one{width:1000px;left:calc(50% - 500px);top:262px;height:auto}
+.sp .sp-b1{flex-direction:row;gap:16px}
+.sp .sp-ph1{width:430px;height:auto;align-self:stretch;min-height:380px}
+.sp .sp-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.sp .sp-h3a{margin:0 2px}
+.sp .sp-info1{flex:none;padding:14px 16px;border-radius:12px;background:#2a2a2a}
+.sp .sp-info1 dl{gap:8px}
+.sp .sp-info1 dt{width:172px}
+.sp .sp-info1 dd{font-size:15px}
+.sp .sp-info1 .sp-acts{margin-top:14px;padding:0}
+.ex.lt .sp-info1{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.sp-h{height:90px;flex-shrink:0;display:flex;align-items:flex-start;gap:16px;padding:20px 24px 0;background:#2a2a2a;border-bottom:1px solid #404040;position:relative}
+.sp-bd{flex-shrink:0;margin-top:2px;padding:2px 7px;border-radius:6px;font-size:13px;line-height:20px;font-weight:600;color:#ffffff}
+.sp-bd.b-bad{background:#ef4444}.sp-bd.b-warn{background:#d97706}.sp-bd.b-ok{background:#16a34a}.sp-bd.b-none{background:#737373}
+.sp-ttl{width:372px;min-width:0}
+.sp-ttl h2{margin:0;font-size:17px;line-height:24px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-ttl p{margin:2px 0 0;font-size:15px;line-height:22px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-sel{position:relative;width:236px;height:44px;flex-shrink:0;border-radius:8px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#cbd5e1}
+.sp-sel select{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color:inherit;font:inherit;font-size:14px;padding:0 40px 0 14px;appearance:none;border-radius:8px;cursor:pointer}
+.sp-sel option{background:#262626;color:#f8fafc}
+.sp-sel svg{position:absolute;right:14px;top:13px;pointer-events:none}
+.sp-x{position:absolute;right:20px;top:18px;margin:0}
+.sp-b{flex:1;min-height:0;padding:16px;display:flex;flex-direction:column}
+.sp-card{display:flex;gap:24px;padding:16px;border-radius:12px;background:#2a2a2a}
+.sp-ph{position:relative;width:522px;height:255px;flex-shrink:0;border-radius:10px;background:#404040 center/cover no-repeat}
+.sp-on{position:absolute;right:8px;top:8px;padding:1px 6px;border-radius:5px;font-size:12px;line-height:20px;font-weight:600;background:#ffffff;color:#16a34a;box-shadow:inset 0 0 0 1px #86efac}
+.sp-on.off{color:#737373;box-shadow:inset 0 0 0 1px #cbd5e1}
+.sp-nav{position:absolute;top:50%;margin-top:-16px;width:32px;height:32px;border:0;border-radius:9999px;background:rgba(15,23,42,.45);color:#ffffff;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 150ms}
+.sp-nav.l{left:8px}.sp-nav.r{right:8px}
+.sp-ph:hover .sp-nav,.sp-nav:focus-visible{opacity:1}
+.sp-dots{position:absolute;left:0;right:0;bottom:6px;display:flex;justify-content:center;gap:5px}
+.sp-dots button{width:8px;height:8px;padding:0;border:0;border-radius:9999px;background:#ffffff;opacity:.9}
+.sp-dots button.on{width:22px;background:#2563eb;opacity:1}
+.sp-info{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-info dl{margin:0;display:flex;flex-direction:column;gap:14px}
+.sp-info dl div{display:flex;align-items:baseline}
+.sp-info dt{width:178px;flex-shrink:0;font-size:13px;color:#94a3b8;white-space:nowrap}
+.sp-info dd{margin:0;font-size:16px;line-height:22px;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.sp-acts{display:flex;gap:12px;margin-top:auto;padding-bottom:4px}
+.sp-ib{width:44px;height:44px;border:0;border-radius:8px;background:#ffffff;color:#18181b;display:flex;align-items:center;justify-content:center;padding:0}
+.sp-ib:hover{background:#e2e8f0}
+.sp-go{height:44px;padding:0 18px;border:0;border-radius:8px;background:#2563eb;color:#ffffff;font-size:16px;font-weight:600}
+.sp-go:hover{background:#2563eb}
+.sp-qr{position:absolute;left:-50px;bottom:52px;z-index:3;width:168px;padding:12px;border-radius:12px;background:#ffffff;color:#0f172a;box-shadow:0 12px 28px rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.sp-qr b{font-size:13px;font-weight:700}
+.sp-qr span{font-size:11px;color:#64748b}
+.sp-h3{margin:18px 4px 12px;font-size:18px;line-height:24px;font-weight:700;display:flex;align-items:baseline;gap:10px}
+.sp-h3 span{font-size:13px;font-weight:400;color:#94a3b8}
+.ex.lt .sp{background:#ffffff;border-color:#e2e8f0;color:#0f172a;box-shadow:0 25px 50px -12px rgba(15,23,42,.35)}
+.ex.lt .sp-h{background:#f8fafc;border-bottom-color:#e2e8f0}
+.ex.lt .sp-ttl p,.ex.lt .sp-info dt,.ex.lt .sp-h3 span{color:#64748b}
+.ex.lt .sp-sel{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#334155}
+.ex.lt .sp-sel option{background:#ffffff;color:#0f172a}
+.ex.lt .sp-card{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .sp-ib{box-shadow:inset 0 0 0 1px #cbd5e1}
+.ex.lt .sp-ib:hover{background:#f1f5f9}
+.ex.lt .sp-go{background:#2563eb}
+.ex.lt .sp-qr{box-shadow:0 0 0 1px #e2e8f0,0 12px 28px rgba(15,23,42,.18)}
+/* map markers: round badge + metric icon (reference style). colour = level of the selected metric, gray = offline */
+.ex-map .ex-pin{position:absolute;z-index:1;width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border:2px solid #ffffff;border-radius:9999px;cursor:pointer;color:var(--pi);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 32% 28%,color-mix(in srgb,var(--pc) 55%,#ffffff) 0%,var(--pc) 64%);box-shadow:0 2px 6px rgba(0,0,0,.45);transition:transform 120ms}
+.ex-pin .pm-i{display:block;width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ex-pin .pm-off{display:none}
+.ex-map .ex-pin.off{--pc:#737373;--pi:#ffffff;opacity:.92}
+.ex-pin.off .pm-ic{display:none}
+.ex-pin.off .pm-off{display:inline}
+.ex-map .ex-pin:hover,.ex-map .ex-pin:focus-visible{transform:scale(1.18);z-index:6;outline:none;box-shadow:0 0 0 3px rgba(96,165,250,.6),0 2px 8px rgba(0,0,0,.5)}
+.ex-map .ex-pin.red{z-index:3;width:30px;height:30px;margin:-15px 0 0 -15px}
+.ex-pin.red .pm-i{width:16px;height:16px}
+/* waves grow with severity: w1 (e.g. ฝน 35-50) subtle → w4 (ฝน >90) strong */
+.ex-pin.wave::before,.ex-pin.wave::after{content:"";position:absolute;inset:-3px;border-radius:9999px;border:var(--wb) solid var(--pc);opacity:0;animation:pmring var(--wd) ease-out infinite;pointer-events:none}
+.ex-pin.wave::after{animation-delay:calc(var(--wd) / 2)}
+.ex-map .ex-pin.w1{z-index:2;--wb:1.5px;--wd:2.6s;--ws:1.7;--wo:.55}
+.ex-map .ex-pin.w1::after{display:none}
+.ex-map .ex-pin.w2{z-index:2;--wb:2px;--wd:2.1s;--ws:2;--wo:.75}
+.ex-map .ex-pin.w2::after{display:none}
+.ex-map .ex-pin.w3{z-index:3;--wb:2.5px;--wd:1.7s;--ws:2.4;--wo:.9;animation:pmbeat 1.6s ease-in-out infinite;--wg:10px}
+.ex-map .ex-pin.w4{z-index:4;--wb:3px;--wd:1.3s;--ws:2.9;--wo:1;animation:pmbeat 1.1s ease-in-out infinite;--wg:16px}
+@keyframes pmbeat{0%,100%{box-shadow:0 2px 6px rgba(0,0,0,.45),0 0 0 0 color-mix(in srgb,var(--pc) 60%,transparent)}50%{box-shadow:0 2px 6px rgba(0,0,0,.45),0 0 var(--wg,12px) 4px color-mix(in srgb,var(--pc) 75%,transparent)}}
+/* critical pins: a softer, warmer breathing pulse — no white ring */
+.ex-map .ex-pin.red.wave{animation:pmbeatRed 1.35s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes pmbeatRed{0%,100%{transform:scale(1);box-shadow:0 2px 6px rgba(0,0,0,.45),0 0 0 0 rgba(239,68,68,.5)}50%{transform:scale(1.1);box-shadow:0 2px 6px rgba(0,0,0,.45),0 0 18px 7px rgba(239,68,68,.65)}}
+@keyframes pmring{0%{transform:scale(.95);opacity:var(--wo,1)}100%{transform:scale(var(--ws,2.4));opacity:0}}
+@media (prefers-reduced-motion: reduce){.ex-map .ex-pin.wave,.ex-pin.wave::before,.ex-pin.wave::after{animation:none}.ex-pin.wave::after{display:none}.ex-pin.wave::before{transform:scale(1.4);opacity:.6}}
+.ex .ex-lr{height:28px}
+/* metric dropdown (ประเภทข้อมูล) */
+.ex-dd{padding:0}
+.ex-ddb{position:absolute;inset:0;width:100%;border:0;background:transparent;color:inherit;font:inherit;font-size:14px;text-align:left;padding:0 40px 0 14px;border-radius:8px;display:flex;align-items:center}
+.ex-ddb span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-ddc{position:fixed;inset:0;z-index:30}
+.ex-ddl{position:absolute;left:0;top:52px;z-index:31;margin:0;padding:8px;list-style:none;min-width:540px;border-radius:12px;background:#2a2a2a;border:1px solid #404040;box-shadow:0 16px 32px rgba(0,0,0,.55)}
+.ex-ddl button{width:100%;height:64px;border:0;border-radius:8px;background:transparent;color:#e2e8f0;font:inherit;font-size:20px;text-align:left;padding:0 32px}
+.ex-ddl button:hover{background:#404040;color:#ffffff}
+.ex-ddl button.on{color:#ffffff;font-weight:600;background:#1e3a8a}
+.ex.lt .ex-ddl{background:#ffffff;border-color:#e2e8f0;box-shadow:0 16px 32px rgba(15,23,42,.18)}
+.ex.lt .ex-ddl button{color:#0f172a}
+.ex.lt .ex-ddl button:hover{background:#f1f5f9;color:#0f172a}
+.ex.lt .ex-ddl button.on{background:#dbeafe;color:#1e3a8a}
+.ex-latest{left:17px;top:389px;width:551px;height:42px;margin:0;display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
+.ex-latest span{padding:6px 14px;border-radius:8px;background:#2563eb;color:#ffffff;font-weight:600}
+.ex-right.lg0 .ex-latest{top:149px}
+.ex.lt .ex-latest{color:#64748b}
+.ex-empty{margin:24px 8px;font-size:14px;line-height:22px;color:#94a3b8;text-align:center}
+.ex.lt .ex-empty{color:#64748b}
+.sp-all{margin-left:auto;height:32px;padding:0 10px 0 12px;border:0;border-radius:8px;background:transparent;color:#60a5fa;font:inherit;font-size:14px;font-weight:600;display:flex;align-items:center;gap:4px}
+.sp-all:hover{background:rgba(96,165,250,.12)}
+.ex.lt .sp-all{color:#2563eb}
+.ex.lt .sp-all:hover{background:#eff6ff}
+/* ThaiWater layer: square markers + layer switcher */
+.ex-map .ex-pin.tw{border-radius:7px;width:22px;height:22px;margin:-11px 0 0 -11px;animation:none;box-shadow:0 2px 6px rgba(0,0,0,.45),0 0 0 1.5px rgba(15,23,42,.55)}
+.ex-map .ex-pin.tw::before,.ex-map .ex-pin.tw::after{display:none}
+.ex-pin.tw .pm-i{width:12px;height:12px}
+.ex-mbtn.on{background:#2563eb;color:#ffffff}
+.ly-pop{right:72px;top:14px;z-index:9;width:340px;padding:14px;border-radius:14px;background:#ffffff;color:#0f172a;box-shadow:0 12px 28px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:6px}
+.ex.hr .ly-pop{right:68px;top:62px}
+.ly-pop h4{margin:0 0 4px;font-size:15px;font-weight:700}
+.ly-row{position:relative;display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer}
+.ly-row:hover{background:#f1f5f9}
+.ly-row input{position:absolute;opacity:0;width:1px;height:1px}
+.ly-sw{width:22px;height:22px;flex-shrink:0;border:2px solid #ffffff;background:#ef4444;box-shadow:0 0 0 1px #cbd5e1}
+.ly-sw.own{border-radius:9999px}.ly-sw.tw{border-radius:6px;background:#f59a3a}
+.ly-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.ly-tx b{font-size:14px;line-height:20px}
+.ly-tx span{font-size:12px;line-height:16px;color:#64748b}
+.ly-tg{position:relative;width:40px;height:22px;flex-shrink:0;border-radius:9999px;background:#cbd5e1;transition:background 150ms}
+.ly-tg::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:9999px;background:#ffffff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:transform 150ms}
+.ly-row input:checked + .ly-tg{background:#2563eb}
+.ly-row input:checked + .ly-tg::after{transform:translateX(18px)}
+.ly-row input:focus-visible + .ly-tg{outline:2px solid #60a5fa;outline-offset:2px}
+.ex.lt .ly-pop{box-shadow:0 0 0 1px #e2e8f0,0 12px 28px rgba(15,23,42,.18)}
+.tw-card{z-index:8;width:270px;padding:12px 14px;border-radius:12px;background:#262626;border:1px solid #404040;box-shadow:0 12px 24px rgba(0,0,0,.5);display:flex;flex-direction:column;gap:2px;color:#f8fafc}
+.tw-ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.tw-src{padding:1px 8px;border-radius:6px;background:#0e7490;color:#ffffff;font-size:11px;line-height:18px;font-weight:600}
+.tw-x{width:24px;height:24px;border:0;border-radius:6px;background:transparent;color:#94a3b8;display:flex;align-items:center;justify-content:center;padding:0}
+.tw-x:hover{background:#404040;color:#ffffff}
+.tw-n{font-size:15px;line-height:20px}
+.tw-l,.tw-t{font-size:12px;line-height:17px;color:#94a3b8}
+.tw-v{display:flex;align-items:baseline;gap:6px;margin:4px 0 2px}
+.ex .tw-v .tw-big{font-size:26px;line-height:32px;font-weight:700}
+.tw-v > span{font-size:12px;color:#94a3b8}
+.ex.lt .tw-card{background:#ffffff;border-color:#e2e8f0;color:#0f172a;box-shadow:0 12px 24px rgba(15,23,42,.18)}
+.ex.lt .tw-l,.ex.lt .tw-t,.ex.lt .tw-v > span{color:#64748b}
+/* station data-status badges on markers: event > late > gap (silent = whole marker gray) */
+.pm-bds{position:absolute;left:calc(100% - 9px);top:-8px;display:flex;gap:1px;z-index:2;pointer-events:none}
+.ex-pin.red .pm-bds{left:calc(100% - 10px)}
+.ex-pin .pm-bd{position:relative;display:flex;flex-shrink:0;width:16px;height:16px;border-radius:9999px;border:1.5px solid #ffffff;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.5);z-index:2}
+.ex-pin .pm-bd svg{width:10px;height:10px;fill:none;stroke:#ffffff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.pm-bd.ev-crit{background:#dc2626}.pm-bd.ev-warn{background:#ea580c}.pm-bd.ev-info{background:#2563eb}
+.pm-bd.late{background:#eab308}.pm-bd.late svg{stroke:#1f2937}.pm-bd.gap{background:#7c3aed}
+.ly-sec{margin:8px 0 2px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:13px;font-weight:700}
+.ly-key{display:flex;align-items:flex-start;gap:10px;padding:5px 10px;font-size:12px;line-height:16px;color:#334155}
+.ly-key b{display:block;font-size:13px;color:#0f172a}
+.ly-key .k{position:relative;width:22px;height:22px;flex-shrink:0;margin-top:1px;border-radius:9999px;border:2px solid #ffffff;box-shadow:0 0 0 1px #cbd5e1;background:#7fc63d}
+.ly-key .k.sil{background:#71717a}
+.ly-key .k.lt8{}
+.ly-key .k i{position:absolute;right:-6px;top:-6px;width:12px;height:12px;border-radius:9999px;border:1.5px solid #ffffff}
+.ly-key .k i.ev{background:#dc2626}.ly-key .k i.late{background:#eab308}.ly-key .k i.gap{background:#7c3aed}
+/* silent vs late — two different problems, two different looks */
+.ex-tr .tm.t-sil{color:#94a3b8;text-decoration:line-through}
+.ex-tr .tm.t-late{color:#fbbf24;font-weight:600}
+.ex-tr .ag.a-sil{color:#f87171;font-weight:600}
+.ex-tr .ag.a-late{color:#fbbf24;font-weight:600}
+.ex.lt .ex-tr .tm.t-late,.ex.lt .ex-tr .ag.a-late{color:#b45309}
+.ex.lt .ex-tr .ag.a-sil{color:#dc2626}
+.ds-bar{left:12px;top:12px;z-index:7;display:flex;align-items:center;gap:6px;padding:6px 8px 6px 12px;border-radius:12px;background:rgba(25,25,25,.88);box-shadow:0 4px 14px rgba(0,0,0,.4);backdrop-filter:blur(4px)}
+.ex.hr .ds-bar{left:12px}
+.ds-t{font-size:12px;color:#94a3b8;margin-right:2px}
+.ds-c{height:30px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:#e2e8f0;font:inherit;font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer}
+.ds-c:hover{background:#404040}
+.ds-c b{font-weight:700}
+.ds-c i{width:12px;height:12px;border-radius:9999px;border:2px solid #ffffff;background:#7fc63d}
+.ds-c.late i{background:#7fc63d;box-shadow:0 0 0 2px #f59e0b}
+.ds-c.silent i{background:#737373}
+.ds-c.on{background:#2563eb;color:#ffffff}
+.ex.lt .ds-bar{background:rgba(255,255,255,.94);box-shadow:0 0 0 1px #e2e8f0,0 4px 14px rgba(15,23,42,.15)}
+.ex.lt .ds-t{color:#64748b}
+.ex.lt .ds-c{color:#0f172a}
+.ex.lt .ds-c:hover{background:#f1f5f9}
+.ex.lt .ds-c.on{background:#2563eb;color:#ffffff}
+.sp-ban{display:flex;align-items:center;gap:12px;margin:12px 16px 0;padding:10px 14px;border-radius:10px;font-size:13px;line-height:18px}
+.sp-ban div{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-ban b{font-size:15px;line-height:20px}
+.sp-ban.sil{background:rgba(239,68,68,.12);box-shadow:inset 0 0 0 1px rgba(239,68,68,.45);color:#fecaca}
+.sp-ban.sil b,.sp-ban.sil svg{color:#f87171}
+.sp-ban.late{background:rgba(245,158,11,.12);box-shadow:inset 0 0 0 1px rgba(245,158,11,.45);color:#fde68a}
+.sp-ban.late b,.sp-ban.late svg{color:#fbbf24}
+.sp-ban-who{flex-shrink:0;padding:4px 10px;border-radius:9999px;font-size:12px;font-weight:700;background:rgba(255,255,255,.1)}
+.ex.lt .sp-ban.sil{background:#fef2f2;color:#7f1d1d;box-shadow:inset 0 0 0 1px #fecaca}
+.ex.lt .sp-ban.sil b,.ex.lt .sp-ban.sil svg{color:#dc2626}
+.ex.lt .sp-ban.late{background:#fffbeb;color:#78350f;box-shadow:inset 0 0 0 1px #fde68a}
+.ex.lt .sp-ban.late b,.ex.lt .sp-ban.late svg{color:#b45309}
+.ex.lt .sp-ban-who{background:rgba(15,23,42,.06)}
+.sp-on.late{color:#b45309;box-shadow:inset 0 0 0 1px #fcd34d}
+/* criteria legend lives on the map now (bottom-left); right panel = station list */
+.ex-h2n{font-size:14px;font-weight:400;color:#94a3b8;margin-left:6px}
+.ex.lt .ex-h2n{color:#64748b}
+.ex-right .ex-arr,.ex-right .ex-tab,.ex-right .ex-latest{top:72px}
+.ex-right .ex-th{top:124px}
+.ex-right .ex-rows{top:180px;height:632px}
+.mlg{left:12px;bottom:12px;z-index:7;width:272px;border-radius:12px;background:rgba(25,25,25,.9);box-shadow:0 6px 18px rgba(0,0,0,.45);backdrop-filter:blur(4px);color:#f8fafc;overflow:hidden}
+.mlg-h{display:flex;align-items:center;gap:8px;height:40px;padding:0 6px 0 14px}
+.mlg-h b{flex:1;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mlg-tg{width:28px;height:28px;border:0;border-radius:8px;background:transparent;color:#cbd5e1;display:flex;align-items:center;justify-content:center;padding:0}
+.mlg-tg:hover{background:#404040;color:#ffffff}
+.mlg-b{padding:2px 8px 8px;border-top:1px solid #404040}
+.mlg-r{position:relative;display:flex;align-items:center;gap:10px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;font-size:13px}
+.mlg-r:hover{background:#404040}
+.mlg-r input{position:absolute;opacity:0;width:1px;height:1px}
+.mlg-r:focus-within{outline:2px solid #60a5fa;outline-offset:-2px}
+.mlg-sw{width:14px;height:14px;flex-shrink:0;border-radius:9999px;border:2px solid #ffffff;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.mlg-r .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mlg-r .n{color:#94a3b8;font-size:12px}
+.mlg-r.off .t{color:#737373;text-decoration:line-through}
+.mlg-r.off .mlg-sw{border-color:#737373}
+.mlg-f{margin:6px 6px 0;font-size:11px;line-height:15px;color:#94a3b8}
+.ex.lt .mlg{background:rgba(255,255,255,.95);color:#0f172a;box-shadow:0 0 0 1px #e2e8f0,0 6px 18px rgba(15,23,42,.15)}
+.ex.lt .mlg-b{border-top-color:#e2e8f0}
+.ex.lt .mlg-tg{color:#475569}
+.ex.lt .mlg-tg:hover,.ex.lt .mlg-r:hover{background:#f1f5f9}
+.ex.lt .mlg-r .n,.ex.lt .mlg-f{color:#64748b}
+.ex.lt .mlg-r.off .t{color:#94a3b8}
+.ex.lt .mlg-sw{box-shadow:0 0 0 1px #cbd5e1}
+/* 7 rainfall periods in the panel tab row */
+.ex-right .ex-tab{width:69px;font-size:13px;padding:0;white-space:nowrap}
+.mlg-sec{display:flex;align-items:baseline;justify-content:space-between;margin:8px 6px 2px;padding-top:8px;border-top:1px solid #404040;font-size:12px;font-weight:700;color:#e2e8f0}
+.mlg-sec span{font-weight:400;color:#94a3b8;font-size:11px}
+button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inherit;font-size:13px;text-align:left}
+.mlg-ds .mlg-sw{background:#7fc63d}
+.mlg-ds.late .mlg-sw{background:#7fc63d;box-shadow:0 0 0 1px rgba(0,0,0,.35);position:relative}
+.mlg-ds.late .mlg-sw::after{content:"";position:absolute;right:-6px;top:-6px;width:9px;height:9px;border-radius:9999px;background:#eab308;border:1.5px solid #ffffff}
+.mlg-ds.silent .mlg-sw{background:#737373}
+.mlg-ds.on{background:#1e3a8a}
+.mlg-ds.on .n{color:#ffffff}
+.ex.lt .mlg-sec{border-top-color:#e2e8f0;color:#0f172a}
+.ex.lt .mlg-sec span{color:#64748b}
+.ex.lt .mlg-ds.on{background:#dbeafe}
+.ex.lt .mlg-ds.on .n{color:#1e3a8a}
+/* basin filter + alerts (bell, inbox, toasts) */
+.ex-bell{left:1597px;top:26px;width:52px;height:52px;border-radius:9999px;background:#262626;border:0;color:#f8fafc;display:flex;align-items:center;justify-content:center}
+.ex-bell:hover,.ex-bell.on{background:#404040}
+.ex-fit .ex-bell{left:calc(1597px + var(--dw,0px))}
+.ex-bell-n{position:absolute;right:2px;top:2px;min-width:20px;height:20px;padding:0 5px;border-radius:9999px;background:#ef4444;color:#ffffff;font-size:11px;line-height:20px;font-weight:700;text-align:center;box-shadow:0 0 0 2px #191919}
+.ex.lt .ex-bell{background:#ffffff;color:#0f172a;box-shadow:0 0 0 1px #e2e8f0}
+.ex.lt .ex-bell:hover,.ex.lt .ex-bell.on{background:#eef2ff}
+.ex.lt .ex-bell-n{box-shadow:0 0 0 2px #f1f5f9}
+.ib-catch{inset:0;z-index:40}
+.ib{left:calc(1649px + var(--dw,0px) - 460px);top:86px;z-index:41;width:460px;max-height:720px;border-radius:14px;background:#1f1f1f;border:1px solid #404040;box-shadow:0 24px 48px -12px rgba(0,0,0,.7);display:flex;flex-direction:column;overflow:hidden;color:#f8fafc}
+.ib-h{display:flex;align-items:flex-start;gap:12px;padding:16px 16px 10px}
+.ib-h div{flex:1;min-width:0}
+.ib-h h3{margin:0;font-size:17px;line-height:24px;font-weight:700}
+.ib-h span{font-size:12px;color:#94a3b8}
+.ib-all{height:30px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:#60a5fa;font:inherit;font-size:13px;font-weight:600}
+.ib-all:hover{background:rgba(96,165,250,.12)}
+.ib-f{display:flex;flex-direction:column;gap:8px;padding:0 16px 10px;border-bottom:1px solid #404040}
+.ib-seg{display:flex;padding:3px;border-radius:9999px;background:#262626;align-self:flex-start}
+.ib-seg button{height:28px;padding:0 14px;border:0;border-radius:9999px;background:transparent;color:#94a3b8;font:inherit;font-size:13px}
+.ib-seg button.on{background:#2563eb;color:#ffffff;font-weight:600}
+.ib-chips{display:flex;gap:6px;flex-wrap:wrap}
+.ib-chips button{height:28px;padding:0 10px;border:0;border-radius:9999px;background:#262626;color:#cbd5e1;font:inherit;font-size:12px;display:flex;align-items:center;gap:6px;box-shadow:inset 0 0 0 1px #404040}
+.ib-chips button i{width:10px;height:10px;border-radius:9999px}
+.ib-chips button.on{box-shadow:inset 0 0 0 2px #60a5fa;color:#ffffff}
+.ib-list{flex:1;min-height:0;overflow-y:auto;padding:6px}
+.ib-it{position:relative;width:100%;display:flex;align-items:stretch;gap:10px;padding:10px 12px 10px 10px;border:0;border-radius:10px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.ib-it:hover{background:#2a2a2a}
+.ib-it.unread{background:rgba(59,130,246,.08)}
+.ib-bar{width:4px;flex-shrink:0;border-radius:4px}
+.ib-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.ib-t1{font-size:12px;line-height:17px;color:#94a3b8}
+.ib-t2{font-size:14px;line-height:20px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib-t3{font-size:12px;line-height:17px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib-r{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;flex-shrink:0}
+.ib-r b{font-size:15px;line-height:20px}
+.ib-r span{font-size:11px;color:#94a3b8}
+.ib-dot{position:absolute;right:6px;top:8px;width:8px;height:8px;border-radius:9999px;background:#2563eb}
+.ib-empty{margin:24px;text-align:center;color:#94a3b8;font-size:13px}
+.ib-ft{padding:10px 16px;border-top:1px solid #404040;font-size:11px;color:#94a3b8}
+.ex.lt .ib{background:#ffffff;border-color:#e2e8f0;color:#0f172a;box-shadow:0 24px 48px -12px rgba(15,23,42,.25)}
+.ex.lt .ib-h span,.ex.lt .ib-t1,.ex.lt .ib-t3,.ex.lt .ib-r span,.ex.lt .ib-ft,.ex.lt .ib-empty{color:#64748b}
+.ex.lt .ib-f,.ex.lt .ib-ft{border-color:#e2e8f0}
+.ex.lt .ib-seg,.ex.lt .ib-chips button{background:#f1f5f9;color:#334155;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .ib-seg{box-shadow:none}
+.ex.lt .ib-seg button{color:#475569}
+.ex.lt .ib-seg button.on{background:#2563eb;color:#ffffff}
+.ex.lt .ib-chips button.on{box-shadow:inset 0 0 0 2px #2563eb;color:#0f172a}
+.ex.lt .ib-it:hover{background:#f8fafc}
+.ex.lt .ib-it.unread{background:#eff6ff}
+.ex.lt .ib-all{color:#2563eb}
+.tst-wrap{left:12px;top:12px;z-index:9;width:360px;display:flex;flex-direction:column;gap:8px}
+.tst{display:flex;align-items:flex-start;gap:10px;padding:10px 10px 10px 12px;border-radius:12px;background:rgba(25,25,25,.95);color:#f8fafc;box-shadow:0 10px 24px rgba(0,0,0,.45),inset 4px 0 0 var(--tc);backdrop-filter:blur(4px);animation:tstIn 260ms ease-out}
+@keyframes tstIn{from{transform:translateY(-8px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){.tst{animation:none}}
+.tst-ic{width:32px;height:32px;flex-shrink:0;border-radius:9999px;display:flex;align-items:center;justify-content:center}
+.tst-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.tst-tx b{font-size:14px;line-height:19px}
+.tst-tx span{font-size:12px;line-height:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tst-tx .m{color:#94a3b8}
+.tst-act{display:flex;align-items:center;gap:4px}
+.tst-go{height:28px;padding:0 10px;border:0;border-radius:8px;background:#2563eb;color:#ffffff;font:inherit;font-size:12px;font-weight:600}
+.tst-go:hover{background:#1d4ed8}
+.tst-x{width:28px;height:28px;border:0;border-radius:8px;background:transparent;color:#94a3b8;display:flex;align-items:center;justify-content:center;padding:0}
+.tst-x:hover{background:#404040;color:#ffffff}
+.tst-more{align-self:flex-start;height:30px;padding:0 12px;border:0;border-radius:9999px;background:rgba(25,25,25,.9);color:#93c5fd;font:inherit;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.ex.lt .tst{background:rgba(255,255,255,.97);color:#0f172a;box-shadow:0 10px 24px rgba(15,23,42,.18),inset 4px 0 0 var(--tc),0 0 0 1px #e2e8f0}
+.ex.lt .tst-tx .m{color:#64748b}
+.ex.lt .tst-x{color:#64748b}
+.ex.lt .tst-x:hover{background:#f1f5f9;color:#0f172a}
+.ex.lt .tst-more{background:#ffffff;color:#2563eb;box-shadow:0 0 0 1px #e2e8f0,0 4px 12px rgba(15,23,42,.12)}
+.mlg-ik{display:flex;gap:12px;margin:6px 6px 0;font-size:12px;color:#cbd5e1}
+.mlg-ik span{display:flex;align-items:center;gap:5px}
+.mlg-ik i{width:16px;height:16px;border-radius:9999px;border:1.5px solid #ffffff;display:flex;align-items:center;justify-content:center}
+.mlg-ik i svg{width:10px;height:10px;fill:none;stroke:#ffffff;stroke-width:3.2;stroke-linecap:round}
+.mlg-ik i.late{background:#eab308}.mlg-ik i.late svg{stroke:#1f2937}.mlg-ik i.ev{background:#dc2626}.mlg-ik i.gap{background:#7c3aed}
+.ex.lt .mlg-ik{color:#334155}
+/* larger text (readability pass) */
+.ex .ex-f,.ex .ex-f select,.ex .ex-f input,.ex .ex-ddb{font-size:16px}
+.ex .ex-h2{font-size:22px;line-height:30px}
+.ex .ex-h2n{font-size:15px}
+.ex .ex-right .ex-tab{font-size:15px}
+.ex .ex-th{font-size:15px;line-height:19px}
+.ex .ex-tr{height:90px}
+.ex .ex-tr .nm{top:8px;font-size:18px;line-height:25px}
+.ex .ex-tr .lc{top:34px;font-size:15px;line-height:21px}
+.ex .ex-tr .ag{top:57px;font-size:15px;line-height:21px}
+.ex .ex-tr .tm{top:34px;font-size:16px;line-height:22px}
+.ex .ex-tr .pl{top:33px;font-size:15px;line-height:24px}
+.ex .ex-tr .ex-gb{top:30px}
+.ex .ex-tip{font-size:14px;line-height:20px;padding:7px 12px}
+.ex .ex-pg{font-size:15px}
+.ex .mlg{width:300px}
+.ex .mlg-h{height:44px}
+.ex .mlg-h b{font-size:16px}
+.ex .mlg-r,.ex button.mlg-r{height:31px;font-size:15px}
+.ex .mlg-r .n{font-size:14px}
+.ex .mlg-sec{font-size:14px}
+.ex .mlg-sec span,.ex .mlg-f{font-size:12px}
+.ex .mlg-ik{font-size:13px}
+.ex .tst-tx b{font-size:16px;line-height:22px}
+.ex .tst-tx span{font-size:14px;line-height:20px}
+.ex .tst-go{font-size:14px;height:32px}
+.ex .ib-t1,.ex .ib-t3{font-size:13px;line-height:18px}
+.ex .ib-t2{font-size:16px;line-height:22px}
+.ex .ib-r b{font-size:16px}
+.ex .ib-r span{font-size:12px}
+.ex .ib-h h3{font-size:19px}
+.ex .ib-h span,.ex .ib-chips button,.ex .ib-seg button{font-size:13px}
+.ex .ly-tx b{font-size:15px}
+.ex .ly-tx span{font-size:13px}
+.ex .sp-info dt{font-size:14px}
+.ex .ex-ddl button{font-size:20px}
+
+/* scrollable period tabs */
+.ex-right .ex-tabs{left:41px;top:72px;width:499px;height:42px;display:flex;gap:4px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-behavior:smooth;padding:0}
+.ex-right .ex-tabs::-webkit-scrollbar{display:none}
+.ex-right.lg0 .ex-tabs{top:149px}
+.ex .ex-right .ex-tabs .ex-tab{position:static;flex:0 0 auto;width:auto;min-width:96px;padding:0 20px;height:42px;font-size:16px;white-space:nowrap}
+.ex .ib-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0}
+.ex .ib-chips::-webkit-scrollbar{display:none}
+.ex .ib-chips button{flex:0 0 auto;white-space:nowrap}
+.sp-bd.b-cat{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+
+/* criteria set switch (ThaiWater / ปภ.) */
+.mlg-cs{display:flex;gap:2px;padding:3px;margin:2px 0 4px;border-radius:10px;background:#262626}
+.mlg-cs button{flex:1;height:32px;border:0;border-radius:8px;background:transparent;color:#94a3b8;font:inherit;font-size:14px;font-weight:600}
+.mlg-cs button.on{background:#404040;color:#fafafa;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.mlg-cs button:focus-visible{outline:2px solid #60a5fa;outline-offset:1px}
+.mlg-cn{margin:0 0 6px;font-size:12px;line-height:16px;color:#94a3b8}
+.lt .mlg-cs{background:#f1f5f9}.lt .mlg-cs button{color:#64748b}.lt .mlg-cs button.on{background:#ffffff;color:#0f172a;box-shadow:0 1px 2px rgba(15,23,42,.12)}
+.lt .mlg-cn{color:#64748b}
+
+/* criteria switch in the filter row */
+.ex-crit{left:1342px;top:113px;height:44px;display:flex;align-items:center;gap:2px;padding:4px;border-radius:22px;background:#262626;box-shadow:inset 0 0 0 1px #404040}
+.ex-crit-l{padding:0 8px 0 12px;font-size:15px;color:#94a3b8}
+.ex-crit button{height:36px;padding:0 16px;border:0;border-radius:18px;background:transparent;color:#cbd5e1;font:inherit;font-size:15px;font-weight:600;white-space:nowrap}
+.ex-crit button:hover{color:#ffffff}
+.ex-crit button.on{background:#2563eb;color:#ffffff}
+.ex-crit button:focus-visible{outline:2px solid #93c5fd;outline-offset:1px}
+.ex.lt .ex-crit{background:#ffffff;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .ex-crit-l{color:#64748b}.ex.lt .ex-crit button{color:#334155}.ex.lt .ex-crit button.on{color:#ffffff}
+.mlg-list{max-height:286px;overflow-y:auto;scrollbar-width:thin}
+.mlg-cn{margin:6px 0 4px}
+/* toast v2 */
+.ex .tst-wrap{width:340px}
+.ex .tst{display:block;padding:10px 12px 12px 16px}
+.tst-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.tst-chip{padding:1px 9px;border-radius:9999px;font-size:13px;line-height:22px;font-weight:700}
+.tst-time{font-size:13px;color:#94a3b8}
+.ex .tst-top .tst-x{margin-left:auto;width:28px;height:28px}
+.tst-v{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.tst-v b{font-size:24px;line-height:28px;font-weight:700}
+.tst-v i{font-style:normal;font-size:14px;color:#cbd5e1}
+.tst-v > span{font-size:14px;color:#94a3b8}
+.tst-st{margin-top:4px;font-size:15px;line-height:21px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tst-m{font-size:13px;line-height:18px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex .tst .tst-go{margin-top:8px;width:100%;height:34px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.ex.lt .tst-time,.ex.lt .tst-m,.ex.lt .tst-v > span{color:#64748b}.ex.lt .tst-v i{color:#334155}
+
+/* toast v2 compact */
+.ex .tst{padding:8px 10px 10px 14px}
+.ex .tst .tst-top{margin-bottom:2px}
+.ex .tst .tst-v b{font-size:22px;line-height:26px}
+.ex .tst .tst-v > span{font-size:13px}
+.tst-row{display:flex;align-items:flex-end;gap:8px;margin-top:4px}
+.tst-who{flex:1;min-width:0}
+.ex .tst .tst-st{margin-top:0;font-size:15px;line-height:20px}
+.ex .tst .tst-go{margin-top:0;width:auto;height:30px;padding:0 8px 0 12px;font-size:13px;flex-shrink:0;gap:2px;border-radius:8px}
+
+/* criteria switch v2: label outside, equal segments */
+.ex .ex-crit{left:1342px;top:113px;height:44px;display:flex;align-items:center;gap:10px;padding:0;background:transparent;box-shadow:none;border-radius:0}
+.ex .ex-crit-l{padding:0;font-size:15px;color:#94a3b8;white-space:nowrap}
+.ex-crit-t{display:flex;gap:2px;height:44px;padding:4px;border-radius:12px;background:#262626;box-shadow:inset 0 0 0 1px #404040}
+.ex .ex-crit-t button{min-width:112px;height:36px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:#94a3b8;font:inherit;font-size:15px;font-weight:500;white-space:nowrap;transition:background 150ms ease,color 150ms ease}
+.ex .ex-crit-t button:hover{color:#f8fafc;background:rgba(255,255,255,.05)}
+.ex .ex-crit-t button.on{background:#2563eb;color:#ffffff;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.ex .ex-crit-t button:focus-visible{outline:2px solid #93c5fd;outline-offset:1px}
+.ex.lt .ex-crit{background:transparent;box-shadow:none}
+.ex.lt .ex-crit-l{color:#64748b}
+.ex.lt .ex-crit-t{background:#f1f5f9;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .ex-crit-t button{color:#475569}
+.ex.lt .ex-crit-t button:hover{color:#0f172a;background:rgba(15,23,42,.04)}
+.ex.lt .ex-crit-t button.on{background:#2563eb;color:#ffffff;box-shadow:0 1px 2px rgba(15,23,42,.15)}
+@media (prefers-reduced-motion: reduce){.ex .ex-crit-t button{transition:none}}
+
+/* criteria switch: far right of the filter row (aligned with the right panel edge) */
+.ex .ex-crit{left:1602px;justify-content:flex-end}
+.ex-fit .ex .ex-crit,.ex-fit .ex-crit{left:calc(1602px + var(--dw,0px))}
+.ex .ex-out{z-index:12}
+
+/* popup with the hourly rain chart: open higher so nothing is cut off */
+.sp.one.hr{top:150px;max-height:910px}
+.sp.one.hr .sp-b{overflow-y:auto}
+
+/* single popup: photo + station info in the left column, readings + 24 h history chart on the right */
+.sp-left{width:430px;flex-shrink:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.sp .sp-left .sp-ph1{width:100%;height:250px;min-height:0;align-self:auto}
+.sp .sp-left .sp-info1{padding:12px 14px}
+.sp .sp-left .sp-info1 dl{gap:7px}
+.sp .sp-left .sp-info1 dt{width:128px;white-space:normal;font-size:13px;line-height:18px;padding-right:8px}
+.sp .sp-left .sp-info1 dd{font-size:14px;line-height:20px;flex:1}
+.sp .sp-left .sp-info1 .sp-acts{margin-top:12px}
+.ex.lt .sp .sp-left .sp-info1{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+
+/* popup: history chart preview (same controls as ข้อมูลย้อนหลัง) */
+.sp .sp-mini{flex:none;padding:12px 12px 8px}
+.sp-mini-h{display:flex;align-items:center;margin-bottom:8px}
+.sp-mini-h h3{margin:0;font-size:16px;line-height:22px;font-weight:600}
+.sp .sp-mini .hx-tools{margin-top:10px;height:auto}
+.sp .sp-mini .hx-rng button{padding:0 9px}
+.sp .sp-mini .hx-chart{margin-top:8px}
+.ex.lt .sp .sp-mini{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+
+/* ===== larger text in popups, modals, inbox (v2) ===== */
+/* inbox */
+.ex .ib{width:500px;left:calc(1649px + var(--dw,0px) - 500px)}
+.ex .ib-h h3{font-size:20px;line-height:28px}
+.ex .ib-h > div > span{font-size:14px;line-height:20px}
+.ex .ib-all{font-size:15px;height:34px}
+.ex .ib-seg button{font-size:15px;height:34px;padding:0 16px}
+.ex .ib-chips button{font-size:14px;height:32px}
+.ex .ib-t1{font-size:14px;line-height:20px}
+.ex .ib-t2{font-size:17px;line-height:24px}
+.ex .ib-t3{font-size:14px;line-height:20px}
+.ex .ib-r > b{font-size:17px;line-height:24px}
+.ex .ib-r > span{font-size:13px}
+.ex .ib-ft{font-size:13px}
+/* station popup */
+.ex .sp.one{width:1080px;left:calc(50% - 540px)}
+.ex .sp-left{width:460px}
+.ex .sp-bd{font-size:15px;line-height:22px;padding:2px 9px}
+.ex .sp-ttl h2{font-size:20px;line-height:28px}
+.ex .sp-ttl p{font-size:16px}
+.ex .sp-sel select{font-size:15px}
+.ex .sp-ban{font-size:15px;line-height:21px}
+.ex .sp-ban b{font-size:17px;line-height:24px}
+.ex .sp-h3{font-size:20px;line-height:28px}
+.ex .sp-h3 > span{font-size:15px}
+.ex .sp-all{font-size:16px}
+.ex .sp-on{font-size:13px}
+.ex .sp .sp-left .sp-info1 dt{width:138px;font-size:15px;line-height:21px}
+.ex .sp .sp-left .sp-info1 dd{font-size:16px;line-height:22px}
+.ex .sp-info dt{font-size:15px}
+.ex .sp-info dd{font-size:17px;line-height:24px}
+.ex .sp-go{font-size:17px}
+.ex .sp-mini-h h3{font-size:18px;line-height:26px}
+.ex .hx-gr button{font-size:16px;height:40px}
+.ex .hx-rng button{font-size:14px;height:32px}
+.ex .hx-cap{font-size:14px}
+.ex .hx-lg{font-size:15px}
+/* history modal */
+.ex .hx-h p{font-size:17px}
+.ex .hx-sens button{font-size:15px;height:38px}
+.ex .hx-card h3,.ex .hx-r h3{font-size:18px;line-height:26px}
+.ex .hx-tb th{font-size:15px}
+.ex .hx-tb td{font-size:16px}
+.ex .hx-tb td b{font-size:16px;line-height:22px}
+.ex .hx-tb td span{font-size:14px;line-height:20px}
+.ex .hx-pg button{font-size:15px;min-width:34px;height:34px}
+
+.ex .hx-sens button{font-size:15px;padding:0 12px}
+.ex .sp:not(.one){top:110px;height:auto;max-height:900px;width:1100px;left:calc(50% - 550px)}
+.ex .sp:not(.one) .sp-b{overflow-y:auto}
+.ex .sp-info dt{width:200px;padding-right:10px;white-space:normal}
+.ex .sp .sp-left .sp-info1 dt{width:138px}
+
+/* ThaiWater pins: same round pin as ours, droplet glyph */
+.ex-map .ex-pin.twd .pm-ic{fill:currentColor;stroke:none}
+.ex-map .ex-pin.twd .pm-i{width:13px;height:13px}
+.ly-sw.twd{border-radius:9999px;background:#2c74d4;display:flex;align-items:center;justify-content:center;color:#ffffff}
+.ly-sw.twd svg{width:12px;height:12px;fill:currentColor}
+.tw-band{align-self:flex-start;margin:2px 0 4px;padding:1px 9px;border-radius:9999px;font-size:13px;line-height:20px;font-weight:600}
+
+.mlg-src{display:flex;gap:14px;padding:6px 6px 2px;font-size:13px;color:#cbd5e1}
+.mlg-src span{display:flex;align-items:center;gap:6px}
+.mlg-src i{width:20px;height:20px;border-radius:9999px;background:#525252;border:1.5px solid #ffffff;display:flex;align-items:center;justify-content:center;color:#ffffff}
+.mlg-src svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.mlg-src i.twd svg{fill:currentColor;stroke:none}
+.ex.lt .mlg-src{color:#334155}.ex.lt .mlg-src i{background:#64748b}
+
+/* one icon colour on every pin: white glyph + thin dark halo so it reads on pale colours too */
+.ex-map .ex-pin{--pi:#ffffff}
+.ex-map .ex-pin .pm-i{filter:drop-shadow(0 0 .8px rgba(15,23,42,.9)) drop-shadow(0 0 .4px rgba(15,23,42,.7))}
+
+/* station switcher (searchable) */
+.sp-ss{position:relative;flex-shrink:0}
+.sp-ss-b{width:260px;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;border:0;border-radius:8px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#cbd5e1;font:inherit;font-size:15px;cursor:pointer}
+.sp-ss-b span{flex:1;text-align:left}
+.sp-ss-b:hover,.sp-ss-b[aria-expanded="true"]{box-shadow:inset 0 0 0 1px #2563eb}
+.sp-ss-pop{position:absolute;right:0;top:52px;z-index:30;width:460px;padding:10px;border-radius:12px;background:#1f1f1f;border:1px solid #404040;box-shadow:0 20px 40px -8px rgba(0,0,0,.7);display:flex;flex-direction:column;gap:8px}
+.sp-ss-in{position:relative;display:flex;align-items:center;gap:8px;height:44px;padding:0 10px 0 12px;border-radius:8px;background:#262626;box-shadow:inset 0 0 0 2px #2563eb;color:#94a3b8}
+.sp-ss-in input{flex:1;min-width:0;height:100%;border:0;background:transparent;color:#f8fafc;font:inherit;font-size:16px;outline:none}
+.sp-ss-clr{width:26px;height:26px;border:0;border-radius:6px;background:#404040;color:#e2e8f0;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.sp-ss-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px;font-size:13px;color:#94a3b8}
+.sp-ss-sort{display:flex;gap:2px;padding:3px;border-radius:9999px;background:#262626}
+.sp-ss-sort button{height:26px;padding:0 10px;border:0;border-radius:9999px;background:transparent;color:#94a3b8;font:inherit;font-size:13px;cursor:pointer}
+.sp-ss-sort button.on{background:#404040;color:#ffffff;font-weight:600}
+.sp-ss-list{list-style:none;margin:0;padding:0;max-height:340px;overflow-y:auto;scrollbar-width:thin}
+.sp-ss-list li{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer}
+.sp-ss-list li.on{background:rgba(37,99,235,.16);box-shadow:inset 3px 0 0 #2563eb}
+.sp-ss-dot{width:12px;height:12px;flex-shrink:0;border-radius:9999px;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.sp-ss-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-ss-tx > b{font-size:15px;line-height:21px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-ss-tx > span{font-size:13px;line-height:18px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-ss-r{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0}
+.sp-ss-r > b{font-size:15px;line-height:21px}
+.sp-ss-r > span{font-size:12px;color:#94a3b8}
+.sp-ss-none{margin:16px 0;text-align:center;font-size:14px;color:#94a3b8}
+.sp-ss-hint{margin:0;padding:2px 4px 0;font-size:12px;color:#737373;border-top:1px solid #404040;padding-top:8px}
+.ex.lt .sp-ss-b{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#334155}
+.ex.lt .sp-ss-pop{background:#ffffff;border-color:#e2e8f0;box-shadow:0 20px 40px -8px rgba(15,23,42,.25)}
+.ex.lt .sp-ss-in{background:#f8fafc;color:#64748b}.ex.lt .sp-ss-in input{color:#0f172a}
+.ex.lt .sp-ss-clr{background:#e2e8f0;color:#334155}
+.ex.lt .sp-ss-bar,.ex.lt .sp-ss-tx > span,.ex.lt .sp-ss-r > span,.ex.lt .sp-ss-none{color:#64748b}
+.ex.lt .sp-ss-sort{background:#f1f5f9}.ex.lt .sp-ss-sort button{color:#475569}.ex.lt .sp-ss-sort button.on{background:#ffffff;color:#0f172a;box-shadow:0 1px 2px rgba(15,23,42,.12)}
+.ex.lt .sp-ss-list li.on{background:#eff6ff}
+.ex.lt .sp-ss-hint{color:#94a3b8;border-top-color:#e2e8f0}
+.ex.lt .sp-ss-dot{box-shadow:0 0 0 2px #ffffff,0 0 0 3px #cbd5e1}
+
+.ex .sp-ss-in input:focus,.ex .sp-ss-in input:focus-visible{outline:none;box-shadow:none}
+/* long station names: wrap to 2 lines instead of "…" */
+.ex .sp-h{height:auto;min-height:90px;padding-bottom:14px}
+.ex .sp-ttl{flex:1;min-width:0}
+.ex .sp-ttl h2{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ex .sp-h .sp-ss{margin-right:56px}
+
+/* clear filters */
+.ex-clr{left:1270px;top:113px;height:44px;padding:0 16px;border:0;border-radius:22px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#e2e8f0;font:inherit;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+.ex-clr:hover:not(:disabled){background:#404040}
+.ex-clr:disabled{opacity:.45;cursor:default}
+.ex-clr b{min-width:22px;height:22px;padding:0 6px;border-radius:9999px;background:#2563eb;color:#ffffff;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ex.lt .ex-clr{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#0f172a}
+.ex.lt .ex-clr:hover:not(:disabled){background:#f1f5f9}
+.ex-f.dis{opacity:.5}
+.ex-f.dis select{cursor:not-allowed}
+/* zoom */
+.ex-zoom{right:14px;bottom:128px;z-index:8;display:flex;flex-direction:column;align-items:center;border-radius:12px;background:#ffffff;box-shadow:0 4px 14px rgba(0,0,0,.35);overflow:hidden}
+.ex-zoom button{width:44px;height:44px;border:0;background:transparent;color:#1f2937;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.ex-zoom button:hover:not(:disabled){background:#f1f5f9}
+.ex-zoom button:disabled{color:#cbd5e1;cursor:default}
+.ex-zoom button + button,.ex-zl + button{border-top:1px solid #e2e8f0}
+.ex-zl{font-size:13px;font-weight:700;color:#475569;padding:2px 0;border-top:1px solid #e2e8f0;width:100%;text-align:center}
+/* cluster marker: ring = share of each level, fill = most severe member, number = stations */
+.ex-map .ex-pin.ex-cl{width:var(--d);height:var(--d);margin:calc(var(--d) / -2) 0 0 calc(var(--d) / -2);border:0;padding:4px;background:var(--ring);z-index:5}
+.ex-map .ex-pin.ex-cl.red{width:var(--d);height:var(--d);margin:calc(var(--d) / -2) 0 0 calc(var(--d) / -2)}
+.ex-cl .cl-in{width:100%;height:100%;border-radius:9999px;background:var(--pc);border:2px solid #ffffff;display:flex;align-items:center;justify-content:center;color:#ffffff;font-size:15px;font-weight:700;line-height:1;text-shadow:0 0 2px rgba(15,23,42,.9),0 0 1px rgba(15,23,42,.9)}
+.ex-cl .cl-tw{position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;border-radius:9999px;background:#2c74d4;border:1.5px solid #ffffff;display:flex;align-items:center;justify-content:center}
+.ex-cl .cl-tw svg{width:9px;height:9px;fill:#ffffff}
+.ex-map .ex-pin.ex-cl:hover,.ex-map .ex-pin.ex-cl:focus-visible{transform:scale(1.1)}
+/* toast auto-dismiss progress (8 s, pauses on hover) */
+.ex .tst{position:relative;overflow:hidden}
+.ex .tst::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--tc);opacity:.8;transform-origin:left;animation:tstLife 8s linear forwards}
+.ex .tst:hover::after{animation-play-state:paused}
+@keyframes tstLife{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion: reduce){.ex .tst::after{animation:none;display:none}}
+
+/* full chart modal v2: one column, chart first */
+.ex .hx.hx2{left:calc(50% - 560px);top:84px;width:1120px;height:auto;max-height:960px}
+.ex .hx2 .hx-h{height:auto;min-height:84px;padding:14px 20px 14px 24px}
+.ex .hx2 .hx-h h2{font-size:24px;line-height:32px;margin:0}
+.hx2-b{display:flex;flex-direction:column;gap:14px;padding:18px 24px 18px;overflow-y:auto}
+.ex .hx2 .hx-sens{display:flex;gap:8px;flex-wrap:wrap}
+.ex .hx2 .hx-sens button{height:40px;font-size:16px;padding:0 16px}
+.hx2-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hx2-seg{display:flex;gap:2px;padding:4px;border-radius:12px;background:#262626}
+.hx2-seg button{height:38px;padding:0 20px;border:0;border-radius:9px;background:transparent;color:#94a3b8;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+.hx2-seg button.on{background:#2563eb;color:#ffffff}
+.ex .hx2 .hx-rng button{height:34px;font-size:15px;padding:0 12px}
+.hx2-dl{height:40px;padding:0 16px;border:0;border-radius:10px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#e2e8f0;font:inherit;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer}
+.hx2-dl:hover{background:#404040}
+.hx2-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.hx2-st{display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-radius:12px;background:#262626}
+.hx2-st > span{font-size:15px;color:#94a3b8}
+.hx2-st > b{font-size:24px;line-height:32px;font-weight:700}
+.hx2-st > em{font-style:normal;font-size:14px;color:#94a3b8}
+.hx2-chart{border-radius:12px;background:#262626;padding:12px 0 4px}
+.hx2-chart svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.ex .hx2 .hx-lg{font-size:15px;margin:0}
+.ex.lt .hx2-seg{background:#f1f5f9}.ex.lt .hx2-seg button{color:#475569}.ex.lt .hx2-seg button.on{background:#2563eb;color:#ffffff}
+.ex.lt .hx2-dl{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#0f172a}.ex.lt .hx2-dl:hover{background:#f1f5f9}
+.ex.lt .hx2-st,.ex.lt .hx2-chart{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .hx2-st > span,.ex.lt .hx2-st > em{color:#64748b}
+
+/* ===== senior-friendly text (v3): nothing under 15px, body 17–18px, key numbers 20px+ ===== */
+.ex .ex-un{font-size:16px}.ex .ex-ur{font-size:14px;line-height:18px}
+.ex .ex-f,.ex .ex-f select,.ex .ex-f input,.ex .ex-ddb{font-size:18px}
+.ex .ex-clr{font-size:17px}
+.ex .ex-crit-l{font-size:16px}.ex .ex-crit-t button{font-size:17px}
+.ex .ex-h2{font-size:24px}.ex .ex-h2n{font-size:17px}
+.ex .ex-right .ex-tabs .ex-tab{font-size:18px}
+.ex .ex-th,.ex .ex-th span{font-size:16px}
+.ex .ex-tr{height:104px}
+.ex .ex-tr .nm{top:8px;font-size:20px;line-height:28px}
+.ex .ex-tr .lc{top:38px;font-size:17px;line-height:24px}
+.ex .ex-tr .ag{top:64px;font-size:16px;line-height:23px}
+.ex .ex-tr .tm{top:38px;font-size:18px;line-height:24px}
+.ex .ex-tr .pl{top:37px;font-size:17px;line-height:27px;padding:0 8px}
+.ex .ex-tr .ex-gb{top:36px;width:34px;height:34px}
+.ex .ex-pg,.ex .ex-pg *{font-size:16px}
+.ex .ex-pb{min-width:36px;height:36px}
+/* legend */
+.ex .mlg{width:330px}
+.ex .mlg-h b{font-size:18px}
+.ex .mlg-cn{font-size:15px;line-height:20px}
+.ex .mlg-r .t{font-size:17px}.ex .mlg-r .n{font-size:16px}
+.ex .mlg-sec{font-size:16px}.ex .mlg-sec > span{font-size:15px}
+.ex .mlg-src{font-size:15px}.ex .mlg-ik,.ex .mlg-ik span{font-size:15px}
+.ex .mlg-f{font-size:15px;line-height:20px}
+/* toasts */
+.ex .tst-wrap{width:380px}
+.ex .tst-chip{font-size:15px;line-height:24px}
+.ex .tst-time{font-size:15px}
+.ex .tst .tst-v b{font-size:26px;line-height:30px}
+.ex .tst .tst-v > span,.ex .tst-v i{font-size:16px}
+.ex .tst .tst-st{font-size:18px;line-height:25px}
+.ex .tst-m{font-size:15px;line-height:21px}
+.ex .tst .tst-go{font-size:16px;height:36px}
+.ex .tst-more{font-size:15px;height:36px}
+.ex .ex-zl{font-size:15px}
+.ex .ex-tip{font-size:16px}
+/* inbox */
+.ex .ib{width:540px;left:calc(1649px + var(--dw,0px) - 540px)}
+.ex .ib-h h3{font-size:22px}.ex .ib-h > div > span{font-size:16px;line-height:22px}
+.ex .ib-all{font-size:16px}.ex .ib-seg button{font-size:16px}.ex .ib-chips button{font-size:15px;height:34px}
+.ex .ib-t1{font-size:15px;line-height:21px}.ex .ib-t2{font-size:19px;line-height:26px}.ex .ib-t3{font-size:15px;line-height:21px}
+.ex .ib-r > b{font-size:19px}.ex .ib-r > span{font-size:15px}.ex .ib-ft{font-size:15px}
+/* popup */
+.ex .sp-bd{font-size:16px}
+.ex .sp-ttl h2{font-size:22px;line-height:30px}.ex .sp-ttl p{font-size:17px}
+.ex .sp-ss-b{font-size:17px}
+.ex .sp-ss-in input{font-size:18px}.ex .sp-ss-bar{font-size:15px}.ex .sp-ss-sort button{font-size:15px;height:30px}
+.ex .sp-ss-tx > b{font-size:17px;line-height:24px}.ex .sp-ss-tx > span{font-size:15px;line-height:21px}
+.ex .sp-ss-r > b{font-size:17px}.ex .sp-ss-r > span{font-size:15px}.ex .sp-ss-hint{font-size:15px}
+.ex .sp-ban{font-size:16px;line-height:22px}.ex .sp-ban b{font-size:18px}
+.ex .sp-h3{font-size:21px}.ex .sp-h3 > span{font-size:16px}.ex .sp-all{font-size:17px}
+.ex .sp-on{font-size:15px}
+.ex .sp .sp-left .sp-info1 dt{width:146px;font-size:16px;line-height:22px}
+.ex .sp .sp-left .sp-info1 dd{font-size:17px;line-height:24px}
+.ex .sp-info dt{font-size:16px}.ex .sp-info dd{font-size:18px;line-height:25px}
+.ex .sp-go{font-size:18px}
+.ex .sp-mini-h h3{font-size:19px}
+.ex .hx-gr button{font-size:17px}.ex .hx-rng button{font-size:15px}.ex .hx-cap{font-size:15px}.ex .hx-lg{font-size:16px}
+/* full chart */
+.ex .hx2 .hx-h p{font-size:18px}
+.ex .hx2 .hx-sens button{font-size:17px;height:42px}
+.ex .hx2-seg button{font-size:17px}
+.ex .hx2 .hx-rng button{font-size:16px;height:36px}
+.ex .hx2-dl{font-size:16px}
+.ex .hx2-st > span{font-size:16px}.ex .hx2-st > b{font-size:26px;line-height:34px}.ex .hx2-st > em{font-size:15px}
+/* station card (ThaiWater) */
+.ex .tw-n{font-size:18px;line-height:25px}.ex .tw-l,.ex .tw-t{font-size:15px;line-height:21px}.ex .tw-src{font-size:14px}.ex .tw-band{font-size:15px}.ex .tw-v > span{font-size:15px}
+.ex .tw-card{width:300px}
+/* layer + basemap popovers */
+.ex .ly-pop{width:380px}.ex .ly-pop h4{font-size:18px}.ex .ly-tx b{font-size:17px;line-height:24px}.ex .ly-tx span{font-size:15px;line-height:21px}
+
+.ex .ex-bell-n{font-size:13px;min-width:22px;height:22px}
+.ex .sp-ban-who{font-size:15px}
+.ex .sp-h3 span{font-size:16px}
+.ex .sp-all,.ex .sp-all *{font-size:17px}
+
+.ex .ex-un{font-size:15px;white-space:nowrap}.ex .ex-ur{font-size:13px;white-space:nowrap}
+.ex .ex-tr .nm{width:360px}
+.ex .ex-tr .tm{left:auto;right:118px}
+
+/* clean clusters: one solid colour (most severe member), no rim, soft halo — no multi-colour ring */
+.ex-map .ex-pin.ex-cl{padding:0;border:0;background:var(--pc);box-shadow:0 0 0 5px color-mix(in srgb,var(--pc) 28%,transparent),0 2px 8px rgba(0,0,0,.4)}
+.ex-cl .cl-in{border:0;background:transparent;font-size:16px;font-weight:700}
+.ex-map .ex-pin.ex-cl.w3,.ex-map .ex-pin.ex-cl.w4{animation:none}
+/* clean pins: softer shadow, slightly lighter wave rings */
+.ex-map .ex-pin{box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.ex-pin.wave::before,.ex-pin.wave::after{opacity:0}
+
+/* popup header: badge above the title (stacked), back button in "all values" view */
+.ex .sp-ttl{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.ex .sp-ttl .sp-bd{margin-top:0}
+.ex .sp-h{align-items:flex-start;padding-top:18px}
+.ex .sp-back{flex-shrink:0;width:44px;height:44px;margin-top:6px}
+.ex .sp-back{background:#404040;color:#ffffff}.ex .sp-back:hover{background:#525252}
+.ex.lt .sp-back{background:#f1f5f9;color:#0f172a;box-shadow:inset 0 0 0 1px #e2e8f0}.ex.lt .sp-back:hover{background:#e2e8f0}
+
+.hx-pdf{height:34px;padding:0 12px;border:0;border-radius:8px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#e2e8f0;font:inherit;font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer}
+.hx-pdf:hover{background:#404040}
+.ex.lt .hx-pdf{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#0f172a}.ex.lt .hx-pdf:hover{background:#f1f5f9}
+
+/* station switcher: compact */
+.ex .sp-ss-pop{width:420px;padding:8px;gap:6px;top:50px}
+.ex .sp-ss-in{height:40px}
+.ex .sp-ss-in input{font-size:16px}
+.ex .sp-ss-bar{font-size:14px;padding:0 4px}
+.ex .sp-ss-sort{padding:2px}
+.ex .sp-ss-sort button{height:26px;font-size:14px;padding:0 10px}
+.ex .sp-ss-list{max-height:312px}
+.ex .sp-ss-list li{padding:6px 10px;gap:12px;border-radius:6px}
+.ex .sp-ss-tx > b{font-size:16px;line-height:22px}
+.ex .sp-ss-tx > span{font-size:14px;line-height:19px}
+.ex .sp-ss-r > b{font-size:16px;line-height:22px}
+.ex .sp-ss-r > span{font-size:13px;line-height:18px}
+
+/* toast v3: 3 short lines, whole card opens the station */
+.ex .tst.tst3{display:flex;align-items:flex-start;gap:4px;padding:0;border-radius:12px}
+.tst3 .tst-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding:12px 4px 14px 16px;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;border-radius:12px}
+.tst3 .tst-main:focus-visible{outline:2px solid #60a5fa;outline-offset:-2px}
+.ex .tst3 .tst-top{display:flex;align-items:center;gap:8px;margin:0}
+.ex .tst3 .tst-chip{font-size:14px;line-height:22px;padding:0 10px}
+.ex .tst3 .tst-time{font-size:14px;color:#94a3b8}
+.ex .tst3 .tst-st{font-size:18px;line-height:24px;font-weight:700;margin:2px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tst3 .tst-row3{display:flex;align-items:baseline;gap:6px;min-width:0}
+.ex .tst3 .tst-row3 > b{font-size:22px;line-height:26px;font-weight:700}
+.ex .tst3 .tst-row3 > i{font-style:normal;font-size:15px;color:#cbd5e1}
+.ex .tst3 .tst-row3 > .tst-m{font-size:15px;color:#94a3b8;margin-left:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ex .tst3 .tst-link{margin-left:auto;padding-right:8px;font-size:15px;font-weight:600;color:#60a5fa;white-space:nowrap}
+.tst3 .tst-main:hover .tst-link{text-decoration:underline}
+.ex .tst3 .tst-x{flex-shrink:0;margin:8px 8px 0 0;width:30px;height:30px}
+.ex.lt .tst3 .tst-time,.ex.lt .tst3 .tst-row3 > .tst-m{color:#64748b}.ex.lt .tst3 .tst-row3 > i{color:#334155}.ex.lt .tst3 .tst-link{color:#2563eb}
+
+.ex .tst3 .tst-loc{font-size:15px;line-height:21px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:-2px}
+.ex.lt .tst3 .tst-loc{color:#64748b}
+
+/* station popup v4: values + chart first, station info collapsible on the side, actions in the header */
+.ex .sp.one{width:1080px;left:calc(50% - 540px)}
+.sp-b2{flex-direction:row !important;gap:16px;align-items:flex-start}
+.sp-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.sp-mh{display:flex;align-items:center;gap:12px}
+.sp-mh h3{flex:1;margin:0;font-size:20px;line-height:28px;font-weight:700}
+.sp-mh h3 span{margin-left:8px;font-size:15px;font-weight:400;color:#94a3b8}
+.sp-sec{height:38px;padding:0 14px;border:0;border-radius:10px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#e2e8f0;font:inherit;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.sp-sec:hover{background:#404040}
+.sp-sec b{min-width:22px;height:22px;padding:0 6px;border-radius:9999px;background:#404040;color:#ffffff;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.sp-sec:focus-visible,.sp-hb:focus-visible,.sp-inf2-h:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .sp .sp-mini{padding:12px 14px 8px}
+.ex .sp-mini-h{margin-bottom:10px;align-items:center}
+.ex .sp-mini-h h3{flex:1}
+.sp-side{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+.ex .sp .sp-side .sp-ph1{width:100%;height:200px;min-height:0;align-self:auto}
+.sp-inf2{border-radius:12px;background:#2a2a2a;overflow:hidden}
+.sp-inf2-h{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.sp-inf2-h > span{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-inf2-h b{font-size:16px;line-height:22px}
+.sp-inf2-h em{font-style:normal;font-size:14px;line-height:20px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-inf2-h:hover{background:rgba(255,255,255,.04)}
+.sp-cv{flex-shrink:0;color:#94a3b8}
+.sp-inf2 dl{margin:0;padding:4px 14px 14px;display:flex;flex-direction:column;gap:8px;border-top:1px solid #404040}
+.sp-inf2 dl div{display:flex;flex-direction:column;padding-top:6px}
+.sp-inf2 dt{font-size:14px;line-height:19px;color:#94a3b8}
+.sp-inf2 dd{margin:0;font-size:15px;line-height:21px;word-break:break-word}
+/* header actions */
+.sp-hact{display:flex;gap:8px;flex-shrink:0}
+.sp-hb{width:44px;height:44px;border:0;border-radius:10px;background:#262626;box-shadow:inset 0 0 0 1px #404040;color:#e2e8f0;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.sp-hb:hover{background:#404040}
+.sp-qrw{position:relative}
+.ex .sp-qrw .sp-qr{left:auto;right:0;bottom:auto;top:52px;z-index:40}
+.ex .sp-h .sp-ss{margin-right:0}
+.ex .sp-h .sp-hact{margin-right:56px}
+.ex.lt .sp-sec,.ex.lt .sp-hb{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#0f172a}
+.ex.lt .sp-sec:hover,.ex.lt .sp-hb:hover{background:#f1f5f9}
+.ex.lt .sp-sec b{background:#e2e8f0;color:#0f172a}
+.ex.lt .sp-mh h3 span,.ex.lt .sp-inf2-h em,.ex.lt .sp-inf2 dt,.ex.lt .sp-cv{color:#64748b}
+.ex.lt .sp-inf2{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .sp-inf2 dl{border-top-color:#e2e8f0}
+.ex.lt .sp-inf2-h:hover{background:#f1f5f9}
+
+/* station info v5: contact first (always visible), coordinates behind a disclosure */
+.sp-inf3{border-radius:12px;background:#2a2a2a;padding:14px;display:flex;flex-direction:column;gap:12px}
+.sp-who{display:flex;align-items:center;gap:12px}
+.sp-av{width:40px;height:40px;flex-shrink:0;border-radius:9999px;background:#404040;color:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
+.sp-whot{min-width:0;display:flex;flex-direction:column}
+.sp-whot em{font-style:normal;font-size:14px;line-height:20px;color:#94a3b8}
+.sp-whot b{font-size:17px;line-height:24px}
+.sp-call{height:44px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;background:#16a34a;color:#ffffff;text-decoration:none;font-size:16px;font-weight:700}
+.sp-call:hover{background:#15803d}
+.sp-call:focus-visible,.sp-cp:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.sp-kv{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:12px;border-top:1px solid #404040}
+.sp-kv div{min-width:0;display:flex;flex-direction:column}
+.sp-kv dt{font-size:14px;line-height:20px;color:#94a3b8}
+.sp-kv dd{margin:0;font-size:16px;line-height:22px;font-weight:600;overflow-wrap:anywhere}
+.ex .sp-geo-h{padding:10px 0 0;border-top:1px solid #404040;border-radius:0;gap:8px;color:inherit}
+.ex .sp-geo-h:hover{background:transparent}
+.sp-geo-h > svg:first-child{color:#94a3b8;flex-shrink:0}
+.sp-geo-h b{font-size:16px}
+.sp-geo{display:flex;flex-direction:column;gap:10px}
+.sp-geo-r{display:flex;align-items:center;gap:8px}
+.sp-geo-r > span{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-geo-r em{font-style:normal;font-size:14px;line-height:20px;color:#94a3b8}
+.sp-geo-r b{font-size:15px;line-height:21px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.sp-cp{height:36px;padding:0 10px;border:0;border-radius:8px;background:#404040;color:#e2e8f0;font:inherit;font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0}
+.sp-cp:hover{background:#525252}
+.ex.lt .sp-inf3{background:#f8fafc;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .sp-av{background:#e2e8f0;color:#334155}
+.ex.lt .sp-whot em,.ex.lt .sp-kv dt,.ex.lt .sp-geo-r em,.ex.lt .sp-geo-h > svg:first-child{color:#64748b}
+.ex.lt .sp-kv,.ex.lt .sp-geo-h{border-top-color:#e2e8f0}
+.ex.lt .sp-cp{background:#e2e8f0;color:#0f172a}.ex.lt .sp-cp:hover{background:#cbd5e1}
+.ex.lt .sp-call{background:#15803d}
+
+/* call = secondary action: tinted, not solid, so values/chart stay the focus */
+.ex .sp-call{background:rgba(34,197,94,.12);box-shadow:inset 0 0 0 1px rgba(34,197,94,.55);color:#4ade80}
+.ex .sp-call:hover{background:rgba(34,197,94,.2)}
+.ex.lt .sp-call{background:#f0fdf4;box-shadow:inset 0 0 0 1px #86efac;color:#15803d}
+.ex.lt .sp-call:hover{background:#dcfce7}
+.sp-kv div.w{grid-column:1 / -1}
+.sp-dst{font-weight:500 !important;font-size:15px !important}
+/* modals open at the centre of the screen (vertical + horizontal), whatever their height */
+.ex .sp,.ex .sp.one,.ex .sp.one.hr,.ex .sp:not(.one),.ex .hx,.ex .hx.hx2{top:50% !important;translate:0 -50%}
+.mlg-ds.gap .mlg-sw{background:#7fc63d;position:relative}
+.mlg-ds.gap .mlg-sw::after{content:"";position:absolute;right:-6px;top:-6px;width:9px;height:9px;border-radius:9999px;background:#7c3aed;border:1.5px solid #ffffff}
+/* long source name (สถาบันสารสนเทศทรัพยากรน้ำ): criteria switch anchored to the right edge; legend source keys wrap */
+.ex .ex-crit,.ex-fit .ex .ex-crit,.ex-fit .ex-crit{left:auto;right:24px}
+.ex .mlg-src{flex-wrap:wrap;row-gap:6px}
+.ex .mlg-src span{white-space:nowrap}
+/* list row: status dot sits before the station name (same colour logic as the map pins) */
+.ex-tr .gp-d{display:inline-block;width:10px;height:10px;margin-right:8px;border-radius:9999px;vertical-align:middle;position:relative;top:-2px;box-shadow:0 0 0 2px #262626}
+.ex-tr .gp-d.none{display:none}
+.ex-tr .gp-gap{background:#a78bfa}
+.ex-tr .gp-sil{background:#a1a1aa}
+.ex-tr .gp-late{background:#eab308}
+.lt .ex-tr .gp-gap{background:#7c3aed;box-shadow:0 0 0 2px #ffffff}
+.lt .ex-tr .gp-sil{background:#71717a;box-shadow:0 0 0 2px #ffffff}
+.lt .ex-tr .gp-late{background:#ca8a04;box-shadow:0 0 0 2px #ffffff}
+.sp-ag{margin:2px 0 0;font-size:13px;color:#94a3b8}
+.sp-ext .sp-main{flex:1;min-width:0}
+/* station popup: zoom to station on the map */
+.sp-loc{flex-shrink:0;height:40px;padding:0 14px;border-radius:8px;border:1px solid #404040;background:#262626;color:#e2e8f0;display:flex;align-items:center;gap:8px;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.sp-loc:hover{background:#333333;border-color:#525252}
+.sp-loc:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.sp-ext .sp-loc{margin-right:56px}
+.ex.lt .sp-loc{background:#ffffff;border-color:#cbd5e1;color:#0f172a}
+.ex.lt .sp-loc:hover{background:#eff6ff;border-color:#93c5fd}
+.ex.lt .sp-loc:focus-visible{outline-color:#3b82f6}
+/* station list: search + agency filter */
+.ex-right .ex-lf{left:17px;top:124px;width:551px;height:44px;display:flex;gap:8px}
+.ex .ex-right .ex-th{top:178px}
+.ex .ex-right .ex-rows{top:234px;height:578px}
+.ex-lf-q,.ex-lf-ag{position:relative;height:44px;border-radius:8px;border:1px solid #404040;background:#262626;color:#e2e8f0}
+.ex-lf-q{flex:1;min-width:0}
+.ex-lf-ag{width:236px;flex-shrink:0}
+.ex-lf-q:focus-within,.ex-lf-ag:focus-within{border-color:#60a5fa;box-shadow:0 0 0 1px #60a5fa}
+.ex-lf-q svg{position:absolute;left:12px;top:12px;color:#94a3b8;pointer-events:none}
+.ex-lf-q input{width:100%;height:100%;border:0;outline:0;background:transparent;padding:0 12px 0 40px;font:inherit;font-size:15px;color:#f8fafc;border-radius:8px}
+.ex-lf-q input::placeholder{color:#94a3b8}
+.ex-lf-ag select{position:absolute;inset:0;width:100%;height:100%;border:0;outline:0;background:transparent;padding:0 36px 0 12px;font:inherit;font-size:15px;color:inherit;appearance:none;border-radius:8px;text-overflow:ellipsis;white-space:nowrap}
+.ex-lf-ag option{background:#262626;color:#e2e8f0}
+.ex-lf-ag .chev{position:absolute;right:10px;top:12px;color:#cbd5e1;pointer-events:none}
+.ex-empty{margin:0;padding:32px 16px;text-align:center;font-size:15px;color:#94a3b8}
+.ex.lt .ex-lf-q,.ex.lt .ex-lf-ag{background:#ffffff;border-color:#cbd5e1;color:#0f172a}
+.ex.lt .ex-lf-q input{color:#0f172a}
+.ex.lt .ex-lf-q input::placeholder,.ex.lt .ex-lf-q svg{color:#64748b}
+.ex.lt .ex-lf-ag option{background:#ffffff;color:#0f172a}
+.ex.lt .ex-lf-ag .chev{color:#334155}
+.ex.lt .ex-lf-q:focus-within,.ex.lt .ex-lf-ag:focus-within{border-color:#3b82f6;box-shadow:0 0 0 1px #3b82f6}
+.ex.lt .ex-empty{color:#475569}
+/* selected station pin (from the list or "ดูบนแผนที่") */
+.ex .ex-pin.sel{z-index:7;outline:3px solid #60a5fa;outline-offset:3px;border-radius:9999px}
+.ex.lt .ex-pin.sel{outline-color:#2563eb}
+/* station popup header: identity (left) + toolbar (right) */
+.ex .sp-h{align-items:flex-start;gap:24px}
+.ex .sp-ttl{gap:6px}
+.ex .sp-tr{display:flex;align-items:center;gap:10px;min-width:0;max-width:100%}
+.ex .sp-tr h2{min-width:0}
+.sp-id{flex-shrink:0;padding:2px 8px;border-radius:6px;background:#333333;box-shadow:inset 0 0 0 1px #404040;font-size:14px;line-height:20px;font-weight:600;color:#cbd5e1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ex .sp-ttl .sp-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;margin:0;white-space:normal;overflow:visible}
+.sp-meta .m{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.sp-meta svg{flex-shrink:0;color:#64748b}
+.ex .sp-h .sp-tools{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto;margin-right:69px}
+.ex .sp-h .sp-tools .sp-loc,.ex .sp-h .sp-tools .sp-hact,.ex .sp-h .sp-tools .sp-ss{margin-right:0}
+.ex .sp-h .sp-loc{height:44px;border-radius:10px}
+.ex .sp-h .sp-ss-b{width:44px;height:44px;padding:0;justify-content:center;border-radius:10px;color:#e2e8f0}
+.ex .sp-h .sp-ss-b span,.ex .sp-h .sp-ss-b svg:last-of-type{display:none}
+.ex .sp-h .sp-ss-b svg:first-of-type{display:block}
+.ex .sp-h .sp-div{position:absolute;right:68px;top:22px;width:1px;height:36px;background:#404040}
+.ex .sp-h .sp-x{top:22px}
+.ex.lt .sp-id{background:#f1f5f9;box-shadow:inset 0 0 0 1px #cbd5e1;color:#334155}
+.ex.lt .sp-meta svg{color:#64748b}
+.ex.lt .sp-h .sp-ss-b{color:#0f172a}
+.ex.lt .sp-h .sp-div{background:#cbd5e1}
+/* all station modals share one width (our station popup = 1080) */
+.ex .hx:not(.hx2){left:calc(50% - 540px);width:1080px}
+/* filter dropdowns (basin / province / district / sub-district / agency) */
+.ex .dd-x{padding:0;transition:border-color 150ms ease,box-shadow 150ms ease}
+.ex .dd-x .ex-ddb{cursor:pointer;color:#cbd5e1}
+.ex .dd-x .ex-ddb:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .dd-x .dd-v{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex .dd-x:not(.dis):hover{border-color:#525252}
+.ex .dd-x.has{border-color:#2563eb;background:#1e293b}
+.ex .dd-x.has .ex-ddb{color:#f8fafc;font-weight:600;padding-right:66px}
+.ex .dd-x.open{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.25)}
+.ex .dd-x.dis{opacity:.55}
+.ex .dd-x.dis .ex-ddb{cursor:not-allowed}
+.ex .dd-x .chev{position:absolute;right:12px;top:50%;margin-top:-10px;color:#94a3b8;pointer-events:none;transition:transform 150ms ease}
+.ex .dd-clr{position:absolute;right:38px;top:50%;margin-top:-12px;z-index:2;width:24px;height:24px;border:0;border-radius:9999px;background:#334155;color:#e2e8f0;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.ex .dd-clr:hover{background:#475569}
+.ex .dd-clr:focus-visible{outline:2px solid #60a5fa;outline-offset:1px}
+.ex .ex-ddl.dd-l{top:50px;min-width:100%;width:max-content;max-width:380px;max-height:380px;overflow-y:auto;padding:6px;scrollbar-width:thin}
+.ex .ex-ddl.dd-l li{margin:0}
+.ex .ex-ddl.dd-l button{height:46px;padding:0 10px 0 12px;font-size:16px;font-weight:400;display:flex;align-items:center;gap:10px;border-radius:8px;color:#e2e8f0;background:transparent}
+.ex .ex-ddl.dd-l button:hover{background:#383838;color:#ffffff}
+.ex .ex-ddl.dd-l button.all{border-bottom:1px solid #404040;border-radius:8px 8px 0 0;margin-bottom:4px}
+.ex .ex-ddl.dd-l button.on{background:#1e3a8a;color:#ffffff;font-weight:600}
+.ex .ex-ddl.dd-l button:disabled{opacity:.45;cursor:not-allowed}
+.ex .ex-ddl.dd-l .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex .ex-ddl.dd-l .n{flex-shrink:0;min-width:28px;padding:1px 8px;border-radius:9999px;background:#333333;color:#94a3b8;font-size:14px;line-height:20px;text-align:center;font-variant-numeric:tabular-nums}
+.ex .ex-ddl.dd-l .n:empty{display:none}
+.ex .ex-ddl.dd-l button.on .n{background:rgba(255,255,255,.16);color:#ffffff}
+.ex .ex-ddl.dd-l .dd-ck{flex-shrink:0;color:#93c5fd;visibility:hidden}
+.ex .ex-ddl.dd-l button.on .dd-ck{visibility:visible}
+.ex-right .ex-lf{z-index:6}
+.ex .ex-lf-ag .ex-ddl.dd-l{left:auto;right:0}
+.ex .ex-lf-ag .ex-ddb{font-size:16px;padding:0 40px 0 12px}
+.ex .ex-lf-ag.has .ex-ddb{padding-right:66px}
+.ex.lt .dd-x .ex-ddb{color:#334155}
+.ex.lt .dd-x:not(.dis):hover{border-color:#94a3b8}
+.ex.lt .dd-x.has{border-color:#2563eb;background:#eff6ff}
+.ex.lt .dd-x.has .ex-ddb{color:#1e3a8a}
+.ex.lt .dd-x.open{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.2)}
+.ex.lt .dd-x .chev{color:#475569}
+.ex.lt .dd-clr{background:#dbeafe;color:#1e3a8a}
+.ex.lt .dd-clr:hover{background:#bfdbfe}
+.ex.lt .ex-ddl.dd-l button{color:#0f172a}
+.ex.lt .ex-ddl.dd-l button:hover{background:#f1f5f9;color:#0f172a}
+.ex.lt .ex-ddl.dd-l button.all{border-bottom-color:#e2e8f0}
+.ex.lt .ex-ddl.dd-l button.on{background:#dbeafe;color:#1e3a8a}
+.ex.lt .ex-ddl.dd-l .n{background:#f1f5f9;color:#475569}
+.ex.lt .ex-ddl.dd-l button.on .n{background:#bfdbfe;color:#1e3a8a}
+.ex.lt .ex-ddl.dd-l .dd-ck{color:#2563eb}
+@media (prefers-reduced-motion: reduce){.ex .dd-x,.ex .dd-x .chev{transition:none}}
+/* page-size picker uses the same dropdown, opening upward */
+.ex .ex-sel.dd-x{width:80px;height:42px;border-radius:8px;border:0;background:#262626;box-shadow:inset 0 0 0 1px #404040}
+.ex .ex-sel.dd-x.open{box-shadow:inset 0 0 0 1px #60a5fa,0 0 0 3px rgba(96,165,250,.25)}
+.ex .ex-sel.dd-x.has{background:#262626}
+.ex .ex-sel.dd-x .ex-ddb{padding:0 30px 0 14px;font-size:15px;font-weight:600;color:#e2e8f0}
+.ex .ex-sel.dd-x .chev{right:8px}
+.ex .ex-sel .ex-ddl svg{position:static}
+.ex .dd-up .ex-ddl.dd-l{top:auto;bottom:50px;min-width:100px}
+.ex-right .ex-pg{z-index:6}
+.ex.lt .ex-sel.dd-x,.ex.lt .ex-sel.dd-x.has{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1}
+.ex.lt .ex-sel.dd-x .ex-ddb{color:#0f172a}
+.ex .ex-ddl.dd-l .n.none{display:none}
+.ex .ex-lf-ag .ex-ddl.dd-l{max-width:540px}
+.ly-div{height:1px;background:#e2e8f0;margin:8px 2px 2px}
+.ly-h2{margin:0 0 4px;font-size:15px;font-weight:700}
+.ex .ly-h2{font-size:18px}
+.ly-sw.cl{border-radius:9999px;background:#475569;display:flex;align-items:center;justify-content:center;color:#ffffff}
+.ly-sw.cl svg{width:15px;height:15px;fill:currentColor;stroke:none}
+.ex.lt .ly-div{background:#e2e8f0}
+/* ===== new map markers: CCTV + dams ===== */
+.ex .ex-mk{position:absolute;transform:translate(-50%,-50%);z-index:4;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:2px solid #ffffff;color:#ffffff;background:var(--mc,#475569);box-shadow:0 2px 6px rgba(0,0,0,.45);cursor:pointer;padding:0}
+.ex .ex-mk svg{stroke:currentColor;fill:none;stroke-width:2}
+.ex .ex-mk:hover{z-index:6;filter:brightness(1.08)}
+.ex .ex-mk.mk-cam{border-radius:9999px}
+.ex .mk-cam.c-run{background:var(--mc,#0ea5e9)}
+.ex .mk-cam.c-dam{background:#6366f1}
+.ex .ex-mk.mk-dam{border-radius:8px}
+.ex .mk-dam.d-L{width:34px;height:34px}
+.ex .mk-dam.d-S{width:24px;height:24px}
+.ex .mk-dam.d-S svg{width:12px;height:12px}
+.ex .mk-dam.d-S svg{width:13px;height:13px}
+/* ===== layer-tree panel ===== */
+.ex .ly-pop.lyv2{width:380px;max-height:calc(100vh - 120px);padding:12px 8px 8px}
+.ex .lyv-sc{display:flex;flex-direction:column;gap:3px;max-height:calc(100vh - 150px);overflow-y:auto;padding:0 4px;scrollbar-width:thin}
+.ex .lyg-h{margin:10px 2px 2px;font-size:13px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:#64748b}
+.ex .lyg-h:first-child{margin-top:0}
+.ex .lyp-wrap{border-radius:10px}
+.ex .lyp-row{position:relative;padding-left:34px}
+.ex .lyp-ex{position:absolute;left:4px;top:50%;transform:translateY(-50%);width:24px;height:24px;border:0;background:transparent;color:#64748b;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer;border-radius:6px}
+.ex .lyp-ex:hover{background:#e2e8f0;color:#0f172a}
+.ex .ly-sw.rain{border-radius:9999px;background:#2c74d4;display:flex;align-items:center;justify-content:center;color:#fff}
+.ex .ly-sw.cam{border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff}
+.ex .ly-sw.cam.crun{background:#0ea5e9}.ex .ly-sw.cam.cdam{background:#6366f1}
+.ex .ly-sw.dam{border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff}
+.ex .ly-sw.dam{background:#475569}.ex .ly-sw.dam.d-L{width:26px;height:26px}.ex .ly-sw.dam.d-S{width:19px;height:19px}
+.ex .ly-sw.rain svg,.ex .ly-sw.cam svg,.ex .ly-sw.dam svg,.ex .ly-sw.cl svg{stroke:currentColor;fill:none;stroke-width:2}
+.ex .lya{list-style:none;margin:2px 0 4px;padding:0 0 0 12px;border-left:2px solid #e2e8f0;margin-left:14px;display:flex;flex-direction:column;gap:1px}
+.ex .lya-h{font-size:12px;color:#94a3b8;padding:4px 0 2px 8px}
+.ex .ly-ag{padding:7px 8px;gap:10px}
+.ex .ag-chip{flex-shrink:0;min-width:46px;height:24px;padding:0 7px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;letter-spacing:.02em}
+.ex .ly-ag .ly-tx b{font-size:14px;line-height:19px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex .ag-n{flex-shrink:0;min-width:34px;padding:1px 9px;border-radius:9999px;background:#f1f5f9;color:#475569;font-size:13px;line-height:20px;text-align:center;font-variant-numeric:tabular-nums}
+.ex .ly-ag input{position:absolute;opacity:0;width:1px;height:1px}
+.ex .ly-cb{flex-shrink:0;width:22px;height:22px;border-radius:6px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;color:#fff;background:#fff;transition:background 120ms,border-color 120ms}
+.ex .ly-cb svg{stroke:#fff;fill:none;stroke-width:3;visibility:hidden}
+.ex .ly-ag input:checked + .ly-cb{background:#2563eb;border-color:#2563eb}
+.ex .ly-ag input:checked + .ly-cb svg{visibility:visible}
+.ex .ly-ag input:focus-visible + .ly-cb{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .ly-ag input:disabled + .ly-cb{opacity:.4}
+.ex .ly-ag:has(input:disabled){opacity:.5}
+/* dark theme */
+.ex .ex-mk.mk-run{width:26px;height:26px;background:transparent;border:0;box-shadow:none;overflow:visible}
+.ex .ex-mk.mk-run .mk-dia{width:18px;height:18px;transform:rotate(45deg);background:var(--mc,#38bdf8);border:2px solid #fff;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.ex .ex-mk.mk-run:hover .mk-dia{filter:brightness(1.1)}
+.ex .ly-sw.run{border-radius:9999px;background:#0891b2;display:flex;align-items:center;justify-content:center;color:#fff}
+.ex .ly-sw.run svg{stroke:currentColor;fill:none;stroke-width:2}
+.ex .ly-leg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:4px 10px 8px 12px}
+.ex .ly-leg-t{font-size:12px;color:#94a3b8;width:100%}
+.ex .ly-leg-i{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#475569}
+.ex .ly-leg-i i{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.ex:not(.lt) .ly-leg-i{color:#cbd5e1}
+.ex .mlg-leg{display:flex;flex-wrap:wrap;gap:5px 12px;padding:4px 6px 2px}
+.ex .mlg-leg-i{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#cbd5e1}
+.ex .mlg-leg-sw{width:11px;height:11px;border-radius:9999px;flex-shrink:0}
+.ex.lt .mlg-leg-i{color:#475569}
+.ex .ly-sw.own2{border-radius:9999px;background:#ef4444;display:flex;align-items:center;justify-content:center;color:#fff}
+.ex .ly-sw.own2 svg{stroke:currentColor;fill:none;stroke-width:2}
+/* map control buttons 4 */
+.ex-mbtn.mb4{top:185px}
+.ex.hr .ex-mbtn.mb4{top:233px}
+/* panels: weather + map layers */
+.ex .lyp-hd{display:flex;flex-direction:column;gap:2px;padding:2px 6px 10px;margin-bottom:6px;border-bottom:1px solid #e2e8f0}
+.ex .lyp-hd b{font-size:18px;line-height:24px}
+.ex .lyp-hd span{font-size:13px;color:#64748b}
+.ex .ly-card{border:1px solid #e2e8f0;border-radius:12px;padding:4px 4px 6px;margin-bottom:8px}
+.ex .ly-rgrp{display:flex;flex-direction:column}
+.ex .ly-ro{padding:7px 10px;gap:10px}
+.ex .ly-ro input{position:absolute;opacity:0;width:1px;height:1px}
+.ex .ly-rd{flex-shrink:0;width:20px;height:20px;border-radius:9999px;border:2px solid #94a3b8;background:#fff;position:relative}
+.ex .ly-ro input:checked + .ly-rd{border-color:#2563eb}
+.ex .ly-ro input:checked + .ly-rd::after{content:"";position:absolute;inset:3px;border-radius:9999px;background:#2563eb}
+.ex .ly-ro input:focus-visible + .ly-rd{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .ly-ro:has(input:disabled){opacity:.45;cursor:default}
+.ex .ly-live{width:10px;height:10px;border-radius:9999px;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2);flex-shrink:0}
+.ex .ly-live.none{display:none}
+.ex .ly-fc{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 10px 8px;margin:0 6px 4px;border-bottom:1px solid #e2e8f0;font-size:14px;color:#64748b}
+.ex .ly-fcb{height:32px;padding:0 14px;border-radius:8px;border:1px solid #6366f1;background:transparent;color:#4f46e5;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.ex .ly-fcb.on{background:#4f46e5;color:#fff}
+.ex .ly-fcb:disabled{opacity:.45;cursor:default}
+.ex .ly-sym{flex-shrink:0;width:22px;display:inline-block}
+.ex .sy-ln{height:0;width:22px;display:inline-block}
+.ex .sy-ring{width:16px;height:16px;border-radius:9999px;border:3px solid;display:inline-block;margin:0 3px}
+.ex .sy-tri{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:12px solid;display:inline-block;margin:0 5px}
+.ex .sy-dot{width:12px;height:12px;border-radius:9999px;display:inline-block}
+.ex .ly-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;padding:2px 4px 6px}
+.ex .ly-grid.one{grid-template-columns:1fr;padding-left:22px}
+.ex .ly-ck{position:relative;display:flex;align-items:center;gap:8px;min-height:34px;padding:4px 6px;border-radius:8px;cursor:pointer;font-size:14px;line-height:18px}
+.ex .ly-ck:hover{background:#f1f5f9}
+.ex .ly-ck input{position:absolute;opacity:0;width:1px;height:1px}
+.ex .ly-ck input:checked + .ly-cb{background:#2563eb;border-color:#2563eb}
+.ex .ly-ck input:checked + .ly-cb svg{visibility:visible}
+.ex .ly-ck input:focus-visible + .ly-cb{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .ly-ck:has(input:disabled){opacity:.45;cursor:default}
+.ex .ly-ck .ly-cb{width:18px;height:18px}
+.ex .ly-ck .t{min-width:0}
+.ex .ly-pi{flex-shrink:0;width:22px;height:22px;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff}
+.ex .ly-pi svg,.ex .ly-ic svg{stroke:currentColor;fill:none;stroke-width:2}
+.ex .ly-ic{flex-shrink:0;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:#334155}
+.ex .ly-ln{flex-shrink:0;width:24px;height:0}
+/* legend additions */
+.ex .mlg-sec span{font-weight:400}
+.ex .mlg-leg-sw.sq{border-radius:3px}
+.ex .mlg-cam{width:16px;height:16px;border-radius:9999px 9999px 9999px 2px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.ex .mlg-cam svg{stroke:currentColor;fill:none;stroke-width:2.5}
+.ex .mlg-grad{height:10px;margin:4px 6px 2px;border-radius:9999px}
+.ex .mlg-gl{display:flex;justify-content:space-between;padding:0 6px 2px;font-size:11px;color:#94a3b8}
+.ex .mlg-sym{display:flex;flex-wrap:wrap;gap:6px 12px;padding:4px 6px 2px}
+.ex .mlg-sym-i{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#cbd5e1}
+.ex .mlg-sym-i .sy-ln{width:16px}
+.ex .mlg-sym-i .sy-ring{width:12px;height:12px;border-width:2px;margin:0}
+.ex .mlg-sym-i .sy-tri{border-top-width:5px;border-bottom-width:5px;border-left-width:9px;margin:0 2px}
+.ex .mlg-sym-i .sy-dot{width:10px;height:10px}
+.ex.lt .mlg-sym-i{color:#475569}
+/* dark theme */
+/* map buttons sit above panel backdrops so one click switches panels */
+.ex .ex-mbtn{z-index:9}
+/* legend: cap height, scroll inside (keeps clear of the alert cards) */
+.ex .mlg .mlg-b{max-height:480px;overflow-y:auto;scrollbar-width:thin}
+.ex .mlg-sec span{display:block;margin-top:1px;font-size:11px;color:#94a3b8}
+/* ===== Sensor panel (button 3) ===== */
+.ex .ss-row{min-height:48px}
+.ex .ss-ic{flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#334155}
+.ex .ss-ic svg{stroke:currentColor;fill:none;stroke-width:1.8}
+.ex .ss-own .ss-ic{color:#dc2626}
+.ex .ss-div{height:1px;background:#e2e8f0;margin:6px 4px}
+.ex .ss-dd{margin:0 8px 6px 46px}
+.ex .ss-ddb{width:100%;min-height:44px;display:flex;align-items:center;gap:8px;padding:0 10px 0 12px;border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;color:#0f172a;font:inherit;font-size:15px;cursor:pointer;text-align:left}
+.ex .ss-ddb:hover{border-color:#94a3b8}
+.ex .ss-ddb[aria-expanded="true"]{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.ex .ss-ddb[aria-expanded="true"] .ss-chev{transform:rotate(180deg)}
+.ex .ss-ddb:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .ss-ddk{flex-shrink:0;font-size:12px;color:#64748b}
+.ex .ss-ddv{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.ex .ss-chev{flex-shrink:0;color:#475569;transition:transform 150ms ease}
+.ex .ss-ddp{margin-top:6px;border:1px solid #e2e8f0;border-radius:10px;padding:4px;background:#ffffff;box-shadow:0 8px 20px rgba(15,23,42,.12)}
+.ex .ss-ddt{display:flex;justify-content:flex-end;padding:2px 4px 4px;border-bottom:1px solid #f1f5f9;margin-bottom:2px}
+.ex .ss-lk{border:0;background:transparent;color:#2563eb;font:inherit;font-size:13px;font-weight:600;padding:4px 8px;border-radius:6px;cursor:pointer}
+.ex .ss-lk:hover{background:#eff6ff}
+.ex .ss-ddlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+.ex .ss-ddlist .ly-ag{padding:8px}
+@media (prefers-reduced-motion: reduce){.ex .ss-chev{transition:none}}
+.ex .ss-ic.sm{width:22px;height:22px}
+/* sensor dropdown lists v2: full width, two-line items */
+.ex .ss-dd{margin:2px 8px 8px 8px}
+.ex .ss-ddp{padding:4px}
+.ex .ss-ddt{justify-content:space-between;align-items:center;padding:4px 4px 6px 8px}
+.ex .ss-ddc{font-size:12px;color:#64748b}
+.ex .ss-ddlist .ss-opt{align-items:flex-start;gap:10px;padding:9px 8px;min-height:44px}
+.ex .ss-ddlist .ss-opt .ly-cb{margin-top:1px}
+.ex .ss-ddlist .ss-opt .ag-n{margin-top:0}
+.ex .ss-ddlist .ss-opt .ss-ic.sm{margin-top:-1px}
+.ex .ss-ot{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ex .ss-ot b{font-size:14px;line-height:20px;font-weight:600;color:#0f172a;white-space:normal}
+.ex .ss-ot span{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:16px;color:#64748b}
+.ex .ss-dot{width:8px;height:8px;border-radius:9999px;flex-shrink:0}
+/* ===== tree groups (rain agencies / reservoir sizes) ===== */
+.ex .tr-g{margin:2px 0}
+.ex .tr-p{display:flex;align-items:center;gap:2px;padding-right:4px}
+.ex .tr-pl{position:relative;flex:1;min-width:0;display:flex;align-items:flex-start;gap:12px;padding:10px 8px;border-radius:8px;cursor:pointer}
+.ex .tr-pl:hover,.ex .tr-i:hover{background:#f8fafc}
+.ex .tr-pl input,.ex .tr-i input{position:absolute;opacity:0;width:1px;height:1px}
+.ex .tr-cb{position:relative;flex-shrink:0;width:20px;height:20px;margin-top:1px;border-radius:5px;border:2px solid #94a3b8;background:#ffffff;display:flex;align-items:center;justify-content:center;transition:background 120ms,border-color 120ms}
+.ex .tr-cb svg{stroke:#ffffff;fill:none;stroke-width:3.2;visibility:hidden}
+.ex .tr-cb .dash{display:none;position:absolute;width:10px;height:2.5px;border-radius:2px;background:#ffffff}
+.ex input:checked + .tr-cb{background:#2563eb;border-color:#2563eb}
+.ex input:checked + .tr-cb svg{visibility:visible}
+.ex input:checked + .tr-cb.part svg{visibility:hidden}
+.ex input:checked + .tr-cb.part .dash{display:block}
+.ex input:focus-visible + .tr-cb{outline:2px solid #60a5fa;outline-offset:2px}
+.ex input:disabled + .tr-cb{opacity:.45}
+.ex .tr-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.ex .tr-t b{font-size:15px;line-height:20px;font-weight:700;color:#0f172a}
+.ex .tr-t small{font-size:12px;line-height:16px;color:#64748b}
+.ex .tr-x{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:#475569;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.ex .tr-x:hover{background:#f1f5f9;color:#0f172a}
+.ex .tr-x:focus-visible{outline:2px solid #60a5fa;outline-offset:1px}
+.ex .tr-x svg{transition:transform 150ms ease}
+.ex .tr-x[aria-expanded="true"] svg{transform:rotate(180deg)}
+.ex .tr-c{margin:0 8px 6px 17px;padding-left:14px;border-left:2px solid #e2e8f0}
+.ex .tr-ch{padding:2px 6px 2px;font-size:12px;font-weight:700;color:#334155}
+.ex .tr-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ex .tr-i{position:relative;display:flex;align-items:flex-start;gap:10px;padding:7px 6px;border-radius:8px;cursor:pointer}
+.ex .tr-i .tr-t b{font-size:14px;line-height:19px}
+.ex .tr-i .tr-t small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex .tr-n{flex-shrink:0;padding-top:1px;font-size:13px;color:#475569;font-variant-numeric:tabular-nums}
+.ex .tr-i:has(input:disabled){opacity:.5;cursor:default}
+@media (prefers-reduced-motion: reduce){.ex .tr-x svg,.ex .tr-cb{transition:none}}
+/* rain group: switch parent + checkbox children */
+.ex .tr-sw{gap:12px;padding:8px 8px;min-height:48px;border-radius:8px}
+.ex .tr-sw:hover{background:#f8fafc}
+.ex .tr-swt{flex:1;min-width:0}
+.ex .tr-swl{position:relative;display:flex;align-items:center;cursor:pointer}
+.ex .tr-swl input{position:absolute;opacity:0;width:1px;height:1px}
+.ex .tr-swl input:checked + .ly-tg{background:#2563eb}
+.ex .tr-swl input:checked + .ly-tg::after{transform:translateX(18px)}
+.ex .tr-swl input:focus-visible + .ly-tg{outline:2px solid #60a5fa;outline-offset:2px}
+.ex .tr-sw .tr-x{width:32px;height:32px;margin-right:-4px}
+.ex .tr-gs .tr-c{margin-left:21px}
+/* ===== unified panel pattern (all 3 map buttons) ===== */
+.ex .tr-pan .lyv-sc{gap:2px}
+.ex .tr-sec{margin:12px 8px 4px;font-size:12px;font-weight:700;letter-spacing:.02em;color:#64748b}
+.ex .tr-pan .lyp-hd + .tr-sec{margin-top:4px}
+.ex .tr-pan .ss-ic .ly-sym{width:20px}
+.ex .tr-pan .ss-ic .sy-ln{width:20px}
+.ex .tr-l2{display:grid;grid-template-columns:1fr 1fr;gap:0 4px}
+.ex .tr-t1 b{font-size:14px;line-height:19px;font-weight:500;color:#0f172a}
+.ex .tr-i .ly-pi{width:20px;height:20px;margin-top:0}
+.ex .tr-i .ly-ln{margin-top:9px}
+.ex .tr-rd{position:relative;flex-shrink:0;width:20px;height:20px;margin-top:0;border-radius:9999px;border:2px solid #94a3b8;background:#ffffff}
+.ex input:checked + .tr-rd{border-color:#2563eb}
+.ex input:checked + .tr-rd::after{content:"";position:absolute;inset:3px;border-radius:9999px;background:#2563eb}
+.ex input:focus-visible + .tr-rd{outline:2px solid #60a5fa;outline-offset:2px}
+.ex input:disabled + .tr-rd{opacity:.45}
+.ex .tr-i .ly-live{margin-top:5px}
+.ex .tr-acts{display:flex;justify-content:flex-end;margin:-2px 0 -6px}
+.ex .ss-lk:disabled{color:#94a3b8;cursor:default;background:transparent}
+.ex .tr-fc{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 6px 8px;margin-bottom:4px;border-bottom:1px solid #f1f5f9;font-size:13px;color:#475569}
+.ex .tr-t small:empty{display:none}
+/* radar composite overlay on the map (sample reflectivity blobs) */
+.ex .ex-radar{inset:0;z-index:1;pointer-events:none;opacity:.55;mix-blend-mode:screen;background-repeat:no-repeat;background-color:transparent;
+ background-image:
+  radial-gradient(circle at 39% 40%, #f800fd 0%, #d40000 4%, #fd0000 7%, #fd9500 11%, #fdf802 15%, #02fd02 21%, #019ff4 28%, rgba(4,233,231,0) 36%),
+  radial-gradient(circle at 46% 47%, #fd0000 0%, #fd9500 6%, #fdf802 11%, #02fd02 18%, #04e9e7 25%, rgba(4,233,231,0) 34%),
+  radial-gradient(ellipse 26% 16% at 33% 54%, #fdf802 0%, #02fd02 26%, #019ff4 46%, rgba(4,233,231,0) 66%),
+  radial-gradient(circle at 54% 33%, #fd9500 0%, #fdf802 10%, #02fd02 22%, #04e9e7 34%, rgba(4,233,231,0) 46%),
+  radial-gradient(ellipse 20% 26% at 60% 58%, #02fd02 0%, #019ff4 40%, rgba(4,233,231,0) 66%),
+  radial-gradient(circle at 44% 66%, #fdf802 0%, #02fd02 24%, #04e9e7 40%, rgba(4,233,231,0) 54%),
+  radial-gradient(ellipse 18% 12% at 28% 40%, #02fd02 0%, #019ff4 44%, rgba(4,233,231,0) 70%)}
+.ex.lt .ex-radar{mix-blend-mode:multiply;opacity:.6}
+</style>
+</helmet>
+<sc-if value="{{onMap}}" hint-placeholder-val="{{true}}">
+<div class="{{fitCls}}">
+<div class="{{rootCls}}" style="{{fitStyle}}">
+<img class="abs ex-logo" src="./assets/b820c1ee4f82dbfcefb07b5f5491f09e.png" alt="ตราสัญลักษณ์ ปภ." width="36" height="53">
+<h1 class="abs ex-ttl">ระบบรวบรวมข้อมูลและติดตามสถานะ<br>ชุดอุปกรณ์ตรวจวัดสภาพแวดล้อม (Sensor)</h1>
+<nav class="ex-navw" aria-label="เมนูหลัก">
+<button class="abs ex-nav-on" aria-current="page"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>แผนที่</button>
+<button class="abs ex-nb" style="left: 1054px;" aria-label="จอแสดงผล"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path></svg></button>
+<button class="abs ex-nb" style="left: 1132px;" aria-label="รายงานข้อมูล"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 20h18"></path><path d="M4 16c2.5-6 5-9 8-9 2.5 0 3.5 3 6 4"></path><path d="M9 12l2 2"></path></svg></button>
+<button class="abs ex-nb" style="left: 1210px;" aria-label="ตั้งค่า · ไปหน้าจัดการสถานี" title="ตั้งค่า · จัดการสถานีและเกณฑ์" onClick="{{goAdmin}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg></button>
+</nav>
+<button class="{{bellCls}}" aria-label="{{bellAria}}" title="การแจ้งเตือน" aria-haspopup="dialog" aria-expanded="{{inboxOpen}}" onClick="{{toggleInbox}}"><svg class="i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><sc-if value="{{hasUnread}}" hint-placeholder-val="{{true}}"><span class="ex-bell-n">{{unreadN}}</span></sc-if></button>
+<sc-if value="{{inboxOpen}}" hint-placeholder-val="{{false}}"><div class="abs ib-catch" aria-hidden="true" onClick="{{closeInbox}}"></div>
+<section class="abs ib" role="dialog" aria-labelledby="ib-t">
+<header class="ib-h"><div><h3 id="ib-t">การแจ้งเตือน</h3><span>{{unreadN}} ยังไม่อ่าน · {{ibScope}}</span></div><button class="ib-all" onClick="{{readAll}}">อ่านทั้งหมด</button></header>
+<div class="ib-f"><div class="ib-seg" role="tablist"><sc-for list="{{ibTabs}}" as="x" hint-placeholder-count="2"><button class="{{x.cls}}" role="tab" aria-selected="{{x.on}}" onClick="{{x.pick}}">{{x.label}}</button></sc-for></div><div class="ib-chips"><sc-for list="{{ibLv}}" as="x" hint-placeholder-count="3"><button class="{{x.cls}}" aria-pressed="{{x.on}}" onClick="{{x.pick}}"><i style="{{x.sw}}"></i>{{x.label}} <b>{{x.n}}</b></button></sc-for></div></div>
+<div class="ib-list"><sc-for list="{{ibItems}}" as="a" hint-placeholder-count="6"><div class="criteria-alert-item"><button class="{{a.cls}}" onClick="{{a.open}}"><span class="ib-bar" style="{{a.sw}}"></span><span class="ib-tx"><span class="ib-t1"><b style="{{a.lvStyle}}">{{a.lvl}}</b> · {{a.metric}}</span><span class="ib-t2">{{a.name}}</span><span class="ib-t3">{{a.loc}}</span></span><span class="ib-r"><b style="{{a.vStyle}}">{{a.val}}</b><span>{{a.ago}}</span></span><sc-if value="{{a.unread}}" hint-placeholder-val="{{false}}"><span class="ib-dot" aria-label="ยังไม่อ่าน"></span></sc-if></button><dc-import name="CriteriaResults" station="{{a.criteria}}" compact=""></dc-import></div></sc-for>
+<sc-if value="{{ibEmpty}}" hint-placeholder-val="{{false}}"><p class="ib-empty">ไม่มีการแจ้งเตือนของ{{ibEmptyScope}}</p></sc-if></div>
+<footer class="ib-ft">เก็บย้อนหลัง 24 ชม. · {{ibTotal}} รายการ · กดรายการเพื่อเปิดข้อมูลสถานี</footer>
+</section></sc-if>
+<button class="abs ex-theme" role="switch" aria-checked="{{isLight}}" aria-label="{{themeLabel}}" title="{{themeLabel}}" onClick="{{toggleTheme}}"><sc-if value="{{isDark}}" hint-placeholder-val="{{true}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg></sc-if><sc-if value="{{isLight}}" hint-placeholder-val="{{false}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"></path></svg></sc-if></button>
+<button class="abs ex-user" aria-haspopup="menu" aria-expanded="{{menu}}" onClick="{{toggleMenu}}"><span class="ex-av"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></span><span style="flex: 1;"><span class="ex-un">ผู้ดูแลระบบ</span><span class="ex-ur">Super admin</span></span><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="{{menuChev}}"></path></svg></button>
+<sc-if value="{{menu}}" hint-placeholder-val="{{true}}"><button class="abs ex-out" role="menuitem"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>ออกจากระบบ</button></sc-if>
+
+<div class="abs ex-f ex-dd" style="left: 8px; width: 302px;">
+<button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{mOpen}}" aria-label="{{mAria}}" onClick="{{toggleM}}"><span>{{mLabel}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{mChev}}"></path></svg></button>
+<sc-if value="{{mOpen}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{closeM}}"></div><ul class="ex-ddl" role="listbox" aria-label="ประเภทข้อมูล"><sc-for list="{{metrics}}" as="o" hint-placeholder-count="8"><li><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" onClick="{{o.pick}}">{{o.label}}</button></li></sc-for></ul></sc-if>
+</div>
+<div class="{{ddBasin.cls}}" style="left: 326px; width: 220px;"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddBasin.open}}" aria-label="{{ddBasin.aria}}" disabled="{{ddBasin.dis}}" onClick="{{ddBasin.toggle}}"><span class="dd-v">{{ddBasin.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddBasin.chev}}"></path></svg></button><sc-if value="{{ddBasin.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddBasin.clrAria}}" title="{{ddBasin.clrAria}}" onClick="{{ddBasin.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddBasin.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddBasin.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddBasin.name}}"><sc-for list="{{ddBasin.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
+<div class="{{ddProv.cls}}" style="left: 562px; width: 220px;"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddProv.open}}" aria-label="{{ddProv.aria}}" disabled="{{ddProv.dis}}" onClick="{{ddProv.toggle}}"><span class="dd-v">{{ddProv.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddProv.chev}}"></path></svg></button><sc-if value="{{ddProv.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddProv.clrAria}}" title="{{ddProv.clrAria}}" onClick="{{ddProv.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddProv.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddProv.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddProv.name}}"><sc-for list="{{ddProv.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
+<div class="{{ddAmp.cls}}" style="left: 798px; width: 220px;" title="{{ampHint}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddAmp.open}}" aria-label="{{ddAmp.aria}}" disabled="{{ddAmp.dis}}" onClick="{{ddAmp.toggle}}"><span class="dd-v">{{ddAmp.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddAmp.chev}}"></path></svg></button><sc-if value="{{ddAmp.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddAmp.clrAria}}" title="{{ddAmp.clrAria}}" onClick="{{ddAmp.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddAmp.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddAmp.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddAmp.name}}"><sc-for list="{{ddAmp.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
+<div class="{{ddTam.cls}}" style="left: 1034px; width: 220px;" title="{{tamHint}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddTam.open}}" aria-label="{{ddTam.aria}}" disabled="{{ddTam.dis}}" onClick="{{ddTam.toggle}}"><span class="dd-v">{{ddTam.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddTam.chev}}"></path></svg></button><sc-if value="{{ddTam.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddTam.clrAria}}" title="{{ddTam.clrAria}}" onClick="{{ddTam.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddTam.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddTam.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddTam.name}}"><sc-for list="{{ddTam.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
+<button class="abs ex-clr" disabled="{{clrDis}}" onClick="{{clearFilters}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.4;"><path d="M3 6h18"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>ล้างตัวกรอง<sc-if value="{{clrN}}" hint-placeholder-val="{{false}}"><b>{{clrN}}</b></sc-if></button>
+<sc-if value="{{hasCritSw}}" hint-placeholder-val="{{true}}"><div class="abs ex-crit"><span class="ex-crit-l" id="ex-crit-l">เกณฑ์สี</span><div class="ex-crit-t" role="radiogroup" aria-labelledby="ex-crit-l"><sc-for list="{{critSw}}" as="c" hint-placeholder-count="2"><button class="{{c.cls}}" role="radio" aria-checked="{{c.on}}" title="{{c.hint}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div></sc-if>
+
+
+<section class="abs ex-p ex-mapp" aria-label="แผนที่สถานีวัดปริมาณน้ำฝน">
+<div class="abs ex-map" style="{{mapStyle}}" onDoubleClick="{{mapDbl}}" onMouseDown="{{mapDown}}" onMouseMove="{{mapMove}}" onMouseUp="{{mapUp}}" onMouseLeave="{{mapUp}}">
+<sc-if value="{{radarOn}}" hint-placeholder-val="{{false}}"><div class="abs ex-radar" aria-hidden="true"></div></sc-if>
+<sc-for list="{{runPins}}" as="p" hint-placeholder-count="0"><button class="{{p.cls}}" style="{{p.style}}" aria-label="{{p.label}}" title="{{p.label}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onFocus="{{p.enter}}" onBlur="{{p.leave}}"><span class="mk-dia" aria-hidden="true"></span></button></sc-for>
+<sc-for list="{{damPins}}" as="p" hint-placeholder-count="0"><button class="{{p.cls}}" style="{{p.style}}" aria-label="{{p.label}}" title="{{p.label}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onFocus="{{p.enter}}" onBlur="{{p.leave}}"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 21V8l4-3 4 3 4-3 4 3v13"></path><path d="M4 13c3 0 3 2 6 2M14 15c3 0 3 2 6 2M4 17c3 0 3 2 6 2M14 19c3 0 3 2 6 2"></path></svg></button></sc-for>
+<sc-for list="{{camPins}}" as="p" hint-placeholder-count="0"><button class="{{p.cls}}" style="{{p.style}}" aria-label="{{p.label}}" title="{{p.label}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onFocus="{{p.enter}}" onBlur="{{p.leave}}"><svg class="i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M2 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z M15 10l5-3v10l-5-3"></path></svg></button></sc-for>
+<sc-for list="{{pins}}" as="p" hint-placeholder-count="0"><button class="{{p.cls}}" style="{{p.style}}" aria-label="{{p.label}}" onClick="{{p.open}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onFocus="{{p.enter}}" onBlur="{{p.leave}}"><svg class="pm-i" viewBox="0 0 24 24" aria-hidden="true"><path class="pm-ic" d="{{p.icD}}" transform="{{p.icT}}"></path><path class="pm-off" d="M12 20h.01 M8.5 16.4a5 5 0 0 1 7 0 M5 12.9a10 10 0 0 1 5.2-2.8 M19 12.9a10 10 0 0 0-2.1-1.7 M2 8.8a15 15 0 0 1 4.2-2.7 M22 8.8a15 15 0 0 0-11.3-3.8 M2 2l20 20"></path></svg><span class="pm-bds" aria-hidden="true"><sc-for list="{{p.bds}}" as="q" hint-placeholder-count="0"><span class="{{q.cls}}"><svg viewBox="0 0 24 24"><path d="{{q.d}}"></path></svg></span></sc-for></span></button></sc-for>
+<sc-for list="{{twPins}}" as="p" hint-placeholder-count="0"><button class="{{p.cls}}" style="{{p.style}}" aria-label="{{p.label}}" onClick="{{p.open}}" onMouseEnter="{{p.enter}}" onMouseLeave="{{p.leave}}" onFocus="{{p.enter}}" onBlur="{{p.leave}}"><svg class="pm-i" viewBox="0 0 24 24" aria-hidden="true"><path class="pm-ic" d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></button></sc-for>
+<sc-for list="{{clusters}}" as="c" hint-placeholder-count="0"><button class="{{c.cls}}" style="{{c.style}}" aria-label="{{c.label}}" onClick="{{c.open}}" onMouseEnter="{{c.enter}}" onMouseLeave="{{c.leave}}" onFocus="{{c.enter}}" onBlur="{{c.leave}}"><span class="cl-in">{{c.n}}</span><sc-if value="{{c.hasTw}}" hint-placeholder-val="{{false}}"><i class="cl-tw" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></i></sc-if></button></sc-for>
+<sc-if value="{{twOpen}}" hint-placeholder-val="{{false}}"><div class="abs tw-card" style="{{twCardStyle}}" role="dialog" aria-label="{{twName}}">
+<div class="tw-ch"><span class="tw-src">สถาบันสารสนเทศทรัพยากรน้ำ · {{twAgency}}</span><button class="tw-x" aria-label="ปิด" onClick="{{twClose}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div>
+<b class="tw-n">{{twName}}</b><span class="tw-l">{{twLoc}}</span>
+<div class="tw-v"><strong class="tw-big" style="{{twVStyle}}">{{twVal}}</strong><span>มม. · {{twPer}}</span></div><span class="tw-band" style="{{twBandStyle}}">{{twBand}}</span>
+<span class="tw-t">อัปเดต 9 ต.ค. 2569 · {{twTime}} น.</span><span class="tw-t">รหัสสถานี {{twCode}}</span>
+</div></sc-if>
+<sc-if value="{{tip}}" hint-placeholder-val="{{false}}"><div class="ex-tip" style="{{tipStyle}}">{{tip}}</div></sc-if>
+<sc-if value="{{rightHidden}}" hint-placeholder-val="{{false}}"><button class="abs ex-col ex-exr" aria-label="แสดงแผงเกณฑ์" onClick="{{showRight}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M15 3v18"></path><path d="m11 9-3 3 3 3"></path></svg></button></sc-if>
+<button class="{{lyBtnCls}}" aria-label="ชั้นข้อมูล" aria-haspopup="true" aria-expanded="{{lyOpen}}" onClick="{{toggleLy}}"><svg class="i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"></path><path d="m2 12 10 5 10-5"></path><path d="m2 17 10 5 10-5"></path></svg></button>
+<button class="{{wxBtnCls}}" aria-label="ชั้นสภาพอากาศ" title="ชั้นสภาพอากาศ" aria-haspopup="true" aria-expanded="{{wxOpen}}" onClick="{{toggleWx}}"><svg class="i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M17.5 19H8a6 6 0 1 1 5.7-7.9A4.5 4.5 0 1 1 17.5 19z"></path></svg></button>
+<button class="{{ssBtnCls}}" aria-label="ข้อมูล Sensor" title="ข้อมูล Sensor" aria-haspopup="true" aria-expanded="{{ssOpen}}" onClick="{{toggleSs}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8a6 6 0 0 1 0 8.4"></path><path d="M7.8 16.2a6 6 0 0 1 0-8.4"></path><path d="M19.1 4.9a10 10 0 0 1 0 14.2"></path><path d="M4.9 19.1a10 10 0 0 1 0-14.2"></path></svg></button>
+
+<section class="{{mlgCls}}" aria-labelledby="mlg-t">
+<div class="mlg-h"><b id="mlg-t">{{legendTitle}}</b><button class="mlg-tg" aria-expanded="{{legendOpen}}" aria-label="{{legendBtn}}" title="{{legendBtn}}" onClick="{{toggleLegend}}"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="stroke-width: 2.5;"><path d="{{mlgChev}}"></path></svg></button></div>
+<sc-if value="{{legendOpen}}" hint-placeholder-val="{{true}}"><div class="mlg-b">
+<sc-if value="{{hasCritSw}}" hint-placeholder-val="{{true}}"><p class="mlg-cn">{{critNote}}</p></sc-if>
+<div class="mlg-list"><sc-for list="{{legend}}" as="l" hint-placeholder-count="8"><label class="{{l.cls2}}"><input type="checkbox" checked="{{l.on}}" onChange="{{l.toggle}}"><span class="mlg-sw" style="{{l.sw2}}"></span><span class="t">{{l.label}}</span><span class="n">{{l.count}}</span></label></sc-for></div>
+<div class="mlg-sec">สถานะการรับข้อมูล <span>กดเพื่อกรอง</span></div>
+<sc-for list="{{dsChips}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" aria-pressed="{{c.on}}" title="{{c.hint}}" onClick="{{c.pick}}"><span class="mlg-sw"></span><span class="t">{{c.label}}</span><span class="n">{{c.n}}</span></button></sc-for>
+<sc-if value="{{twOn}}" hint-placeholder-val="{{true}}"><div class="mlg-src" aria-label="แหล่งสถานี"><span><i class="own"><svg viewBox="0 0 24 24"><path d="M6.5 3a3.5 3.5 0 0 1 3.5 3.5v11a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 3 17.5v-11A3.5 3.5 0 0 1 6.5 3z M11.4 12a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0 M16.2 8.2a5.4 5.4 0 0 1 0 7.6 M19.2 5.2a9.6 9.6 0 0 1 0 13.6"></path></svg></i>สถานี ปภ.</span><span><i class="twd"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></i>สถาบันสารสนเทศทรัพยากรน้ำ</span></div></sc-if>
+<sc-if value="{{runoffOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เกณฑ์ระดับน้ำท่า (น้ำท่า)</div><div class="mlg-leg"><sc-for list="{{runLegend}}" as="g" hint-placeholder-count="5"><span class="mlg-leg-i"><i class="mlg-leg-sw" style="{{g.style}}"></i>{{g.t}}</span></sc-for></div></sc-if>
+<sc-if value="{{damLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เกณฑ์น้ำในอ่าง</div><div class="mlg-leg"><sc-for list="{{damLegend}}" as="g" hint-placeholder-count="5"><span class="mlg-leg-i"><i class="mlg-leg-sw sq" style="{{g.style}}"></i>{{g.t}}</span></sc-for></div></sc-if>
+<sc-if value="{{cctvLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เกณฑ์ CCTV</div><div class="mlg-leg"><sc-for list="{{cctvLegend}}" as="g" hint-placeholder-count="5"><span class="mlg-leg-i"><i class="mlg-cam" style="{{g.style}}"><svg viewBox="0 0 24 24" width="9" height="9"><path d="M2 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z M15 10l5-3v10l-5-3"></path></svg></i>{{g.t}}</span></sc-for></div></sc-if>
+
+<sc-if value="{{wxLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">{{wxLgTitle}}</div><div class="mlg-grad" style="{{wxLgGrad}}"></div><div class="mlg-gl"><span>{{wxLgMin}}</span><span>{{wxLgMax}}</span></div></sc-if>
+<sc-if value="{{rnLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">{{rnLgTitle}}</div><div class="mlg-grad" style="{{rnLgGrad}}"></div><div class="mlg-gl"><span>เบา</span><span>หนักมาก</span></div></sc-if>
+<sc-if value="{{radarLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เรดาร์ composite <span>ความเข้มฝน (dBZ)</span></div><div class="mlg-leg"><sc-for list="{{radarLegend}}" as="g" hint-placeholder-count="6"><span class="mlg-leg-i"><i class="mlg-leg-sw" style="{{g.style}}"></i>{{g.t}}</span></sc-for></div></sc-if>
+<sc-if value="{{mpLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">ชั้นแผนที่</div><div class="mlg-sym"><sc-for list="{{mpLegend}}" as="g" hint-placeholder-count="3"><span class="mlg-sym-i"><i class="{{g.cls}}" style="{{g.style}}"></i>{{g.t}}</span></sc-for></div></sc-if>
+
+<p class="mlg-f">ติ๊กเกณฑ์ออกเพื่อซ่อนหมุดระดับนั้น · ทั้งหมด {{total}} สถานี</p>
+</div></sc-if>
+</section>
+<div class="abs tst-wrap" aria-live="polite"><sc-for list="{{toasts}}" as="a" hint-placeholder-count="0"><div class="tst tst3" role="alert" style="{{a.bar}}" onMouseEnter="{{a.hold}}" onMouseLeave="{{a.release}}"><button class="tst-main" onClick="{{a.open}}" aria-label="{{a.aria}}"><span class="tst-top"><span class="tst-chip" style="{{a.chipStyle}}">{{a.chip}}</span><span class="tst-time">{{a.ago}}</span></span><span class="tst-st">{{a.name}}</span><span class="tst-loc">{{a.code}} · {{a.addr}}</span><span class="tst-row3"><b style="{{a.vStyle}}">{{a.val}}</b><i>{{a.unit}}</i><span class="tst-m">{{a.metric}}</span><span class="tst-link">ดูสถานี ›</span></span></button><button class="tst-x" aria-label="ปิดการแจ้งเตือน" onClick="{{a.dismiss}}"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div></sc-for>
+</div>
+<sc-if value="{{lyOpen}}" hint-placeholder-val="{{false}}"><div class="bm-catch" aria-hidden="true" onClick="{{closeLy}}"></div>
+<div class="abs ly-pop lyv2 tr-pan" role="group" aria-labelledby="ly-t"><div class="lyv-sc">
+<div class="lyp-hd"><b id="ly-t">ชั้นข้อมูล</b><span>เส้นทาง ลุ่มน้ำ สถานที่สำคัญ และเขตการปกครอง</span></div>
+<div class="tr-sec">เส้นทางและพื้นที่</div>
+<sc-for list="{{routeRows}}" as="r" hint-placeholder-count="4"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><span class="{{r.symCls}}" style="{{r.symStyle}}"></span></span><span class="ly-tx tr-swt"><b>{{r.label}}</b></span><label class="tr-swl"><input type="checkbox" role="switch" aria-label="{{r.label}}" checked="{{r.on}}" onChange="{{r.toggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div></sc-for>
+<div class="tr-sec">พื้นที่และสถานที่</div>
+<div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><span class="ly-sym sy-tri" style="border-left-color: #22c55e;"></span></span><span class="ly-tx tr-swt"><b>ลุ่มแม่น้ำหลัก</b><span>{{basinSub}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนลุ่มน้ำ" aria-expanded="{{basinExp}}" onClick="{{basinExpTog}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="ลุ่มแม่น้ำหลัก" checked="{{basinOn}}" onChange="{{basinToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{basinExp}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-acts"><button class="ss-lk" onClick="{{basinBulk}}" disabled="{{basinBulkDis}}">{{basinBulkLbl}}</button></div><div class="tr-ch">ลุ่มน้ำ</div><ul class="tr-l tr-l2" aria-label="ลุ่มน้ำ"><sc-for list="{{basinRows}}" as="a" hint-placeholder-count="4"><li><label class="tr-i"><input type="checkbox" aria-label="{{a.label}}" checked="{{a.on}}" disabled="{{a.dis}}" onChange="{{a.toggle}}"><span class="tr-cb" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><i class="dash"></i></span><span class="tr-t tr-t1"><b>{{a.label}}</b></span></label></li></sc-for></ul></div></sc-if></div>
+<div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"></path></svg></span><span class="ly-tx tr-swt"><b>สถานที่สำคัญ</b><span>{{plcSub}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนประเภทสถานที่" aria-expanded="{{plcExp}}" onClick="{{plcExpTog}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="สถานที่สำคัญ" checked="{{plcOn}}" onChange="{{plcToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{plcExp}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-ch">ประเภทสถานที่</div><ul class="tr-l tr-l2" aria-label="ประเภทสถานที่"><sc-for list="{{plcRows}}" as="a" hint-placeholder-count="4"><li><label class="tr-i"><input type="checkbox" aria-label="{{a.label}}" checked="{{a.on}}" disabled="{{a.dis}}" onChange="{{a.toggle}}"><span class="tr-cb" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><i class="dash"></i></span><span class="ly-pi" style="{{a.icStyle}}" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="12" height="12"><path d="{{a.d}}"></path></svg></span><span class="tr-t tr-t1"><b>{{a.label}}</b></span></label></li></sc-for></ul></div></sc-if></div>
+<div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z M9 4v14 M15 6v14"></path></svg></span><span class="ly-tx tr-swt"><b>เขตพื้นที่ปกครอง</b><span>{{admSub}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนระดับเขต" aria-expanded="{{admExp}}" onClick="{{admExpTog}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="เขตพื้นที่ปกครอง" checked="{{admOn}}" onChange="{{admToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{admExp}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-ch">ระดับเขต</div><ul class="tr-l" aria-label="ระดับเขต"><sc-for list="{{admRows}}" as="a" hint-placeholder-count="4"><li><label class="tr-i"><input type="checkbox" aria-label="{{a.label}}" checked="{{a.on}}" disabled="{{a.dis}}" onChange="{{a.toggle}}"><span class="tr-cb" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><i class="dash"></i></span><span class="ly-ln" style="{{a.lnStyle}}" aria-hidden="true"></span><span class="tr-t tr-t1"><b>{{a.label}}</b></span></label></li></sc-for></ul></div></sc-if></div>
+</div></div></sc-if>
+<sc-if value="{{wxOpen}}" hint-placeholder-val="{{false}}"><div class="bm-catch" aria-hidden="true" onClick="{{closePnl}}"></div>
+<div class="abs ly-pop lyv2 tr-pan" role="group" aria-labelledby="wx-t"><div class="lyv-sc">
+<div class="lyp-hd"><b id="wx-t">ชั้นสภาพอากาศ</b><span>เปิด/ปิดชั้นข้อมูลสภาพอากาศและตรวจการณ์</span></div>
+<div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M17.5 19H8a6 6 0 1 1 5.7-7.9A4.5 4.5 0 1 1 17.5 19z"></path></svg></span><span class="ly-tx tr-swt"><b>สภาพอากาศ</b><span>{{wxSub}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนชนิดข้อมูล" aria-expanded="{{wxExp}}" onClick="{{wxExpTog}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="สภาพอากาศ" checked="{{wxOn}}" onChange="{{wxToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{wxExp}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-ch">ชนิดข้อมูล</div><ul class="tr-l" aria-label="ชนิดข้อมูล"><sc-for list="{{wxOpts}}" as="o" hint-placeholder-count="4"><li><label class="tr-i"><input type="radio" name="wxv" aria-label="{{o.label}}" checked="{{o.on}}" disabled="{{o.dis}}" onChange="{{o.pick}}"><span class="tr-rd" aria-hidden="true"></span><span class="tr-t tr-t1"><b>{{o.label}}</b></span></label></li></sc-for></ul></div></sc-if></div>
+<div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0 M12 12 19 5 M4.9 19.1A10 10 0 1 1 19.1 19.1 M7.8 16.2a6 6 0 1 1 8.4 0"></path></svg></span><span class="ly-tx tr-swt"><b>ตรวจวัดปริมาณน้ำฝน</b><span>{{rnSub}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนเวลา" aria-expanded="{{rnExp}}" onClick="{{rnExpTog}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="ตรวจวัดปริมาณน้ำฝน" checked="{{rainObsOn}}" onChange="{{rainObsToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{rnExp}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-fc"><span>คาดการณ์ปริมาณน้ำฝน</span><button class="{{rainFcCls}}" aria-pressed="{{rainFcOn}}" disabled="{{rainFcDis}}" onClick="{{rainFcToggle}}">{{rainFcBtn}}</button></div><div class="tr-ch">เวลา</div><ul class="tr-l" aria-label="เวลา"><sc-for list="{{rainTimes}}" as="o" hint-placeholder-count="4"><li><label class="tr-i"><input type="radio" name="rnt" aria-label="{{o.label}}" checked="{{o.on}}" disabled="{{o.dis}}" onChange="{{o.pick}}"><span class="tr-rd" aria-hidden="true"></span><span class="tr-t tr-t1"><b>{{o.label}}</b></span><span class="{{o.dotCls}}" aria-hidden="true"></span></label></li></sc-for></ul></div></sc-if></div>
+
+</div></div></sc-if>
+<sc-if value="{{ssOpen}}" hint-placeholder-val="{{false}}"><div class="bm-catch" aria-hidden="true" onClick="{{closeSs}}"></div>
+<div class="abs ly-pop lyv2 tr-pan" role="group" aria-labelledby="ss-t"><div class="lyv-sc">
+<div class="lyp-hd"><b id="ss-t">ข้อมูล Sensor</b><span>เปิด/ปิดชั้นข้อมูลสถานีตรวจวัดและการเฝ้าระวัง</span></div>
+
+<div class="tr-sec">สถานีตรวจวัด</div>
+<div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0 M8.5 8.5a5 5 0 0 0 0 7 M15.5 8.5a5 5 0 0 1 0 7 M6 6a8 8 0 0 0 0 12 M18 6a8 8 0 0 1 0 12"></path></svg></span><span class="ly-tx tr-swt"><b>สถานีตรวจวัด ปภ.</b><span>{{ownN}} สถานี · ข้อมูลของระบบนี้</span></span><label class="tr-swl"><input type="checkbox" role="switch" aria-label="สถานีตรวจวัด ปภ." checked="{{ownOn}}" onChange="{{ownToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></span><span class="ly-tx tr-swt"><b>สถานีวัดปริมาณน้ำฝน</b><span>{{rainSub2}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนหน่วยงาน" aria-expanded="{{agDdOpen}}" onClick="{{agDdToggle}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="สถานีวัดปริมาณน้ำฝน" checked="{{rainOn}}" onChange="{{rainToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{agDdOpen}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-ch">หน่วยงาน</div><ul class="tr-l" aria-label="หน่วยงาน"><sc-for list="{{agRows}}" as="a" hint-placeholder-count="4"><li><label class="tr-i"><input type="checkbox" aria-label="{{a.aria}}" checked="{{a.on}}" disabled="{{a.dis}}" onChange="{{a.toggle}}"><span class="tr-cb" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><i class="dash"></i></span><span class="tr-t"><b>{{a.code}} · {{a.abbr}}</b><small>{{a.name}}</small></span><span class="tr-n">{{a.n}}</span></label></li></sc-for></ul></div></sc-if></div>
+<div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M2 8c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2 M2 14c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2 M2 20c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 5-2"></path></svg></span><span class="ly-tx tr-swt"><b>สถานีวัดระดับน้ำท่า</b></span><label class="tr-swl"><input type="checkbox" role="switch" aria-label="สถานีวัดระดับน้ำท่า" checked="{{runoffOn}}" onChange="{{runoffToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div>
+<div class="tr-sec">แหล่งน้ำและการเฝ้าระวัง</div>
+<div class="tr-g tr-gs"><div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6 M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></svg></span><span class="ly-tx tr-swt"><b>อ่างเก็บน้ำ</b><span>{{damSub2}}</span></span><button class="tr-x" aria-label="แสดง/ซ่อนขนาด" aria-expanded="{{damDdOpen}}" onClick="{{damDdToggle}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><label class="tr-swl"><input type="checkbox" role="switch" aria-label="อ่างเก็บน้ำ" checked="{{damOn}}" onChange="{{damToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div><sc-if value="{{damDdOpen}}" hint-placeholder-val="{{false}}"><div class="tr-c"><div class="tr-ch">ขนาด</div><ul class="tr-l" aria-label="ขนาด"><sc-for list="{{damSizeRows}}" as="a" hint-placeholder-count="4"><li><label class="tr-i"><input type="checkbox" aria-label="{{a.aria}}" checked="{{a.on}}" disabled="{{a.dis}}" onChange="{{a.toggle}}"><span class="tr-cb" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><i class="dash"></i></span><span class="tr-t"><b>{{a.label}}</b><small>{{a.sub}}</small></span><span class="tr-n">{{a.n}}</span></label></li></sc-for></ul></div></sc-if></div>
+
+<div class="tr-p tr-sw"><span class="ss-ic" aria-hidden="true"><svg class="i" viewBox="0 0 24 24" width="20" height="20"><path d="M2 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z M15 10l5-3v10l-5-3"></path></svg></span><span class="ly-tx tr-swt"><b>กล้อง CCTV</b></span><label class="tr-swl"><input type="checkbox" role="switch" aria-label="กล้อง CCTV" checked="{{cctvOn}}" onChange="{{cctvToggle}}"><span class="ly-tg" aria-hidden="true"></span></label></div>
+</div></div></sc-if>
+<button class="abs ex-mini" aria-label="{{miniAria}}" aria-haspopup="true" aria-expanded="{{bmOpen}}" style="{{miniStyle}}" onClick="{{toggleBm}}"></button>
+<sc-if value="{{bmOpen}}" hint-placeholder-val="{{false}}"><div class="bm-catch" aria-hidden="true" onClick="{{closeBm}}"></div>
+<div class="abs bm-pop" role="radiogroup" aria-label="เลือกแผนที่ฐาน"><sc-for list="{{bms}}" as="b" hint-placeholder-count="3"><button class="{{b.cls}}" role="radio" aria-checked="{{b.on}}" onClick="{{b.pick}}"><img src="{{b.img}}" alt="" width="136" height="136"><b>{{b.label}}</b><sc-if value="{{b.def}}" hint-placeholder-val="{{false}}"><i class="bm-def">Default</i></sc-if></button></sc-for></div></sc-if>
+</div>
+</section>
+
+<section class="{{rightCls}}" aria-labelledby="ex-lg">
+<span class="abs ex-bar" aria-hidden="true"></span>
+<h2 id="ex-lg" class="abs ex-h2" style="left: 36px; top: 23px;">รายการสถานี <span class="ex-h2n">{{total}} สถานี · {{mName}}</span></h2>
+<button class="abs ex-col" style="left: 522px; top: 16px; height: 35px;" aria-label="ย่อแผงเกณฑ์" onClick="{{hideRight}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M15 3v18"></path><path d="m8 9 3 3-3 3"></path></svg></button>
+<sc-if value="{{isRain}}" hint-placeholder-val="{{true}}">
+<button class="abs ex-arr" style="left: 13px;" aria-label="ช่วงก่อนหน้า" onClick="{{prevPeriod}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<div class="abs ex-tabs" role="tablist" aria-label="ช่วงเวลาฝนสะสม"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div>
+<button class="abs ex-arr" style="left: 544px;" aria-label="ช่วงถัดไป" onClick="{{nextPeriod}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+</sc-if>
+<sc-if value="{{notRain}}" hint-placeholder-val="{{false}}"><p class="abs ex-latest"><span>ค่าล่าสุด</span>อัปเดต 9 ต.ค. 2569 · 11:00 น.</p></sc-if>
+<div class="abs ex-lf" role="search" aria-label="ค้นหาและกรองรายการสถานี"><label class="ex-lf-q"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหาสถานี</span><input type="search" placeholder="ค้นหาชื่อ รหัส หรือพื้นที่" value="{{lq}}" onInput="{{setLq}}"></label><div class="{{ddAg.cls}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddAg.open}}" aria-label="{{ddAg.aria}}" disabled="{{ddAg.dis}}" onClick="{{ddAg.toggle}}"><span class="dd-v">{{ddAg.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddAg.chev}}"></path></svg></button><sc-if value="{{ddAg.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddAg.clrAria}}" title="{{ddAg.clrAria}}" onClick="{{ddAg.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddAg.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddAg.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddAg.name}}"><sc-for list="{{ddAg.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div></div>
+<div class="abs ex-th" role="row">
+<span style="left: 15px; top: 19px;">สถานี <svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg></span>
+<span style="left: 407px; top: 11px;">เวลา<br>(น.)</span><svg class="i abs" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="left: 442px; top: 21px;"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>
+<span style="left: 462px; top: 11px; width: 66px; display: block; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{colTop}}<br>({{colUnit}})</span><svg class="i abs" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="left: 532px; top: 21px;"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg>
+</div>
+<div class="abs ex-rows">
+<sc-if value="{{noRows}}" hint-placeholder-val="{{false}}"><p class="ex-empty">ไม่พบสถานีที่ตรงกับการค้นหาหรือตัวกรอง</p></sc-if>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<div class="{{r.cls}}" onClick="{{r.pick}}">
+<span class="nm"><span class="{{r.gpCls}}" role="img" aria-label="{{r.gpTxt}}" title="{{r.gpTxt}}"></span>{{r.name}}</span><span class="lc">{{r.loc}}</span><span class="{{r.agCls}}">{{r.ag}}</span>
+<dc-import name="CriteriaResults" station="{{r.criteria}}"></dc-import>
+<span class="{{r.tmCls}}">{{r.time}}</span><span class="pl" style="{{r.plStyle}}">{{r.val}}</span>
+<button class="ex-gb" aria-label="{{r.gAria}}" title="ดูกราฟข้อมูลย้อนหลัง" onClick="{{r.openHist}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 16v-4"></path><path d="M11 16V8"></path><path d="M15 16v-6"></path><path d="M19 16V5"></path></svg></button>
+</div>
+</sc-for>
+</div>
+<div class="abs ex-pg">
+<span>แสดง</span>
+<div class="{{ddSize.cls}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddSize.open}}" aria-label="{{ddSize.aria}}" disabled="{{ddSize.dis}}" onClick="{{ddSize.toggle}}"><span class="dd-v">{{ddSize.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddSize.chev}}"></path></svg></button><sc-if value="{{ddSize.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddSize.clrAria}}" title="{{ddSize.clrAria}}" onClick="{{ddSize.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddSize.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddSize.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddSize.name}}"><sc-for list="{{ddSize.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
+<span>รายการ</span>
+<span style="flex: 1;"></span>
+<nav style="display: flex; gap: 5px;" aria-label="แบ่งหน้า">
+<button class="ex-pb" aria-label="หน้าก่อน" disabled="{{prevDis}}" onClick="{{prevPage}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m15 18-6-6 6-6"></path></svg></button>
+<sc-for list="{{pages}}" as="g" hint-placeholder-count="4"><button class="{{g.cls}}" aria-current="{{g.cur}}" disabled="{{g.gap}}" onClick="{{g.pick}}">{{g.n}}</button></sc-for>
+<button class="ex-pb" aria-label="หน้าถัดไป" disabled="{{nextDis}}" onClick="{{nextPage}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m9 18 6-6-6-6"></path></svg></button>
+</nav>
+</div>
+</section>
+<sc-if value="{{stOpen}}" hint-placeholder-val="{{false}}">
+<div class="abs hx-ovl" aria-hidden="true" onClick="{{stClose}}"></div>
+<section class="{{spCls}}" role="dialog" aria-modal="true" aria-labelledby="sp-t">
+<header class="sp-h">
+<sc-if value="{{spMulti}}" hint-placeholder-val="{{false}}"><button class="hx-ib sp-back" aria-label="กลับไปค่าที่เลือก" title="กลับไปค่าที่เลือก" onClick="{{spShowOne}}"><svg class="i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></button></sc-if>
+<div class="sp-ttl"><span class="{{spBadgeCls}}" style="{{spBadgeStyle}}">{{spBadge}}</span><div class="sp-tr"><h2 id="sp-t">{{spName}}</h2><span class="sp-id" title="รหัสสถานี"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">รหัสสถานี </span>{{spCode}}</span></div><p class="sp-meta"><span class="m"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ที่ตั้ง </span>{{spLoc}}</span></span><span class="m"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg><span><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">หน่วยงาน </span>{{spAgency}}</span></span></p></div>
+<div class="sp-tools" role="toolbar" aria-label="การทำงานกับสถานี"><sc-if value="{{spLocOn}}" hint-placeholder-val="{{true}}"><button class="sp-loc" onClick="{{spLocate}}" title="ซูมไปยังตำแหน่งสถานีนี้บนแผนที่"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>ดูบนแผนที่</span></button></sc-if><sc-if value="{{spInt}}" hint-placeholder-val="{{true}}"><div class="sp-ss"><button class="sp-ss-b" aria-label="ค้นหาสถานีอื่น" title="ค้นหาสถานีอื่น" aria-haspopup="listbox" aria-expanded="{{ssOpen}}" onClick="{{ssToggle}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span>ค้นหาสถานีอื่น</span><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><sc-if value="{{ssOpen}}" hint-placeholder-val="{{false}}"><div class="sp-ss-pop" role="dialog" aria-label="ค้นหาสถานี"><div class="sp-ss-in"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="text" role="combobox" aria-expanded="true" aria-controls="sp-ss-list" aria-activedescendant="{{ssActive}}" aria-autocomplete="list" placeholder="ชื่อสถานี รหัส อำเภอ หรือจังหวัด" value="{{ssQ}}" onInput="{{ssInput}}" onKeyDown="{{ssKey}}"><sc-if value="{{ssHasQ}}" hint-placeholder-val="{{false}}"><button class="sp-ss-clr" aria-label="ล้างคำค้น" onClick="{{ssClear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if></div><div class="sp-ss-bar"><span>{{ssCount}}</span><div class="sp-ss-sort" role="radiogroup" aria-label="เรียงตาม"><sc-for list="{{ssSorts}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" role="radio" aria-checked="{{o.on}}" onClick="{{o.pick}}">{{o.label}}</button></sc-for></div></div><ul class="sp-ss-list" id="sp-ss-list" role="listbox" aria-label="สถานี"><sc-for list="{{ssItems}}" as="o" hint-placeholder-count="6"><li class="{{o.cls}}" id="{{o.domId}}" role="option" aria-selected="{{o.on}}" onMouseEnter="{{o.hover}}" onClick="{{o.pick}}"><span class="sp-ss-tx"><b>{{o.name}}</b><span>{{o.sub}}</span></span><span class="sp-ss-r"><b style="{{o.vStyle}}">{{o.val}}</b><span>{{o.dist}}</span></span></li></sc-for></ul><sc-if value="{{ssEmpty}}" hint-placeholder-val="{{false}}"><p class="sp-ss-none">ไม่พบสถานีที่ตรงกับ “{{ssQ}}”</p></sc-if></div></sc-if></div>
+</sc-if><sc-if value="{{spInt}}" hint-placeholder-val="{{true}}"><div class="sp-hact"><button class="sp-hb" aria-label="แก้ไขข้อมูลสถานี" title="แก้ไขข้อมูลสถานี (ไปหน้าจัดการสถานี)" onClick="{{goAdmin}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.4 3.6a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg></button><div class="sp-qrw"><button class="sp-hb" aria-label="QR Code สถานี" title="QR Code สถานี" aria-expanded="{{qrOpen}}" onClick="{{toggleQr}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><path d="M14 14h3v3h-3z"></path><path d="M20 14v.01"></path><path d="M14 20h.01"></path><path d="M17 17h4v4h-4"></path></svg></button><sc-if value="{{qrOpen}}" hint-placeholder-val="{{false}}"><div class="sp-qr" role="dialog" aria-label="QR Code สถานี">{{spQr}}<b>{{spCode}}</b><span>สแกนเพื่อเปิดข้อมูลสถานี</span></div></sc-if></div></div>
+</sc-if></div><span class="sp-div" aria-hidden="true"></span><button class="hx-x sp-x" aria-label="ปิด" onClick="{{stClose}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+</header>
+<sc-if value="{{spSingle}}" hint-placeholder-val="{{false}}">
+<sc-if value="{{spBanOn}}" hint-placeholder-val="{{false}}"><div class="{{spBanCls}}" role="status"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{spBanIcon}}"></path></svg><div><b>{{spBanTitle}}</b><span>{{spBanText}}</span></div><span class="sp-ban-who">{{spBanWho}}</span></div></sc-if>
+<div class="sp-b sp-b2">
+<div class="sp-main">
+<div class="sp-mh"><h3>ค่าล่าสุด <span>อัปเดต {{spTime}}</span></h3><sc-if value="{{spInt}}" hint-placeholder-val="{{true}}"><button class="sp-sec" onClick="{{spShowAll}}" title="ดูทุกค่าที่สถานีนี้ตรวจวัด"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>ค่าทั้งหมด <b>{{spCount}}</b></button></sc-if></div>
+
+<dc-import name="ReadingCards" readings="{{spOne}}" note="{{spNote}}" stats="{{spStats}}" hourly="{{spHourly}}" theme="{{theme}}"></dc-import>
+<sc-if value="{{spIsRain}}"><dc-import name="CriteriaComparison" context="{{spComparison}}"></dc-import></sc-if><sc-if value="{{spIsOther}}"><dc-import name="CriteriaResults" station="{{spCriteria}}" compact=""></dc-import></sc-if>
+<sc-if value="{{spMini}}" hint-placeholder-val="{{true}}"><div class="hx-card sp-mini"><div class="sp-mini-h"><h3>{{mnTitle}}</h3><button class="sp-sec" onClick="{{mnMore}}" title="เปิดกราฟเต็ม พร้อมตารางบันทึกและดาวน์โหลด PDF"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>ขยายกราฟ</button></div><div class="hx-gr" role="tablist" aria-label="ช่วงการสรุป"><sc-for list="{{mnGrans}}" as="g" hint-placeholder-count="3"><button class="{{g.cls}}" role="tab" aria-selected="{{g.on}}" onClick="{{g.pick}}">{{g.label}}</button></sc-for></div><div class="hx-tools"><sc-if value="{{mnDaily}}" hint-placeholder-val="{{true}}"><div class="hx-rng" role="group" aria-label="ช่วงเวลา"><sc-for list="{{mnRanges}}" as="q" hint-placeholder-count="7"><button class="{{q.cls}}" aria-pressed="{{q.on}}" onClick="{{q.pick}}">{{q.label}}</button></sc-for></div></sc-if><sc-if value="{{mnCapOn}}" hint-placeholder-val="{{false}}"><span class="hx-cap">{{mnCap}}</span></sc-if></div><div class="hx-chart">{{mnChart}}</div><p class="hx-lg"><i style="{{mnSw}}"></i>{{mnLegend}}</p></div></sc-if>
+</div>
+<sc-if value="{{spInt}}" hint-placeholder-val="{{true}}"><aside class="sp-side">
+<div class="sp-ph sp-ph1" style="{{spPhStyle}}" role="img" aria-label="{{spPhAria}}">
+<span class="{{spOnCls}}">{{spOnline}}</span>
+<button class="sp-nav l" aria-label="รูปก่อนหน้า" onClick="{{spPrev}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m15 18-6-6 6-6"></path></svg></button>
+<button class="sp-nav r" aria-label="รูปถัดไป" onClick="{{spNext}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m9 18 6-6-6-6"></path></svg></button>
+<div class="sp-dots"><sc-for list="{{spDots}}" as="d" hint-placeholder-count="3"><button class="{{d.cls}}" aria-label="{{d.aria}}" aria-current="{{d.cur}}" onClick="{{d.pick}}"></button></sc-for></div>
+</div>
+<section class="sp-inf3" aria-label="ข้อมูลสถานี">
+<div class="sp-who"><span class="sp-av" aria-hidden="true">{{spInit}}</span><span class="sp-whot"><em>ผู้ดูแลอุปกรณ์ / ผู้ประสานงาน</em><b>{{spPerson}}</b></span></div>
+<a class="sp-call" href="{{spTel}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg><span>โทร {{spPhoneFmt}}</span></a>
+<dl class="sp-kv"><div><dt>ลุ่มน้ำ</dt><dd>{{spBasin}}</dd></div><div></div><div class="w"><dt>สถานะข้อมูล</dt><dd class="sp-dst">{{spDataStat}}</dd></div></dl>
+<button class="sp-inf2-h sp-geo-h" aria-expanded="{{spInfoOpen}}" aria-controls="sp-geo" onClick="{{toggleInfo}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span><b>ตำแหน่งและพิกัด</b></span><svg class="i sp-cv" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{spInfoChev}}"></path></svg></button>
+<sc-if value="{{spInfoOpen}}" hint-placeholder-val="{{false}}"><div class="sp-geo" id="sp-geo"><div class="sp-geo-r"><span><em>ละติจูด, ลองจิจูด</em><b>{{spLatLon}}</b></span><button class="sp-cp" onClick="{{copyLatLon}}" aria-label="คัดลอกพิกัด"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>{{spCopyTxt}}</span></button></div><div class="sp-geo-r"><span><em>พิกัด UTM</em><b>{{spUtm}}</b></span></div></div></sc-if>
+</section>
+<section class="criteria-history" aria-label="ประวัติผลประเมินเกณฑ์"><h3>ประวัติผลประเมินเกณฑ์ของสถานี</h3><p>ยังไม่มีประวัติผลประเมินที่เชื่อมกับสถานีนี้</p><small>เมื่อเชื่อมข้อมูล จะแยกประเภทเกณฑ์ ช่วงสะสม ค่าที่ตรวจพบ และเวลาที่ประเมิน โดยไม่ใช้รายการแจ้งเตือนสาธิตแทนประวัติจริง</small></section>
+</aside></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{spMulti}}" hint-placeholder-val="{{true}}">
+<sc-if value="{{spBanOn}}" hint-placeholder-val="{{false}}"><div class="{{spBanCls}}" role="status"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{spBanIcon}}"></path></svg><div><b>{{spBanTitle}}</b><span>{{spBanText}}</span></div><span class="sp-ban-who">{{spBanWho}}</span></div></sc-if>
+<div class="sp-b">
+<div class="sp-card">
+<div class="sp-ph" style="height: 286px" role="img" aria-label="{{spPhAria}}">
+<span class="{{spOnCls}}">{{spOnline}}</span>
+<button class="sp-nav l" aria-label="รูปก่อนหน้า" onClick="{{spPrev}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m15 18-6-6 6-6"></path></svg></button>
+<button class="sp-nav r" aria-label="รูปถัดไป" onClick="{{spNext}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m9 18 6-6-6-6"></path></svg></button>
+<div class="sp-dots"><sc-for list="{{spDots}}" as="d" hint-placeholder-count="3"><button class="{{d.cls}}" aria-label="{{d.aria}}" aria-current="{{d.cur}}" onClick="{{d.pick}}"></button></sc-for></div>
+</div>
+<div class="sp-info">
+<dl><sc-for list="{{spInfo}}" as="x" hint-placeholder-count="5"><div><dt>{{x.k}}</dt><dd>{{x.v}}</dd></div></sc-for></dl>
+
+</div>
+</div>
+<h3 class="sp-h3">ข้อมูลตรวจวัดล่าสุด <span>อัปเดต {{spTime}}</span></h3>
+<dc-import name="ReadingCards" readings="{{spReadings}}" theme="{{theme}}"></dc-import>
+</div>
+</sc-if>
+</section>
+</sc-if>
+<sc-if value="{{hist}}" hint-placeholder-val="{{false}}">
+<div class="abs hx-ovl" aria-hidden="true" onClick="{{closeAll}}"></div>
+<section class="abs hx" role="dialog" aria-modal="true" aria-labelledby="hx-t">
+<header class="hx-h">
+<button class="hx-ib" aria-label="ย้อนกลับ" onClick="{{closeHist}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></button>
+<div style="flex: 1; min-width: 0;"><h2 id="hx-t">ข้อมูลย้อนหลัง</h2><p>{{hxSub}}</p></div>
+<button class="hx-x" aria-label="ปิด" onClick="{{closeAll}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+</header>
+<div class="hx-b">
+<div class="hx-l">
+<sc-if value="{{hxSensOn}}" hint-placeholder-val="{{true}}"><div class="hx-sens" role="tablist" aria-label="ชนิดเซนเซอร์"><sc-for list="{{hxSens}}" as="t" hint-placeholder-count="7"><button class="{{t.cls}}" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div></sc-if>
+<div class="hx-card">
+<h3>{{hxTitle}}</h3>
+<div class="hx-gr" role="tablist" aria-label="ช่วงการสรุป"><sc-for list="{{hxGrans}}" as="g" hint-placeholder-count="3"><button class="{{g.cls}}" role="tab" aria-selected="{{g.on}}" onClick="{{g.pick}}">{{g.label}}</button></sc-for></div>
+<div class="hx-tools">
+<sc-if value="{{hxDaily}}" hint-placeholder-val="{{true}}"><div class="hx-rng" role="group" aria-label="ช่วงเวลา"><sc-for list="{{hxRanges}}" as="q" hint-placeholder-count="7"><button class="{{q.cls}}" aria-pressed="{{q.on}}" onClick="{{q.pick}}">{{q.label}}</button></sc-for></div></sc-if>
+<sc-if value="{{hxCapOn}}" hint-placeholder-val="{{false}}"><span class="hx-cap">{{hxCap}}</span></sc-if>
+<span style="flex: 1;"></span>
+<button class="hx-pdf" aria-label="ดาวน์โหลด PDF" title="ดาวน์โหลด PDF (กราฟ + ตารางบันทึก)" onClick="{{hxPdf}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M12 12v6"></path><path d="m9 15 3 3 3-3"></path></svg>PDF</button>
+<sc-if value="{{hxFullOn}}" hint-placeholder-val="{{true}}"><button class="hx-ib sm" aria-label="{{hxFullLabel}}" title="{{hxFullLabel}}" aria-pressed="{{hxFull}}" onClick="{{hxToggleFull}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="{{hxFullIcon}}"></path></svg></button></sc-if>
+</div>
+<div class="hx-chart">{{hxChart}}</div>
+<p class="hx-lg"><i style="{{hxSw}}"></i>{{hxLegend}}</p>
+</div>
+</div>
+<sc-if value="{{hxSide}}" hint-placeholder-val="{{true}}">
+<div class="hx-r">
+<h3>บันทึกรายงานข้อมูลเซนเซอร์ล่าสุด</h3>
+<table class="hx-tb">
+<thead><tr><th scope="col" style="width: 40%; text-align: left;">วันที่และเวลา</th><th scope="col" style="width: 30%;">ความถี่ส่งข้อมูล</th><th scope="col">{{hxColName}}</th></tr></thead>
+<tbody><sc-for list="{{hxRows}}" as="w" hint-placeholder-count="6"><tr><td style="text-align: left;"><b>{{w.d}}</b><span>{{w.tm}}</span></td><td>{{w.fq}}</td><td>{{w.v}}</td></tr></sc-for></tbody>
+</table>
+<nav class="hx-pg" aria-label="แบ่งหน้าบันทึก">
+<button aria-label="หน้าก่อน" disabled="{{hxPrevDis}}" onClick="{{hxPrev}}"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="stroke-width: 2.5;"><path d="m15 18-6-6 6-6"></path></svg></button>
+<sc-for list="{{hxPages}}" as="g" hint-placeholder-count="4"><button class="{{g.cls}}" aria-current="{{g.cur}}" disabled="{{g.gap}}" onClick="{{g.pick}}">{{g.n}}</button></sc-for>
+<button aria-label="หน้าถัดไป" disabled="{{hxNextDis}}" onClick="{{hxNext}}"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="stroke-width: 2.5;"><path d="m9 18 6-6-6-6"></path></svg></button>
+</nav>
+</div>
+</sc-if>
+</div>
+</section>
+</sc-if>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{onAdmin}}" hint-placeholder-val="{{false}}"><dc-import name="Stations" go-map="{{goMap}}" theme="{{theme}}" set-theme="{{setThemeFn}}"></dc-import></sc-if>

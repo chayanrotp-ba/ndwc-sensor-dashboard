@@ -1,0 +1,153 @@
+
+<helmet>
+<style>
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:400;font-display:swap;src:url(./assets/bcc369502f7b45efbd73f6a2c5708ac0.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:500;font-display:swap;src:url(./assets/8202380b16afe7cd17e348573e875494.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:600;font-display:swap;src:url(./assets/82569b647ff348945259fa2b398f1ed0.ttf) format('truetype')}
+@font-face{font-family:'Sarabun';font-style:normal;font-weight:700;font-display:swap;src:url(./assets/66d1a1f409f1d7267b7159f42f977071.ttf) format('truetype')}
+body{margin:0}
+/* Sensor reading cards — component. Classes prefixed rc- (shared helmet CSS when imported).
+   variant: "all" = station measures every value (grid of cards, 1 value per card)
+            "single" = station measures one value only (one wide card) — auto when readings has 1 item */
+.rc{font-family:'Sarabun',"Leelawadee UI","Noto Sans Thai","Segoe UI",Tahoma,sans-serif;color:#f4f4f5;--rc-card:#2a2a2e;--rc-line:#3f3f46;--rc-lb:#d4d4d8;--rc-tile:#ffffff;--rc-none:#f4f4f5;--rc-ok:#22c55e;--rc-warn:#f97316;--rc-bad:#ef4444;--rc-info:#3b82f6}
+.rc.lt{color:#0f172a;--rc-card:#ffffff;--rc-line:#e4e4e7;--rc-lb:#475569;--rc-tile:#ffffff;--rc-none:#0f172a;--rc-ok:#16a34a;--rc-warn:#ea580c;--rc-bad:#dc2626;--rc-info:#2563eb}
+.rc *{box-sizing:border-box}
+.rc svg.rc-i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+/* split: one card per value */
+.rc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.rc-card{display:flex;align-items:center;gap:12px;min-width:0;height:64px;padding:0 12px 0 8px;border-radius:12px;background:var(--rc-card)}
+.rc.lt .rc-card{box-shadow:inset 0 0 0 1px var(--rc-line)}
+.rc-ic{width:48px;height:48px;flex-shrink:0;border-radius:8px;background:var(--rc-tile);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1.5px #e5e7eb;color:var(--rc-info)}
+.rc-tx{display:flex;flex-direction:column;min-width:0}
+.rc-lb{font-size:13px;line-height:18px;color:var(--rc-lb);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-vl{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.rc-vl b{font-size:20px;line-height:28px;font-weight:700;color:var(--rc-none)}
+.rc-vl i{font-style:normal;font-size:14px;color:var(--rc-lb)}
+.rc-vl em{font-style:normal;font-size:13px;color:var(--rc-lb)}
+.s-ok .rc-ic{box-shadow:inset 0 0 0 1.5px var(--rc-ok);color:var(--rc-ok)}
+.s-warn .rc-ic{box-shadow:inset 0 0 0 1.5px var(--rc-warn);color:var(--rc-warn)}
+.s-bad .rc-ic{box-shadow:inset 0 0 0 1.5px var(--rc-bad);color:var(--rc-bad);background:#fef2f2}
+.s-ok .rc-vl b{color:var(--rc-ok)}
+.s-warn .rc-vl b{color:var(--rc-warn)}
+.s-bad .rc-vl b{color:var(--rc-bad)}
+/* single: the station measures only one value */
+.rc-one{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:12px;background:var(--rc-card)}
+.rc.lt .rc-one{box-shadow:inset 0 0 0 1px var(--rc-line)}
+.rc-oh{display:flex;align-items:center;gap:12px}
+.rc-one .rc-ic{width:48px;height:48px;border-radius:10px}
+.rc-one .rc-lb{font-size:15px;line-height:22px;color:inherit;font-weight:600}
+.rc-note{display:flex;align-items:center;gap:6px;font-size:12px;line-height:18px;color:var(--rc-lb)}
+.rc-pill{margin-left:auto;flex-shrink:0;padding:2px 10px;border-radius:9999px;font-size:13px;line-height:22px;font-weight:600;color:#ffffff;background:#71717a}
+.s-ok .rc-pill{background:var(--rc-ok)}.s-warn .rc-pill{background:var(--rc-warn)}.s-bad .rc-pill{background:var(--rc-bad)}
+.rc-big{display:flex;align-items:baseline;gap:8px;padding-left:2px}
+.rc-big b{font-size:48px;line-height:54px;font-weight:700;color:var(--rc-none);letter-spacing:-.5px}
+.rc-big i{font-style:normal;font-size:18px;color:var(--rc-lb)}
+.s-ok .rc-big b{color:var(--rc-ok)}.s-warn .rc-big b{color:var(--rc-warn)}.s-bad .rc-big b{color:var(--rc-bad)}
+.rc-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rc-stats button{height:56px;border:0;border-radius:10px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--rc-line);color:inherit;font:inherit;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:0 12px;cursor:pointer;text-align:left}
+.rc.lt .rc-stats button{background:#f8fafc}
+.rc-stats button:hover{box-shadow:inset 0 0 0 1px var(--rc-info)}
+.rc-stats button span{font-size:12px;line-height:16px;color:var(--rc-lb)}
+.rc-stats button b{font-size:17px;line-height:24px;font-weight:700}
+.rc-stats button.ro{cursor:default}
+.rc-stats button.ro:hover{box-shadow:inset 0 0 0 1px var(--rc-line)}
+.rc-card.hl{box-shadow:inset 0 0 0 2px var(--rc-info)}
+.rc-stats button.on{box-shadow:inset 0 0 0 2px var(--rc-info)}
+.rc-stats button.on span{color:var(--rc-info);font-weight:600}
+.rc-sec .rc-one{max-width:520px}
+/* showcase board */
+.rc-show{min-height:100vh;padding:32px;background:#191919;display:flex;flex-direction:column;gap:28px}
+.rc-show.lt{background:#f4f4f5}
+.rc-top{display:flex;align-items:center;gap:16px}
+.rc-top h1{margin:0;font-size:24px;line-height:32px;font-weight:700;flex:1}
+.rc-top p{margin:2px 0 0;font-size:14px;color:var(--rc-lb);font-weight:400}
+.rc-seg{display:flex;padding:3px;border-radius:9999px;background:var(--rc-card);box-shadow:inset 0 0 0 1px var(--rc-line)}
+.rc-seg button{height:32px;padding:0 14px;border:0;border-radius:9999px;background:transparent;color:var(--rc-lb);font:inherit;font-size:14px;cursor:pointer}
+.rc-seg button.on{background:var(--rc-info);color:#ffffff;font-weight:600}
+.rc-sec h2{margin:0 0 4px;font-size:16px;line-height:22px;font-weight:700}
+.rc-sec p{margin:0 0 12px;font-size:13px;color:var(--rc-lb)}
+.rc-sec code{font-family:ui-monospace,monospace;font-size:12px;padding:1px 6px;border-radius:4px;background:var(--rc-card);box-shadow:inset 0 0 0 1px var(--rc-line)}
+
+/* hourly rain (24 bars) — single card, rain 24 ชม. only */
+.rc-hr{margin-top:2px;padding:12px 12px 8px;border-radius:10px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--rc-line)}
+.rc.lt .rc-hr{background:#f8fafc}
+.rc-hr-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.rc-hr-h > b{font-size:14px;line-height:20px;font-weight:600}
+.rc-hr-h > span{font-size:12px;line-height:18px;color:var(--rc-lb);text-align:right}
+.rc-hr-plot{position:relative;height:96px;margin-left:28px}
+.rc-hr-grid{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.rc-hr-grid i{display:block;height:1px;background:var(--rc-line);opacity:.7}
+.rc-hr-ymax{position:absolute;left:-30px;top:-7px;width:26px;text-align:right;font-size:11px;color:var(--rc-lb)}
+.rc-hr-rec{position:absolute;top:-2px;bottom:0;border-radius:6px;background:rgba(83,145,247,.12);box-shadow:inset 0 0 0 1px rgba(83,145,247,.45)}
+.rc-hr-rec span{position:absolute;right:4px;top:3px;font-size:10px;line-height:12px;font-weight:600;color:var(--rc-info);white-space:nowrap}
+.rc-hr-bars{position:absolute;inset:0;display:flex;align-items:flex-end;gap:2px}
+.rc-hr-bars > span{flex:1;height:100%;display:flex;align-items:flex-end;border-radius:3px}
+.rc-hr-bars > span:hover{background:rgba(127,127,127,.12)}
+.rc-hr-bars > span > i{display:block;width:100%;min-height:2px;border-radius:3px 3px 1px 1px;background:#5b8fd6;opacity:.75}
+.rc-hr-bars > span.r3 > i{opacity:1}
+.rc-hr-bars > span.z > i{background:var(--rc-line);opacity:1}
+.rc-hr-x{position:relative;height:16px;margin:4px 0 0 28px}
+.rc-hr-x span{position:absolute;top:0;transform:translateX(-50%);font-size:11px;color:var(--rc-lb);white-space:nowrap}
+
+.rc-hr-h{align-items:center}
+.rc-hr-k{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.rc-hr-kv{display:flex;align-items:baseline;gap:5px;white-space:nowrap}
+.rc-hr-kv em{font-style:normal;font-size:12px;color:var(--rc-lb)}
+.rc-hr-kv strong{font-size:14px;font-weight:700}
+.rc-hr-tr{font-size:12px;font-weight:600;padding:0 6px;border-radius:9999px;line-height:18px}
+.rc-hr-tr.up{color:#f87171;background:rgba(239,68,68,.14)}.rc-hr-tr.dn{color:#4ade80;background:rgba(34,197,94,.14)}.rc-hr-tr.eq{color:var(--rc-lb);background:rgba(127,127,127,.14)}
+.rc.lt .rc-hr-tr.up{color:#dc2626}.rc.lt .rc-hr-tr.dn{color:#15803d}
+.rc-hr-tm{font-size:12px;color:var(--rc-lb)}
+
+.rc-hr-t{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.rc-hr-t > b{font-size:14px;line-height:20px;font-weight:600}
+.rc-hr-t > span{font-size:12px;color:var(--rc-lb)}
+.rc-hr-more{margin-left:auto;align-self:center;height:26px;padding:0 4px 0 8px;border:0;border-radius:6px;background:transparent;color:var(--rc-info);font:inherit;font-size:13px;font-weight:600;display:flex;align-items:center;gap:2px;cursor:pointer}
+.rc-hr-more:hover{background:rgba(83,145,247,.12)}
+.rc-hr-more:focus-visible{outline:2px solid var(--rc-info);outline-offset:1px}
+.rc .rc-hr-h{justify-content:flex-start;margin-bottom:10px}
+.rc .rc-hr-k{justify-content:flex-start}
+.rc-one .rc-hr-plot{height:150px}
+.rc button.rc-hr-more{color:var(--rc-info)}
+
+/* larger text v2 */
+.rc .rc-card{height:74px}
+.rc .rc-lb{font-size:15px;line-height:21px}
+.rc .rc-vl b{font-size:23px;line-height:30px}
+.rc .rc-vl i{font-size:15px}
+.rc .rc-vl em{font-size:14px}
+.rc .rc-one .rc-lb{font-size:18px;line-height:26px}
+.rc .rc-note{font-size:14px;line-height:20px}
+.rc .rc-pill{font-size:15px;line-height:24px;padding:2px 12px}
+.rc .rc-big i{font-size:20px}
+.rc .rc-stats button span{font-size:14px;line-height:20px}
+.rc .rc-stats button b{font-size:18px}
+
+/* senior-friendly v3 */
+.rc .rc-lb{font-size:17px;line-height:24px}
+.rc .rc-vl b{font-size:25px;line-height:32px}.rc .rc-vl i{font-size:16px}.rc .rc-vl em{font-size:15px}
+.rc .rc-one .rc-lb{font-size:20px;line-height:28px}
+.rc .rc-note{font-size:16px;line-height:22px}
+.rc .rc-pill{font-size:16px;line-height:26px}
+.rc .rc-big b{font-size:52px;line-height:58px}.rc .rc-big i{font-size:22px}
+.rc .rc-card{height:80px}
+</style>
+</helmet>
+<sc-if value="{{embedded}}" hint-placeholder-val="{{false}}">
+<div class="{{rootCls}}">
+<sc-if value="{{isAll}}" hint-placeholder-val="{{true}}"><div class="rc-grid"><sc-for list="{{cards}}" as="c" hint-placeholder-count="8"><div class="{{c.cls}}" role="group" aria-label="{{c.aria}}"><span class="rc-ic" style="{{c.icStyle}}">{{c.icon}}</span><span class="rc-tx"><span class="rc-lb">{{c.label}}</span><span class="rc-vl"><b style="{{c.vStyle}}">{{c.value}}</b><i>{{c.unit}}</i><em>{{c.extra}}</em></span></span></div></sc-for></div></sc-if>
+<sc-if value="{{isSingle}}" hint-placeholder-val="{{false}}"><div class="{{one.cls}}" role="group" aria-label="{{one.aria}}"><div class="rc-oh"><span class="rc-ic" style="{{one.icStyle}}">{{one.icon}}</span><span class="rc-tx"><span class="rc-lb">{{one.label}}</span><span class="rc-note">{{oneNote}}</span></span><sc-if value="{{one.pill}}" hint-placeholder-val="{{true}}"><span class="rc-pill" style="{{one.pillStyle}}">{{one.pill}}</span></sc-if></div><div class="rc-big"><b style="{{one.vStyle}}">{{one.value}}</b><i>{{one.unit}}</i></div><sc-if value="{{hasStats}}" hint-placeholder-val="{{true}}"><div class="rc-stats" role="group" aria-label="ค่าสะสมตามช่วงเวลา"><sc-for list="{{stats}}" as="m" hint-placeholder-count="3"><button class="{{m.cls}}" aria-pressed="{{m.on}}" onClick="{{m.pick}}"><span>{{m.label}}</span><b>{{m.value}}</b></button></sc-for></div></sc-if><sc-if value="{{hasHr}}" hint-placeholder-val="{{true}}"><div class="rc-hr" role="group" aria-label="{{hr.aria}}"><div class="rc-hr-t"><b>{{hr.title}}</b><span>{{hr.sub}}</span><sc-if value="{{hr.hasMore}}" hint-placeholder-val="{{true}}"><button class="rc-hr-more" onClick="{{hr.more}}">ดูกราฟเต็ม<svg class="rc-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></sc-if></div><div class="rc-hr-h"><span class="rc-hr-k"><span class="rc-hr-kv"><em>3 ชม.ล่าสุด</em><strong>{{hr.last3}}</strong><span class="{{hr.trCls}}">{{hr.trend}}</span></span><span class="rc-hr-kv"><em>สูงสุด</em><strong>{{hr.peak}}</strong><span class="rc-hr-tm">{{hr.peakAt}}</span></span></span></div><div class="rc-hr-plot"><div class="rc-hr-grid" aria-hidden="true"><i></i><i></i><i></i></div><span class="rc-hr-ymax" aria-hidden="true">{{hr.ymax}}</span><div class="rc-hr-rec" style="{{hr.recStyle}}" aria-hidden="true"><span>{{hr.recLabel}}</span></div><div class="rc-hr-bars"><sc-for list="{{hr.bars}}" as="b" hint-placeholder-count="24"><span class="{{b.cls}}" title="{{b.tip}}"><i style="{{b.style}}"></i></span></sc-for></div></div><div class="rc-hr-x" aria-hidden="true"><sc-for list="{{hr.ticks}}" as="t" hint-placeholder-count="5"><span style="{{t.style}}">{{t.label}}</span></sc-for></div></div></sc-if></div></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{showcase}}" hint-placeholder-val="{{true}}">
+<div class="{{showCls}}">
+<div class="rc-top"><div style="flex: 1;"><h1>การ์ดค่าตรวจวัด · Component</h1><p>ใช้ในป๊อปอัปข้อมูลสถานี · ตัวแปร <code>variant</code> = all / single</p></div>
+<div class="rc-seg" role="radiogroup" aria-label="ธีม"><sc-for list="{{themes}}" as="t" hint-placeholder-count="2"><button class="{{t.cls}}" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div></div>
+<section class="rc-sec"><h2>สถานีวัดหลายค่า — แสดงทุกค่า (1 ค่าต่อ 1 การ์ด)</h2><p><code>variant="all"</code> · ตามภาพต้นแบบ · สีกรอบไอคอนและตัวเลขบอกสถานะ (ปกติ / เฝ้าระวัง / วิกฤต)</p>
+<div class="rc-grid"><sc-for list="{{cards}}" as="c" hint-placeholder-count="8"><div class="{{c.cls}}" role="group" aria-label="{{c.aria}}"><span class="rc-ic" style="{{c.icStyle}}">{{c.icon}}</span><span class="rc-tx"><span class="rc-lb">{{c.label}}</span><span class="rc-vl"><b style="{{c.vStyle}}">{{c.value}}</b><i>{{c.unit}}</i><em>{{c.extra}}</em></span></span></div></sc-for></div></section>
+<section class="rc-sec"><h2>สถานีวัดค่าเดียว — แสดงเฉพาะค่าที่สถานีวัดได้</h2><p><code>variant="single"</code> · ใช้อัตโนมัติเมื่อ readings มีค่าเดียว · การ์ดใหญ่ + ค่าสะสมตามช่วงเวลา (prop <code>stats</code>) · ไม่ใช่ “ไม่มีข้อมูล” แต่สถานีมีเซนเซอร์ตัวเดียว (เช่น เครื่องวัดน้ำฝน)</p>
+<div class="{{one.cls}}" role="group" aria-label="{{one.aria}}"><div class="rc-oh"><span class="rc-ic" style="{{one.icStyle}}">{{one.icon}}</span><span class="rc-tx"><span class="rc-lb">{{one.label}}</span><span class="rc-note">{{oneNote}}</span></span><sc-if value="{{one.pill}}" hint-placeholder-val="{{true}}"><span class="rc-pill" style="{{one.pillStyle}}">{{one.pill}}</span></sc-if></div><div class="rc-big"><b style="{{one.vStyle}}">{{one.value}}</b><i>{{one.unit}}</i></div><sc-if value="{{hasStats}}" hint-placeholder-val="{{true}}"><div class="rc-stats" role="group" aria-label="ค่าสะสมตามช่วงเวลา"><sc-for list="{{stats}}" as="m" hint-placeholder-count="3"><button class="{{m.cls}}" aria-pressed="{{m.on}}" onClick="{{m.pick}}"><span>{{m.label}}</span><b>{{m.value}}</b></button></sc-for></div></sc-if><sc-if value="{{hasHr}}" hint-placeholder-val="{{true}}"><div class="rc-hr" role="group" aria-label="{{hr.aria}}"><div class="rc-hr-t"><b>{{hr.title}}</b><span>{{hr.sub}}</span><sc-if value="{{hr.hasMore}}" hint-placeholder-val="{{true}}"><button class="rc-hr-more" onClick="{{hr.more}}">ดูกราฟเต็ม<svg class="rc-i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></sc-if></div><div class="rc-hr-h"><span class="rc-hr-k"><span class="rc-hr-kv"><em>3 ชม.ล่าสุด</em><strong>{{hr.last3}}</strong><span class="{{hr.trCls}}">{{hr.trend}}</span></span><span class="rc-hr-kv"><em>สูงสุด</em><strong>{{hr.peak}}</strong><span class="rc-hr-tm">{{hr.peakAt}}</span></span></span></div><div class="rc-hr-plot"><div class="rc-hr-grid" aria-hidden="true"><i></i><i></i><i></i></div><span class="rc-hr-ymax" aria-hidden="true">{{hr.ymax}}</span><div class="rc-hr-rec" style="{{hr.recStyle}}" aria-hidden="true"><span>{{hr.recLabel}}</span></div><div class="rc-hr-bars"><sc-for list="{{hr.bars}}" as="b" hint-placeholder-count="24"><span class="{{b.cls}}" title="{{b.tip}}"><i style="{{b.style}}"></i></span></sc-for></div></div><div class="rc-hr-x" aria-hidden="true"><sc-for list="{{hr.ticks}}" as="t" hint-placeholder-count="5"><span style="{{t.style}}">{{t.label}}</span></sc-for></div></div></sc-if></div></section>
+<section class="rc-sec"><h2>สถานะ</h2><p>ป้ายบนการ์ดแสดง<b>ชื่อเกณฑ์ปริมาณ</b> (เช่น ฝนหนัก, ฝนหนักมาก) ด้วยสีของเกณฑ์นั้น — ส่ง prop <code>band</code> / <code>color</code> · สีตัวเลขยังไล่ตามความหนัก (status ok / warn / bad / none) · ไม่มีเกณฑ์ = ตัวเลขสีปกติ ไอคอนสีน้ำเงิน</p>
+<div class="rc-grid"><sc-for list="{{states}}" as="c" hint-placeholder-count="4"><div class="{{c.cls}}" role="group" aria-label="{{c.aria}}"><span class="rc-ic" style="{{c.icStyle}}">{{c.icon}}</span><span class="rc-tx"><span class="rc-lb">{{c.label}}</span><span class="rc-vl"><b style="{{c.vStyle}}">{{c.value}}</b><i>{{c.unit}}</i><em>{{c.extra}}</em></span></span></div></sc-for></div></section>
+</div>
+</sc-if>
