@@ -33,3 +33,6 @@ The criteria UI now deliberately simulates area/station bindings using the suppl
 
 Rainfall accumulation controls now consistently use 24h, 3d, 5d, 7d and 15d in the dashboard, popup comparison, history chart and both threshold editors. Additional multi-day cuts are mock draft values only.
 
+
+The 24-hour group includes rolling 1h, rolling 24h (default), today from 07:00, and yesterday from previous 07:00 to current-day 07:00. The existing historical demo clock is retained. Today/yesterday use separate observation-day sums and mock thresholds; these do not create notifications.
+

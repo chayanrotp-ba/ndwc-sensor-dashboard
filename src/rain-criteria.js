@@ -1,6 +1,9 @@
 // Exact default five-level rainfall intensity cuts from the supplied v56.
 // Prototype reference only: these are not operational notification thresholds.
 export const RAIN_CRITERIA = Object.freeze({
+  '1h': {label:'ฝน 1 ชั่วโมง',cuts:[0.5,5,25,50]},
+  'today': {label:'ฝนวันนี้ (07:00–ปัจจุบัน)',cuts:[0.5,10,35,90],draft:true},
+  'yesterday': {label:'ฝนวานนี้ (07:00–07:00)',cuts:[0.5,10,35,90],draft:true},
   '24h': { label: '24 ชั่วโมง', cuts: [0.5, 10, 35, 90] },
   '72h': { label: '3 วัน', cuts: [50, 100, 150, 200], draft: true },
   '5d': { label:'5 วัน', cuts:[70,140,210,280], draft:true },
@@ -10,6 +13,7 @@ export const RAIN_CRITERIA = Object.freeze({
 export const RAIN_LEVELS = ['ฝนละออง', 'ฝนเล็กน้อย', 'ฝนปานกลาง', 'ฝนหนัก', 'ฝนหนักมาก'];
 export const RAIN_COLORS = ['#9dd9ef', '#90c881', '#f0d447', '#f99c38', '#ff3656'];
 export const STATION_MOCK_CUTS = {
+ '1h':[0.5,8,30,60], today:[1,15,50,120], yesterday:[1,15,50,120],
 
   '24h': [1, 15, 50, 120],
   '72h': [60, 120, 180, 250],

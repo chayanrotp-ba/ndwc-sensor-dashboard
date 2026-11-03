@@ -2199,7 +2199,7 @@ html.backoffice-embedded .app{grid-template-columns:minmax(0,1fr)!important}
 html.backoffice-embedded .app>aside.sensor-sidebar{display:none!important}
 html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
 </style>
-</head>
+<style>.rain-daily-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;margin:8px 0;background:var(--info-bg);border:1px solid var(--info-border);border-radius:8px}.rain-daily-options[hidden]{display:none}.rain-daily-options button{padding:10px;border:1px solid var(--input-border);border-radius:7px;background:var(--panel-soft);color:var(--ink);cursor:pointer}.rain-daily-options button[aria-pressed="true"]{background:var(--primary-soft);border-color:#3b82f6}</style></head>
 <body>
 <div class="app theme-dark" id="sensorThemeRoot">
 <aside class="sensor-sidebar" aria-label="เมนูหลัก">
@@ -2973,6 +2973,9 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
   // These are aggregation/observation windows, not the numeric alert limits.
   // "today" and "yesterday" follow the 07:00 Asia/Bangkok observation-day convention.
   const RAIN_PERIOD_CATALOG = Object.freeze([
+{key:'1h',label:'ฝน 1 ชั่วโมง',description:'ฝนสะสมย้อนหลัง 1 ชั่วโมงนับจากเวลาปัจจุบัน',group:'1d'},
+{key:'today',label:'ฝนวันนี้',description:'ฝนสะสมตั้งแต่ 07:00 น. ของวันปัจจุบันถึงเวลาปัจจุบัน',group:'1d'},
+{key:'yesterday',label:'ฝนวานนี้',description:'ฝนสะสมตั้งแต่ 07:00 น. ของวันก่อนหน้า ถึง 07:00 น. ของวันปัจจุบัน',group:'1d'},
 {key:'1d',label:'24 ชม.',description:'ปริมาณฝนสะสมย้อนหลัง 24 ชั่วโมง',isDefault:true},
 {key:'3d',label:'3 วัน',description:'ฝนสะสม 3 วัน (72 ชั่วโมง) · Mockup / TBD'},
 {key:'5d',label:'5 วัน',description:'ฝนสะสม 5 วัน · Mockup / TBD'},
@@ -2982,7 +2985,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
   const RAIN_PERIOD_KEYS = new Set(RAIN_PERIOD_CATALOG.map(p=>p.key));
   // V56: maintain legacy observation periods in prototype data, without exposing
   // those periods as configurable alert rules until a specific rule is approved.
-  const ALERT_RAIN_PERIODS = Object.freeze(RAIN_PERIOD_CATALOG.filter(p=>['1d','3d','5d','7d','15d'].includes(p.key)));
+  const ALERT_RAIN_PERIODS = Object.freeze(RAIN_PERIOD_CATALOG.filter(p=>['1h','1d','today','yesterday','3d','5d','7d','15d'].includes(p.key)));
   const ALERT_RAIN_KEYS = new Set(ALERT_RAIN_PERIODS.map(p=>p.key));
 
   // Central threshold master for Nan upper basin (above Sirikit Dam).
@@ -4491,7 +4494,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
     // Proposed UI-only five-band cuts for 72-hour cumulative rain (not a TMD standard).
     const RAIN_3DAY_FIVE_BOUNDS=Object.freeze([50,100,150,200]);
     function defaultRainBounds(period='1d'){
-      return [...({'1d':RAIN_DEFAULT_BOUNDS,'3d':RAIN_3DAY_FIVE_BOUNDS,'5d':[70,140,210,280],'7d':[100,200,300,400],'15d':[150,300,450,600]}[period] || RAIN_DEFAULT_BOUNDS)];
+      return [...({'1h':RAIN_HOURLY_BOUNDS,'today':RAIN_DEFAULT_BOUNDS,'yesterday':RAIN_DEFAULT_BOUNDS,'1d':RAIN_DEFAULT_BOUNDS,'3d':RAIN_3DAY_FIVE_BOUNDS,'5d':[70,140,210,280],'7d':[100,200,300,400],'15d':[150,300,450,600]}[period] || RAIN_DEFAULT_BOUNDS)];
     }
     function defaultRainSignature(key){return JSON.stringify(defaultRainBounds(key));}
     function ensureDefaultRainThresholds(rows){
@@ -6744,7 +6747,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
     }
     selector.querySelectorAll('button[data-rain-range]').forEach(btn=>{
       const key=btn.dataset.rainRange;
-      const on=key===selected;
+      const on=key===selected || key==='1d' && ['1h','today','yesterday'].includes(selected) && !!btn.closest('.rain-ac05-options');
       btn.setAttribute('aria-pressed',String(on));
       const marker=btn.querySelector('.rain-ac05-marker');
       if(marker){
@@ -6796,7 +6799,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
       if(!root)continue;
       const choices=root.querySelector('.rain-ac05-options');
       choices.replaceChildren();
-      for(const p of [{key:'all',label:`ทั้งหมด (${OPTIONS.length} ช่วง)`,description:'แสดงและแก้ไขเกณฑ์ครบทุกช่วงในตาราง'},...OPTIONS]){
+      for(const p of [{key:'all',label:`ทั้งหมด (5 กลุ่ม / 8 ช่วง)`,description:'แสดงและแก้ไขเกณฑ์ครบทุกช่วงในตาราง'},...OPTIONS.filter(p=>!p.group)]){
         const button=document.createElement('button');
         button.type='button';button.dataset.rainRange=p.key;
         button.title=p.description;
@@ -6811,6 +6814,9 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
         button.addEventListener('click',()=>{current[scope]=p.key;refresh(scope);});
         choices.appendChild(button);
       }
+      const sub=document.createElement('div');sub.className='rain-daily-options';sub.setAttribute('role','group');sub.setAttribute('aria-label','ตัวเลือกภายในกลุ่ม 24 ชั่วโมง');
+      for(const key of ['1h','1d','today','yesterday']){const p=OPTIONS.find(p=>p.key===key);const b=document.createElement('button');b.type='button';b.dataset.rainRange=key;b.textContent=p.label+(p.isDefault?' (Default)':'');b.title=p.description;b.addEventListener('click',()=>{current[scope]=key;refresh(scope)});sub.appendChild(b);}
+      choices.insertAdjacentElement('afterend',sub);
       const body=document.getElementById(scopes[scope].body);
       if(body){
         // Rebuilt table after area/station selection, mode switch, or edit toggle.

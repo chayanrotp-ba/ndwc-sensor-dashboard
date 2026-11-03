@@ -42,3 +42,16 @@ test('popup period buttons update the shared graph range and matching accumulati
   for(const key of ['5d','7d','15d']){view.spComparison.periods.find(p=>p.key===key).pick();view=model.renderVals();assert.equal(view.spComparison.range,key);assert.equal(rainfallResult(key,view.spComparison.value).available,true);}
 
 });
+
+test('24-hour group has four subperiods with separate 07:00 observation days', () => {
+  const model=new Component({});model.state.st='s1';
+  const series=model.histSeries('s1','rain',model.data().R[0]);
+  let view=model.renderVals();
+  assert.deepEqual(view.spComparison.dailyOptions.map(p=>p.key),['1h','24h','today','yesterday']);
+  for(const [key,from,to] of [['today',0,4],['yesterday',4,28]]){
+    view.spComparison.dailyOptions.find(p=>p.key===key).pick();view=model.renderVals();
+    assert.equal(view.spComparison.dailyGroup,true);
+    assert.equal(view.spComparison.value,Math.round(series.hr.slice(from,to).reduce((a,b)=>a+b,0)*10)/10);
+    assert.equal(view.spComparison.periods.find(p=>p.key==='24h').selected,true);
+  }
+});
