@@ -36,3 +36,6 @@ Rainfall accumulation controls now consistently use 24h, 3d, 5d, 7d and 15d in t
 
 The 24-hour group includes rolling 1h, rolling 24h (default), today from 07:00, and yesterday from previous 07:00 to current-day 07:00. The existing historical demo clock is retained. Today/yesterday use separate observation-day sums and mock thresholds; these do not create notifications.
 
+
+Backoffice responsive layout: mobile navigation menu under 768px, compact desktop sidebar on tablets, wrapping filters, horizontally scrollable tables, and single-column threshold forms. Browser-checked at actual viewport widths 257, 391, 1023 and 1441 px.
+

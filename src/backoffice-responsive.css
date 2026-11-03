@@ -1,0 +1,42 @@
+/* Loaded after the exported artboard styles. These rules apply only to Backoffice. */
+#app .sx,#app .sx.lt{height:100dvh;max-width:100%;grid-template-columns:260px minmax(0,1fr)}
+#app .sx .side{overflow-y:auto;min-width:0}
+#app .sx .twx,#app .sx .lr-tw{overflow:auto;overscroll-behavior-x:contain}
+#app .sx .tx{min-width:1100px}
+#app .sx .lr-tb{min-width:1000px}
+#app .sx .fbx,#app .sx .lr-bar2{flex-wrap:wrap}
+#app .sx .mdl{width:min(1080px,100%);max-width:100%;max-height:100%}
+#app .threshold-sidebar{overflow-y:auto;min-height:0}
+@media(min-width:768px) and (max-width:1199px){
+ #app .sx,#app .sx.lt{grid-template-columns:220px minmax(0,1fr)}
+ #app .sx .side{padding:12px}
+ #app .sx .brandx b{font-size:13px;white-space:normal}
+ #app .sx .mainx,#app .sx .lr-main{padding:18px}
+ #app .threshold-backoffice{grid-template-columns:220px minmax(0,1fr)}
+}
+@media(max-width:767px){
+ #app .sx,#app .sx.lt{display:block;position:relative;width:100%;overflow:hidden}
+ #app .sx>.side{display:none}
+ #app .sx>.mainx,#app .sx>.lr-main{height:100%;padding:70px 12px 16px;overflow:auto;gap:12px}
+ #app .sx .phx,#app .sx .ttlrow,#app .sx .ph-r,#app .sx .pgx{flex-wrap:wrap;align-items:flex-start;gap:10px}
+ #app .sx .h1x{font-size:21px;line-height:29px}
+ #app .sx .cardx{flex:none;min-height:360px;padding:12px;min-width:0}
+ #app .sx .fbx,#app .sx .lr-bar2{display:flex;flex-direction:column;align-items:stretch;gap:10px}
+ #app .sx .fx,#app .sx .lr-srch,#app .sx .lr-bar2 .lr-srch{width:100%;flex:auto;min-width:0}
+ #app .sx .fx input,#app .sx .fx select{width:100%;min-width:0}
+ #app .sx .fbx>button{margin-left:0!important;align-self:flex-start}
+ #app .sx .twx{max-height:55dvh;min-height:200px;flex:none}
+ #app .sx .lr-tw{min-height:180px;flex-shrink:0}
+ #app .sx .lr-seg{flex-wrap:wrap;max-width:100%}
+ #app .sx .lr-res{margin-left:0}
+ #app .sx .ovl{position:fixed;padding:10px;z-index:50}
+ #app .sx .mdl{max-height:calc(100dvh - 20px)}
+ #app .sx .mdl [style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr)!important}
+ #app .sx .mdl input,#app .sx .mdl select{max-width:100%}
+ #app .threshold-backoffice{display:flex;flex-direction:column;height:100dvh;overflow:hidden;padding-top:56px}
+ #app .threshold-backoffice>.threshold-sidebar{display:none}
+ #app .threshold-content{flex:1;width:100%;min-height:0}
+ #app .threshold-content>header{padding:12px;flex-wrap:wrap;gap:10px}
+ #app .threshold-content h1{font-size:20px;line-height:28px}
+ #app .threshold-content iframe{min-height:0}
+}

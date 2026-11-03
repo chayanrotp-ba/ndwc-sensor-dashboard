@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import BackofficeMenu from './BackofficeMenu.vue';
 defineProps({ goMap: Function, goStations: Function, goLine: Function });
 const frame = ref(null);
 const logoUrl = import.meta.env.BASE_URL + 'assets/b820c1ee4f82dbfcefb07b5f5491f09e.png';
@@ -13,6 +14,7 @@ function applyTheme(value = theme.value) {
 
 <template>
   <div :class="['threshold-backoffice', {'threshold-light':theme === 'light'}]">
+    <BackofficeMenu :go-light="() => applyTheme('light')" :go-dark="() => applyTheme('dark')" current="criteria" :go-map="goMap" :go-stations="goStations" :go-line="goLine" />
     <aside class="threshold-sidebar" aria-label="เมนู Backoffice">
       <div class="threshold-brand"><img :src="logoUrl" alt="ตราสัญลักษณ์ ปภ."><div><strong>ระบบบริหารจัดการ Sensor</strong><small>System Management Sensor</small></div></div>
       <nav aria-label="เมนูหลัก">

@@ -2199,7 +2199,21 @@ html.backoffice-embedded .app{grid-template-columns:minmax(0,1fr)!important}
 html.backoffice-embedded .app>aside.sensor-sidebar{display:none!important}
 html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
 </style>
-<style>.rain-daily-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;margin:8px 0;background:var(--info-bg);border:1px solid var(--info-border);border-radius:8px}.rain-daily-options[hidden]{display:none}.rain-daily-options button{padding:10px;border:1px solid var(--input-border);border-radius:7px;background:var(--panel-soft);color:var(--ink);cursor:pointer}.rain-daily-options button[aria-pressed="true"]{background:var(--primary-soft);border-color:#3b82f6}</style></head>
+<style>.rain-daily-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;margin:8px 0;background:var(--info-bg);border:1px solid var(--info-border);border-radius:8px}.rain-daily-options[hidden]{display:none}.rain-daily-options button{padding:10px;border:1px solid var(--input-border);border-radius:7px;background:var(--panel-soft);color:var(--ink);cursor:pointer}.rain-daily-options button[aria-pressed="true"]{background:var(--primary-soft);border-color:#3b82f6}</style><style>
+@media(max-width:767px){
+ html.backoffice-embedded,html.backoffice-embedded body{width:100%;max-width:100%;overflow-x:hidden}
+ html.backoffice-embedded .app>main{padding:14px 10px 32px!important}
+ html.backoffice-embedded .app section,html.backoffice-embedded .app .field{min-width:0;max-width:100%;box-sizing:border-box}
+ html.backoffice-embedded .app .area-rule-layout,html.backoffice-embedded .app .area-focused-layout,html.backoffice-embedded .app .area-editor-grid,html.backoffice-embedded .app .station-config-grid{grid-template-columns:minmax(0,1fr)!important}
+ html.backoffice-embedded .app .sensor-page-heading,html.backoffice-embedded .app .central-intro,html.backoffice-embedded .app .master-footer,html.backoffice-embedded .app .area-rule-toolbar{flex-wrap:wrap;gap:10px}
+ html.backoffice-embedded .app .action-row{flex-wrap:wrap;max-width:100%}
+ html.backoffice-embedded .app input,html.backoffice-embedded .app select,html.backoffice-embedded .app textarea{max-width:100%;min-width:0;box-sizing:border-box;font-size:16px}
+ html.backoffice-embedded .app .rain-daily-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+ html.backoffice-embedded .app .station-rain-table-viewport,html.backoffice-embedded .app .rain-table-viewport,html.backoffice-embedded .app .area-data-scroll{overflow:auto;max-width:100%;overscroll-behavior-x:contain}
+ html.backoffice-embedded .app .area-data-columns{min-width:640px}
+ html.backoffice-embedded .app .rain-ac05-options button,html.backoffice-embedded .app .rain-daily-options button{min-height:44px;white-space:normal}
+}
+</style></head>
 <body>
 <div class="app theme-dark" id="sensorThemeRoot">
 <aside class="sensor-sidebar" aria-label="เมนูหลัก">
