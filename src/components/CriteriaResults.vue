@@ -5,7 +5,7 @@ const props = defineProps({ station: { type: Object, required: true }, compact: 
 const opened = ref(false);
 const selection = ref(null);
 const selected = computed(() => selection.value || props.station);
-const rangeOf = s => s.metric === 'rain' ? ({d1:'24h',d3:'72h'})[s.period] : null;
+const rangeOf = s => s.metric === 'rain' ? ({d1:'24h',d3:'72h',d5:'5d',d7:'7d',d15:'15d'})[s.period] : null;
 const inlineResult = computed(() => rainfallResult(rangeOf(props.station),props.station.value,props.station.offline,'station'));
 const inlineArea = computed(() => rainfallResult(rangeOf(props.station),props.station.value,props.station.offline,'area'));
 const detailArea = computed(() => rainfallResult(rangeOf(selected.value),selected.value.value,selected.value.offline,'area'));
@@ -63,7 +63,7 @@ onBeforeUnmount(() => { if (opened.value) close(); });
             <p>เกณฑ์ที่กำหนดเฉพาะสถานีตรวจวัดนี้</p>
             <dl><div><dt>ชื่อเกณฑ์รายสถานี</dt><dd>ค่าเริ่มต้น v56 · ช่วงเฉพาะสถานีจำลอง</dd></div><div><dt>ช่วงสะสม / ค่าจุดแบ่งระดับ</dt><dd>{{ periodLabel }} · จุดแบ่ง {{ cuts }} มม.</dd></div><div><dt>ผลการเข้าเงื่อนไข</dt><dd>{{ detailResult.label }} · ผลจำลอง</dd></div></dl>
           </article>
-          <footer class="criteria-footnote"><strong>อยู่ในพื้นที่ ≠ เข้าเงื่อนไข</strong><p>เกณฑ์ 1 ชม.: 0.5 / 5 / 25 / 50 · 24 ชม.: 0.5 / 10 / 35 / 90 · 3 วัน: 50 / 100 / 150 / 200 มม. (Draft / TBD) · ทุกค่าเป็นต้นแบบ ไม่ใช่เกณฑ์ปฏิบัติการที่อนุมัติแล้ว</p></footer>
+          <footer class="criteria-footnote"><strong>อยู่ในพื้นที่ ≠ เข้าเงื่อนไข</strong><p>ช่วงเกณฑ์: 24 ชม. / 3 วัน / 5 วัน / 7 วัน / 15 วัน · ค่าเกณฑ์หลายวันเป็น Mockup Draft / TBD · ทุกค่าเป็นต้นแบบ ไม่ใช่เกณฑ์ปฏิบัติการที่อนุมัติแล้ว</p></footer>
         </div>
       </section>
     </div>

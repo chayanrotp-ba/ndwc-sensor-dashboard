@@ -38,10 +38,7 @@ test('popup period buttons update the shared graph range and matching accumulati
   assert.equal(model.state.sph.range, '72h');
   assert.equal(view.spComparison.value, 437.7);
   assert.equal(rainfallResult(view.spComparison.range,view.spComparison.value).label,'ฝนหนักมาก');
-  view.spComparison.periods.find(p => p.key === '1h').pick();
-  view = model.renderVals();
-  assert.equal(view.spComparison.range,'1h');
-  assert.equal(Number.isFinite(view.spComparison.value),true);
-  view.spComparison.periods.find(p => p.key === '48h').pick();
-  assert.equal(model.renderVals().spComparison.value,null);
+  assert.deepEqual(view.spComparison.periods.map(p=>p.label),['24 ชม.','3 วัน','5 วัน','7 วัน','15 วัน']);
+  for(const key of ['5d','7d','15d']){view.spComparison.periods.find(p=>p.key===key).pick();view=model.renderVals();assert.equal(view.spComparison.range,key);assert.equal(rainfallResult(key,view.spComparison.value).available,true);}
+
 });

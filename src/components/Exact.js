@@ -273,7 +273,7 @@ export default class Component extends DCLogic {
       hxTitle: sen[4],
       hxGrans: [['day', 'รายวัน'], ['month', 'รายเดือน'], ['year', 'รายปี']].map(([k, l]) => ({ label: l, on: h.gran === k, cls: h.gran === k ? 'on' : '', pick: () => setH({ gran: k, pg: 1 }) })),
       hxDaily: h.gran === 'day', hxCapOn: h.gran !== 'day', hxCap: h.gran === 'month' ? 'สรุปรายวัน · 30 วันล่าสุด' : 'สรุปรายเดือน · 12 เดือนล่าสุด',
-      hxRanges: [['1h', '1 ชม.'], ['today', 'วันนี้'], ['24h', '24 ชม.'], ['48h', '48 ชม.'], ['72h', '72 ชม.'], ['5d', '5 วัน'], ['7d', '7 วัน'], ['15d', '15 วัน']].map(([k, l]) => ({ label: l, on: range === k, cls: range === k ? 'on' : '', pick: () => setH({ range: k, pg: 1 }) })),
+      hxRanges: [['24h','24 ชม.'], ['72h','3 วัน'], ['5d','5 วัน'], ['7d','7 วัน'], ['15d','15 วัน']].map(([k, l]) => ({ label: l, on: range === k, cls: range === k ? 'on' : '', pick: () => setH({ range: k, pg: 1 }) })),
       hxDownload: download,
       hxPdf: () => {
         const esc = (t) => String(t).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -324,7 +324,7 @@ export default class Component extends DCLogic {
   // ---------- measured values: 8 metrics, one shown on the map at a time ----------
   // rainfall periods: 24 ชม. / 3 / 5 / 7 / 15 วัน / เดือนนี้ / ปีนี้. k = criteria multiplier vs the 24 h thresholds (ข้อเสนอ)
   periods() {
-    return [['d1', '24 ชม.', 1], ['d3', '3 วัน', 1.5], ['d5', '5 วัน', 2], ['d7', '7 วัน', 2.5], ['d15', '15 วัน', 4], ['m', 'รายเดือน', 6], ['y', 'รายปี', 20]];
+    return [['d1', '24 ชม.', 1], ['d3', '3 วัน', 1.5], ['d5', '5 วัน', 2], ['d7', '7 วัน', 2.5], ['d15', '15 วัน', 4]];
   }
 
   // accumulated rain of a station for a period (sample data beyond 5 days, deterministic)
@@ -581,7 +581,7 @@ export default class Component extends DCLogic {
     const sph = Object.assign({ gran: s.period === 'm' ? 'month' : s.period === 'y' ? 'year' : 'day', range: ({ d1: '24h', d3: '72h', d5: '5d', d7: '7d', d15: '15d' })[s.period] || '24h' }, s.sph || {});
     const MINI = met.dir || DS.silent ? null : this.histVals(s, R, lt, { h: { id: st[0], sensor: met.hist, gran: sph.gran, range: sph.range, pg: 1, full: false }, W: ext ? 1000 : 660, H: 230,
       onSet: (o) => this.setState({ sph: Object.assign({}, sph, { gran: o.gran || sph.gran, range: o.range || sph.range }) }) });
-    const comparisonRanges = [['1h', '1 ชม.'], ['24h', '24 ชม.'], ['48h', '48 ชม.'], ['72h', '72 ชม.'], ['5d', '5 วัน'], ['7d', '7 วัน'], ['15d', '15 วัน']];
+    const comparisonRanges = [['24h','24 ชม.'], ['72h','3 วัน'], ['5d','5 วัน'], ['7d','7 วัน'], ['15d','15 วัน']];
     const comparisonPeriod = sph.gran === 'month' ? 'm' : sph.gran === 'year' ? 'y' : { '24h': 'd1', '72h': 'd3', '5d': 'd5', '7d': 'd7', '15d': 'd15' }[sph.range];
     const comparisonLabel = sph.gran === 'month' ? 'รายเดือน' : sph.gran === 'year' ? 'รายปี' : (comparisonRanges.find((p) => p[0] === sph.range) || [0, sph.range === 'today' ? 'วันนี้' : 'ไม่ระบุช่วงเวลา'])[1];
     const spComparison = { code, province: st[4], range: sph.gran === 'day' ? sph.range : sph.gran, offline: !!DS.silent, periodLabel: comparisonLabel,

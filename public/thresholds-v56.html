@@ -2173,7 +2173,7 @@ body:has(.theme-light){background:#f4f4f5}
 .app .rain-risk-bound.invalid{border-color:#dc2626!important;outline:1px solid #dc2626}
 .app .rain-risk-band small{font-size:9px;color:var(--muted)}
 .app .rain-risk-disclaimer{font-size:10px;color:#eac17e;text-align:left;margin-top:10px;line-height:1.6}
-.app .rain-ac05-options{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.app .rain-ac05-options{grid-template-columns:repeat(6,minmax(0,1fr))!important}
 .app .rain-ac05-options button{min-height:46px;font-size:12px!important}
 .app #stationRainPanel .station-rain-table-viewport .station-alert-table{min-width:880px}
 /* At laptop widths, avoid squeezing the rainfall table beside the station list. */
@@ -2459,13 +2459,13 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
 </section>
 <!-- AC05 — rainfall accumulation-period selector; visible only for rainfall measurement. -->
 <div class="rain-ac05-selector" data-rain-ac05-scope="area" aria-label="เลือกช่วงเวลาฝนสะสมสำหรับเกณฑ์กลาง NDWC">
-  <div class="rain-ac05-heading"><div><strong>ช่วงเวลาฝนสะสม</strong><p>ตั้งเกณฑ์ 5 ระดับแยกสำหรับ 1 ชั่วโมง / 24 ชั่วโมง / 3 วัน • ช่วง 3 วันเป็นค่าเสนอรอยืนยัน • หน่วย: มม.</p></div><span class="rain-ac05-only">เฉพาะปริมาณน้ำฝน</span></div>
+  <div class="rain-ac05-heading"><div><strong>ช่วงเวลาฝนสะสม</strong><p>ตั้งเกณฑ์ 5 ระดับแยกสำหรับ 24 ชั่วโมง / 3 วัน / 5 วัน / 7 วัน / 15 วัน • ช่วง 3 วันเป็นค่าเสนอรอยืนยัน • หน่วย: มม.</p></div><span class="rain-ac05-only">เฉพาะปริมาณน้ำฝน</span></div>
   <div class="rain-ac05-options" role="group" aria-label="ตัวเลือกแสดงทั้งหมดหรือช่วงเวลาฝนสะสมทีละช่วง"></div>
-  <div class="rain-ac05-status" role="status" aria-live="polite">แสดง 3 ช่วงเกณฑ์หลัก • ช่วงอื่นเป็นข้อมูลฝนสะสม</div>
+  <div class="rain-ac05-status" role="status" aria-live="polite">แสดง 5 ช่วงเกณฑ์หลัก • ช่วงอื่นเป็นข้อมูลฝนสะสม</div>
 </div>
 <div class="central-master-editor" id="centralRainPanel">
 <div class="section-head" style="margin-bottom:8px">
-<div><h3>กำหนดเกณฑ์ปริมาณฝนของ List ที่เลือก</h3><div class="sub">ทั้ง 3 ช่วงแสดงตารางฝน 5 ระดับ • ฝน 3 วันใช้จุดแบ่งเสนอ 50 / 100 / 150 / 200 มม. (Reference Draft / TBD)</div></div>
+<div><h3>กำหนดเกณฑ์ปริมาณฝนของ List ที่เลือก</h3><div class="sub">ทั้ง 5 ช่วงแสดงตารางฝน 5 ระดับ • ฝน 3 วันใช้จุดแบ่งเสนอ 50 / 100 / 150 / 200 มม. (Reference Draft / TBD)</div></div>
 <div class="mode-switch">
 <button class="mode-btn active" id="ndwcViewModeBtn" type="button">View Mode</button>
 <button class="mode-btn" id="ndwcEditModeBtn" type="button">NDWC Edit Mode</button>
@@ -2477,7 +2477,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
 <div><b>Scope Type</b><span>Multi-area</span></div>
 <div><b>Version</b><span id="ndwcMasterVersionText">v1.2</span></div>
 </div>
-<div class="master-edit-banner" id="ndwcEditBanner"><b>NDWC Edit Mode:</b> แก้ไขจุดแบ่งฝน 5 ระดับแยกตามช่วง 1 ชั่วโมง / 24 ชั่วโมง / 3 วันได้เป็น Draft • ค่า 3 วันเป็นข้อเสนอเพื่อออกแบบ UI ยังไม่เปิดสร้าง AlertEvent อัตโนมัติ</div>
+<div class="master-edit-banner" id="ndwcEditBanner"><b>NDWC Edit Mode:</b> แก้ไขจุดแบ่งฝน 5 ระดับแยกตามช่วง 24 ชั่วโมง / 3 วัน / 5 วัน / 7 วัน / 15 วันได้เป็น Draft • ค่า 3 วันเป็นข้อเสนอเพื่อออกแบบ UI ยังไม่เปิดสร้าง AlertEvent อัตโนมัติ</div>
 <table class="threshold-table central-threshold-table">
 <thead><tr>
 <th>ช่วงสะสม</th>
@@ -2490,7 +2490,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
 </tr></thead>
 <tbody id="ndwcMasterThresholdBody"></tbody>
 </table>
-<div class="rain-criteria-note"><b>หลักการตั้งค่า:</b> ฝน 1 ชั่วโมง, 24 ชั่วโมง และ 3 วันใช้จุดแบ่งคนละชุด • ฝน 3 วันใช้จุดแบ่ง <b>50 / 100 / 150 / 200 มม.</b> เพื่อแสดง 5 ระดับในต้นแบบเท่านั้น เป็น <b>Reference Draft (TBD)</b> ไม่ใช่เกณฑ์มาตรฐานหรือเกณฑ์แจ้งเตือนที่ ปภ. อนุมัติแล้ว <span>ฝนวันนี้/วานนี้ และฝน 5, 7, 15 วัน รายเดือน รายปี ยังคงเป็นข้อมูลติดตามและสถิติ ไม่สร้างกฎแจ้งเตือนจากหน้าตั้งค่านี้</span></div>
+<div class="rain-criteria-note"><b>หลักการตั้งค่า:</b> ฝน 24 ชั่วโมง, 3 วัน, 5 วัน, 7 วัน และ 15 วันใช้จุดแบ่งคนละชุด • ฝน 3 วันใช้จุดแบ่ง <b>50 / 100 / 150 / 200 มม.</b> เพื่อแสดง 5 ระดับในต้นแบบเท่านั้น เป็น <b>Reference Draft (TBD)</b> ไม่ใช่เกณฑ์มาตรฐานหรือเกณฑ์แจ้งเตือนที่ ปภ. อนุมัติแล้ว <span>ค่าทั้ง 5 ช่วงเป็นข้อมูลต้นแบบเพื่อออกแบบ UI ไม่สร้างกฎแจ้งเตือนจากหน้าตั้งค่านี้</span></div>
 <div class="master-footer">
 <div class="audit" id="ndwcMasterAudit">ค่าเกณฑ์ตัวอย่างตามช่วง • Proposed / UAT • รอตรวจทาน</div>
 <div class="action-row">
@@ -2519,9 +2519,9 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
     <div class="station-metric-tabs" id="stationMetricTabs" role="group" aria-label="ตัวกรองประเภทการตรวจวัด 9 ค่า"></div>
   </div>
   <div class="rain-ac05-selector" data-rain-ac05-scope="station" aria-label="เลือกช่วงเวลาฝนสะสมสำหรับเกณฑ์รายสถานีตรวจวัด">
-  <div class="rain-ac05-heading"><div><strong>ช่วงเวลาฝนสะสม</strong><p>ตั้งเกณฑ์หลัก 1 ชั่วโมง, 24 ชั่วโมง และ 3 วัน • ค่า 3 วัน (50/100/150/200 มม.) เป็น Reference Draft ยังไม่เปิดแจ้งเตือนจริง • หน่วย: มม.</p></div><span class="rain-ac05-only">เฉพาะปริมาณน้ำฝน</span></div>
+  <div class="rain-ac05-heading"><div><strong>ช่วงเวลาฝนสะสม</strong><p>ตั้งเกณฑ์หลัก 24 ชั่วโมง, 3 วัน, 5 วัน, 7 วัน และ 15 วัน • ค่า 3 วัน (50/100/150/200 มม.) เป็น Reference Draft ยังไม่เปิดแจ้งเตือนจริง • หน่วย: มม.</p></div><span class="rain-ac05-only">เฉพาะปริมาณน้ำฝน</span></div>
   <div class="rain-ac05-options" role="group" aria-label="ตัวเลือกแสดงทั้งหมดหรือช่วงเวลาฝนสะสมทีละช่วง"></div>
-  <div class="rain-ac05-status" role="status" aria-live="polite">แสดง 3 ช่วงเกณฑ์หลัก • ช่วงอื่นเป็นข้อมูลฝนสะสม</div>
+  <div class="rain-ac05-status" role="status" aria-live="polite">แสดง 5 ช่วงเกณฑ์หลัก • ช่วงอื่นเป็นข้อมูลฝนสะสม</div>
 </div>
   <div class="station-group-overview"><span id="stationOwnerGroupInfo">ข้อมูลสถานีตามหน่วยงานเจ้าของ</span><span id="stationOwnerAllCount" class="station-catalog-count"></span></div>
 </div>
@@ -2585,7 +2585,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
 <tbody id="stationThresholdBody"></tbody>
 </table>
 </div>
-<div class="rain-criteria-note"><b>การรับเกณฑ์:</b> สถานีรับค่าจากเกณฑ์ List/เกณฑ์กลาง และสามารถบันทึก Station Override Draft ได้ • ทั้ง 3 ช่วงมีจุดแบ่ง 5 ระดับของตนเอง โดยช่วง 3 วันใช้ 50 / 100 / 150 / 200 มม. (ค่าต้นแบบ / TBD) <span>ไม่สร้าง AlertEvent จากเกณฑ์ 3 วันก่อนหน่วยงานอนุมัติ • ช่วงอื่นอยู่ใน Monitoring / Report</span></div>
+<div class="rain-criteria-note"><b>การรับเกณฑ์:</b> สถานีรับค่าจากเกณฑ์ List/เกณฑ์กลาง และสามารถบันทึก Station Override Draft ได้ • ทั้ง 5 ช่วงมีจุดแบ่ง 5 ระดับของตนเอง โดยช่วง 3 วันใช้ 50 / 100 / 150 / 200 มม. (ค่าต้นแบบ / TBD) <span>ไม่สร้าง AlertEvent จากเกณฑ์ 3 วันก่อนหน่วยงานอนุมัติ • ช่วงอื่นอยู่ใน Monitoring / Report</span></div>
 <div class="master-footer">
 <div class="audit" id="stationThresholdAudit">ยังไม่ได้เลือกสถานี</div>
 <div class="action-row"><button class="btn-light" disabled="" id="resetStationThresholdBtn" title="คืนค่าเกณฑ์กลางเฉพาะช่วงที่เลือก หรือทุกช่วงเมื่อเลือกทั้งหมด">คืนค่าเกณฑ์กลาง (ทุกช่วง)</button><button class="btn-primary" disabled="" id="saveStationThresholdBtn2">บันทึก Station Draft</button></div>
@@ -2973,21 +2973,16 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
   // These are aggregation/observation windows, not the numeric alert limits.
   // "today" and "yesterday" follow the 07:00 Asia/Bangkok observation-day convention.
   const RAIN_PERIOD_CATALOG = Object.freeze([
-    {key:'1h', label:'ฝน 1 ชั่วโมง', description:'ปริมาณฝนสะสมย้อนหลัง 1 ชั่วโมง นับจากเวลาปัจจุบัน'},
-    {key:'1d', label:'24 ชม.', description:'ปริมาณฝนสะสมย้อนหลัง 24 ชั่วโมง นับจากเวลาปัจจุบัน', isDefault:true},
-    {key:'today', label:'ฝนวันนี้', description:'ปริมาณฝนสะสมตั้งแต่เวลา 07:00 น. ของวันปัจจุบันจนถึงเวลาปัจจุบัน'},
-    {key:'yesterday', label:'ฝนวานนี้', description:'ปริมาณฝนสะสมตั้งแต่เวลา 07:00 น. ของวันก่อนหน้าถึงเวลา 07:00 น. ของวันปัจจุบัน'},
-    {key:'3d', label:'3 วัน', description:'ฝนสะสม 3 วัน • รูปแบบ Rolling 72 ชั่วโมง หรือ 3 รอบวันฝนยังต้องยืนยัน (TBD)'},
-    {key:'5d', label:'5 วัน', description:'ยอดรวมปริมาณฝนรายวัน จำนวน 5 วัน'},
-    {key:'7d', label:'7 วัน', description:'ยอดรวมปริมาณฝนรายวัน จำนวน 7 วัน'},
-    {key:'15d', label:'15 วัน', description:'ยอดรวมปริมาณฝนรายวัน จำนวน 15 วัน'},
-    {key:'month', label:'รายเดือน', description:'ยอดรวมปริมาณฝนสะสมรายเดือน'},
-    {key:'year', label:'รายปี', description:'ยอดรวมปริมาณฝนสะสมรายปี'}
-  ]);
+{key:'1d',label:'24 ชม.',description:'ปริมาณฝนสะสมย้อนหลัง 24 ชั่วโมง',isDefault:true},
+{key:'3d',label:'3 วัน',description:'ฝนสะสม 3 วัน (72 ชั่วโมง) · Mockup / TBD'},
+{key:'5d',label:'5 วัน',description:'ฝนสะสม 5 วัน · Mockup / TBD'},
+{key:'7d',label:'7 วัน',description:'ฝนสะสม 7 วัน · Mockup / TBD'},
+{key:'15d',label:'15 วัน',description:'ฝนสะสม 15 วัน · Mockup / TBD'}
+]);
   const RAIN_PERIOD_KEYS = new Set(RAIN_PERIOD_CATALOG.map(p=>p.key));
   // V56: maintain legacy observation periods in prototype data, without exposing
   // those periods as configurable alert rules until a specific rule is approved.
-  const ALERT_RAIN_PERIODS = Object.freeze(RAIN_PERIOD_CATALOG.filter(p=>['1h','1d','3d'].includes(p.key)));
+  const ALERT_RAIN_PERIODS = Object.freeze(RAIN_PERIOD_CATALOG.filter(p=>['1d','3d','5d','7d','15d'].includes(p.key)));
   const ALERT_RAIN_KEYS = new Set(ALERT_RAIN_PERIODS.map(p=>p.key));
 
   // Central threshold master for Nan upper basin (above Sirikit Dam).
@@ -4496,7 +4491,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
     // Proposed UI-only five-band cuts for 72-hour cumulative rain (not a TMD standard).
     const RAIN_3DAY_FIVE_BOUNDS=Object.freeze([50,100,150,200]);
     function defaultRainBounds(period='1d'){
-      return [...(period==='1h'?RAIN_HOURLY_BOUNDS:period==='3d'?RAIN_3DAY_FIVE_BOUNDS:RAIN_DEFAULT_BOUNDS)];
+      return [...({'1d':RAIN_DEFAULT_BOUNDS,'3d':RAIN_3DAY_FIVE_BOUNDS,'5d':[70,140,210,280],'7d':[100,200,300,400],'15d':[150,300,450,600]}[period] || RAIN_DEFAULT_BOUNDS)];
     }
     function defaultRainSignature(key){return JSON.stringify(defaultRainBounds(key));}
     function ensureDefaultRainThresholds(rows){
@@ -4512,7 +4507,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
         const oldPrototypeDefault=Array.isArray(row.rainBands)
           && JSON.stringify(row.rainBands)===JSON.stringify(RAIN_DEFAULT_BOUNDS)
           && ['default-five-bands-uat','default-hourly-proposed'].includes(row.bandOrigin||'default-five-bands-uat');
-        const v55ThreeDay=p.key==='3d' && (
+        const v55ThreeDay=['3d','5d','7d','15d'].includes(p.key) && (
           JSON.stringify(row.rainBands)===JSON.stringify(RAIN_DEFAULT_BOUNDS)
           || String(row.bandOrigin||'').endsWith('-reference-v55')
           || (Array.isArray(row.riskBands)&&row.riskBands.length===2)
@@ -4551,7 +4546,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
           label:p.label,watch:CENTRAL_RAIN_THRESHOLD_NAN.periods[p.key].watch,
           special:CENTRAL_RAIN_THRESHOLD_NAN.periods[p.key].special,
           critical:CENTRAL_RAIN_THRESHOLD_NAN.periods[p.key].critical,
-          status:'proposed',alertEnabled:p.key!=='3d',rainBands:defaultRainBounds(p.key),bandOrigin:'default-'+p.key+'-reference-v56'
+          status:'proposed',alertEnabled:false,rainBands:defaultRainBounds(p.key),bandOrigin:'default-'+p.key+'-reference-v56'
         }]))
       }
     };
@@ -4593,7 +4588,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
         if(!cfg.thresholds[p.key]){
           const m=ndwcMasterState.thresholds[p.key];
           cfg.thresholds[p.key]={label:p.label,watch:m.watch,special:m.special,critical:m.critical,
-            rainBands:[...rainBandsForPrototype(m)],alertEnabled:p.key!=='3d',edited:false};
+            rainBands:[...rainBandsForPrototype(m)],alertEnabled:false,edited:false};
         }else{
           cfg.thresholds[p.key].label=p.label;
           if(p.key==='3d'){
@@ -5011,7 +5006,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
         // Each *new* List starts with the canonical five-band defaults; it must
         // not inherit unsaved edits from whatever List happened to be open.
         thresholds:Object.fromEntries(Object.entries(ndwcMasterState.thresholds).map(([period,t])=>
-          [period,{...cloneThresholds(t),rainBands:defaultRainBounds(period),riskBands:undefined,alertEnabled:period!=='3d',bandOrigin:'default-'+period+'-reference-v56',status:'proposed'}]))
+          [period,{...cloneThresholds(t),rainBands:defaultRainBounds(period),riskBands:undefined,alertEnabled:false,bandOrigin:'default-'+period+'-reference-v56',status:'proposed'}]))
       };
       loadAreaRule(id);
       const details=document.getElementById('areaProfileEditorDisclosure');if(details)details.open=true;
@@ -5678,7 +5673,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
           if(!ALERT_RAIN_KEYS.has(key)||(selectedPeriod!=='all'&&selectedPeriod!==key))return;
           const old=cfg.thresholds[key];
           const wasOverride=!!old?.edited;
-          cfg.thresholds[key]={label:t.label,watch:t.watch,special:t.special,critical:t.critical,rainBands:[...rainBandsFor(t)],alertEnabled:key!=='3d',edited:false,pending:wasOverride||!!old?.pending};
+          cfg.thresholds[key]={label:t.label,watch:t.watch,special:t.special,critical:t.critical,rainBands:[...rainBandsFor(t)],alertEnabled:false,edited:false,pending:wasOverride||!!old?.pending};
         });
         cfg.hasOverride=Object.values(cfg.thresholds).some(row=>row.edited);
         renderStationThresholdTable();
@@ -5690,7 +5685,7 @@ html.backoffice-embedded .app>main{min-width:0;width:100%;box-sizing:border-box}
         if(!currentStationForThreshold||currentStationForThreshold.type!=='rain')return;
         const cfg=getStationSpecificConfig(currentStationForThreshold);
         if(!validateRainThresholdRows(Object.fromEntries(Object.entries(cfg.thresholds).filter(([,t])=>t.edited)))){
-          alert('กรุณาตรวจสอบจุดแบ่ง 4 ค่าในแต่ละช่วงฝน (1 ชม. / 24 ชม. / 3 วัน) โดยเรียงจากน้อยไปมาก');return;
+          alert('กรุณาตรวจสอบจุดแบ่ง 4 ค่าในแต่ละช่วงฝน (24 ชม. / 3 วัน / 5 วัน / 7 วัน / 15 วัน) โดยเรียงจากน้อยไปมาก');return;
         }
         const priorPending=Object.fromEntries(Object.entries(cfg.thresholds).map(([key,row])=>[key,!!row.pending]));
         Object.values(cfg.thresholds).forEach(row=>{delete row.pending;});

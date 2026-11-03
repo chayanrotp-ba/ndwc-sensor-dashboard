@@ -1,16 +1,21 @@
 // Exact default five-level rainfall intensity cuts from the supplied v56.
 // Prototype reference only: these are not operational notification thresholds.
 export const RAIN_CRITERIA = Object.freeze({
-  '1h': { label: '1 ชั่วโมง', cuts: [0.5, 5, 25, 50] },
   '24h': { label: '24 ชั่วโมง', cuts: [0.5, 10, 35, 90] },
-  '72h': { label: '3 วัน (72 ชม.)', cuts: [50, 100, 150, 200], draft: true },
+  '72h': { label: '3 วัน', cuts: [50, 100, 150, 200], draft: true },
+  '5d': { label:'5 วัน', cuts:[70,140,210,280], draft:true },
+  '7d': { label:'7 วัน', cuts:[100,200,300,400], draft:true },
+  '15d': { label:'15 วัน', cuts:[150,300,450,600], draft:true },
 });
 export const RAIN_LEVELS = ['ฝนละออง', 'ฝนเล็กน้อย', 'ฝนปานกลาง', 'ฝนหนัก', 'ฝนหนักมาก'];
 export const RAIN_COLORS = ['#9dd9ef', '#90c881', '#f0d447', '#f99c38', '#ff3656'];
 export const STATION_MOCK_CUTS = {
-  '1h': [0.5, 8, 30, 60],
+
   '24h': [1, 15, 50, 120],
   '72h': [60, 120, 180, 250],
+  '5d':[80,160,240,320],
+  '7d':[120,240,360,480],
+  '15d':[180,360,540,720],
 };
 export function rainfallResult(range, value, offline = false, scope = 'central') {
   const reference = RAIN_CRITERIA[range];

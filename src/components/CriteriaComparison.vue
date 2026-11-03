@@ -20,7 +20,7 @@ const results = computed(() => [
     <div v-for="criterion in results" :key="criterion.key" :class="['comparison-row', criterion.key]">
       <div class="comparison-source"><span class="comparison-source-icon" aria-hidden="true">{{ criterion.icon }}</span><div><strong>{{ criterion.name }}</strong><span>{{ criterion.scope }}</span></div></div>
       <div class="comparison-result">
-        <div><span class="comparison-state">{{ criterion.result.criterion?.draft ? 'Draft / TBD · เกณฑ์ 3 วัน' : 'ค่าเกณฑ์จำลองจาก v56' }}</span><strong :style="{color:criterion.result.color}">{{ criterion.result.label }}</strong></div>
+        <div><span class="comparison-state">{{ criterion.result.criterion?.draft ? 'Draft / TBD · เกณฑ์หลายวัน' : 'ค่าเกณฑ์จำลองจาก v56' }}</span><strong :style="{color:criterion.result.color}">{{ criterion.result.label }}</strong></div>
         <div v-if="criterion.result.bands.length" class="comparison-bands"><div v-for="band in criterion.result.bands" :key="band.label"><span>{{ band.label }}</span><b>{{ band.range }}</b></div></div>
         <div v-if="criterion.result.bands.length" class="comparison-scale" title="แถบแบ่งเป็น 5 ระดับ ไม่ใช่สเกลเชิงเส้น"><i v-for="band in criterion.result.bands" :key="band.label" :style="{background:band.color}"></i><span v-if="criterion.result.available" class="comparison-marker" :style="{left:criterion.result.position + '%'}" :aria-label="'ค่าฝน ' + amount"></span></div>
         <div v-else class="comparison-empty-scale" aria-hidden="true"></div>

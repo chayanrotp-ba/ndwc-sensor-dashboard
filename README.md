@@ -30,3 +30,6 @@ The station list, notification inbox and station details now expose a shared cri
 ## v56 threshold mockup
 The criteria UI now deliberately simulates area/station bindings using the supplied v56 default cuts: 1h 0.5/5/25/50; 24h 0.5/10/35/90; 72h 50/100/150/200 mm (Draft/TBD). The central v56 values remain the reference. The user-requested mock area override reduces every cut by 20 percent; per-station criteria retain the reference values. Each type is evaluated independently. Positive-rainfall interval upper bounds are inclusive; zero means no rain. Unsupported windows have no criteria. This replaces the earlier unconnected presentation state for rainfall only and does not create operational alerts. A 1h chart uses the existing simulated hourly series; 48h accumulation remains unavailable.
 
+
+Rainfall accumulation controls now consistently use 24h, 3d, 5d, 7d and 15d in the dashboard, popup comparison, history chart and both threshold editors. Additional multi-day cuts are mock draft values only.
+
