@@ -1,5 +1,5 @@
 import { DCLogic } from '../runtime.js';
-import { thresholdSettings } from '../threshold-settings.js';
+import { thresholdSettings, hasCustomThreshold } from '../threshold-settings.js';
 export default class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ export default class Component extends DCLogic {
     const list=stations.filter(x=>(!s.q.trim() || (x.code+x.name+x.loc).includes(s.q.trim())) && (!s.basin || x.basin===s.basin) && (!s.stat || (s.stat==='on')===x.online));
     const rows=list.map(x=>({
       ...x,loc1:x.loc.split(' จ.')[0],loc2:'จ.'+x.loc.split(' จ.')[1],updD:x.upd.split(' ')[0],updT:x.upd.split(' ')[1],
-      own:!!thresholdSettings.stations[x.code]?.rain,source:thresholdSettings.stations[x.code]?.rain ? 'รายสถานี' : 'กลาง Default',
+      own:hasCustomThreshold(x.code),source:thresholdSettings.stations[x.code]?.rain ? 'รายสถานี' : 'กลาง Default',
       st:x.online?'Online':'Offline',stCls:x.online?'st-on':'st-off',show:!s.hidden[x.code],tgCls:s.hidden[x.code]?'tgx':'tgx on',tgAria:'แสดงผล '+x.name,
       toggle:()=>this.setState({hidden:{...s.hidden,[x.code]:!s.hidden[x.code]}}),
       menu:s.menu===x.code,kbCls:s.menu===x.code?'kb on':'kb',kbAria:'จัดการ '+x.name,

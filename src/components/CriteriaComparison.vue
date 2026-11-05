@@ -1,9 +1,9 @@
 <script setup>
 import { computed } from 'vue';
-import { effectiveThreshold, effectiveRainfall } from '../threshold-settings.js';
+import { thresholdComparisons } from '../threshold-settings.js';
 const props = defineProps({ context: { type: Object, required: true } });
 const amount = computed(() => props.context.offline ? 'ออฟไลน์' : props.context.value == null ? 'ไม่มีข้อมูลช่วงนี้' : `${props.context.value.toLocaleString('en-US')} มม.`);
-const results = computed(() => [{key:'effective',name:effectiveThreshold(props.context.code,props.context.range).source,scope:props.context.code+' · ใช้ประเมินและเป็นเงื่อนไขแจ้งเตือนชุดเดียวกัน',icon:'▥',result:effectiveRainfall(props.context.code,props.context.range,props.context.value,props.context.offline)}]);
+const results = computed(() => thresholdComparisons(props.context.code,props.context.range,props.context.value,props.context.offline));
 </script>
 
 <template>
@@ -17,15 +17,15 @@ const results = computed(() => [{key:'effective',name:effectiveThreshold(props.c
     <details v-for="criterion in results" :key="context.code + criterion.key" :class="['comparison-row', criterion.key]" open>
       <summary class="comparison-source" :aria-label="'ย่อหรือขยายรายละเอียด ' + criterion.name"><span class="comparison-source-icon" aria-hidden="true">{{ criterion.icon }}</span><div class="comparison-source-title"><strong>{{ criterion.name }}</strong><span>{{ criterion.scope }}</span></div><span class="comparison-summary-result" :style="{color:criterion.result.color}">{{ criterion.result.label }}</span><span class="comparison-toggle"><span class="when-expanded">ย่อ</span><span class="when-collapsed">ขยาย</span><span class="comparison-chevron" aria-hidden="true">⌄</span></span></summary>
       <div class="comparison-result">
-        <div><span class="comparison-state">ต้นแบบ · เกณฑ์ที่มีผลใช้งาน</span><strong :style="{color:criterion.result.color}">{{ criterion.result.label }}</strong></div>
+        <div><span class="comparison-state">ต้นแบบ · ผลประเมินตามเกณฑ์นี้</span><strong :style="{color:criterion.result.color}">{{ criterion.result.label }}</strong></div>
         <div v-if="criterion.result.bands.length" class="comparison-bands"><div v-for="band in criterion.result.bands" :key="band.label"><span>{{ band.label }}</span><b>{{ band.range }}</b></div></div>
         <div v-if="criterion.result.bands.length" class="comparison-scale" title="แถบแบ่งเป็น 5 ระดับ ไม่ใช่สเกลเชิงเส้น"><i v-for="band in criterion.result.bands" :key="band.label" :style="{background:band.color}"></i><span v-if="criterion.result.available" class="comparison-marker" :style="{left:criterion.result.position + '%'}" :aria-label="'ค่าฝน ' + amount"></span></div>
         <div v-else class="comparison-empty-scale" aria-hidden="true"></div>
         <p>{{ criterion.result.bands.length ? 'หน่วย มม. · รวมค่าขอบบนของแต่ละระดับ · ตั้งค่าจากรายการสถานี → จัดการ → ตั้งค่าเกณฑ์' : 'ช่วงนี้ใช้ติดตามและดูกราฟ ยังไม่มีเกณฑ์ 5 ระดับในต้นฉบับ' }}</p>
       </div>
     </details>
-    <p class="comparison-note" role="status"><span aria-hidden="true">ⓘ</span><span>ผลจำลอง · ฝนสะสม {{ context.periodLabel }} {{ amount }} · {{ results[0].name }}: {{ results[0].result.label }}</span></p>
-    <p class="comparison-caption">ต้นแบบ · เกณฑ์รายสถานีมีลำดับใช้ก่อนเกณฑ์ตามประเภทการตรวจวัด ใช้เกณฑ์ชุดเดียวสำหรับประเมินและเงื่อนไขแจ้งเตือน · ยังไม่เชื่อมการส่งแจ้งเตือนจริง</p>
+    <p class="comparison-note" role="status"><span aria-hidden="true">ⓘ</span><span>ผลจำลอง · ฝนสะสม {{ context.periodLabel }} {{ amount }} · {{ results.map(item=>item.name+': '+item.result.label).join(' · ') }}</span></p>
+    <p class="comparison-caption">ต้นแบบ · แสดงเกณฑ์กลางเสมอ และเพิ่มเกณฑ์กำหนดเองเฉพาะสถานีที่บันทึกไว้ เกณฑ์รายสถานีมีลำดับใช้ก่อนเกณฑ์กลาง ใช้เกณฑ์ชุดเดียวสำหรับประเมินและเงื่อนไขแจ้งเตือน · ยังไม่เชื่อมการส่งแจ้งเตือนจริง</p>
   </section>
 </template>
 

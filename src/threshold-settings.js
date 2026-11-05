@@ -5,6 +5,17 @@ export const defaultRain = () => Object.fromEntries(Object.entries(RAIN_CRITERIA
 let saved;
 try { saved = JSON.parse(globalThis.localStorage?.getItem(SETTINGS_KEY) || 'null'); } catch { /* Use demo defaults if storage is unavailable. */ }
 export const thresholdSettings = reactive({ types: saved?.types || { rain: defaultRain() }, stations: saved?.stations || {} });
+// Seed one visible prototype example once; returning it to Default stays respected.
+thresholdSettings.customDemoSeeded = true;
+if (!saved?.customDemoSeeded) {
+  if (!thresholdSettings.stations['G15006-5501']?.rain) {
+    const demo = defaultRain();
+    demo['24h'] = [1,15,50,300];
+    demo.today = [...demo['24h']]; demo.yesterday = [...demo['24h']];
+    thresholdSettings.stations['G15006-5501'] = { rain:demo };
+  }
+  try { globalThis.localStorage?.setItem(SETTINGS_KEY,JSON.stringify(thresholdSettings)); } catch { /* Keep the example usable in memory. */ }
+}
 // Upgrade prior demo data to the linked daily windows and lower hourly bounds.
 for (const values of [thresholdSettings.types.rain, ...Object.values(thresholdSettings.stations).map(s=>s.rain)]) {
   if (!values?.['24h']) continue;
@@ -15,6 +26,15 @@ export function validCuts(cuts) {
   return Array.isArray(cuts) && cuts.length === 4 && cuts.every((v, i) => typeof v === 'number' && Number.isFinite(v) && v > 0 && (!i || v > cuts[i - 1]));
 }
 export const thresholdRange = range => ['today','yesterday'].includes(range) ? '24h' : range;
+export function hasCustomThreshold(code, range) {
+  const values = thresholdSettings.stations[code]?.rain;
+  return range ? validCuts(values?.[thresholdRange(range)]) : !!values && Object.values(values).some(validCuts);
+}
+export function thresholdComparisons(code, range, value, offline) {
+  const result = [{ key:'central', name:'เกณฑ์กลาง (Default ระบบ)', scope:'ค่าเริ่มต้นของระบบ', icon:'▥', result:effectiveRainfall('',range,value,offline) }];
+  if (hasCustomThreshold(code,range)) result.push({key:'station',name:'เกณฑ์กำหนดเองรายสถานี',scope:code+' · กำหนดเกณฑ์เอง',icon:'⌖',result:effectiveRainfall(code,range,value,offline)});
+  return result;
+}
 export function effectiveThreshold(code, range) {
   range = thresholdRange(range);
   const own = thresholdSettings.stations[code]?.rain?.[range];

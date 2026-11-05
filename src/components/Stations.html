@@ -376,7 +376,7 @@ body{margin:0;background:#f4f4f5}
 <sc-for list="{{rows}}" as="r" hint-placeholder-count="12">
 <tr>
 <td class="num">{{r.no}}</td>
-<td title="{{r.name}}"><span class="nmc"><span class="nmt">{{r.name}}</span><sc-if value="{{r.own}}" hint-placeholder-val="{{false}}"><span class="thb" title="มีเกณฑ์รายสถานี">เกณฑ์รายสถานี</span></sc-if></span><span class="sub2">{{r.code}} · เกณฑ์{{r.source}}</span></td>
+<td title="{{r.name}}"><span class="nmc"><span class="nmt">{{r.name}}</span><sc-if value="{{r.own}}" hint-placeholder-val="{{false}}"><span class="thb" title="สถานีนี้มีการกำหนดเกณฑ์เอง">กำหนดเกณฑ์เอง</span></sc-if></span><span class="sub2">{{r.code}} · เกณฑ์{{r.source}}</span></td>
 <td title="{{r.loc}}"><span class="l1">{{r.loc1}}</span><span class="sub2">{{r.loc2}}</span></td>
 <td title="{{r.basin}}"><span class="cl2">{{r.basin}}</span></td>
 <td>{{r.freq}}</td>
