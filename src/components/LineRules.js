@@ -151,6 +151,7 @@ export default class Component extends DCLogic {
       isLight: theme === 'light', isDark: theme !== 'light', thLightCls: theme === 'light' ? 'on' : '', thDarkCls: theme !== 'light' ? 'on' : '',
       setLight: () => setTheme('light'), setDark: () => setTheme('dark'), rootCls: theme === 'light' ? 'sx lt' : 'sx',
       goCriteria: () => this.props.goCriteria?.(),
+      goMaster: () => this.props.goMaster?.(),
       goMap: () => { if (this.props && typeof this.props.goMap === 'function') this.props.goMap(); },
       dl, cr, stop: (e) => e.stopPropagation(), openCreate: () => this.setState({ form: this.blankForm(), quota: false }),
       goStations: () => { if (this.props && typeof this.props.goStations === 'function') this.props.goStations(); },

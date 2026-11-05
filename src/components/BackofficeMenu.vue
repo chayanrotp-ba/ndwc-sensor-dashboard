@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-const props = defineProps({goMap:Function,goStations:Function,goLine:Function,goLight:Function,goDark:Function,current:String});
+const props = defineProps({goMap:Function,goStations:Function,goLine:Function,goMaster:Function,goLight:Function,goDark:Function,current:String});
 const menu=ref(null);
 function navigate(action){menu.value.open=false;action?.();}
 </script>
@@ -13,7 +13,7 @@ function navigate(action){menu.value.open=false;action?.();}
         <button @click="navigate(goMap)">หน้าแผนที่</button>
         <button :aria-current="current==='stations'?'page':undefined" @click="navigate(goStations)">รายการสถานี Sensor</button>
         <button :aria-current="current==='line'?'page':undefined" @click="navigate(goLine)">จัดการการแจ้งเตือนไลน์</button>
-        <div class="bo-mobile-theme"><button v-if="goLight" @click="navigate(goLight)">☼ สว่าง</button><button v-if="goDark" @click="navigate(goDark)">☾ มืด</button></div>
+        <button :aria-current="current==='master'?'page':undefined" @click="navigate(goMaster)">การจัดการข้อมูล (Master)</button><div class="bo-mobile-theme"><button v-if="goLight" @click="navigate(goLight)">☼ สว่าง</button><button v-if="goDark" @click="navigate(goDark)">☾ มืด</button></div>
       </nav>
     </details>
   </div>

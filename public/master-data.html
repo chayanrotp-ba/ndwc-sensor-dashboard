@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย | Sensor Master Data</title>
+<style>
+
+:root{color-scheme:dark;--bg:#191919;--side:#0e0e10;--surface:#0e0e10;--surface2:#18181b;--surface3:#262626;--edge:#303034;--text:#f8fafc;--sub:#cbd5e1;--muted:#94a3b8;--primary:#2563eb;--primary-bg:#172554;--primary-text:#bfdbfe;--danger:#fca5a5;--overlay:#000a}
+:root.light{color-scheme:light;--bg:#f4f4f5;--side:#fff;--surface:#fff;--surface2:#fafafa;--surface3:#f4f4f5;--edge:#e4e4e7;--text:#0f172a;--sub:#334155;--muted:#64748b;--primary:#2563eb;--primary-bg:#dbeafe;--primary-text:#1e40af;--danger:#b91c1c;--overlay:#0f172a66}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 'Sarabun','Noto Sans Thai','Leelawadee UI',Tahoma,Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}[hidden]{display:none!important}
+.layout{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100dvh}.side{height:100dvh;position:sticky;top:0;background:var(--side);border-right:1px solid var(--edge);padding:13px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;z-index:15}.brand{display:flex;gap:12px;align-items:center;margin:0 3px 6px}.emblem{width:36px;height:44px;display:grid;place-items:center;flex-shrink:0;color:#fff;font-size:19px;background:linear-gradient(145deg,#1d4ed8,#132753);border:1px solid #3b82f6;border-radius:8px}.brand b{font-size:15px;font-weight:600;line-height:1.4}.brand small{display:block;color:var(--muted);font-size:12px}.searchmenu{height:40px;width:100%;background:var(--surface3);border:1px solid #737373;border-radius:6px;padding:0 12px;color:var(--text)}.nav{display:flex;align-items:center;gap:11px;padding:10px;border-radius:6px;color:var(--sub);min-height:40px}.nav-symbol{width:20px;text-align:center;color:var(--muted);font-size:17px}.navgrp{border:1px solid var(--edge);border-radius:8px;background:var(--surface2);padding:4px}.navgrp .nav{font-weight:600}.navsub{margin-left:22px;padding:9px 10px;color:var(--sub);border-left:2px solid transparent;min-height:36px;font-size:13px;border-radius:0 6px 6px 0}.navsub.active{background:var(--primary-bg);border-left-color:var(--primary);color:var(--primary-text);font-weight:600}.bottom{margin-top:auto;display:grid;gap:10px}.theme{display:flex;background:var(--surface2);border:1px solid var(--edge);border-radius:8px;padding:3px;gap:2px}.theme button{height:34px;flex:1;border:0;border-radius:6px;background:transparent;color:var(--muted)}.theme button.on{background:var(--surface3);color:var(--text);font-weight:600}.user{border:1px solid var(--edge);background:var(--surface2);border-radius:8px;padding:10px 12px}.user small{display:block;color:var(--muted)}
+.main{min-width:0;padding:24px clamp(18px,2vw,34px) 36px;width:100%;max-width:1800px;margin:0 auto}.crumb{color:var(--muted);font-size:13px;margin:0 0 6px}.head{display:flex;gap:20px;align-items:center;justify-content:space-between;margin-bottom:22px}.head h1{margin:0;font-size:24px;font-weight:600;line-height:1.4}.head p{color:var(--muted);margin:3px 0 0;font-size:13px}.btn{background:var(--primary);border:1px solid var(--primary);color:#fff;padding:10px 16px;border-radius:6px;font-weight:600;white-space:nowrap;min-height:40px}.btn:hover{filter:brightness(1.12)}.btn.secondary{background:var(--surface3);border-color:var(--edge);color:var(--text)}.btn.danger{background:#991b1b;border-color:#991b1b;color:#fff}.btn.quiet{background:transparent;border:1px solid var(--edge);color:var(--sub)}.btn.small{min-height:34px;padding:6px 11px;font-size:13px}
+.panel{background:var(--surface);border:1px solid var(--edge);border-radius:12px;padding:24px;min-width:0}.panel-heading{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.panel-heading h2{font-size:16px;margin:0 0 3px}.subtext{color:var(--muted);font-size:12px}.count-pill{color:var(--primary-text);background:var(--primary-bg);padding:3px 10px;border-radius:20px;font-size:12px;white-space:nowrap}.tabs{display:flex;gap:3px;overflow-x:auto;overflow-y:hidden;border-bottom:1px solid var(--edge);margin-top:19px;scrollbar-width:thin;scrollbar-color:var(--edge) transparent}.tab{flex:0 0 auto;background:none;color:var(--muted);border:0;border-bottom:2px solid transparent;padding:12px 14px;margin-bottom:-1px;font-weight:600;white-space:nowrap;font-size:13px}.tab:hover{color:var(--text)}.tab[aria-selected=true]{color:var(--text);border-bottom-color:#3b82f6}.tab[aria-selected=true] .tabcount{color:#fff;background:var(--primary)}.tabcount{font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px;background:var(--surface3);color:var(--muted);margin-left:6px}
+/* New compact list: deliberately centered, readable on widescreens */
+.shared-banner{border:1px solid #2563eb66;background:var(--primary-bg);color:var(--primary-text);border-radius:8px;font-size:13px;padding:11px 14px;margin-bottom:12px}
+.list-section{max-width:990px;margin:18px auto 0}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}.list-heading{font-size:14px;font-weight:600;color:var(--text)}.list-container{border:1px solid var(--edge);border-radius:10px;overflow:hidden;background:var(--surface)}.criteria-list{margin:0;padding:0;list-style:none}.criterion{display:flex;align-items:center;gap:14px;min-height:72px;padding:11px 15px;border-bottom:1px solid var(--edge);transition:background .12s}.criterion:last-child{border-bottom:0}.criterion:hover{background:var(--surface2)}.swatch{width:7px;height:42px;border-radius:8px;flex:0 0 7px}.criterion-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}.criterion-name{color:var(--text);font-size:14px;font-weight:600;overflow-wrap:anywhere}.criterion-color{display:flex;gap:7px;align-items:center}.dot{display:inline-block;flex-shrink:0;width:12px;height:12px;border-radius:50%;border:1px solid #ffffff80}.hex{font-size:12px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.criterion-pos{color:var(--muted);font-size:12px;width:26px;text-align:center;flex-shrink:0;font-variant-numeric:tabular-nums}.criterion-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}.action-button{display:inline-flex;gap:6px;align-items:center;justify-content:center;height:34px;border:1px solid var(--edge);border-radius:6px;padding:0 12px;color:var(--sub);background:var(--surface2);font-size:13px;font-weight:500}.action-button:hover{background:var(--surface3);color:var(--text)}.action-button.delete{background:transparent;color:var(--muted)}.action-button.delete:hover{background:#7f1d1d22;color:var(--danger);border-color:#991b1b}.action-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.group-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 9px;font-weight:600;font-size:14px}.group-title:first-child{margin-top:0}.group-title .subtext{font-weight:400}.empty{text-align:center;color:var(--muted);padding:34px 12px}.footnote{font-size:12px;color:var(--muted);margin:20px auto 0;max-width:990px;line-height:1.7}.list-hint{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:0 0 11px}.list-hint svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.8}
+.overlay{position:fixed;inset:0;background:var(--overlay);z-index:30;display:none;align-items:center;justify-content:center;padding:18px}.overlay.open{display:flex}.modal{width:min(530px,100%);max-height:95vh;overflow:auto;background:var(--surface2);border:1px solid var(--edge);border-radius:12px;box-shadow:0 25px 55px #0007}.modalhead{padding:17px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--edge)}.modalhead h2{font-size:19px;margin:0}.modalbody{padding:20px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;padding:15px 20px;border-top:1px solid var(--edge)}.fieldrow{margin-bottom:16px}.fieldrow label{display:block;color:var(--sub);font-weight:600;margin-bottom:6px}.fieldrow input,.fieldrow select{height:42px;width:100%;padding:0 12px;background:var(--surface3);border:1px solid #737373;border-radius:6px;color:var(--text)}.fieldrow input:disabled{opacity:.7}.picker{display:flex;align-items:center;gap:12px;border:1px solid var(--edge);border-radius:8px;padding:10px;background:var(--surface)}.picker input[type=color]{width:54px;height:43px;border:0;background:transparent;padding:0;cursor:pointer}.sample-dot{width:22px;height:22px;border-radius:50%;border:1px solid #ffffff80;flex-shrink:0}.preview{border:1px solid var(--edge);background:var(--surface);border-radius:8px;padding:12px;margin-top:8px}.preview-line{display:flex;align-items:center;gap:12px;margin-top:9px}.preview .dot{width:18px;height:18px}.err{color:var(--danger);font-size:13px;min-height:18px}.toast{display:none;position:fixed;bottom:25px;right:25px;padding:11px 16px;border-radius:8px;background:#14532d;border:1px solid #166534;color:#fff;box-shadow:0 15px 35px #0007;z-index:50}.alert-text{font-size:13px;color:var(--muted);line-height:1.7}.danger-title{color:var(--danger)}.mobile-bar,.mobile-backdrop{display:none}
+@media(max-width:1100px){.layout{grid-template-columns:260px minmax(0,1fr)}.main{padding:20px}.panel{padding:20px}}
+@media(max-width:900px){.layout{display:block}.side{position:fixed;top:0;left:0;bottom:0;width:min(300px,85vw);height:100dvh;transform:translateX(-105%);transition:transform .18s ease;box-shadow:12px 0 30px #0005}body.menu-open .side{transform:translateX(0)}body.menu-open{overflow:hidden}.mobile-backdrop{position:fixed;inset:0;background:#0009;z-index:14;display:none}body.menu-open .mobile-backdrop{display:block}.mobile-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}.mobile-bar .menu-trigger{display:inline-flex;align-items:center;gap:7px;justify-content:center;border:1px solid var(--edge);border-radius:7px;background:var(--surface2);color:var(--text);height:38px;padding:0 12px;font-size:14px;font-weight:600}.mobile-bar span{font-size:13px;color:var(--muted)}}
+@media(max-width:620px){.main{padding:14px}.head{align-items:stretch;flex-direction:column;gap:13px;margin-bottom:16px}.head h1{font-size:21px}.head .btn{align-self:flex-start}.panel{padding:14px}.panel-heading{flex-wrap:wrap}.list-section{margin-top:16px}.criterion{gap:10px;padding:11px;min-height:68px}.criterion-pos{width:18px}.swatch{height:38px}.criterion-actions{gap:5px}.action-button{width:34px;padding:0}.action-button .action-label{display:none}.toolbar{gap:8px}.toolbar .subtext{white-space:nowrap}.group-title{margin-top:16px}.toast{left:12px;right:12px;bottom:12px;text-align:center}.modalhead{padding:14px 16px}.modalbody{padding:16px}.modalfoot{padding:12px 16px}.picker{flex-wrap:wrap}}
+@media(max-width:380px){.criterion{gap:7px;padding:9px 8px}.criterion-name{font-size:13px}.criterion-pos{width:15px}.toolbar .subtext{font-size:11px}.panel{padding:11px}.main{padding:10px}}
+
+
+/* Type-to-confirm deletion (Thai confirmation phrase) */
+.delete-context{border:1px solid var(--edge);background:var(--surface);border-radius:8px;padding:12px 14px;margin-bottom:18px}
+.delete-context .label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.delete-context strong{font-size:15px;color:var(--text)}
+.delete-context .subtext{display:block;margin-top:5px}
+.delete-warning{padding:10px 12px;border:1px solid #ef444455;background:#ef44440c;border-radius:8px;color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:18px}
+.delete-confirm-label{display:block;color:var(--sub);font-weight:600;margin-bottom:7px;font-size:14px}
+.delete-confirm-label code{font-family:inherit;color:var(--danger);font-weight:700;letter-spacing:0}
+.delete-confirm-input{width:100%;height:42px;padding:0 12px;color:var(--text);background:var(--surface3);border:1px solid #737373;border-radius:6px;letter-spacing:0;font-family:inherit}
+.delete-confirm-input.ok{border-color:#22c55e}
+.delete-confirm-hint{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}
+.btn.danger:disabled{opacity:.4;cursor:not-allowed;filter:none}
+
+/* Edit confirmation: Thai type-to-confirm field, within the editor */
+.edit-confirm{margin-top:18px;padding:14px;border:1px solid var(--edge);border-radius:9px;background:var(--surface)}
+.edit-confirm-title{font-size:14px;font-weight:600;color:var(--text);margin:0 0 7px}
+.edit-confirm-note{font-size:12px;line-height:1.65;margin:0 0 12px;color:var(--muted)}
+.edit-confirm-label{display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:7px}
+.edit-confirm-label code{font:inherit;color:#60a5fa;font-weight:700}
+.edit-confirm-input{display:block;width:100%;height:42px;padding:0 12px;color:var(--text);background:var(--surface3);border:1px solid #737373;border-radius:6px;font:inherit}
+.edit-confirm-input.ok{border-color:#22c55e}
+.edit-confirm-hint{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+</style>
+<style>.layout{display:block}.layout>.side,.mobile-bar,.mobile-backdrop{display:none!important}.main{max-width:none;padding:24px}body{overflow-x:hidden}@media(max-width:767px){.main{padding:14px}}</style></head>
+<body>
+<div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
+<div class="layout">
+<aside class="side" id="mainSidebar" aria-label="เมนูหลัก">
+ <div class="brand"><div class="emblem" aria-hidden="true">◈</div><div><b>ระบบบริหารจัดการ Sensor</b><small>System Management Sensor</small></div></div>
+ <input id="menuSearch" class="searchmenu" type="search" placeholder="ค้นหาเมนู..." aria-label="ค้นหาเมนู">
+ <div class="nav" data-nav><span class="nav-symbol">▧</span> หน้าแผนที่</div>
+ <div class="nav" data-nav><span class="nav-symbol">◉</span> สถานีตรวจวัด</div>
+ <div class="nav" data-nav><span class="nav-symbol">♧</span> จัดการการแจ้งเตือน</div>
+ <div class="navgrp" data-nav><div class="nav"><span class="nav-symbol">▣</span> การจัดการข้อมูลหลัก (Master Data)</div><div class="navsub">ข้อมูลสถานี</div><div class="navsub">อุปกรณ์และเซนเซอร์</div><div class="navsub active" aria-current="page">ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</div><div class="navsub">ข้อมูลอ้างอิง</div></div>
+ <div class="nav" data-nav><span class="nav-symbol">⚙</span> ผู้ใช้และสิทธิ์</div>
+ <div class="bottom"><div class="theme"><button id="lightButton" type="button" onclick="setTheme('light')">☀ สว่าง</button><button id="darkButton" type="button" onclick="setTheme('dark')">☾ มืด</button></div><div class="user">◉ &nbsp;ผู้ดูแลระบบ<small>Super admin</small></div><div class="nav"><span class="nav-symbol">⇥</span> ออกจากระบบ</div></div>
+</aside>
+<main class="main">
+ <div class="mobile-bar"><button class="menu-trigger" type="button" aria-controls="mainSidebar" aria-expanded="false" id="menuTrigger" onclick="toggleMobileMenu()">☰ เมนู</button><span>ระบบบริหารจัดการ Sensor</span></div>
+ <div class="crumb">หน้าแรก › การจัดการข้อมูลหลัก (Master Data) › ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</div>
+ <header class="head"><div><h1>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</h1><p>ตั้งค่าข้อมูลหลักของชื่อระดับและสีที่ใช้แสดงตามประเภทการตรวจวัด</p></div><button type="button" class="btn" onclick="openEditor()">＋ เพิ่มชื่อเกณฑ์</button></header>
+ <section class="panel" aria-label="รายการชื่อเกณฑ์ตามประเภทการตรวจวัด">
+  <div class="panel-heading"><div><h2>ประเภทการตรวจวัด</h2><div class="subtext">เลือกประเภทการตรวจวัดเพื่อจัดการชื่อเกณฑ์การเตือนภัยและสีประจำเกณฑ์</div></div><span class="count-pill">9 ค่าตรวจวัด · 9 แท็บ</span></div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="ประเภทการตรวจวัด"></div>
+  <div class="list-section"><div class="toolbar"><span class="list-heading">รายการชื่อเกณฑ์การเตือนภัย</span><span class="subtext" id="count"></span></div>
+  <div id="content" role="tabpanel" aria-live="polite"></div></div>
+  <p class="footnote">ข้อมูลชื่อและสีอ้างอิงจากตัวอย่างหน้าจอที่แนบ · <strong>PM2.5 และ PM10 แยกจัดการ โดยใช้ชื่อเกณฑ์และสีเริ่มต้นเหมือนกัน</strong> · การเปลี่ยนแปลงใน Mockup บันทึกในเบราว์เซอร์นี้เท่านั้น</p>
+ </section>
+</main>
+</div>
+<div class="overlay" id="editorOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalhead"><h2 id="modalTitle">เพิ่มชื่อเกณฑ์</h2><button class="btn secondary small" onclick="closeEditor()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="fieldrow"><label for="type">ประเภทการตรวจวัด</label><select id="type"></select></div><div class="fieldrow"><label for="name">ชื่อเกณฑ์การเตือนภัย <span aria-hidden="true">*</span></label><input id="name" type="text" maxlength="100" placeholder="ระบุชื่อระดับหรือชื่อเกณฑ์" oninput="renderPreview()"></div><div class="fieldrow"><label for="color">สีเกณฑ์การเตือนภัย <span aria-hidden="true">*</span></label><div class="picker"><input type="color" id="color" value="#ef4444" oninput="renderPreview()" aria-label="เลือกสีเกณฑ์การเตือนภัย"><span class="sample-dot" id="sampleDot"></span><span id="colorText" class="hex">#EF4444</span><span class="subtext">คลิกเพื่อเลือกสี</span></div></div><div class="preview"><span class="subtext">ตัวอย่างการแสดงผล</span><div class="preview-line"><span class="dot" id="previewDot"></span><strong id="previewName">ชื่อเกณฑ์การเตือนภัย</strong></div></div><div class="edit-confirm" id="editConfirmSection" hidden><p class="edit-confirm-title">ยืนยันก่อนบันทึกการแก้ไข</p><p class="edit-confirm-note">โปรดตรวจสอบชื่อเกณฑ์และสีที่แก้ไข เนื่องจากอาจส่งผลต่อรายการที่นำชื่อเกณฑ์นี้ไปใช้งาน</p><label class="edit-confirm-label" for="editConfirmInput">พิมพ์ <code>ยืนยันการแก้ไข</code> เพื่อยืนยัน</label><input class="edit-confirm-input" id="editConfirmInput" type="text" placeholder="พิมพ์ ยืนยันการแก้ไข" autocomplete="off" spellcheck="false" aria-describedby="editConfirmHint" oninput="updateEditSaveState()"><div id="editConfirmHint" class="edit-confirm-hint" role="status">ปุ่มบันทึกจะใช้งานได้เมื่อพิมพ์ “ยืนยันการแก้ไข” ตรงตามที่กำหนด</div></div><p id="error" class="err" role="alert"></p></div><div class="modalfoot"><button class="btn secondary" onclick="closeEditor()">ยกเลิก</button><button id="editorSaveButton" class="btn" onclick="saveEditor()">บันทึกข้อมูล</button></div></div></div>
+<div class="overlay" id="deleteOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteWarning"><div class="modalhead"><h2 class="danger-title" id="deleteTitle">ลบชื่อเกณฑ์การเตือนภัย</h2><button type="button" class="btn secondary small" onclick="closeDelete()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="delete-context"><span class="label">รายการที่ต้องการลบ</span><strong id="deleteName"></strong><span class="subtext" id="deleteType"></span></div><div class="delete-warning" id="deleteWarning">การลบชื่อเกณฑ์เป็นการดำเนินการที่มีความเสี่ยง หากมีการนำรายการนี้ไปอ้างอิงในระบบจริง อาจส่งผลต่อการทำงานที่เกี่ยวข้อง</div><label class="delete-confirm-label" for="deleteConfirmInput">พิมพ์ <code>ยืนยันการลบ</code> เพื่อยืนยันการลบ</label><input class="delete-confirm-input" type="text" id="deleteConfirmInput" placeholder="พิมพ์ ยืนยันการลบ" autocomplete="off" spellcheck="false" aria-describedby="deleteConfirmHint" oninput="updateDeleteState()"><div id="deleteConfirmHint" class="delete-confirm-hint" role="status">ปุ่มลบจะใช้งานได้เมื่อพิมพ์ “ยืนยันการลบ” ตรงตามที่กำหนด</div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeDelete()">ยกเลิก</button><button type="button" id="deleteConfirmButton" class="btn danger" onclick="confirmDelete()" disabled>ลบชื่อเกณฑ์</button></div></div></div>
+<div id="toast" class="toast" role="status"></div>
+<script>
+'use strict';
+const types=['ปริมาณฝนสะสม','อุณหภูมิอากาศ','ความชื้นสัมพัทธ์','ความเร็วลม','ทิศทางลม','ความกดอากาศ','ก๊าซคาร์บอนไดออกไซด์','ฝุ่นละออง PM2.5','ฝุ่นละออง PM10'];
+// Master Data นี้ประกอบด้วยชื่อและสีเท่านั้น ไม่ผูกกับนิยามเชิงตัวเลข
+const initial=[
+ [['ฝนหนักมาก','#ef4444'],['ฝนหนัก','#f97316'],['ฝนหนัก','#facc15'],['ฝนปานกลาง','#86efac'],['ฝนเล็กน้อย','#93c5fd'],['ฝนละออง','#78d1e3']],
+ [['ร้อนจัด','#f43f5e'],['ร้อน','#fb923c'],['อุ่น','#facc15'],['ปกติ','#86d65b'],['เย็น','#93c5fd']],
+ [['อิ่มตัว','#1d4ed8'],['ชื้นมาก','#60a5fa'],['ปกติ','#86d65b'],['แห้ง','#facc15'],['แห้งมาก','#fb923c']],
+ [['พายุ','#f43f5e'],['ลมแรง','#fb923c'],['ปานกลาง','#facc15'],['ลมเบา','#86d65b'],['ลมสงบ','#93c5fd']],
+ [['เหนือ (N)','#60a5fa'],['ตะวันออกเฉียงเหนือ (NE)','#22d3ee'],['ตะวันออก (E)','#6ee7b7'],['ตะวันออกเฉียงใต้ (SE)','#a3e635'],['ใต้ (S)','#facc15'],['ตะวันตกเฉียงใต้ (SW)','#fb923c'],['ตะวันตก (W)','#f472b6'],['ตะวันตกเฉียงเหนือ (NW)','#c084fc']],
+ [['ต่ำมาก (พายุ)','#f43f5e'],['ต่ำ','#fb923c'],['ปกติ','#86d65b'],['สูง','#60a5fa']],
+ [['สูงมาก','#f43f5e'],['สูง','#fb923c'],['ปานกลาง','#facc15'],['ดี','#86d65b']],
+ [['มีผลกระทบต่อสุขภาพ','#f43f5e'],['เริ่มมีผลกระทบ','#fb923c'],['ปานกลาง','#facc15'],['ดี','#86d65b'],['ดีมาก','#60a5fa']]
+];
+initial.push(initial[7].map(row=>[...row]));
+const STORAGE='ddpm_masterdata_levelnames_split_v5';
+const SHARED_STORAGE='ddpm_masterdata_levelnames_shared_v4_rain6';
+const PREVIOUS_STORAGE='ddpm_masterdata_levelnames_shared_v3';
+const LEGACY_STORAGE='ddpm_masterdata_levelnames_v2';
+const $=id=>document.getElementById(id);
+function uid(){return (typeof crypto!=='undefined' && typeof crypto.randomUUID==='function')?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`}
+function defaults(){return initial.map(list=>list.map(([name,color])=>({id:uid(),name,color})))}
+// Copy the previous shared PM group into independent PM2.5 and PM10 records.
+function normalize(saved){
+ if(!Array.isArray(saved)||![8,9].includes(saved.length)||!saved.every(Array.isArray))return null;
+ if(saved.length===8)saved=[...saved,saved[7].map(r=>({...r,id:uid()}))];
+ return saved.map((a,i)=>{
+  const valid=a.filter(r=>r&&typeof r.name==='string'&&/^#[0-9a-fA-F]{6}$/.test(r.color||''));
+  const rows=valid.map(r=>({id:String(r.id||uid()),name:r.name,color:r.color}));
+  if(i!==7)return rows;
+  const seen=new Set();
+  return rows.filter(r=>{const key=r.name+'\u0000'+r.color.toLowerCase();if(seen.has(key))return false;seen.add(key);return true});
+ });
+}
+function load(){
+ try{
+  const current=normalize(JSON.parse(localStorage.getItem(STORAGE)));
+  if(current)return current;
+  const shared=normalize(JSON.parse(localStorage.getItem(SHARED_STORAGE)));
+  if(shared)return shared;
+  const previous=normalize(JSON.parse(localStorage.getItem(PREVIOUS_STORAGE)));
+  if(previous){previous[0]=defaults()[0];return previous;}
+  const legacy=normalize(JSON.parse(localStorage.getItem(LEGACY_STORAGE)));
+  if(legacy){legacy[0]=defaults()[0];return legacy;}
+ }catch{}
+ return defaults();
+}
+let data=load(),active=0,editingId=null,deletingId=null,toastTimer;
+function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(data))}catch{}}
+function esc(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function rowsForActive(){return data[active]}
+function renderTabs(){$('tabs').innerHTML=types.map((t,i)=>`<button type="button" role="tab" class="tab" aria-selected="${active===i}" onclick="pickTab(${i})">${esc(t)}<span class="tabcount">${data[i].length}</span></button>`).join('')}
+function pickTab(idx){active=idx;renderTabs();renderList()}
+const iconEdit='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg>';
+const iconTrash='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg>';
+function makeList(rows){
+ if(!rows.length)return '<div class="list-container"><div class="empty">ยังไม่มีรายการชื่อเกณฑ์ในประเภทนี้</div></div>';
+ return `<div class="list-container"><ol class="criteria-list">${rows.map((r,i)=>`<li class="criterion"><span class="criterion-pos" aria-label="รายการที่ ${i+1}">${String(i+1).padStart(2,'0')}</span><span class="swatch" style="background:${esc(r.color)}" aria-hidden="true"></span><div class="criterion-info"><span class="criterion-name">${esc(r.name)}</span><span class="criterion-color"><span class="dot" style="background:${esc(r.color)}" aria-hidden="true"></span><span class="hex">${esc(r.color.toUpperCase())}</span></span></div><div class="criterion-actions"><button class="action-button" type="button" aria-label="แก้ไข ${esc(r.name)}" onclick="openEditor('${esc(r.id)}')">${iconEdit}<span class="action-label">แก้ไข</span></button><button class="action-button delete" type="button" aria-label="ลบ ${esc(r.name)}" onclick="openDelete('${esc(r.id)}')">${iconTrash}<span class="action-label">ลบ</span></button></div></li>`).join('')}</ol></div>`;
+}
+function renderList(){
+ const rows=rowsForActive();$('count').textContent=`${rows.length} รายการ`;
+ $('content').innerHTML=(active>=7?'<div class="shared-banner">PM2.5 และ PM10 ใช้ชื่อและสีเริ่มต้นเหมือนกัน แต่แยกแก้ไขข้อมูลของแต่ละประเภท</div>':'')+makeList(rows)
+}
+function findCurrent(id){return data[active].find(r=>r.id===id)}
+function openEditor(id){editingId=id||null;const row=id?findCurrent(id):null;$('modalTitle').textContent=row?'แก้ไขชื่อเกณฑ์และสี':'เพิ่มชื่อเกณฑ์และสี';$('type').innerHTML=types.map((t,i)=>`<option value="${i}">${esc(t)}</option>`).join('');$('type').value=active;$('type').disabled=Boolean(row);$('name').value=row?.name||'';$('color').value=row?.color||'#ef4444';$('error').textContent='';$('editConfirmSection').hidden=!row;$('editConfirmInput').value='';$('editorSaveButton').textContent=row?'บันทึกการแก้ไข':'บันทึกข้อมูล';renderPreview();updateEditSaveState();$('editorOverlay').classList.add('open');$('name').focus()}
+function closeEditor(){$('editorOverlay').classList.remove('open');$('editConfirmInput').value='';editingId=null}
+function renderPreview(){let c=$('color').value;for(const id of ['sampleDot','previewDot'])$(id).style.background=c;$('colorText').textContent=c.toUpperCase();$('previewName').textContent=$('name').value.trim()||'ชื่อเกณฑ์การเตือนภัย';updateEditSaveState()}
+function updateEditSaveState(){const matched=$('editConfirmInput').value==='ยืนยันการแก้ไข';$('editorSaveButton').disabled=Boolean(editingId)&&!matched;$('editConfirmInput').classList.toggle('ok',matched);$('editConfirmHint').textContent=matched?'ยืนยันข้อความถูกต้อง สามารถบันทึกการแก้ไขได้':'ปุ่มบันทึกจะใช้งานได้เมื่อพิมพ์ “ยืนยันการแก้ไข” ตรงตามที่กำหนด'}
+function saveEditor(){if(editingId&&$('editConfirmInput').value!=='ยืนยันการแก้ไข'){$('error').textContent='กรุณาพิมพ์ “ยืนยันการแก้ไข” เพื่อบันทึก';return}const idx=Number($('type').value),name=$('name').value.trim(),color=$('color').value;if(!name){$('error').textContent='กรุณาระบุชื่อเกณฑ์การเตือนภัย';$('name').focus();return}if(name.length>100){$('error').textContent='ชื่อเกณฑ์ยาวเกินขนาดที่กำหนด';return}const row={id:editingId||uid(),name,color};if(editingId){const pos=data[idx].findIndex(r=>r.id===editingId);if(pos<0)return;data[idx][pos]=row}else data[idx].push(row);active=idx;persist();closeEditor();renderTabs();renderList();toast('บันทึกชื่อและสีเกณฑ์เรียบร้อยแล้ว')}
+function openDelete(id){
+ const row=findCurrent(id);if(!row)return;
+ deletingId=id;
+ $('deleteName').textContent=row.name+' · '+row.color.toUpperCase();
+ $('deleteType').textContent='ประเภทการตรวจวัด: '+types[active];
+ $('deleteConfirmInput').value='';
+ updateDeleteState();
+ $('deleteOverlay').classList.add('open');
+ $('deleteConfirmInput').focus();
+}
+function updateDeleteState(){
+ const matched=$('deleteConfirmInput').value==='ยืนยันการลบ';
+ $('deleteConfirmButton').disabled=!matched;
+ $('deleteConfirmInput').classList.toggle('ok',matched);
+ $('deleteConfirmHint').textContent=matched?'ยืนยันข้อความถูกต้อง สามารถลบรายการได้':'ปุ่มลบจะใช้งานได้เมื่อพิมพ์ “ยืนยันการลบ” ตรงตามที่กำหนด';
+}
+function closeDelete(){
+ deletingId=null;$('deleteOverlay').classList.remove('open');
+ $('deleteConfirmInput').value='';updateDeleteState();
+}
+function confirmDelete(){
+ if(!deletingId||$('deleteConfirmInput').value!=='ยืนยันการลบ')return;
+ const idx=data[active].findIndex(r=>r.id===deletingId);
+ if(idx<0){closeDelete();return;}
+ data[active].splice(idx,1);persist();closeDelete();renderTabs();renderList();toast('ลบชื่อเกณฑ์เรียบร้อยแล้ว');
+}
+function toast(message){$('toast').textContent=message;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',2300)}
+function toggleMobileMenu(){const open=document.body.classList.toggle('menu-open');$('menuTrigger').setAttribute('aria-expanded',String(open))}
+function closeMobileMenu(){document.body.classList.remove('menu-open');$('menuTrigger').setAttribute('aria-expanded','false')}
+function setTheme(t){document.documentElement.classList.toggle('light',t==='light');$('lightButton').classList.toggle('on',t==='light');$('darkButton').classList.toggle('on',t==='dark');try{localStorage.setItem('ddpm_mock_theme',t)}catch{}}
+for(const id of ['editorOverlay','deleteOverlay'])$(id).addEventListener('click',e=>{if(e.target===$(id)){id==='editorOverlay'?closeEditor():closeDelete()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeEditor();closeDelete();closeMobileMenu()}});
+$('menuSearch').addEventListener('input',e=>{const q=e.target.value.trim().toLocaleLowerCase('th-TH');document.querySelectorAll('[data-nav]').forEach(n=>n.style.display=n.textContent.toLocaleLowerCase('th-TH').includes(q)?'':'none')});
+setTheme((()=>{try{return localStorage.getItem('ddpm_mock_theme')||'dark'}catch{return 'dark'}})());renderTabs();renderList();
+</script>
+</body></html>
