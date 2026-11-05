@@ -1,16 +1,15 @@
 <script setup>
 import { computed, ref, onBeforeUnmount, nextTick } from 'vue';
-import { rainfallResult } from '../rain-criteria.js';
+import { effectiveRainfall, effectiveThreshold } from '../threshold-settings.js';
 const props = defineProps({ station: { type: Object, required: true }, compact: Boolean });
 const opened = ref(false);
 const selection = ref(null);
 const selected = computed(() => selection.value || props.station);
-const rangeOf = s => s.metric === 'rain' ? ({d1:'24h',d3:'72h',d5:'5d',d7:'7d',d15:'15d'})[s.period] : null;
-const inlineResult = computed(() => rainfallResult(rangeOf(props.station),props.station.value,props.station.offline,'station'));
-const inlineArea = computed(() => rainfallResult(rangeOf(props.station),props.station.value,props.station.offline,'area'));
-const detailArea = computed(() => rainfallResult(rangeOf(selected.value),selected.value.value,selected.value.offline,'area'));
-const areaCuts = computed(() => detailArea.value.criterion?.cuts.join(' / ') || 'ไม่มีเกณฑ์ช่วงนี้');
-const detailResult = computed(() => rainfallResult(rangeOf(selected.value),selected.value.value,selected.value.offline,'station'));
+const rangeOf = s => s.metric === 'rain' ? ({'1h':'1h',today:'today',yesterday:'yesterday',d1:'24h',d3:'72h',d5:'5d',d7:'7d',d15:'15d'})[s.period] : null;
+const inlineResult = computed(() => effectiveRainfall(props.station.code,rangeOf(props.station),props.station.value,props.station.offline));
+const source = computed(() => effectiveThreshold(props.station.code,rangeOf(props.station)).source);
+const detailSource = computed(() => effectiveThreshold(selected.value.code,rangeOf(selected.value)).source);
+const detailResult = computed(() => effectiveRainfall(selected.value.code,rangeOf(selected.value),selected.value.value,selected.value.offline));
 const cuts = computed(() => detailResult.value.criterion?.cuts.join(' / ') || 'ไม่มีเกณฑ์ช่วงนี้ใน v56');
 const trigger = ref(null);
 const closeButton = ref(null);
@@ -38,8 +37,7 @@ onBeforeUnmount(() => { if (opened.value) close(); });
 
 <template>
   <div :class="['criteria-inline', { 'criteria-compact': compact }]" @click.stop>
-    <span class="criteria-type central" title="รายพื้นที่จำลอง: ต่ำกว่าค่ากลาง v56 20%">รายพื้นที่ <span :style="{color:inlineArea.color}">{{ inlineArea.label }}</span></span>
-    <span class="criteria-type station" title="เกณฑ์รายสถานีจำลอง · ช่วงเฉพาะสถานีจำลอง">รายสถานี <span :style="{color:inlineResult.color}">{{ inlineResult.label }}</span></span>
+    <span class="criteria-type station">{{ source }} <span :style="{color:inlineResult.color}">{{ inlineResult.label }}</span></span>
     <button ref="trigger" type="button" class="criteria-open" :aria-label="`ดูผลประเมินเกณฑ์ ${station.name}`" @click="open">ดูผลจำลอง <span aria-hidden="true">↗</span></button>
   </div>
   <Teleport to="body">
@@ -50,20 +48,15 @@ onBeforeUnmount(() => { if (opened.value) close(); });
           <button ref="closeButton" class="criteria-close" aria-label="ปิดผลประเมินเกณฑ์" @click="close">×</button>
         </header>
         <div class="criteria-body">
-          <p id="criteria-description" class="criteria-explanation">ตรวจสอบเกณฑ์ที่ครอบคลุมสถานี และผลการเข้าเงื่อนไขของแต่ละเกณฑ์แยกกัน</p>
+          <p id="criteria-description" class="criteria-explanation">ผลประเมินจากเกณฑ์ชุดเดียวที่สถานีใช้สำหรับตรวจวัดและเงื่อนไขแจ้งเตือน</p>
           <div class="criteria-observation"><div><span>{{ selected.metricLabel }} · {{ periodLabel }}</span><strong>{{ observation }}</strong></div><span class="criteria-demo">ข้อมูลสาธิตจากต้นฉบับ</span></div>
-          <div class="criteria-pending"><span aria-hidden="true">ⓘ</span><div><strong>MOCKUP · ใช้ค่าเริ่มต้นจาก v56</strong><p>จำลองรายพื้นที่ให้มีจุดแบ่งต่ำกว่าค่ากลาง 20% ส่วนรายสถานีกำหนดช่วงเฉพาะ v56 เป็นฐาน ไม่สร้างการแจ้งเตือนจริง</p></div></div>
+          <p class="criteria-explanation">ข้อมูลต้นแบบ · ยังไม่เชื่อมการส่งแจ้งเตือนจริง</p>
           <article class="criteria-section">
-            <div class="criteria-section-head"><h3><span class="criteria-dot central"></span>เกณฑ์กลางตามพื้นที่</h3><span class="criteria-status">{{ detailArea.label }}</span></div>
-            <p>เกณฑ์ที่ส่วนกลางกำหนดให้สถานีภายในจังหวัด อำเภอ หรือตำบลที่เลือก</p>
-            <dl><div><dt>ชื่อเกณฑ์ / Area List</dt><dd>เกณฑ์กลางตามพื้นที่ · ลดจุดแบ่ง 20% (Mockup)</dd></div><div><dt>พื้นที่ที่ครอบคลุม</dt><dd>พื้นที่จำลอง · จ.{{ selected.province }}</dd></div><div><dt>สถานะการอยู่ในขอบเขต</dt><dd>สมมติให้อยู่ในพื้นที่สำหรับทดสอบ UI</dd></div><div><dt>ผลการเข้าเงื่อนไข</dt><dd>{{ periodLabel }} · จุดแบ่ง {{ areaCuts }} มม. · {{ detailArea.label }}</dd></div></dl>
+            <div class="criteria-section-head"><h3><span class="criteria-dot station"></span>{{ detailSource }}</h3><span class="criteria-status">{{ detailResult.label }}</span></div>
+            <p>เกณฑ์รายสถานีมีลำดับใช้ก่อนเกณฑ์กลาง Default ของระบบ</p>
+            <dl><div><dt>แหล่งที่มาของเกณฑ์</dt><dd>{{ detailSource }}</dd></div><div><dt>ช่วงสะสม / ค่าจุดแบ่งระดับ</dt><dd>{{ periodLabel }} · จุดแบ่ง {{ cuts }} มม.</dd></div><div><dt>ผลการเข้าเงื่อนไข</dt><dd>{{ detailResult.label }} · ผลจำลอง</dd></div></dl>
           </article>
-          <article class="criteria-section">
-            <div class="criteria-section-head"><h3><span class="criteria-dot station"></span>เกณฑ์รายสถานี</h3><span class="criteria-status">{{ detailResult.label }}</span></div>
-            <p>เกณฑ์ที่กำหนดเฉพาะสถานีตรวจวัดนี้</p>
-            <dl><div><dt>ชื่อเกณฑ์รายสถานี</dt><dd>ค่าเริ่มต้น v56 · ช่วงเฉพาะสถานีจำลอง</dd></div><div><dt>ช่วงสะสม / ค่าจุดแบ่งระดับ</dt><dd>{{ periodLabel }} · จุดแบ่ง {{ cuts }} มม.</dd></div><div><dt>ผลการเข้าเงื่อนไข</dt><dd>{{ detailResult.label }} · ผลจำลอง</dd></div></dl>
-          </article>
-          <footer class="criteria-footnote"><strong>อยู่ในพื้นที่ ≠ เข้าเงื่อนไข</strong><p>ช่วงเกณฑ์: 24 ชม. / 3 วัน / 5 วัน / 7 วัน / 15 วัน · ค่าเกณฑ์หลายวันเป็น Mockup Draft / TBD · ทุกค่าเป็นต้นแบบ ไม่ใช่เกณฑ์ปฏิบัติการที่อนุมัติแล้ว</p></footer>
+          <footer class="criteria-footnote"><strong>ตั้งค่าเกณฑ์จากรายการสถานี → จัดการ → ตั้งค่าเกณฑ์</strong><p>ช่วงเกณฑ์: 24 ชม. / 3 วัน / 5 วัน / 7 วัน / 15 วัน · ค่าเกณฑ์หลายวันเป็น Mockup Draft / TBD · ทุกค่าเป็นต้นแบบ ไม่ใช่เกณฑ์ปฏิบัติการที่อนุมัติแล้ว</p></footer>
         </div>
       </section>
     </div>

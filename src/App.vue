@@ -2,7 +2,7 @@
 import { referenceComponent } from './runtime.js';
 import CriteriaResults from './components/CriteriaResults.vue';
 import CriteriaComparison from './components/CriteriaComparison.vue';
-import ThresholdWorkspace from './components/ThresholdWorkspace.vue';
+import StationThresholdEditor from './components/StationThresholdEditor.vue';
 import BackofficeMenu from './components/BackofficeMenu.vue';
 import backofficeResponsive from './backoffice-responsive.css?raw';
 import ExactLogic from './components/Exact.js';
@@ -17,7 +17,7 @@ const registry = {};
 registry.BackofficeMenu = BackofficeMenu;
 registry.CriteriaResults = CriteriaResults;
 registry.CriteriaComparison = CriteriaComparison;
-registry.ThresholdWorkspace = ThresholdWorkspace;
+registry.StationThresholdEditor = StationThresholdEditor;
 registry.ReadingCards = referenceComponent('ReadingCards', readings, ReadingCardsLogic, registry);
 registry.LineRules = referenceComponent('LineRules', rules, LineRulesLogic, registry);
 registry.Stations = referenceComponent('Stations', stations, StationsLogic, registry);

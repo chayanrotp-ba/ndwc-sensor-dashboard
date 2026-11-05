@@ -1,9 +1,13 @@
+import { effectiveThreshold } from '../threshold-settings.js';
+import { RAIN_LEVELS, RAIN_COLORS } from '../rain-criteria.js';
 import { DCLogic, createElement } from '../runtime.js';
 
 export default class Component extends DCLogic {
   criteriaContext(r, metric, period, value, unit, metricLabel) {
     const status = this.dataStat(r);
-    return { id: r[0], name: r[1], location: 'ต.' + r[2] + ' อ.' + r[3] + ' จ.' + r[4],
+    const index = this.data().R.findIndex(item => item[0] === r[0]);
+    const code = r[0].startsWith('tw-') ? r[0].slice(3) : 'G15006-' + (5501 + index * 13);
+    return { id: r[0], code, name: r[1], location: 'ต.' + r[2] + ' อ.' + r[3] + ' จ.' + r[4],
       metric, period, value, unit, metricLabel, province:r[4], offline: !!status.silent };
   }
   scrollTab() {
@@ -65,7 +69,7 @@ export default class Component extends DCLogic {
 
   constructor(props) {
     super(props);
-    this.state = { theme: 'dark', crit: 'tw', amp: '', tam: '', zi: 0, zc: null, hl: true, basin: '', inbox: false, ibTab: 'all', ibLv: 'all', readIds: {}, gone: {}, extra: [], lyOwn: true, lyTw: true, nocl: false, layHid: { runoff: true, dam: true, vil: true }, rainExp: true, lyOpen: false, pnl: null, cctvOff: true, agDd: true, damDd: false, exB: false, exP: false, exA: false, exW: false, exR: false, wx: false, wxVar: 'cloud', rainObs: false, rainT: 2, rainFc: false, radar: false, mp: {}, bsel: {}, psel: {}, tw: null, metric: 'rain', mOpen: false, stAll: false, basemap: 'dark', bmOpen: false, hr: false, screen: 'map', period: 'd1', hidden: {}, legend: true, page: 1, size: 10, sel: null, tip: null, menu: false, prov: '' };
+    this.state = { theme: 'dark', crit: 'tw', amp: '', tam: '', zi: 0, zc: null, hl: true, basin: '', inbox: false, ibTab: 'all', ibLv: 'all', readIds: {}, gone: {}, extra: [], lyOwn: true, lyTw: true, nocl: false, layHid: { runoff: true, dam: true, vil: true }, rainExp: true, lyOpen: false, pnl: null, cctvOff: true, agDd: true, damDd: false, exB: false, exP: false, exA: false, exW: false, exR: false, wx: false, wxVar: 'cloud', rainObs: false, rainT: 2, rainFc: false, radar: false, mp: {}, bsel: {}, psel: {}, tw: null, metric: 'rain', mOpen: false, stAll: false, basemap: 'dark', bmOpen: false, hr: false, screen: globalThis.location?.hash.startsWith('#stations') ? 'admin' : 'map', period: 'd1', hidden: {}, legend: true, page: 1, size: 10, sel: null, tip: null, menu: false, prov: '' };
   }
 
   data() {
@@ -325,11 +329,17 @@ export default class Component extends DCLogic {
   // ---------- measured values: 8 metrics, one shown on the map at a time ----------
   // rainfall periods: 24 ชม. / 3 / 5 / 7 / 15 วัน / เดือนนี้ / ปีนี้. k = criteria multiplier vs the 24 h thresholds (ข้อเสนอ)
   periods() {
-    return [['d1', '24 ชม.', 1], ['d3', '3 วัน', 1.5], ['d5', '5 วัน', 2], ['d7', '7 วัน', 2.5], ['d15', '15 วัน', 4]];
+    return [['1h', 'ฝน 1 ชั่วโมง', 1], ['d1', '24 ชม.', 1], ['today', 'ฝนวันนี้', 1], ['yesterday', 'ฝนวานนี้', 1], ['d3', '3 วัน', 1.5], ['d5', '5 วัน', 2], ['d7', '7 วัน', 2.5], ['d15', '15 วัน', 4]];
   }
 
   // accumulated rain of a station for a period (sample data beyond 5 days, deterministic)
   rainOf(r, p) {
+    if (['1h','today','yesterday'].includes(p)) {
+      if (r[7] == null) return null;
+      const hours = this.histSeries(r[0], 'rain', r).hr;
+      const values = p === '1h' ? hours.slice(0,1) : p === 'today' ? hours.slice(0,4) : hours.slice(4,28);
+      return Math.round(values.reduce((sum,v)=>sum+v,0)*10)/10;
+    }
     const IDX = { d1: 7, d3: 8, d5: 9 };
     if (IDX[p]) return r[IDX[p]];
     if (r[9] == null) return null;
@@ -378,6 +388,7 @@ export default class Component extends DCLogic {
   // 24 ชม.: 7 ช่วง · 3/5/7/15 วัน: 12 ช่วง · รายเดือน / รายปี: สเกลสีต่อเนื่อง 30 ช่วง (ไม่มีชื่อระดับ)
   // ThaiWater rain for a period (24 ชม. is real sample data; longer periods synthesised from it, deterministic)
   twRainOf(r, p) {
+    if (['1h','today','yesterday'].includes(p)) return null;
     const d1 = r[7]; if (d1 == null) return null; if (p === 'd1' || !p) return d1;
     let h = 29; for (let i = 0; i < r[0].length; i++) h = (Math.imul(h, 31) + r[0].charCodeAt(i)) >>> 0;
     const f = (k) => ((h >>> k) % 100) / 100;
@@ -404,22 +415,17 @@ export default class Component extends DCLogic {
       [5, 10, 'ฝนเล็กน้อย', '#aed3ff', 'none'], [1, 5, 'ฝนเล็กน้อย', '#cce3ff', 'none'], [0, 1, 'ฝนเล็กน้อย', '#fffff5', 'none']]);
   }
 
+  rainCategories(period, code = '') {
+    const range = ({d1:'24h',d3:'72h',d5:'5d',d7:'7d',d15:'15d'})[period] || period;
+    const cuts = effectiveThreshold(code,range).cuts || effectiveThreshold(code,'24h').cuts;
+    return RAIN_LEVELS.map((label,i)=>['rain'+i, v=>i===0 || v>cuts[i-1],
+      (i===4 ? '>'+cuts[3] : (i ? '>'+cuts[i-1] : '>0')+'–'+cuts[i])+' มม. '+label,
+      label, RAIN_COLORS[i], i===4?'bad':i===3?'warn':'none']).reverse();
+  }
+
   metricDefs(period, crit) {
     const gt = (x) => (v) => v > x, lt = (x) => (v) => v < x, any = () => true;
-    // เกณฑ์ของเรา (ปภ.) — ค่าตั้งต้นตามกฎแจ้งเตือน LINE: เฝ้าระวัง / วิกฤต (ปรับได้ในหน้าจัดการเกณฑ์)
-    // เกณฑ์ของเรา (ปภ.) — "เกณฑ์ระดับฝนรายสถานีตรวจวัด" (หน้าแก้เกณฑ์ระดับฝน): 5 ระดับ ค่าต่อ 24 ชม.
-    //   ฝนละออง >0–0.5 · ฝนเล็กน้อย >0.5–10 · ฝนปานกลาง 10.1–35 · ฝนหนัก 35.1–90 · ฝนหนักมาก >90 (≥90.1)
-    //   ช่วง 3 วันขึ้นไป: ยังไม่มีเกณฑ์จริง → คูณจากเกณฑ์ 24 ชม. ตาม periods() (ข้อเสนอ)
-    const RAIN_OWN = [['k90', 90, 'ฝนหนักมาก', '#d6475a', 'bad'], ['k35', 35, 'ฝนหนัก', '#dba11c', 'warn'], ['k10', 10, 'ฝนปานกลาง', '#2c74d4', 'none'],
-      ['k05', 0.5, 'ฝนเล็กน้อย', '#4b9ce9', 'none'], ['k0', 0, 'ฝนละออง', '#93b4d6', 'none']];
-    const RAIN = crit === 'own' ? RAIN_OWN.map((c, i, a) => {
-      const k = (this.periods().find((q) => q[0] === period) || [0, 0, 1])[2];
-      const lo = c[1] * k, hi = i > 0 ? a[i - 1][1] * k : null;
-      const nf = (x) => (Math.round(x * 10) / 10).toLocaleString('en-US', { maximumFractionDigits: 1 });
-      const step = (x) => (x >= 10 ? nf(x + 0.1) : '>' + nf(x));   // 10 → "10.1", 35 → "35.1" as in the criteria page; below 10 keep ">x"
-      const lab = i === 0 ? '>' + nf(lo) + ' มม. ' + c[2] : step(lo) + '–' + nf(hi) + ' มม. ' + c[2];
-      return [c[0], i === a.length - 1 ? any : gt(lo), lab, c[2], c[3], c[4]];
-    }) : this.twRain(period);
+    const RAIN = this.rainCategories(period);
     const D8 = [['N', 'เหนือ', '#60a5fa'], ['NE', 'ตะวันออกเฉียงเหนือ', '#22d3ee'], ['E', 'ตะวันออก', '#34d399'], ['SE', 'ตะวันออกเฉียงใต้', '#a3e635'], ['S', 'ใต้', '#facc15'], ['SW', 'ตะวันตกเฉียงใต้', '#fb923c'], ['W', 'ตะวันตก', '#f472b6'], ['NW', 'ตะวันตกเฉียงเหนือ', '#a78bfa']];
     return [
       { key: 'rain', hist: 'rain', label: 'ปริมาณน้ำฝน (Rainfall)', name: 'ปริมาณน้ำฝน', unit: 'mm', unitTh: 'มม.', col: 'ฝนสะสม', title: 'เกณฑ์ปริมาณฝนสะสม', critName: crit === 'own' ? 'เกณฑ์ ปภ.' : 'เกณฑ์ สถาบันสารสนเทศทรัพยากรน้ำ', cats: RAIN,
@@ -542,7 +548,7 @@ export default class Component extends DCLogic {
     const dsTxtOld = DS.silent ? 'ออฟไลน์ · ไม่ได้รับข้อมูล ' + DS.lastMin + ' นาที' : [DS.late ? 'ข้อมูลมาช้า ' + DS.late + ' นาที' : 'รับข้อมูลล่าสุด ' + DS.lastMin + ' นาทีที่แล้ว', DS.gap ? 'ข้อมูลขาดช่วง ' + DS.gap + ' ช่วง (' + DS.recv + '/144 ใน 24 ชม.)' : '', DS.events.length ? 'event เปิด ' + DS.events.length + ': ' + DS.events[0].type : ''].filter(Boolean).join(' · ');
     const M = MS[st[0]] || this.meas(st);
     const vOf = (d) => (d.key === 'rain' ? this.rainOf(st, s.period) : M[d.key]);
-    const catOf = (d) => { const v = vOf(d); if (v == null) return null; return d.cats.find((x) => x[1](v)) || d.cats[d.cats.length - 1]; };
+    const catOf = (d) => { const v = vOf(d); if (v == null) return null; const cats=d.key==='rain'?this.rainCategories(s.period,code):d.cats; return cats.find(x=>x[1](v)) || cats[cats.length-1]; };
     const lvOf = (d) => { const c = catOf(d); return c ? c[5] : 'none'; };
     const v = vOf(met), mLv = lvOf(met);
     const mCat = catOf(met);
@@ -579,7 +585,7 @@ export default class Component extends DCLogic {
     // supporting numbers for the hero card
     const fmtS = (x) => (x == null ? '–' : (Math.round(x * 10) / 10) + (met.dir ? '°' : ' ' + met.unit));
     // popup preview = the history chart itself (ข้อมูลย้อนหลัง): same tabs (รายวัน / รายเดือน / รายปี) and ranges, own state s.sph
-    const sph = Object.assign({ gran: s.period === 'm' ? 'month' : s.period === 'y' ? 'year' : 'day', range: ({ d1: '24h', d3: '72h', d5: '5d', d7: '7d', d15: '15d' })[s.period] || '24h' }, s.sph || {});
+    const sph = Object.assign({ gran: s.period === 'm' ? 'month' : s.period === 'y' ? 'year' : 'day', range: ({ '1h':'1h',today:'today',yesterday:'yesterday',d1: '24h', d3: '72h', d5: '5d', d7: '7d', d15: '15d' })[s.period] || '24h' }, s.sph || {});
     const MINI = met.dir || DS.silent ? null : this.histVals(s, R, lt, { h: { id: st[0], sensor: met.hist, gran: sph.gran, range: sph.range, pg: 1, full: false }, W: ext ? 1000 : 660, H: 230,
       onSet: (o) => this.setState({ sph: Object.assign({}, sph, { gran: o.gran || sph.gran, range: o.range || sph.range }) }) });
     const comparisonRanges = [['24h','24 ชม.'], ['72h','3 วัน'], ['5d','5 วัน'], ['7d','7 วัน'], ['15d','15 วัน']];
@@ -821,7 +827,7 @@ export default class Component extends DCLogic {
     const MS = {}; LIST.forEach((r) => { MS[r[0]] = this.meas(r); });
     const val = (r) => (isRain ? this.rainOf(r, s.period) : MS[r[0]][met.key]);
     const rainVal = (r) => this.rainOf(r, s.period);
-    const catOf = (v) => (v == null ? 'none' : (CATS.find((c) => c[1](v)) || CATS[CATS.length - 1])[0]);
+    const catOf = (v,r) => { const cats=isRain && r ? this.rainCategories(s.period,this.criteriaContext(r,'rain',s.period,v,'mm','').code) : CATS; return v == null ? 'none' : (cats.find(c=>c[1](v)) || cats[cats.length-1])[0]; };
     const TW24 = this.twRain('d1');
     const RC = [['c90', 90], ['c70', 70], ['c50', 50], ['c35', 35], ['c20', 20], ['c10', 10], ['c0', -1]];
     const rainCat = (v) => (v == null ? 'none' : RC.find((c) => v > c[1])[0]);
@@ -831,7 +837,7 @@ export default class Component extends DCLogic {
     const ink = (k) => { const h = COL[k] || '#71717a'; const n = parseInt(h.slice(1), 16); return (0.299 * (n >> 16 & 255) + 0.587 * (n >> 8 & 255) + 0.114 * (n & 255)) / 255 > 0.6 ? '#111111' : '#ffffff'; };
     const rank = (k) => (k === 'none' ? 99 : CATS.findIndex((c) => c[0] === k));
     const scoped = LIST.filter((r) => this.inArea(s, r));
-    const counts = {}; scoped.forEach((r) => { const k = catOf(val(r)); counts[k] = (counts[k] || 0) + 1; });
+    const counts = {}; scoped.forEach((r) => { const k = catOf(val(r),r); counts[k] = (counts[k] || 0) + 1; });
     const DSall = {}; LIST.forEach((r) => { DSall[r[0]] = this.dataStat(r); });
     // agency naming is driven by the layer's AGENCIES list, so the layer, the station popup, and the right-panel list + dropdown all match
     const AGL = AGENCIES.map((a) => a.name);
@@ -840,15 +846,15 @@ export default class Component extends DCLogic {
     const codeOf = (r) => (r[0].indexOf('tw-') === 0 ? r[0].slice(3) : 'G15006-' + (5501 + R.indexOf(r) * 13));
     const lq = (s.lq || '').trim().toLowerCase();
     const matchQ = (r) => !lq || [r[1], r[2], r[3], r[4], codeOf(r)].some((x) => String(x).toLowerCase().indexOf(lq) >= 0);
-    const shown = scoped.filter((r) => !s.hidden[catOf(val(r))] && (!s.dsf || DSall[r[0]].kind === s.dsf) && (!s.agf || agOf(r) === s.agf) && matchQ(r));
+    const shown = scoped.filter((r) => !s.hidden[catOf(val(r),r)] && (!s.dsf || DSall[r[0]].kind === s.dsf) && (!s.agf || agOf(r) === s.agf) && matchQ(r));
     const sorted = isRain ? shown.slice().sort((a, b) => (val(b) == null ? -1 : val(b)) - (val(a) == null ? -1 : val(a)))
-      : shown.slice().sort((a, b) => rank(catOf(val(a))) - rank(catOf(val(b))) || (met.key === 'pres' ? val(a) - val(b) : (val(b) || 0) - (val(a) || 0)));
+      : shown.slice().sort((a, b) => rank(catOf(val(a),a)) - rank(catOf(val(b),b)) || (met.key === 'pres' ? val(a) - val(b) : (val(b) || 0) - (val(a) || 0)));
     const pick = (id) => () => this.setState({ sel: id, st: id, stPh: 0, qr: false, tip: null, stAll: false });
     const loc = (r) => 'ต.' + r[2] + ' อ.' + r[3] + ' จ.' + r[4];
     const vCol = (k) => (LVL[k] === 'bad' ? (lt ? '#dc2626' : '#fb2c36') : (lt ? '#b45309' : '#fbbf24'));
 
-    const alerts = sorted.filter((r) => val(r) != null && (LVL[catOf(val(r))] === 'bad' || LVL[catOf(val(r))] === 'warn')).map((r) => {
-      const k = catOf(val(r)), c = CATS.find((x) => x[0] === k);
+    const alerts = sorted.filter((r) => val(r) != null && (LVL[catOf(val(r),r)] === 'bad' || LVL[catOf(val(r),r)] === 'warn')).map((r) => {
+      const k = catOf(val(r),r), c = CATS.find((x) => x[0] === k);
       return { name: r[1], loc: loc(r), val: fmt(val(r)), unit: met.dir ? '' : met.unitTh, badge: c[3],
         bdStyle: 'background: ' + COL[k] + '; color: ' + ink(k) + ';',
         vStyle: 'color: ' + vCol(k) + ';',
@@ -858,7 +864,7 @@ export default class Component extends DCLogic {
     const pages = Math.max(1, Math.ceil(sorted.length / s.size));
     const page = Math.min(s.page, pages);
     const rows = sorted.slice((page - 1) * s.size, page * s.size).map((r) => {
-      const k = catOf(val(r));
+      const k = catOf(val(r),r);
       const ds = DSall[r[0]];
       return { criteria: this.criteriaContext(r, met.key, s.period, val(r), met.unitTh, met.name), name: r[1], loc: (r[0].indexOf('tw-') === 0 ? 'รหัส ' + r[0].slice(3) + ' · ' : '') + loc(r),
         time: r[11] || (ds.silent ? ds.seenAt : ds.late ? ds.valAt : '11:00'), tmCls: ds.silent ? 'tm t-sil' : ds.late ? 'tm t-late' : 'tm',
@@ -897,7 +903,7 @@ export default class Component extends DCLogic {
     const pinSt = P.map((p) => { const g = byRain[p[0]] && byRain[p[0]].length ? byRain[p[0]] : R; const k = (used[p[0]] = (used[p[0]] || 0) + 1) - 1; return g[k % g.length]; });
     const pinName = (k) => (k === 'none' ? 'ออฟไลน์ · ไม่ส่งข้อมูล' : (CATS.find((c) => c[0] === k) || [0, 0, ''])[2]);
     const pins = P.map((p, i) => {
-      const r = pinSt[i], v = val(r), k = catOf(v);
+      const r = pinSt[i], v = val(r), k = catOf(v,r);
       return { k, p, r, v };
     }).filter((o) => ownOn && !s.hidden[o.k] && (!s.dsf || this.dataStat(o.r).kind === s.dsf) && this.inArea(s, o.r)).map(({ k, p, r, v }) => {
       const bad = LVL[k] === 'bad', off = k === 'none';
@@ -918,7 +924,7 @@ export default class Component extends DCLogic {
     const toMap = (x, y) => (wide ? [Math.round(x * m) + dx, Math.round(y * m)] : [x - 419, y]);
     // ThaiWater layer: same round pin as ours, droplet glyph = rain gauge from ThaiWater · colour/waves follow the active criteria + period
     const twVal = (r) => this.twRainOf(r, s.period);
-    const twAll = TW.map((r) => { const xy = toMap(r[10], r[11]); const v = twVal(r); return { r, x: xy[0], y: xy[1], v, k: catOf(v) }; }).filter((o) => o.x > 4 && o.x < mapW - 4 && o.y > 4 && o.y < 863);
+    const twAll = TW.map((r) => { const xy = toMap(r[10], r[11]); const v = twVal(r); return { r, x: xy[0], y: xy[1], v, k: catOf(v,r) }; }).filter((o) => o.x > 4 && o.x < mapW - 4 && o.y > 4 && o.y < 863);
     const TW_ENABLED = true;
     // ---- sample CCTV / dam / runoff layers (styling to follow) ----
     // sample dams / reservoirs (wide map coords) — size: L/M/S
@@ -1167,7 +1173,7 @@ export default class Component extends DCLogic {
       noAlerts: alerts.length === 0, noAlertsMsg: met.dir ? 'ทิศทางลมไม่มีเกณฑ์เฝ้าระวัง · ดูค่าของแต่ละสถานีได้ในตารางด้านขวา' : 'ไม่มีสถานีที่' + met.name + 'ถึงเกณฑ์เฝ้าระวัง',
       dsChips: [['ok', 'ปกติ', 'สถานีส่งข้อมูลครบทุกช่วง'], ['gap', 'ข้อมูลขาดช่วง', 'สถานียังส่งอยู่ แต่ข้อมูลบางช่วงหายไป (ได้ไม่ครบ 144 ค่าใน 24 ชม.)'], ['late', 'ข้อมูลมาช้า', 'ค่าล่าสุดมาถึงช้ากว่าปกติ (เกิน 10 นาที)'], ['silent', 'ออฟไลน์', 'สถานีไม่ส่งข้อมูลเกิน 30 นาที → ออกหน้างาน']].map(([k, l, h]) => ({
         label: l, hint: h + ' · กดเพื่อกรอง', n: scoped.filter((r) => DSall[r[0]].kind === k).length, on: s.dsf === k, cls: 'mlg-r mlg-ds ' + k + (s.dsf === k ? ' on' : ''), pick: () => this.setState({ dsf: s.dsf === k ? null : k, page: 1, tip: null }) })),
-      isRain, notRain: !isRain, legendTitle: met.title, critSw: isRain ? [['tw', 'สถาบันสารสนเทศทรัพยากรน้ำ', 'เกณฑ์สีตาม thaiwater.net'], ['own', 'ปภ.', 'เกณฑ์ระดับฝนรายสถานีตรวจวัด (ของเรา) · 5 ระดับ']].map(([k, l, h]) => ({ label: l, hint: h, on: (s.crit || 'tw') === k, cls: (s.crit || 'tw') === k ? 'on' : '', pick: () => this.setState({ crit: k, hidden: {}, ibLv: 'all', page: 1 }) })) : [], hasCritSw: isRain, critNote: ((s.crit || 'tw') === 'own' ? 'เกณฑ์ ปภ.' : 'เกณฑ์ สถาบันสารสนเทศทรัพยากรน้ำ') + ' · ' + (this.periods().find((q) => q[0] === s.period) || [0, '24 ชม.'])[1] + (((s.crit || 'tw') === 'tw' && (s.period === 'm' || s.period === 'y')) ? ' · สเกลสีต่อเนื่อง ไม่มีระดับเตือน' : ''), colTop: met.col, colUnit: met.unitTh,
+      isRain, notRain: !isRain, legendTitle: met.title, critSw: isRain ? [['tw', 'สถาบันสารสนเทศทรัพยากรน้ำ', 'เกณฑ์สีตาม thaiwater.net'], ['own', 'ปภ.', 'เกณฑ์ระดับฝนรายสถานีตรวจวัด (ของเรา) · 5 ระดับ']].map(([k, l, h]) => ({ label: l, hint: h, on: (s.crit || 'tw') === k, cls: (s.crit || 'tw') === k ? 'on' : '', pick: () => this.setState({ crit: k, hidden: {}, ibLv: 'all', page: 1 }) })) : [], hasCritSw: false, critNote: 'เกณฑ์กลาง Default · ' + (this.periods().find(q=>q[0]===s.period)||[0,'24 ชม.'])[1] + ' · รายสถานีที่ตั้งเฉพาะ ดูช่วงค่าใน Popup', colTop: met.col, colUnit: met.unitTh,
       mLabel: met.label, mAria: 'ประเภทข้อมูล: ' + met.label, mOpen: !!s.mOpen, mChev: s.mOpen ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6-6',
       toggleM: () => this.setState({ mOpen: !s.mOpen, dd: null }), closeM: () => this.setState({ mOpen: false }),
       metrics: MD.map((x) => ({ label: x.label, on: x.key === met.key, cls: x.key === met.key ? 'on' : '', pick: () => this.setState({ metric: x.key, mOpen: false, page: 1, tip: null }) })),

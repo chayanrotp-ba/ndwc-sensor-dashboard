@@ -1,7 +1,7 @@
 // Exact default five-level rainfall intensity cuts from the supplied v56.
 // Prototype reference only: these are not operational notification thresholds.
 export const RAIN_CRITERIA = Object.freeze({
-  '1h': {label:'ฝน 1 ชั่วโมง',cuts:[0.5,5,25,50]},
+  '1h': {label:'ฝน 1 ชั่วโมง',cuts:[0.2,5,25,50]},
   'today': {label:'ฝนวันนี้ (07:00–ปัจจุบัน)',cuts:[0.5,10,35,90],draft:true},
   'yesterday': {label:'ฝนวานนี้ (07:00–07:00)',cuts:[0.5,10,35,90],draft:true},
   '24h': { label: '24 ชั่วโมง', cuts: [0.5, 10, 35, 90] },
@@ -23,7 +23,7 @@ export const STATION_MOCK_CUTS = {
 };
 export function rainfallResult(range, value, offline = false, scope = 'central') {
   const reference = RAIN_CRITERIA[range];
-  const criterion = reference && (scope === 'station' ? { ...reference, cuts: STATION_MOCK_CUTS[range], mockOverride: true } : scope === 'area' ? { ...reference, cuts: reference.cuts.map(cut => Math.round(cut * 0.8 * 100) / 100), mockOverride: true } : reference);
+  const criterion = reference && (Array.isArray(scope) ? { ...reference, cuts: scope } : scope === 'station' ? { ...reference, cuts: STATION_MOCK_CUTS[range], mockOverride: true } : scope === 'area' ? { ...reference, cuts: reference.cuts.map(cut => Math.round(cut * 0.8 * 100) / 100), mockOverride: true } : reference);
   if (!criterion) return { available: false, label: 'ไม่มีเกณฑ์ช่วงนี้ใน v56', bands: [] };
   const bands = RAIN_LEVELS.map((label, i) => ({ label, color: RAIN_COLORS[i], range: i === 4 ? `>${criterion.cuts[3]}` : `${i ? '>' + criterion.cuts[i - 1] : '>0'}–${criterion.cuts[i]}` }));
   if (offline || value == null || !Number.isFinite(value) || value < 0) return { available: false, label: offline ? 'ออฟไลน์ · ประเมินไม่ได้' : 'ไม่มีข้อมูลพร้อมประเมิน', bands, criterion };
