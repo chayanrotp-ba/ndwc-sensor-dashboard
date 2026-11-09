@@ -611,14 +611,8 @@ export default class Component extends DCLogic {
         const sp = { temp: 4.5, hum: 14, wind: 3.2, pres: 2.4, co2: 140, pm: 12 }[met.key] || 1;
         return [{ label: 'ต่ำสุดวันนี้', value: fmtS(Math.max(0, v - sp)) }, { label: 'สูงสุดวันนี้', value: fmtS(v + sp * 0.6) }, { label: 'เฉลี่ย 24 ชม.', value: fmtS(v - sp * 0.2) }];
       })();
-    // QR (illustrative pattern from the station code)
-    const n = 25, cell = 5, qk = [];
-    let qs = 0; for (let i = 0; i < code.length; i++) qs = (Math.imul(qs, 33) + code.charCodeAt(i)) >>> 0;
-    const qr = () => { qs = (Math.imul(qs, 1103515245) + 12345) >>> 0; return (qs >>> 16) & 1; };
-    const finder = (x, y) => [[x, y, 7], [x + 1, y + 1, 5], [x + 2, y + 2, 3]].forEach(([a, b, w], j) => qk.push(E('rect', { key: 'f' + x + y + j, x: a * cell, y: b * cell, width: w * cell, height: w * cell, fill: j === 1 ? '#ffffff' : '#0f172a' })));
-    const inF = (x, y) => (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
-    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (!inF(x, y) && qr()) qk.push(E('rect', { key: x + '-' + y, x: x * cell, y: y * cell, width: cell, height: cell, fill: '#0f172a' }));
-    finder(0, 0); finder(n - 7, 0); finder(0, n - 7);
+    const stationUrl = new URL(globalThis.location?.href || 'http://localhost/');
+    stationUrl.search = ''; stationUrl.hash = ''; stationUrl.searchParams.set('station',code);
     const PH = ['./assets/4c25bd342f475f24ffee0630da9e320a.jpg', './assets/debfa4f497673172a9a6052cb3775156.jpg', './assets/7cb7125fdc60fd4b663030a3f25ca65c.jpg'];
     const ph = (s.stPh || 0) % PH.length;
     const setP = (i) => this.setState({ stPh: (i + PH.length) % PH.length });
@@ -639,7 +633,7 @@ export default class Component extends DCLogic {
         { k: 'พิกัด UTM', v: utm(lat, lon) },
         { k: 'สถานะข้อมูล', v: DS.silent ? 'ออฟไลน์ · ไม่ส่งข้อมูลมา ' + DS.seenMin + ' นาที' : DS.late ? 'ข้อมูลมาช้า ' + DS.late + ' นาที · สถานีส่งล่าสุด ' + DS.seenAt : (DS.gap ? 'ข้อมูลขาดช่วง ' + DS.gap + ' ช่วง (' + DS.recv + '/144 ใน 24 ชม.) · ' : 'ปกติ · ') + 'รับข้อมูลล่าสุด ' + DS.seenAt + (DS.events.length ? ' · event: ' + DS.events[0].type : '') }
       ],
-      qrOpen: !!s.qr, toggleQr: () => this.setState({ qr: !s.qr }),
+      qrOpen: !!s.qr, closeQr: () => this.setState({qr:false}), toggleQr: () => this.setState({ qr: !s.qr }),
       spInfoOpen: !!s.spInfo, toggleInfo: () => this.setState({ spInfo: !s.spInfo }), spInfoChev: s.spInfo ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6-6',
       spInfoSum: 'ลุ่มน้ำ' + this.basinOf(st) + ' · ' + PEOPLE[idx % PEOPLE.length],
       spPerson: PEOPLE[idx % PEOPLE.length], spInit: PEOPLE[idx % PEOPLE.length].replace(/^(นาย|นางสาว|นาง)/, '').charAt(0),
@@ -648,7 +642,8 @@ export default class Component extends DCLogic {
       spDataStat: DS.silent ? 'ออฟไลน์ · ไม่ส่งข้อมูลมา ' + DS.seenMin + ' นาที' : DS.late ? 'ข้อมูลมาช้า ' + DS.late + ' นาที · สถานีส่งล่าสุด ' + DS.seenAt : (DS.gap ? 'ข้อมูลขาดช่วง ' + DS.gap + ' ช่วง (' + DS.recv + '/144 ใน 24 ชม.) · ' : 'ปกติ · ') + 'รับข้อมูลล่าสุด ' + DS.seenAt + (DS.events.length ? ' · event: ' + DS.events[0].type : ''),
       spCopyTxt: s.copied === st[0] ? 'คัดลอกแล้ว' : 'คัดลอก',
       copyLatLon: () => { try { const pr = navigator.clipboard && navigator.clipboard.writeText(lat.toFixed(5) + ', ' + lon.toFixed(5)); if (pr && pr.catch) pr.catch(() => {}); } catch (e) {} this.setState({ copied: st[0] }); setTimeout(() => this.setState((x) => (x.copied === st[0] ? { copied: null } : null)), 1800); },
-      spQr: E('svg', { width: 125, height: 125, viewBox: '0 0 125 125', role: 'img', 'aria-label': 'QR Code ' + code }, qk),
+      spStationUrl: stationUrl.href,
+      spQrPageUrl: stationUrl.href.replace('?station=', '?qr='),
       spHist: () => this.setState({ qr: false, hist: { id: st[0], sensor: met.hist, gran: s.period === 'm' ? 'month' : s.period === 'y' ? 'year' : 'day', range: null, pg: 1, full: false } }),
       spCls: s.stAll && !ext ? 'abs sp' : 'abs sp one' + (MINI ? ' hr' : '') + (ext ? ' sp-ext' : ''), spSingle: !s.stAll || ext, spMulti: !!s.stAll && !ext, spInt: !ext,
       spShowAll: () => this.setState({ stAll: true, qr: false }), spShowOne: () => this.setState({ stAll: false, qr: false }),
