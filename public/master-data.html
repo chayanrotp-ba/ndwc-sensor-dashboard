@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย | Sensor Master Data</title>
+<script>
+// Open direct links within the Backoffice shell so the other pages stay accessible.
+if(window.self===window.top){const backoffice=new URL('./',location.href);backoffice.search=location.search;backoffice.hash='stations/master';location.replace(backoffice.href);}
+</script>
 <style>
 
 :root{color-scheme:dark;--bg:#191919;--side:#0e0e10;--surface:#0e0e10;--surface2:#18181b;--surface3:#262626;--edge:#303034;--text:#f8fafc;--sub:#cbd5e1;--muted:#94a3b8;--primary:#2563eb;--primary-bg:#172554;--primary-text:#bfdbfe;--danger:#fca5a5;--overlay:#000a}
@@ -45,7 +49,176 @@
 .edit-confirm-hint{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}
 .btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
 </style>
-<style>.layout{display:block}.layout>.side,.mobile-bar,.mobile-backdrop{display:none!important}.main{max-width:none;padding:24px}body{overflow-x:hidden}@media(max-width:767px){.main{padding:14px}}</style></head>
+<style>.layout{display:block}.layout>.side,.mobile-bar,.mobile-backdrop{display:none!important}.main{max-width:none;padding:24px}body{overflow-x:hidden}@media(max-width:767px){.main{padding:14px}}</style><style>
+.rain-selectors{padding:16px 20px;border-bottom:1px solid var(--border,#404855)}
+.daily-periods{padding:12px 14px;margin-bottom:16px;border:1px solid #52607866;border-radius:8px}
+.rain-selectors h3{font-size:14px;margin:8px 0 12px}
+.rain-selectors .tabs{padding:0;border:0;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px}
+.rain-selectors .tab[aria-pressed=true]{background:#2563eb;color:#fff;border-color:#60a5fa}
+.rain-selectors .tab{border:1px solid #526078;border-radius:8px;padding:9px 13px}
+</style>
+<style>
+@font-face{font-family:Sarabun;font-style:normal;font-weight:400;font-display:swap;src:url('./assets/bcc369502f7b45efbd73f6a2c5708ac0.ttf') format('truetype')}
+@font-face{font-family:Sarabun;font-style:normal;font-weight:500;font-display:swap;src:url('./assets/8202380b16afe7cd17e348573e875494.ttf') format('truetype')}
+@font-face{font-family:Sarabun;font-style:normal;font-weight:600;font-display:swap;src:url('./assets/82569b647ff348945259fa2b398f1ed0.ttf') format('truetype')}
+:root{--bg:#191919;--surface:#0e0e10;--surface2:#18181b;--surface3:#262626;--edge:#262626;--sub:#cbd5e1;--muted:#94a3b8}
+:root.light{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--surface3:#e2e8f0;--edge:#cbd5e1;--sub:#334155;--muted:#64748b}
+body{font-family:Sarabun,'Leelawadee UI',Tahoma,sans-serif;font-size:14px;line-height:20px}
+.main{max-width:none;padding:24px 24px 16px}
+.head{align-items:flex-end;gap:16px;margin-bottom:16px}
+.head h1{font-size:24px;line-height:32px;font-weight:600}
+.head p{font-size:13px;line-height:18px;margin-top:2px}
+.crumb{font-size:13px;line-height:18px;margin-bottom:8px}
+.btn{font-weight:500;min-height:40px;line-height:20px;border-radius:6px;padding:9px 16px}
+.btn:hover{filter:none;background:#1d4ed8}.btn.secondary:hover{background:var(--surface3)}
+.panel{padding:16px;border-radius:12px}
+.panel-heading{padding-top:16px}
+.panel-heading h2{font-size:14px;line-height:20px;font-weight:600}
+.rain-selectors{padding:0;border-color:var(--edge)}
+#categorySelectors{padding-bottom:16px}
+#categorySelectors h3{margin:0 0 10px}
+.rain-selectors h3{font-size:13px;line-height:20px;color:var(--sub);margin:0 0 10px;font-weight:500}
+.rain-selectors .tabs{margin:0;gap:8px}
+.rain-selectors .tab{background:var(--surface3);color:var(--sub);border:1px solid #525252;border-radius:6px;font-weight:500;line-height:20px;padding:8px 12px;min-height:38px}
+.rain-selectors .tab:hover{border-color:#94a3b8;color:var(--text)}
+.rain-selectors .tab[aria-pressed=true]{background:var(--primary);border-color:#60a5fa;color:#fff}
+#categorySelectors .tab{border-radius:999px;padding-inline:16px}
+#tabs{margin:12px 0 16px;gap:8px;border:0;flex-wrap:wrap;overflow:visible}
+#tabs .tab{border:1px solid var(--edge);border-radius:999px;margin:0;background:var(--surface2);padding:8px 14px;line-height:20px;font-weight:500;min-height:38px}
+#tabs .tab[aria-selected=true]{background:var(--primary-bg);border-color:#3b82f6;color:var(--primary-text)}
+#rainSelectors{padding-top:16px}
+#rainSelectors>.tabs{margin-bottom:16px}
+.daily-periods{padding:14px;margin-bottom:12px;border:1px solid var(--edge);background:var(--surface2);border-radius:8px}
+.daily-periods .tab{background:var(--surface);border-color:#404040}
+:root.light .rain-selectors .tab{border-color:#94a3b8}
+.tabcount{background:var(--surface2);color:var(--muted)}
+.tab[aria-pressed=true] .tabcount{background:#ffffff26;color:white}
+.subtext,.footnote{line-height:18px}
+.list-section{max-width:none;margin:16px 0 0}
+.toolbar{background:var(--surface3);padding:10px 14px;border-radius:6px;margin:0 0 8px;min-height:40px}
+.list-heading{font-size:13px;font-weight:500;line-height:20px}
+.list-container{border:0;border-radius:6px}
+.criterion{min-height:64px;padding:10px 14px;gap:12px;border-color:var(--edge)}
+.criterion:nth-child(even){background:var(--surface2)}
+.criterion:hover{background:var(--surface3)}
+.criterion-name{font-size:14px;line-height:20px;font-weight:500}
+.swatch{width:5px;flex-basis:5px;height:36px;border-radius:4px}
+.criterion-info{gap:3px}
+.action-button{height:34px;background:var(--surface3);border-color:#404040;border-radius:6px;font-weight:400}
+:root.light .action-button{border-color:var(--edge)}
+.action-button.delete{color:var(--danger);border-color:var(--edge)}
+.footnote{max-width:none;margin:16px 0 0}
+.modal{border-color:var(--edge);font-family:Sarabun,sans-serif}
+:root.light .fieldrow input,:root.light .fieldrow select{border-color:#94a3b8}
+@media(max-width:767px){.main{padding:14px}.head{align-items:flex-start}.head h1{font-size:21px;line-height:29px}.panel{padding:12px}}
+@media(max-width:620px){.head{gap:12px}.toolbar{align-items:flex-start;flex-wrap:wrap;gap:4px}.criterion{padding:10px;gap:8px}.action-button{width:34px;padding:0}.rain-selectors .tab{white-space:normal;text-align:left}.daily-periods{padding:10px}}
+</style>
+<style>
+.head{margin-bottom:20px}.head p{display:none}.panel-heading{display:none}
+.main-category-tabs{border-bottom:1px solid var(--edge);margin-bottom:16px}
+.main-category-tabs>div{display:flex;gap:10px;overflow-x:auto}
+.category-tab{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);padding:16px 20px;font-size:17px;font-weight:600;white-space:nowrap}
+.category-tab[aria-selected=true]{color:var(--text);border-bottom-color:#2563eb}
+.panel{padding:20px}
+#tabs{margin:0 0 20px;gap:8px}
+#tabs .tab{border:1px solid var(--edge);background:var(--surface);font-size:14px}
+#tabs .tab[aria-selected=true]{background:#2563eb;color:#fff;border-color:#2563eb}
+#rainSelectors{border:0;padding:0}
+.period-segment{display:inline-flex;flex-wrap:wrap;padding:5px;gap:2px;border:1px solid var(--edge);border-radius:9px;background:var(--surface2)}
+.period-tab{padding:10px 15px;min-height:40px;border:0;border-radius:6px;background:transparent;color:var(--muted);font-weight:500}
+.period-tab[aria-pressed=true]{background:#404040;color:#fff}
+:root.light .period-tab[aria-pressed=true]{background:#cbd5e1;color:#0f172a}
+.extra-periods{margin:10px 0 0;color:var(--muted);font-size:12px}
+.extra-periods summary{cursor:pointer;display:inline-block;padding:4px 0}
+.extra-period-options{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.extra-period-options .period-tab{font-size:13px;border:1px solid var(--edge)}
+.list-section{margin:20px 0 0}
+.toolbar{background:transparent;padding:0;margin:0 0 20px;gap:12px}
+.list-heading{font-size:18px;line-height:26px;font-weight:600}
+.toolbar #count{margin-left:auto}
+#referenceNote{font-size:12px;padding:8px 12px;margin:0 0 12px}
+#inlineError:empty{display:none}
+.levels-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.levels-table th{text-align:left;background:#202024;color:var(--sub);padding:14px;font-size:13px;font-weight:500;height:48px}
+.levels-table th:first-child{width:120px;border-radius:8px 0 0 0}
+.levels-table th:last-child{width:190px;border-radius:0 8px 0 0}
+.levels-table td{padding:15px 14px;border-bottom:1px solid var(--edge);height:76px}
+:root.light .levels-table th{background:#e2e8f0}
+.editing-row{background:var(--surface2)}
+.level-position{white-space:nowrap}
+.reorder-handle{padding:0;margin-right:12px;width:14px;border:0;background:transparent;color:var(--muted);cursor:grab}
+.level-content{display:flex;gap:14px;align-items:center;min-width:0}
+.level-color{width:30px;height:30px;flex:0 0 30px;border-radius:7px}
+.level-content .hex{display:block;margin-top:2px}
+.level-content .criterion-name{font-weight:600;overflow-wrap:anywhere}
+.levels-table .level-actions{text-align:right;white-space:nowrap}
+.level-actions button+button{margin-left:6px}
+.action-button.icon-only{background:transparent;border:0;padding:0;width:40px;height:40px;color:var(--muted)}
+.action-button.icon-only:hover{background:var(--surface3);color:var(--text)}
+.inline-fields{display:flex;align-items:center;gap:14px;min-width:0}
+.inline-fields input[type=color]{width:34px;height:36px;flex:0 0 34px;padding:2px;border:1px solid #737373;border-radius:6px;background:var(--surface3);cursor:pointer}
+.inline-fields input[type=text],.inline-fields #inlineName{width:100%;min-width:0;height:44px;padding:10px 12px;border:1px solid #404040;border-radius:7px;background:var(--surface2);color:var(--text)}
+.inline-fields .hex{flex-shrink:0}
+@media(max-width:767px){.panel{padding:14px}.category-tab{font-size:15px;padding:12px}.levels-table th:first-child{width:60px}.levels-table th:last-child{width:88px}.levels-table td,.levels-table th{padding:10px 6px}.level-actions .btn{padding:8px;font-size:12px}.editing-row .level-actions{white-space:normal}.editing-row .level-actions button{display:block;margin:3px 0;width:100%}.inline-fields{flex-wrap:wrap;gap:8px}.inline-fields #inlineName{order:3;flex-basis:100%}.reorder-handle{margin-right:3px}.level-content{gap:8px}.level-color{width:24px;height:24px;flex-basis:24px}.period-tab{padding:8px 10px}.list-heading{font-size:16px}.toolbar{flex-wrap:wrap}.toolbar .btn{margin-left:auto}.action-button.icon-only{width:30px}.action-button.icon-only+button{margin-left:0}}
+</style>
+<style data-stations-reference>
+/* Measurements and spacing from the supplied Stations.dc.html levels view. */
+html,body{height:100%;overflow:hidden}
+.layout{height:100dvh;min-height:0}
+.main{padding:16px 24px 12px;height:100%;min-height:0;display:flex;flex-direction:column}
+.crumb,.head,.main-category-tabs{flex-shrink:0}
+.crumb{margin-bottom:8px}
+.head{margin-bottom:12px}
+.head h1{font-size:19px;line-height:24px;font-weight:600}
+.main-category-tabs{margin-bottom:12px;border-color:#262626}
+.main-category-tabs>div{gap:8px}
+.category-tab{height:50px;padding:0 16px;font-size:16px;line-height:20px;margin-bottom:0}
+.category-tab[aria-selected=true]{border-bottom-color:#3b82f6}
+.panel{padding:16px;flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#626262 transparent;scrollbar-gutter:stable}
+#tabs{gap:6px;margin:0 0 16px}
+#tabs .tab{height:36px;min-height:36px;padding:0 14px;font-size:13px;line-height:18px;font-weight:500;border-color:#262626;transition:background 120ms ease,color 120ms ease,border-color 120ms ease}
+#tabs .tab:hover{color:#e2e8f0;background:#1c1c20}
+#tabs .tab[aria-selected=true]{background:#2563eb;border-color:#2563eb;color:#fff}
+.period-segment{gap:2px;padding:4px;border-color:#262626;border-radius:8px;background:#18181b}
+.period-tab{height:32px;min-height:32px;padding:0 12px;font-size:13px;line-height:18px;font-weight:500}
+.period-tab[aria-pressed=true]{background:#404040;color:#f8fafc;font-weight:600}
+.extra-periods{margin-top:6px}
+.list-section{margin-top:16px}
+.toolbar{margin-bottom:16px;min-height:40px}
+.list-heading{font-size:16px;line-height:24px}
+.toolbar .btn{height:40px}
+.levels-table th{height:40px;padding:0 12px;font-size:12px;line-height:16px;font-weight:600;background:#1c1c20;border-bottom:1px solid #262626}
+.levels-table th:first-child{width:96px}
+.levels-table th:last-child{width:200px}
+.levels-table td{height:60px;padding:8px 12px;border-bottom-color:#262626;vertical-align:middle}
+.levels-table .editing-row td{background:#18181b}
+.level-content{gap:12px}
+.level-color{width:24px;height:24px;flex-basis:24px;border-radius:6px}
+.level-content .criterion-name{font-size:14px;line-height:20px}
+.level-content .hex{font-size:12px;line-height:16px;font-variant-numeric:tabular-nums}
+.reorder-handle{display:inline-flex;width:16px;margin-right:6px;color:#737373;vertical-align:middle}
+.reorder-handle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.level-position{font-variant-numeric:tabular-nums}
+.action-button.icon-only{width:36px;height:36px}
+.level-actions button+button{margin-left:4px}
+.inline-fields{gap:12px}
+.inline-fields #inlineName{flex:0 1 400px;height:36px;border-color:#737373;background:#262626;font-size:14px}
+.inline-fields input[type=color]{width:28px;height:28px;flex-basis:28px;border-radius:6px;padding:0;background:transparent;appearance:none}
+.inline-fields input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
+.inline-fields input[type=color]::-webkit-color-swatch{border:0;border-radius:3px}
+.level-actions .btn{height:36px;min-height:36px;padding:0 12px;font-weight:500}
+.legend-source-note{margin:12px 0 0}
+:root.light .main-category-tabs,:root.light .levels-table td{border-color:#e4e4e7}
+:root.light .levels-table th{background:#f4f4f5;border-color:#e4e4e7}
+:root.light .levels-table .editing-row td{background:#f8fafc}
+:root.light #tabs .tab{border-color:#e4e4e7;background:transparent;color:#64748b}
+:root.light #tabs .tab[aria-selected=true]{background:#2563eb;color:#fff;border-color:#2563eb}
+:root.light .period-segment{background:#f4f4f5;border-color:#e4e4e7}
+:root.light .period-tab[aria-pressed=true]{background:#fff;color:#0f172a;box-shadow:0 1px 2px #0f172a26}
+:root.light .inline-fields #inlineName{background:#fff;color:#0f172a;border-color:#a1a1aa}
+@media(max-width:767px){.main{padding:14px}.category-tab{font-size:14px;padding:0 10px}.panel{padding:12px}.levels-table th:first-child{width:52px}.levels-table th:last-child{width:86px}.levels-table td,.levels-table th{padding:10px 6px}.editing-row .level-actions .btn{padding:0 6px}.inline-fields{gap:8px}.inline-fields #inlineName{flex-basis:100%;max-width:100%}.reorder-handle{margin-right:2px}.level-content{gap:8px}.list-heading{font-size:15px}}
+</style>
+</head>
 <body>
 <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
 <div class="layout">
@@ -61,26 +234,27 @@
 </aside>
 <main class="main">
  <div class="mobile-bar"><button class="menu-trigger" type="button" aria-controls="mainSidebar" aria-expanded="false" id="menuTrigger" onclick="toggleMobileMenu()">☰ เมนู</button><span>ระบบบริหารจัดการ Sensor</span></div>
- <div class="crumb">หน้าแรก › การจัดการข้อมูลหลัก (Master Data) › ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</div>
- <header class="head"><div><h1>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</h1><p>ตั้งค่าข้อมูลหลักของชื่อระดับและสีที่ใช้แสดงตามประเภทการตรวจวัด</p></div><button type="button" class="btn" onclick="openEditor()">＋ เพิ่มชื่อเกณฑ์</button></header>
+ <div class="crumb">หน้าแรก › ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</div>
+ <header class="head"><div><h1>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</h1><p>ตั้งค่าข้อมูลหลักของชื่อระดับและสีที่ใช้แสดงตามประเภทการตรวจวัด</p></div></header>
+ <div id="categorySelectors" class="main-category-tabs"></div>
  <section class="panel" aria-label="รายการชื่อเกณฑ์ตามประเภทการตรวจวัด">
   <div class="panel-heading"><div><h2>ประเภทการตรวจวัด</h2><div class="subtext">เลือกประเภทการตรวจวัดเพื่อจัดการชื่อเกณฑ์การเตือนภัยและสีประจำเกณฑ์</div></div><span class="count-pill">9 ค่าตรวจวัด · 9 แท็บ</span></div>
   <div class="tabs" id="tabs" role="tablist" aria-label="ประเภทการตรวจวัด"></div>
-  <div class="list-section"><div class="toolbar"><span class="list-heading">รายการชื่อเกณฑ์การเตือนภัย</span><span class="subtext" id="count"></span></div>
-  <div id="content" role="tabpanel" aria-live="polite"></div></div>
+  <div id="rainSelectors" class="rain-selectors"></div><div class="list-section"><div class="toolbar"><span class="list-heading">รายการชื่อเกณฑ์การเตือนภัย</span><span class="subtext" id="count"></span><button class="btn" type="button" onclick="openEditor()">＋ เพิ่มระดับ</button></div>
+  <p id="inlineError" class="err" role="alert"></p><div id="content" role="tabpanel" aria-live="polite"></div><p id="referenceNote" class="subtext legend-source-note" hidden></p></div>
   <p class="footnote">ข้อมูลชื่อและสีอ้างอิงจากตัวอย่างหน้าจอที่แนบ · <strong>PM2.5 และ PM10 แยกจัดการ โดยใช้ชื่อเกณฑ์และสีเริ่มต้นเหมือนกัน</strong> · การเปลี่ยนแปลงใน Mockup บันทึกในเบราว์เซอร์นี้เท่านั้น</p>
  </section>
 </main>
 </div>
-<div class="overlay" id="editorOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalhead"><h2 id="modalTitle">เพิ่มชื่อเกณฑ์</h2><button class="btn secondary small" onclick="closeEditor()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="fieldrow"><label for="type">ประเภทการตรวจวัด</label><select id="type"></select></div><div class="fieldrow"><label for="name">ชื่อเกณฑ์การเตือนภัย <span aria-hidden="true">*</span></label><input id="name" type="text" maxlength="100" placeholder="ระบุชื่อระดับหรือชื่อเกณฑ์" oninput="renderPreview()"></div><div class="fieldrow"><label for="color">สีเกณฑ์การเตือนภัย <span aria-hidden="true">*</span></label><div class="picker"><input type="color" id="color" value="#ef4444" oninput="renderPreview()" aria-label="เลือกสีเกณฑ์การเตือนภัย"><span class="sample-dot" id="sampleDot"></span><span id="colorText" class="hex">#EF4444</span><span class="subtext">คลิกเพื่อเลือกสี</span></div></div><div class="preview"><span class="subtext">ตัวอย่างการแสดงผล</span><div class="preview-line"><span class="dot" id="previewDot"></span><strong id="previewName">ชื่อเกณฑ์การเตือนภัย</strong></div></div><div class="edit-confirm" id="editConfirmSection" hidden><p class="edit-confirm-title">ยืนยันก่อนบันทึกการแก้ไข</p><p class="edit-confirm-note">โปรดตรวจสอบชื่อเกณฑ์และสีที่แก้ไข เนื่องจากอาจส่งผลต่อรายการที่นำชื่อเกณฑ์นี้ไปใช้งาน</p><label class="edit-confirm-label" for="editConfirmInput">พิมพ์ <code>ยืนยันการแก้ไข</code> เพื่อยืนยัน</label><input class="edit-confirm-input" id="editConfirmInput" type="text" placeholder="พิมพ์ ยืนยันการแก้ไข" autocomplete="off" spellcheck="false" aria-describedby="editConfirmHint" oninput="updateEditSaveState()"><div id="editConfirmHint" class="edit-confirm-hint" role="status">ปุ่มบันทึกจะใช้งานได้เมื่อพิมพ์ “ยืนยันการแก้ไข” ตรงตามที่กำหนด</div></div><p id="error" class="err" role="alert"></p></div><div class="modalfoot"><button class="btn secondary" onclick="closeEditor()">ยกเลิก</button><button id="editorSaveButton" class="btn" onclick="saveEditor()">บันทึกข้อมูล</button></div></div></div>
 <div class="overlay" id="deleteOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteWarning"><div class="modalhead"><h2 class="danger-title" id="deleteTitle">ลบชื่อเกณฑ์การเตือนภัย</h2><button type="button" class="btn secondary small" onclick="closeDelete()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="delete-context"><span class="label">รายการที่ต้องการลบ</span><strong id="deleteName"></strong><span class="subtext" id="deleteType"></span></div><div class="delete-warning" id="deleteWarning">การลบชื่อเกณฑ์เป็นการดำเนินการที่มีความเสี่ยง หากมีการนำรายการนี้ไปอ้างอิงในระบบจริง อาจส่งผลต่อการทำงานที่เกี่ยวข้อง</div><label class="delete-confirm-label" for="deleteConfirmInput">พิมพ์ <code>ยืนยันการลบ</code> เพื่อยืนยันการลบ</label><input class="delete-confirm-input" type="text" id="deleteConfirmInput" placeholder="พิมพ์ ยืนยันการลบ" autocomplete="off" spellcheck="false" aria-describedby="deleteConfirmHint" oninput="updateDeleteState()"><div id="deleteConfirmHint" class="delete-confirm-hint" role="status">ปุ่มลบจะใช้งานได้เมื่อพิมพ์ “ยืนยันการลบ” ตรงตามที่กำหนด</div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeDelete()">ยกเลิก</button><button type="button" id="deleteConfirmButton" class="btn danger" onclick="confirmDelete()" disabled>ลบชื่อเกณฑ์</button></div></div></div>
 <div id="toast" class="toast" role="status"></div>
+<script src="./rainfall-legend-reference.js"></script>
 <script>
 'use strict';
 const types=['ปริมาณฝนสะสม','อุณหภูมิอากาศ','ความชื้นสัมพัทธ์','ความเร็วลม','ทิศทางลม','ความกดอากาศ','ก๊าซคาร์บอนไดออกไซด์','ฝุ่นละออง PM2.5','ฝุ่นละออง PM10'];
 // Master Data นี้ประกอบด้วยชื่อและสีเท่านั้น ไม่ผูกกับนิยามเชิงตัวเลข
 const initial=[
- [['ฝนหนักมาก','#ef4444'],['ฝนหนัก','#f97316'],['ฝนหนัก','#facc15'],['ฝนปานกลาง','#86efac'],['ฝนเล็กน้อย','#93c5fd'],['ฝนละออง','#78d1e3']],
+ [['ต้องอพยพ','#ef4444'],['อพยพ','#f97316'],['เตรียมรับมือ','#facc15'],['เฝ้าระวัง','#38bdf8'],['ติดตาม','#22c55e']],
  [['ร้อนจัด','#f43f5e'],['ร้อน','#fb923c'],['อุ่น','#facc15'],['ปกติ','#86d65b'],['เย็น','#93c5fd']],
  [['อิ่มตัว','#1d4ed8'],['ชื้นมาก','#60a5fa'],['ปกติ','#86d65b'],['แห้ง','#facc15'],['แห้งมาก','#fb923c']],
  [['พายุ','#f43f5e'],['ลมแรง','#fb923c'],['ปานกลาง','#facc15'],['ลมเบา','#86d65b'],['ลมสงบ','#93c5fd']],
@@ -96,7 +270,7 @@ const PREVIOUS_STORAGE='ddpm_masterdata_levelnames_shared_v3';
 const LEGACY_STORAGE='ddpm_masterdata_levelnames_v2';
 const $=id=>document.getElementById(id);
 function uid(){return (typeof crypto!=='undefined' && typeof crypto.randomUUID==='function')?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`}
-function defaults(){return initial.map(list=>list.map(([name,color])=>({id:uid(),name,color})))}
+function defaults(){return initial.map((list,type)=>list.map(([name,color],i)=>({id:type===0?'ddpm-'+(5-i):uid(),name,color})))}
 // Copy the previous shared PM group into independent PM2.5 and PM10 records.
 function normalize(saved){
  if(!Array.isArray(saved)||![8,9].includes(saved.length)||!saved.every(Array.isArray))return null;
@@ -122,33 +296,210 @@ function load(){
  }catch{}
  return defaults();
 }
-let data=load(),active=0,editingId=null,deletingId=null,toastTimer;
-function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(data))}catch{}}
+let data=load();
+if(data[0].length===6 && data[0].every(row=>row.name.startsWith('ฝน'))) {
+ data[0]=initial[0].map(([name,color],i)=>({id:'ddpm-'+(5-i),name,color}));
+ try {localStorage.setItem(STORAGE,JSON.stringify(data))}catch{}
+}
+const previousWarningColors=['#a855f7','#ef4444','#fb923c','#facc15','#86efac'];
+if(data[0].length===5 && data[0].every((row,i)=>row.name===initial[0][i][0] && row.color.toLowerCase()===previousWarningColors[i])) {
+ data[0]=data[0].map((row,i)=>({...row,color:initial[0][i][1]}));
+ try {localStorage.setItem(STORAGE,JSON.stringify(data))}catch{}
+}
+let active=0,editingId=null,deletingId=null,toastTimer;
+const RAIN_NAMES_KEY='ndwc.rain-name-lists.v1';
+const rainPeriods={
+ '1h':'ฝน 1 ชั่วโมง',
+ '3h':'ฝน 3 ชั่วโมง',
+ '6h':'ฝน 6 ชั่วโมง',
+ '12h':'ฝน 12 ชั่วโมง',
+ today:'ฝนวันนี้ (07:00–ปัจจุบัน)',
+ yesterday:'ฝนวานนี้ (07:00–07:00)',
+ '24h':'ฝน 24 ชั่วโมง (ย้อนหลัง)',
+ '48h':'ฝน 48 ชั่วโมง',
+ '72h':'ฝน 3 วัน',
+ '5d':'ฝน 5 วัน',
+ '7d':'ฝน 7 วัน',
+ '15d':'ฝน 15 วัน',
+ month:'ฝนรายเดือน',
+ year:'ฝนรายปี'
+};
+let rainCategory='quantity',rainPeriod='24h',lastDailyPeriod='24h';
+const initialView=new URLSearchParams(location.search);
+const initialMeasurement=Number(initialView.get('measurement'));
+if(Number.isInteger(initialMeasurement)&&initialMeasurement>=0&&initialMeasurement<types.length)active=initialMeasurement;
+if(initialView.get('category')==='warning')rainCategory='warning';
+if(Object.hasOwn(rainPeriods,initialView.get('period')))rainPeriod=initialView.get('period');
+if(!['month','year'].includes(rainPeriod))lastDailyPeriod=rainPeriod;
+let inlineDraft=null;
+const intensity=[
+ ['ฝนละออง','#9dd9ef'],['ฝนเล็กน้อย','#90c881'],['ฝนปานกลาง','#f0d447'],
+ ['ฝนหนัก','#f99c38'],['ฝนหนักมาก','#ff3656']
+].map(([name,color],i)=>({id:'rain-standard-'+i,name,color}));
+let rainLists;
+try {rainLists=JSON.parse(localStorage.getItem(RAIN_NAMES_KEY)||'null')}catch{}
+rainLists ??= {quantity:{},warning:{}};
+const legendReference=window.NDWC_RAINFALL_LEGEND_REFERENCE||{};
+for(const category of ['quantity','warning']){
+ rainLists[category] ??= {};
+ for(const period of Object.keys(rainPeriods)){
+  const existing=rainLists[category][period];
+  const oldPlaceholder=existing?.length===intensity.length&&existing.every((row,index)=>
+   row.id===intensity[index].id&&row.name===intensity[index].name&&row.color.toLowerCase()===intensity[index].color.toLowerCase());
+  if(category==='quantity'&&(!existing||oldPlaceholder)){
+   rainLists.quantity[period]=JSON.parse(JSON.stringify(legendReference[period]||[]));
+  }else if(!existing){
+   rainLists.warning[period]=JSON.parse(JSON.stringify([...data[0]].reverse()));
+  }
+ }
+}
+const QUANTITY_NAMES_KEY='ndwc.quantity-other-names.v1';
+let quantityOther;
+try{quantityOther=JSON.parse(localStorage.getItem(QUANTITY_NAMES_KEY)||'null')}catch{}
+quantityOther ??= {};
+for(let type=1;type<types.length;type++) quantityOther[type] ??= JSON.parse(JSON.stringify(data[type]));
+function persist(){
+ try {
+  localStorage.setItem(STORAGE,JSON.stringify(data));
+  localStorage.setItem(RAIN_NAMES_KEY,JSON.stringify(rainLists));
+  localStorage.setItem(QUANTITY_NAMES_KEY,JSON.stringify(quantityOther));
+  return true;
+ }catch{
+  toast('บันทึกไม่ได้ กรุณาตรวจสอบพื้นที่จัดเก็บของเบราว์เซอร์');
+  return false;
+ }
+}
 function esc(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function rowsForActive(){return data[active]}
-function renderTabs(){$('tabs').innerHTML=types.map((t,i)=>`<button type="button" role="tab" class="tab" aria-selected="${active===i}" onclick="pickTab(${i})">${esc(t)}<span class="tabcount">${data[i].length}</span></button>`).join('')}
-function pickTab(idx){active=idx;renderTabs();renderList()}
+function rowsForActive(){return active===0?rainLists[rainCategory][rainPeriod]:(rainCategory==='quantity'?quantityOther[active]:data[active])}
+function scopeLabel(){
+ return active===0?(rainCategory==='quantity'?'ปริมาณฝน':'ระดับเตือนภัย')+' · '+rainPeriods[rainPeriod]:types[active];
+}
+function renderTabs(){
+ $('tabs').innerHTML=types.map((t,i)=>({name:t,index:i})).map(type=>`<button type="button" role="tab" class="tab" aria-selected="${active===type.index}" onclick="pickTab(${type.index})">${esc(type.name)}</button>`).join('');
+ document.querySelector('.count-pill').textContent=rainCategory==='quantity'?'ปริมาณฝนสะสม':'9 ค่าตรวจวัด · 9 แท็บ';
+}
+function pickTab(idx){inlineDraft=null;active=idx;renderTabs();renderList()}
+function pickRainCategory(category){inlineDraft=null;rainCategory=category;renderTabs();renderList()}
+function pickRainPeriod(period){
+ inlineDraft=null;rainPeriod=period;
+ if(!['month','year'].includes(period))lastDailyPeriod=period;
+ renderList();
+}
+function pickRainGroup(group){
+ rainPeriod=group==='day'?lastDailyPeriod:group;
+ renderList();
+}
+function renderRainSelectors(){
+ $('categorySelectors').innerHTML='<div role="tablist" aria-label="ประเภทเกณฑ์สี">'+
+ [['quantity','เกณฑ์สีตามปริมาณ'],['warning','เกณฑ์สีระดับเตือนภัย']].map(([key,label])=>
+ `<button class="category-tab" role="tab" aria-selected="${rainCategory===key}" onclick="pickRainCategory('${key}')">${label}</button>`).join('')+'</div>';
+ $('rainSelectors').hidden=active!==0;
+ if(active!==0)return;
+ const primary=['24h','72h','5d','7d','15d','month','year'];
+ const labels={'24h':'24 ชม.','72h':'3 วัน','5d':'5 วัน','7d':'7 วัน','15d':'15 วัน',month:'รายเดือน',year:'รายปี'};
+ const periodButtons=primary.map(key=>
+ `<button class="period-tab" aria-pressed="${rainPeriod===key}" onclick="pickRainPeriod('${key}')">${labels[key]}</button>`).join('');
+ const extra=['1h','today','yesterday','24h','72h'].map(key=>[key,rainPeriods[key]]);
+ $('rainSelectors').innerHTML='<div class="period-segment" role="group" aria-label="ช่วงฝนสะสม">'+periodButtons+'</div>'+
+ '<details class="extra-periods"'+(!primary.includes(rainPeriod)?' open':'')+'><summary>ช่วงฝนสะสมอื่น</summary><div class="extra-period-options" role="group" aria-label="ช่วงฝนสะสมอื่น">'+
+ extra.map(([key,label])=>`<button class="period-tab" aria-pressed="${rainPeriod===key}" onclick="pickRainPeriod('${key}')">${label}</button>`).join('')+'</div></details>';
+}
 const iconEdit='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg>';
 const iconTrash='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg>';
+function displayName(row){
+ return row.displayName || (row.range&&row.range!==row.name?row.range+' '+row.name:row.name);
+}
+function rowMarkup(row,index,isNew=false){
+ const edit=inlineDraft?.id===row.id;
+ const name=displayName(row);
+ const position=String(index+1).padStart(2,'0');
+ const handle=!edit?`<button class="reorder-handle" draggable="true" aria-label="ย้ายลำดับ ${esc(name)}" title="ลากเพื่อย้ายลำดับ หรือใช้ Alt + ลูกศรขึ้น/ลง" ondragstart="event.dataTransfer.setData('text/plain','${esc(row.id)}')" onkeydown="reorderKey(event,'${esc(row.id)}')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"></path></svg></button>`:'';
+ return `<tr class="${edit?'editing-row':''}" ondragover="event.preventDefault()" ondrop="dropLevel(event,'${esc(row.id)}')">
+ <td class="level-position">${handle}<span>${position}</span></td>
+ <td>${edit?
+  `<div class="inline-fields"><input id="inlineColor" type="color" aria-label="สีเกณฑ์" value="${esc(inlineDraft.color)}" oninput="inlineDraft.color=this.value;document.getElementById('inlineHex').textContent=this.value.toUpperCase()"><input id="inlineName" aria-label="ชื่อเกณฑ์" maxlength="150" value="${esc(inlineDraft.name)}" oninput="inlineDraft.name=this.value"><span class="hex" id="inlineHex">${esc(inlineDraft.color.toUpperCase())}</span></div>`:
+  `<div class="level-content"><span class="level-color" style="background:${esc(row.color)}"></span><div><span class="criterion-name">${esc(name)}</span><span class="hex">${esc(row.color.toUpperCase())}</span></div></div>`}
+ </td>
+ <td class="level-actions">${edit?
+  '<button class="btn secondary" onclick="cancelInline()">ยกเลิก</button><button class="btn" onclick="saveInline()">บันทึก</button>':
+  `<button class="action-button icon-only" aria-label="แก้ไข ${esc(name)}" onclick="openEditor('${esc(row.id)}')">${iconEdit}</button><button class="action-button icon-only delete" aria-label="ลบ ${esc(name)}" onclick="openDelete('${esc(row.id)}')">${iconTrash}</button>`}</td></tr>`;
+}
 function makeList(rows){
- if(!rows.length)return '<div class="list-container"><div class="empty">ยังไม่มีรายการชื่อเกณฑ์ในประเภทนี้</div></div>';
- return `<div class="list-container"><ol class="criteria-list">${rows.map((r,i)=>`<li class="criterion"><span class="criterion-pos" aria-label="รายการที่ ${i+1}">${String(i+1).padStart(2,'0')}</span><span class="swatch" style="background:${esc(r.color)}" aria-hidden="true"></span><div class="criterion-info"><span class="criterion-name">${esc(r.name)}</span><span class="criterion-color"><span class="dot" style="background:${esc(r.color)}" aria-hidden="true"></span><span class="hex">${esc(r.color.toUpperCase())}</span></span></div><div class="criterion-actions"><button class="action-button" type="button" aria-label="แก้ไข ${esc(r.name)}" onclick="openEditor('${esc(r.id)}')">${iconEdit}<span class="action-label">แก้ไข</span></button><button class="action-button delete" type="button" aria-label="ลบ ${esc(r.name)}" onclick="openDelete('${esc(r.id)}')">${iconTrash}<span class="action-label">ลบ</span></button></div></li>`).join('')}</ol></div>`;
+ const pending=inlineDraft?.isNew?rowMarkup({id:inlineDraft.id,name:inlineDraft.name,color:inlineDraft.color},rows.length,true):'';
+ return '<div class="list-container"><table class="levels-table"><thead><tr><th>ลำดับ</th><th>ชื่อเกณฑ์</th><th class="level-actions">จัดการ</th></tr></thead><tbody>'+
+ rows.map((row,index)=>rowMarkup(row,index)).join('')+pending+
+ (!rows.length&&!pending?'<tr><td colspan="3" class="empty">ยังไม่มีรายการชื่อเกณฑ์ในช่วงนี้</td></tr>':'')+'</tbody></table></div>';
+}
+function cancelInline(){inlineDraft=null;renderList()}
+function saveInline(){
+ const name=inlineDraft.name.trim();
+ if(!name){$('inlineError').textContent='กรุณาระบุชื่อเกณฑ์';$('inlineName').focus();return;}
+ const rows=rowsForActive();
+ const index=rows.findIndex(row=>row.id===inlineDraft.id);
+ const before=index>=0?{...rows[index]}:null;
+ const row={...(before||{}),id:inlineDraft.id,name,color:inlineDraft.color};
+ if(before?.range){
+  const prefix=before.range+' ';
+  if(name.startsWith(prefix)){
+   row.name=name.slice(prefix.length);
+   delete row.displayName;
+  }else if(name===displayName(before)){
+   row.name=before.name;
+  }else{
+   row.displayName=name;
+  }
+ }
+ if(index>=0)rows[index]=row;else rows.push(row);
+ if(!persist()){if(index>=0)rows[index]=before;else rows.pop();return;}
+ inlineDraft=null;renderList();toast('บันทึกชื่อและสีเกณฑ์เรียบร้อยแล้ว');
+}
+function moveLevel(id,targetIndex){
+ if(inlineDraft)return;
+ const rows=rowsForActive(),index=rows.findIndex(row=>row.id===id);
+ if(index<0||targetIndex<0||targetIndex>=rows.length)return;
+ const before=[...rows];
+ const [row]=rows.splice(index,1);rows.splice(targetIndex,0,row);
+ if(!persist()){rows.splice(0,rows.length,...before);return;}
+ renderList();
+}
+function reorderKey(event,id){
+ if(!event.altKey||!['ArrowUp','ArrowDown'].includes(event.key))return;
+ event.preventDefault();
+ const index=rowsForActive().findIndex(row=>row.id===id);
+ moveLevel(id,index+(event.key==='ArrowUp'?-1:1));
+ const handles=document.querySelectorAll('.reorder-handle');
+ handles[Math.max(0,Math.min(handles.length-1,index+(event.key==='ArrowUp'?-1:1)))]?.focus();
+}
+function dropLevel(event,target){
+ event.preventDefault();
+ const id=event.dataTransfer.getData('text/plain');
+ if(id!==target)moveLevel(id,rowsForActive().findIndex(row=>row.id===target));
 }
 function renderList(){
- const rows=rowsForActive();$('count').textContent=`${rows.length} รายการ`;
+ renderRainSelectors();
+ $('inlineError').textContent='';
+ document.querySelector('.list-heading').textContent='รายการระดับการแจ้งเตือน · '+rowsForActive().length+' ระดับ';
+ const rows=rowsForActive();
+ const referenceNote=active===0&&rainCategory==='quantity'
+  ? (legendReference[rainPeriod]?'อ้างอิงช่วงค่า ชื่อ และสีจาก Legend ปริมาณฝนในหน้าแผนที่'+(['month','year'].includes(rainPeriod)?' · สเกลสี ไม่มีชื่อระดับความรุนแรง':''):'ช่วงนี้ยังไม่มีข้อมูลอ้างอิงจาก Legend ในระบบ')
+  : '';
+ $('referenceNote').textContent=referenceNote;
+ $('referenceNote').hidden=!referenceNote;
+ $('count').textContent='';
  $('content').innerHTML=(active>=7?'<div class="shared-banner">PM2.5 และ PM10 ใช้ชื่อและสีเริ่มต้นเหมือนกัน แต่แยกแก้ไขข้อมูลของแต่ละประเภท</div>':'')+makeList(rows)
 }
-function findCurrent(id){return data[active].find(r=>r.id===id)}
-function openEditor(id){editingId=id||null;const row=id?findCurrent(id):null;$('modalTitle').textContent=row?'แก้ไขชื่อเกณฑ์และสี':'เพิ่มชื่อเกณฑ์และสี';$('type').innerHTML=types.map((t,i)=>`<option value="${i}">${esc(t)}</option>`).join('');$('type').value=active;$('type').disabled=Boolean(row);$('name').value=row?.name||'';$('color').value=row?.color||'#ef4444';$('error').textContent='';$('editConfirmSection').hidden=!row;$('editConfirmInput').value='';$('editorSaveButton').textContent=row?'บันทึกการแก้ไข':'บันทึกข้อมูล';renderPreview();updateEditSaveState();$('editorOverlay').classList.add('open');$('name').focus()}
-function closeEditor(){$('editorOverlay').classList.remove('open');$('editConfirmInput').value='';editingId=null}
-function renderPreview(){let c=$('color').value;for(const id of ['sampleDot','previewDot'])$(id).style.background=c;$('colorText').textContent=c.toUpperCase();$('previewName').textContent=$('name').value.trim()||'ชื่อเกณฑ์การเตือนภัย';updateEditSaveState()}
-function updateEditSaveState(){const matched=$('editConfirmInput').value==='ยืนยันการแก้ไข';$('editorSaveButton').disabled=Boolean(editingId)&&!matched;$('editConfirmInput').classList.toggle('ok',matched);$('editConfirmHint').textContent=matched?'ยืนยันข้อความถูกต้อง สามารถบันทึกการแก้ไขได้':'ปุ่มบันทึกจะใช้งานได้เมื่อพิมพ์ “ยืนยันการแก้ไข” ตรงตามที่กำหนด'}
-function saveEditor(){if(editingId&&$('editConfirmInput').value!=='ยืนยันการแก้ไข'){$('error').textContent='กรุณาพิมพ์ “ยืนยันการแก้ไข” เพื่อบันทึก';return}const idx=Number($('type').value),name=$('name').value.trim(),color=$('color').value;if(!name){$('error').textContent='กรุณาระบุชื่อเกณฑ์การเตือนภัย';$('name').focus();return}if(name.length>100){$('error').textContent='ชื่อเกณฑ์ยาวเกินขนาดที่กำหนด';return}const row={id:editingId||uid(),name,color};if(editingId){const pos=data[idx].findIndex(r=>r.id===editingId);if(pos<0)return;data[idx][pos]=row}else data[idx].push(row);active=idx;persist();closeEditor();renderTabs();renderList();toast('บันทึกชื่อและสีเกณฑ์เรียบร้อยแล้ว')}
+function findCurrent(id){return rowsForActive().find(r=>r.id===id)}
+function openEditor(id){
+ const row=id?findCurrent(id):null;
+ inlineDraft={id:row?.id||uid(),name:row?displayName(row):'',color:row?.color||'#ef4444',isNew:!row};
+ renderList();
+ $('inlineName').focus();
+}
 function openDelete(id){
  const row=findCurrent(id);if(!row)return;
  deletingId=id;
  $('deleteName').textContent=row.name+' · '+row.color.toUpperCase();
- $('deleteType').textContent='ประเภทการตรวจวัด: '+types[active];
+ $('deleteType').textContent=scopeLabel();
  $('deleteConfirmInput').value='';
  updateDeleteState();
  $('deleteOverlay').classList.add('open');
@@ -166,17 +517,27 @@ function closeDelete(){
 }
 function confirmDelete(){
  if(!deletingId||$('deleteConfirmInput').value!=='ยืนยันการลบ')return;
- const idx=data[active].findIndex(r=>r.id===deletingId);
+ const idx=rowsForActive().findIndex(r=>r.id===deletingId);
  if(idx<0){closeDelete();return;}
- data[active].splice(idx,1);persist();closeDelete();renderTabs();renderList();toast('ลบชื่อเกณฑ์เรียบร้อยแล้ว');
+ rowsForActive().splice(idx,1);if(!persist())return;closeDelete();renderTabs();renderList();toast('ลบชื่อเกณฑ์เรียบร้อยแล้ว');
 }
 function toast(message){$('toast').textContent=message;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',2300)}
 function toggleMobileMenu(){const open=document.body.classList.toggle('menu-open');$('menuTrigger').setAttribute('aria-expanded',String(open))}
 function closeMobileMenu(){document.body.classList.remove('menu-open');$('menuTrigger').setAttribute('aria-expanded','false')}
 function setTheme(t){document.documentElement.classList.toggle('light',t==='light');$('lightButton').classList.toggle('on',t==='light');$('darkButton').classList.toggle('on',t==='dark');try{localStorage.setItem('ddpm_mock_theme',t)}catch{}}
-for(const id of ['editorOverlay','deleteOverlay'])$(id).addEventListener('click',e=>{if(e.target===$(id)){id==='editorOverlay'?closeEditor():closeDelete()}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeEditor();closeDelete();closeMobileMenu()}});
+$('deleteOverlay').addEventListener('click',event=>{if(event.target===$('deleteOverlay'))closeDelete()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelInline();closeDelete();closeMobileMenu()}});
 $('menuSearch').addEventListener('input',e=>{const q=e.target.value.trim().toLocaleLowerCase('th-TH');document.querySelectorAll('[data-nav]').forEach(n=>n.style.display=n.textContent.toLocaleLowerCase('th-TH').includes(q)?'':'none')});
+persist();
+window.addEventListener('message',event=>{
+ if(event.source!==window.parent||event.origin!==location.origin)return;
+ if(event.data?.type==='ndwc-backoffice-theme'&&['light','dark'].includes(event.data.theme)){
+  setTheme(event.data.theme);
+ }
+});
+window.addEventListener('storage',event=>{
+ if(event.key==='ddpm_mock_theme'&&['light','dark'].includes(event.newValue))setTheme(event.newValue);
+});
 setTheme((()=>{try{return localStorage.getItem('ddpm_mock_theme')||'dark'}catch{return 'dark'}})());renderTabs();renderList();
 </script>
 </body></html>

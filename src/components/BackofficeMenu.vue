@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-const props = defineProps({goMap:Function,goStations:Function,goLine:Function,goMaster:Function,goLight:Function,goDark:Function,current:String});
+import CriteriaNavigation from './CriteriaNavigation.vue';
+const props = defineProps({goMap:Function,goStations:Function,goLine:Function,goCentral:Function,goMaster:Function,goLight:Function,goDark:Function,current:String});
 const menu=ref(null);
 function navigate(action){menu.value.open=false;action?.();}
 </script>
@@ -12,8 +13,9 @@ function navigate(action){menu.value.open=false;action?.();}
       <nav aria-label="เมนู Backoffice สำหรับมือถือ">
         <button @click="navigate(goMap)">หน้าแผนที่</button>
         <button :aria-current="current==='stations'?'page':undefined" @click="navigate(goStations)">รายการสถานี Sensor</button>
+        <CriteriaNavigation :current="current" :go-master="()=>navigate(goMaster)" :go-central="goCentral?()=>navigate(goCentral):undefined" />
         <button :aria-current="current==='line'?'page':undefined" @click="navigate(goLine)">จัดการการแจ้งเตือนไลน์</button>
-        <button :aria-current="current==='master'?'page':undefined" @click="navigate(goMaster)">การจัดการข้อมูล (Master)</button><div class="bo-mobile-theme"><button v-if="goLight" @click="navigate(goLight)">☼ สว่าง</button><button v-if="goDark" @click="navigate(goDark)">☾ มืด</button></div>
+        <div class="bo-mobile-theme"><button v-if="goLight" @click="navigate(goLight)">☼ สว่าง</button><button v-if="goDark" @click="navigate(goDark)">☾ มืด</button></div>
       </nav>
     </details>
   </div>

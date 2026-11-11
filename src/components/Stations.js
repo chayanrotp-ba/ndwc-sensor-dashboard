@@ -1,15 +1,17 @@
 import { DCLogic } from '../runtime.js';
-import { thresholdSettings, hasCustomThreshold } from '../threshold-settings.js';
+import {customMeasurements,seedWarningExamples} from '../warning-criteria.js';
 export default class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { page:'stations', q:'', basin:'', stat:'', menu:null, modal:null, hidden:{'G15006-2204':true,'G15006-4006':true}, toast:'' };
+    this.state = { page:'stations', q:'', basin:'', stat:'', criterion:'', menu:null, modal:null, hidden:{'G15006-2204':true,'G15006-4006':true}, toast:'' };
     if(globalThis.location?.hash === '#stations/master') this.state.page='master';
+    seedWarningExamples(this.stations());
+    if(globalThis.location?.hash === "#stations/default") this.state.page="central";
     const direct = /^#stations\/(G\d+-\d+)\/thresholds$/.exec(globalThis.location?.hash || '');
     if (direct && this.stations().some(station => station.code === direct[1])) this.state.modal = direct[1];
   }
   stations() {
-    // sample rows (design data)
+    // Demo weather stations support every measurement. Ownership does not determine sensor capabilities.
     return [
       ['G15006-1801', 'ที่ว่าการอำเภอเมืองชัยนาท', 'ต.ในเมือง อ.เมือง จ.ชัยนาท', 'ลุ่มแม่น้ำเจ้าพระยา', '15 นาที', 'สมชาย ใจดี', '27/07/2568 14:30', true, 'กรมทรัพยากรน้ำ'],
       ['G15006-1802', 'ศูนย์พัฒนาเด็กเล็ก วัดฝาง', 'ต.ชัยนาท อ.เมือง จ.ชัยนาท', 'ลุ่มแม่น้ำเจ้าพระยา', '15 นาที', 'สมศรี วงค์แก้ว', '27/07/2568 13:15', true, 'กรมทรัพยากรน้ำ'],
@@ -24,7 +26,17 @@ export default class Component extends DCLogic {
       ['G15006-0515', 'โรงเรียนบ้านน้ำปาย', 'ต.น้ำปาย อ.แม่จริม จ.น่าน', 'ลุ่มน้ำน่าน', '15 นาที', 'ณัฐธิดา ใจงาม', '10/07/2568 18:05', true, 'กรมทรัพยากรน้ำ'],
       ['G15006-0821', 'อบต.ปิงโค้ง', 'ต.ปิงโค้ง อ.เชียงดาว จ.เชียงใหม่', 'ลุ่มน้ำปิง', '30 นาที', 'กิตติ ทองดี', '09/07/2568 12:40', true, 'กรมทรัพยากรน้ำ'],
       ['G15006-5501', 'องค์การบริหารส่วนตำบลขุนน่าน', 'ต.ขุนน่าน อ.เฉลิมพระเกียรติ จ.น่าน', 'ลุ่มน้ำน่าน', '15 นาที', 'นายสมชาย วงศ์ศรี', '09/10/2569 11:00', true, 'กรมป้องกันและบรรเทาสาธารณภัย']
-    ].map((r, i) => ({ code: r[0], name: r[1], loc: r[2], basin: r[3], freq: r[4], owner: r[5], upd: r[6], online: r[7], agency: r[8], no: 61 + i }));
+    ].map((r, i) => ({ code: r[0], name: r[1], loc: r[2], basin: r[3], freq: r[4], owner: r[5], upd: r[6], online: r[7], agency: r[8], sensors: [0,1,2,3,4,5,6,7,8], no: 61 + i }));
+  }
+
+  openThreshold(code) {
+    globalThis.history?.replaceState(null, '', '#stations/'+code+'/thresholds');
+    this.setState({menu:null,modal:code});
+  }
+
+  closeThreshold() {
+    globalThis.history?.replaceState(null, '', '#stations');
+    this.setState({modal:null});
   }
 
   renderVals() {
@@ -32,26 +44,29 @@ export default class Component extends DCLogic {
     const theme=this.props.theme || s.theme || 'dark';
     const setTheme=v=>this.props.setTheme ? this.props.setTheme(v) : this.setState({theme:v});
     const stations=this.stations();
-    const list=stations.filter(x=>(!s.q.trim() || (x.code+x.name+x.loc).includes(s.q.trim())) && (!s.basin || x.basin===s.basin) && (!s.stat || (s.stat==='on')===x.online));
+    const masterQuery=new URLSearchParams();
+    const pageQuery=new URLSearchParams(globalThis.location?.search || '');
+    for(const key of ['category','measurement','period']) if(pageQuery.has(key))masterQuery.set(key,pageQuery.get(key));
+    const list=stations.filter(x=>(!s.q.trim() || (x.code+x.name+x.loc+x.agency).includes(s.q.trim())) && (!s.basin || x.basin===s.basin) && (!s.stat || (s.stat==='on')===x.online) && (!s.criterion || (customMeasurements(x.code).length>0)===(s.criterion==='custom')));
     const rows=list.map(x=>({
       ...x,loc1:x.loc.split(' จ.')[0],loc2:'จ.'+x.loc.split(' จ.')[1],updD:x.upd.split(' ')[0],updT:x.upd.split(' ')[1],
-      own:hasCustomThreshold(x.code),source:thresholdSettings.stations[x.code]?.rain ? 'รายสถานี' : 'กลาง Default',
+      criterionCls:(customMeasurements(x.code).length>0)?'criterion-badge custom':'criterion-badge default',own:(customMeasurements(x.code).length>0),source:(customMeasurements(x.code).length>0) ? ' Custom · '+customMeasurements(x.code).join(', ') : ' Default — ใช้เกณฑ์กลาง',
       st:x.online?'Online':'Offline',stCls:x.online?'st-on':'st-off',show:!s.hidden[x.code],tgCls:s.hidden[x.code]?'tgx':'tgx on',tgAria:'แสดงผล '+x.name,
       toggle:()=>this.setState({hidden:{...s.hidden,[x.code]:!s.hidden[x.code]}}),
       menu:s.menu===x.code,kbCls:s.menu===x.code?'kb on':'kb',kbAria:'จัดการ '+x.name,
-      openMenu:()=>this.setState({menu:s.menu===x.code?null:x.code}),openTh:()=>this.setState({menu:null,modal:x.code})
+      openMenu:()=>this.setState({menu:s.menu===x.code?null:x.code}),openTh:()=>this.openThreshold(x.code)
     }));
     return {
       isLight:theme==='light',isDark:theme!=='light',thLightCls:theme==='light'?'on':'',thDarkCls:theme!=='light'?'on':'',
       setLight:()=>setTheme('light'),setDark:()=>setTheme('dark'),rootCls:theme==='light'?'sx lt':'sx',theme,setThemeFn:setTheme,
-      goMap:()=>this.props.goMap?.(),masterCurrent:s.page==='master'?'master':'stations',onBackoffice:s.page!=='line',onMaster:s.page==='master',stationNav:s.page==='stations'?'mi on':'mi',masterNav:s.page==='master'?'mi on':'mi',masterUrl:import.meta.env.BASE_URL+'master-data.html',onStations:s.page==='stations',onLine:s.page==='line',
-      goMaster:()=>this.setState({page:'master',menu:null,modal:null}),goStations:()=>this.setState({page:'stations'}),goLine:()=>this.setState({page:'line',menu:null,modal:null}),
+      goMap:()=>this.props.goMap?.(),masterCurrent:s.page,onBackoffice:s.page!=='line',onMaster:s.page==='master',stationNav:s.page==='stations'?'mi on':'mi',masterNav:s.page==='master'?'mi on':'mi',masterUrl:import.meta.env.BASE_URL+'master-data.html'+(masterQuery.size?'?'+masterQuery:''),onStations:s.page==='stations',onLine:s.page==='line',
+      onCentral:s.page==="central",centralNav:s.page==="central"?"mi on":"mi",goCentral:()=>this.setState({page:"central",menu:null,modal:null}),goMaster:()=>this.setState({page:'master',menu:null,modal:null}),goStations:()=>this.setState({page:'stations'}),goLine:()=>this.setState({page:'line',menu:null,modal:null}),
       q:s.q,setQ:e=>this.setState({q:e.target.value}),
       basinOpts:[{v:'',l:'ลุ่มแม่น้ำ: ทั้งหมด',on:!s.basin},...Array.from(new Set(stations.map(x=>x.basin))).map(b=>({v:b,l:b,on:s.basin===b}))],
       setBasin:e=>this.setState({basin:e.target.value}),
       statOpts:[['','สถานะ: ทั้งหมด'],['on','สถานะ: Online'],['off','สถานะ: Offline']].map(([v,l])=>({v,l,on:s.stat===v})),setStat:e=>this.setState({stat:e.target.value}),
-      rows,anyMenu:!!s.menu,closeMenu:()=>this.setState({menu:null}),modalOpen:!!s.modal,selectedStation:stations.find(x=>x.code===s.modal),
-      closeModal:()=>this.setState({modal:null}),savedThreshold:message=>{this.setState({modal:null,toast:message});clearTimeout(this._t);this._t=setTimeout(()=>this.setState({toast:''}),3500);},toast:s.toast
+      criterionOpts:[['','เกณฑ์เตือนภัย: ทั้งหมด'],['default','Default — ใช้เกณฑ์กลาง'],['custom','Custom — เฉพาะสถานี']].map(([v,l])=>({v,l,on:s.criterion===v})),setCriterion:e=>this.setState({criterion:e.target.value}),noRows:rows.length===0,rows,anyMenu:!!s.menu,closeMenu:()=>this.setState({menu:null}),modalOpen:!!s.modal,selectedStation:stations.find(x=>x.code===s.modal),
+      closeModal:()=>this.closeThreshold(),savedThreshold:message=>{this.setState({modal:null,toast:message});clearTimeout(this._t);this._t=setTimeout(()=>this.setState({toast:''}),3500);},toast:s.toast
     };
   }
   componentWillUnmount(){clearTimeout(this._t);}

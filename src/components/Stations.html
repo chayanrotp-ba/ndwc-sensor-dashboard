@@ -331,6 +331,7 @@ body{margin:0;background:#f4f4f5}
 .lt .mfoot .meta{flex:1;font-size:12px;line-height:16px;color:#64748b}
 .lt .xb{width:32px;height:32px;border:0;border-radius:6px;background:transparent;color:#334155;display:flex;align-items:center;justify-content:center}
 .lt .xb:hover{background:#e4e4e7}
+.mgrp .mi{height:auto;min-height:40px;padding-top:8px;padding-bottom:8px;line-height:20px;white-space:normal}
 .mi.on{background:#172554;color:#bfdbfe;font-weight:600}
 .mi.on .ic{color:#60a5fa}
 .mi.on:hover{background:#1e3a8a;color:#dbeafe}
@@ -341,14 +342,14 @@ body{margin:0;background:#f4f4f5}
 </helmet>
 <sc-if value="{{onBackoffice}}" hint-placeholder-val="{{true}}">
 <div class="{{rootCls}}">
-<dc-import name="BackofficeMenu" go-light="{{setLight}}" go-dark="{{setDark}}" current="{{masterCurrent}}" go-map="{{goMap}}" go-stations="{{goStations}}" go-line="{{goLine}}" go-master="{{goMaster}}"></dc-import>
+<dc-import name="BackofficeMenu" go-light="{{setLight}}" go-dark="{{setDark}}" current="{{masterCurrent}}" go-map="{{goMap}}" go-stations="{{goStations}}" go-line="{{goLine}}" go-master="{{goMaster}}" go-central="{{goCentral}}"></dc-import>
 <aside class="side" aria-label="เมนูหลัก">
 <div class="brandx"><img src="./assets/b820c1ee4f82dbfcefb07b5f5491f09e.png" alt="ตราสัญลักษณ์ ปภ." width="31" height="44"><span><b>ระบบบริหารจัดการ Sensor</b><span>System Management Sensor</span></span></div>
 <label class="sfld"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหาเมนู</span><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" placeholder="Search..."></label>
 <button class="mi" onClick="{{goMap}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14"></path><path d="M15 6v14"></path></svg>หน้าแผนที่</button>
 <button class="{{stationNav}}" onClick="{{goStations}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8a6 6 0 0 1 0 8.4"></path><path d="M7.8 16.2a6 6 0 0 1 0-8.4"></path><path d="M19.1 4.9a10 10 0 0 1 0 14.2"></path><path d="M4.9 19.1a10 10 0 0 1 0-14.2"></path></svg>รายการสถานี Sensor</button>
+<dc-import name="CriteriaNavigation" current="{{masterCurrent}}" go-master="{{goMaster}}" go-central="{{goCentral}}"></dc-import>
 <button class="mi" onClick="{{goLine}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>จัดการการแจ้งเตือนไลน์</button>
-<div class="mgrp"><span class="mi">▣ การจัดการข้อมูล (Master)</span><button class="{{masterNav}}" onClick="{{goMaster}}">ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</button></div>
 <div class="ubox">
 <div class="thm" role="radiogroup" aria-label="โหมดการแสดงผล"><button class="{{thLightCls}}" role="radio" aria-checked="{{isLight}}" onClick="{{setLight}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>สว่าง</button><button class="{{thDarkCls}}" role="radio" aria-checked="{{isDark}}" onClick="{{setDark}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"></path></svg>มืด</button></div>
 <div class="ucard"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path><path d="M4 21a8 8 0 0 1 16 0"></path></svg><span><b>ผู้ดูแลระบบ</b><span>Super admin</span></span></div>
@@ -366,6 +367,7 @@ body{margin:0;background:#f4f4f5}
 <label class="fx"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหา Sensor</span><svg class="ic l" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" placeholder="ค้นหา Sensor..." value="{{q}}" onInput="{{setQ}}"></label>
 <label class="fx"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ลุ่มแม่น้ำ</span><select onChange="{{setBasin}}"><sc-for list="{{basinOpts}}" as="o" hint-placeholder-count="4"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select><svg class="ic r" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></label>
 <label class="fx"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">สถานะ</span><select onChange="{{setStat}}"><sc-for list="{{statOpts}}" as="o" hint-placeholder-count="3"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select><svg class="ic r" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></label>
+<label class="fx"><span class="sr-only">เกณฑ์เตือนภัย</span><select aria-label="เกณฑ์เตือนภัย" onChange="{{setCriterion}}"><sc-for list="{{criterionOpts}}" as="o"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select></label>
 <span style="flex: 1;"></span>
 <button class="bs"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>Export รายการ</button>
 </div>
@@ -376,7 +378,7 @@ body{margin:0;background:#f4f4f5}
 <sc-for list="{{rows}}" as="r" hint-placeholder-count="12">
 <tr>
 <td class="num">{{r.no}}</td>
-<td title="{{r.name}}"><span class="nmc"><span class="nmt">{{r.name}}</span><sc-if value="{{r.own}}" hint-placeholder-val="{{false}}"><span class="thb" title="สถานีนี้มีการกำหนดเกณฑ์เอง">กำหนดเกณฑ์เอง</span></sc-if></span><span class="sub2">{{r.code}} · เกณฑ์{{r.source}}</span></td>
+<td title="{{r.name}}"><span class="nmc"><span class="nmt">{{r.name}}</span></span><span class="sub2">{{r.code}}</span><span class="{{r.criterionCls}}">เกณฑ์เตือนภัย:{{r.source}}</span><span class="sub2">{{r.agency}}</span></td>
 <td title="{{r.loc}}"><span class="l1">{{r.loc1}}</span><span class="sub2">{{r.loc2}}</span></td>
 <td title="{{r.basin}}"><span class="cl2">{{r.basin}}</span></td>
 <td>{{r.freq}}</td>
@@ -390,13 +392,13 @@ body{margin:0;background:#f4f4f5}
 <div class="menu" role="menu">
 <button role="menuitem" onClick="{{closeMenu}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="m14 6 4 4"></path></svg>แก้ไข</button>
 <button role="menuitem" class="dz" onClick="{{closeMenu}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M6 7l1 13h10l1-13"></path><path d="M9 7V4h6v3"></path></svg>ลบ</button>
-<button role="menuitem" onClick="{{r.openTh}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><path d="M1 14h6"></path><path d="M9 8h6"></path><path d="M17 16h6"></path></svg>ตั้งค่าเกณฑ์</button>
+<button role="menuitem" onClick="{{r.openTh}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><path d="M1 14h6"></path><path d="M9 8h6"></path><path d="M17 16h6"></path></svg>ตั้งค่าเกณฑ์และการแจ้งเตือน</button>
 </div>
 </sc-if>
 </div></td>
 </tr>
 </sc-for>
-</tbody>
+<sc-if value="{{noRows}}"><tr><td colspan="10" style="text-align:center;padding:28px">ไม่พบข้อมูลสถานีตามเงื่อนไข</td></tr></sc-if></tbody>
 </table>
 </div>
 <div class="pgx">
@@ -411,7 +413,8 @@ body{margin:0;background:#f4f4f5}
 </div>
 </section>
 </main></sc-if>
-<sc-if value="{{onMaster}}"><main class="master-main"><iframe title="การจัดการข้อมูล Master: ชื่อเกณฑ์และระดับการแจ้งเตือนภัย" src="{{masterUrl}}"></iframe></main></sc-if>
+<sc-if value="{{onCentral}}"><main class="mainx"><dc-import name="CentralWarningEditor"></dc-import></main></sc-if>
+<sc-if value="{{onMaster}}"><main class="master-main"><dc-import name="MasterDataPanel" url="{{masterUrl}}" theme="{{theme}}"></dc-import></main></sc-if>
 
 <sc-if value="{{anyMenu}}" hint-placeholder-val="{{false}}"><div class="scrim" onClick="{{closeMenu}}"></div></sc-if>
 
@@ -420,6 +423,7 @@ body{margin:0;background:#f4f4f5}
 <sc-if value="{{toast}}" hint-placeholder-val="{{false}}"><div class="toast" role="status"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>{{toast}}</div></sc-if>
 </div>
 </sc-if>
-<sc-if value="{{onLine}}" hint-placeholder-val="{{false}}"><dc-import name="LineRules" go-stations="{{goStations}}" go-map="{{goMap}}" theme="{{theme}}" set-theme="{{setThemeFn}}"></dc-import></sc-if>
+<sc-if value="{{onLine}}" hint-placeholder-val="{{false}}"><dc-import name="LineRules" go-master="{{goMaster}}" go-central="{{goCentral}}" go-stations="{{goStations}}" go-map="{{goMap}}" theme="{{theme}}" set-theme="{{setThemeFn}}"></dc-import></sc-if>
 
 <style>.master-main{min-width:0;min-height:0;overflow:hidden}.master-main iframe{width:100%;height:100%;border:0;display:block}@media(max-width:767px){#app .sx>.master-main{height:100%;padding-top:56px}}</style>
+<style>.criterion-badge{display:inline-block;white-space:normal;font-size:11px;line-height:1.5;padding:3px 7px;border-radius:6px;margin-top:5px;border:1px solid #52647c}.criterion-badge.default{background:#233044;color:#c3dcfa}.criterion-badge.custom{background:#443019;color:#ffda88;border-color:#997033}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.menu{min-width:240px}</style>
