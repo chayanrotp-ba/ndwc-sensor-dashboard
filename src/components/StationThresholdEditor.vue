@@ -5,6 +5,7 @@ import MeasurementTypes from './MeasurementTypes.vue';
 const type = ref(0);
 const otherDirty = ref(false);
 import {WARNING_PERIODS,warningMaster,warningCustom,activeWarning,validWarning,saveWarning,resetWarning} from '../warning-criteria.js';
+import {recordAudit} from '../audit-log.js';
 const props=defineProps({station:Object,close:Function,saved:Function,canManage:{type:Boolean,default:true}});
 const period=ref('24h'),dirty=ref(false),pending=ref(null),error=ref(''),dialog=ref(null),levels=ref([]),current=ref({}),editing=ref(false),notice=ref('');
 const origin=document.activeElement;
@@ -21,8 +22,8 @@ function cancelEdit(){load();editing.value=false;dirty.value=false;notice.value=
 watch(()=>props.station.code,()=>{period.value='24h';pending.value=null;notice.value='';cancelEdit();});
 function update(i,e){current.value[period.value][i]=e.target.value===''?null:Number(e.target.value);dirty.value=true;}
 function close(){if(dirty.value||otherDirty.value)pending.value='close';else props.close();}
-function save(){if(!props.canManage||!hasRain.value||!editing.value||invalid.value||error.value)return;try{saveWarning(props.station.code,JSON.parse(JSON.stringify(current.value)),levels.value,props.canManage);dirty.value=false;editing.value=false;notice.value='บันทึกสำเร็จ — Custom — มีเกณฑ์เฉพาะสถานี';load();}catch(e){error.value=e.message;}}
-function confirm(){if(pending.value==='reset'){try{resetWarning(props.station.code,props.canManage);dirty.value=false;editing.value=false;notice.value='Reset สำเร็จ — Default — ใช้เกณฑ์กลาง';load();}catch(e){error.value=e.message;}pending.value=null;}else props.close();}
+function save(){if(!props.canManage||!hasRain.value||!editing.value||invalid.value||error.value)return;try{const action=custom.value?'แก้ไข':'เพิ่ม';saveWarning(props.station.code,JSON.parse(JSON.stringify(current.value)),levels.value,props.canManage);recordAudit({item:'รายการสถานี Sensor',action,target:props.station.name,basin:props.station.basin||'-',detail:'บันทึกเกณฑ์ Custom เฉพาะสถานี'});dirty.value=false;editing.value=false;notice.value='บันทึกสำเร็จ — Custom — มีเกณฑ์เฉพาะสถานี';load();}catch(e){error.value=e.message;}}
+function confirm(){if(pending.value==='reset'){try{resetWarning(props.station.code,props.canManage);recordAudit({item:'รายการสถานี Sensor',action:'ลบ',target:props.station.name,basin:props.station.basin||'-',detail:'ยกเลิกเกณฑ์ Custom และกลับไปใช้ Default'});dirty.value=false;editing.value=false;notice.value='Reset สำเร็จ — Default — ใช้เกณฑ์กลาง';load();}catch(e){error.value=e.message;}pending.value=null;}else props.close();}
 function keydown(e){if(e.key==='Escape'){e.stopPropagation();close();}if(e.key==='Tab'){const a=[...dialog.value.querySelectorAll('button:not(:disabled),input:not(:disabled)')];if(e.shiftKey&&document.activeElement===a[0]){e.preventDefault();a.at(-1)?.focus();}else if(!e.shiftKey&&document.activeElement===a.at(-1)){e.preventDefault();a[0]?.focus();}}}
 onMounted(async()=>{await nextTick();dialog.value.querySelector('button')?.focus();});onBeforeUnmount(()=>origin?.focus());
 </script>

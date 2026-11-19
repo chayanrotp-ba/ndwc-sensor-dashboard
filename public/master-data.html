@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย | Sensor Master Data</title>
+<title>ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง | Sensor Master Data</title>
 <script>
 // Open direct links within the Backoffice shell so the other pages stay accessible.
 if(window.self===window.top){const backoffice=new URL('./',location.href);backoffice.search=location.search;backoffice.hash='stations/master';location.replace(backoffice.href);}
@@ -37,6 +37,9 @@ if(window.self===window.top){const backoffice=new URL('./',location.href);backof
 .delete-confirm-input.ok{border-color:#22c55e}
 .delete-confirm-hint{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}
 .btn.danger:disabled{opacity:.4;cursor:not-allowed;filter:none}
+
+/* Confirmation before changing a central rule: Default stations are affected. */
+.central-confirm-context{border:1px solid #2563eb66;background:var(--primary-bg);border-radius:9px;padding:13px 14px;margin-bottom:14px}.central-confirm-context .label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.central-confirm-context .items-label{margin-top:12px}.central-confirm-context strong{display:block;font-size:15px;color:var(--text)}.central-confirm-context .detail{display:block;margin-top:5px;font-size:13px;color:var(--sub);line-height:1.55}.central-confirm-impact{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid #f59e0b66;background:#f59e0b12;border-radius:8px;color:var(--sub);font-size:13px;line-height:1.65}.central-confirm-impact b{color:var(--text)}.central-confirm-impact .impact-icon{flex:0 0 23px;width:23px;height:23px;border-radius:50%;background:#f59e0b;color:#111827;display:grid;place-items:center;font-weight:800}.central-confirm-note{margin:13px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
 
 /* Edit confirmation: Thai type-to-confirm field, within the editor */
 .edit-confirm{margin-top:18px;padding:14px;border:1px solid var(--edge);border-radius:9px;background:var(--surface)}
@@ -159,7 +162,12 @@ body{font-family:Sarabun,'Leelawadee UI',Tahoma,sans-serif;font-size:14px;line-h
 .inline-fields input[type=color]{width:34px;height:36px;flex:0 0 34px;padding:2px;border:1px solid #737373;border-radius:6px;background:var(--surface3);cursor:pointer}
 .inline-fields input[type=text],.inline-fields #inlineName{width:100%;min-width:0;height:44px;padding:10px 12px;border:1px solid #404040;border-radius:7px;background:var(--surface2);color:var(--text)}
 .inline-fields .hex{flex-shrink:0}
-@media(max-width:767px){.panel{padding:14px}.category-tab{font-size:15px;padding:12px}.levels-table th:first-child{width:60px}.levels-table th:last-child{width:88px}.levels-table td,.levels-table th{padding:10px 6px}.level-actions .btn{padding:8px;font-size:12px}.editing-row .level-actions{white-space:normal}.editing-row .level-actions button{display:block;margin:3px 0;width:100%}.inline-fields{flex-wrap:wrap;gap:8px}.inline-fields #inlineName{order:3;flex-basis:100%}.reorder-handle{margin-right:3px}.level-content{gap:8px}.level-color{width:24px;height:24px;flex-basis:24px}.period-tab{padding:8px 10px}.list-heading{font-size:16px}.toolbar{flex-wrap:wrap}.toolbar .btn{margin-left:auto}.action-button.icon-only{width:30px}.action-button.icon-only+button{margin-left:0}}
+.threshold-summary{display:flex;align-items:center;gap:8px;margin-top:4px;color:var(--muted);font-size:12px}
+.threshold-summary strong{color:var(--text);font-variant-numeric:tabular-nums}
+.inline-threshold{display:flex;align-items:center;gap:7px;flex:0 0 auto;color:var(--muted);font-size:12px}
+.inline-threshold input{width:110px;height:36px;padding:7px 10px;border:1px solid #737373;border-radius:6px;background:var(--surface3);color:var(--text);font-variant-numeric:tabular-nums}
+.warning-direct-note{border:1px solid #2563eb66;background:var(--primary-bg);color:var(--primary-text);padding:10px 12px;border-radius:8px;margin:0 0 12px;font-size:13px}
+@media(max-width:767px){.panel{padding:14px}.category-tab{font-size:15px;padding:12px}.levels-table th:first-child{width:60px}.levels-table th:last-child{width:88px}.levels-table td,.levels-table th{padding:10px 6px}.level-actions .btn{padding:8px;font-size:12px}.editing-row .level-actions{white-space:normal}.editing-row .level-actions button{display:block;margin:3px 0;width:100%}.inline-fields{flex-wrap:wrap;gap:8px}.inline-fields #inlineName{order:3;flex-basis:100%}.inline-threshold{order:4;flex-basis:100%}.inline-threshold input{flex:1;width:auto}.reorder-handle{margin-right:3px}.level-content{gap:8px}.level-color{width:24px;height:24px;flex-basis:24px}.period-tab{padding:8px 10px}.list-heading{font-size:16px}.toolbar{flex-wrap:wrap}.toolbar .btn{margin-left:auto}.action-button.icon-only{width:30px}.action-button.icon-only+button{margin-left:0}}
 </style>
 <style data-stations-reference>
 /* Measurements and spacing from the supplied Stations.dc.html levels view. */
@@ -206,6 +214,8 @@ html,body{height:100%;overflow:hidden}
 .inline-fields input[type=color]{width:28px;height:28px;flex-basis:28px;border-radius:6px;padding:0;background:transparent;appearance:none}
 .inline-fields input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
 .inline-fields input[type=color]::-webkit-color-swatch{border:0;border-radius:3px}
+.central-warning-container{max-width:none;width:100%}.central-warning-table{width:100%}.central-warning-table .level-position{width:7%}.central-warning-table .criterion-column{width:50%}.central-warning-table .warning-range{width:29%;font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums;white-space:nowrap}.central-warning-table .warning-alert-cell{width:14%;text-align:center;white-space:nowrap}.central-warning-table.is-editing .criterion-column{width:43%}.central-warning-table.is-editing .warning-range{width:25%}.central-warning-table.is-editing .warning-alert-cell{width:14%}.central-warning-table.is-editing .level-actions{width:11%;padding-right:14px}.warning-alert-toggle{display:inline-flex;align-items:center;gap:8px;padding:4px 6px;border:0;border-radius:6px;background:transparent;color:var(--sub);font:inherit;font-size:13px;cursor:pointer}.warning-alert-toggle:hover{background:#27272a;color:var(--text)}.warning-alert-toggle:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.warning-alert-toggle[disabled]{opacity:.5;cursor:not-allowed}.warning-alert-switch{position:relative;display:inline-block;width:40px;height:22px;border-radius:999px;background:#52525b;transition:background .16s ease}.warning-alert-switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0006;transition:transform .16s ease}.warning-alert-toggle.is-on .warning-alert-switch{background:#2563eb}.warning-alert-toggle.is-on .warning-alert-switch::after{transform:translateX(18px)}.central-warning-table .range-prefix{margin-right:8px}.central-warning-table .range-unit{margin-left:7px;color:var(--muted)}.central-warning-table .range-input{width:88px;height:36px;padding:7px 9px;border:1px solid #737373;border-radius:6px;background:#262626;color:var(--text);font:inherit;font-variant-numeric:tabular-nums}.central-inline input:not([type=color]){width:280px;flex:0 0 280px;height:36px;padding:8px 10px;border:1px solid #737373;border-radius:6px;background:#262626;color:var(--text);font:inherit}.central-warning-table .level-actions{padding-right:14px}
+.warning-alert-note{margin:0;padding:10px 14px;border-top:1px solid var(--edge);background:var(--surface);color:var(--muted);font-size:12px;line-height:1.6}
 .level-actions .btn{height:36px;min-height:36px;padding:0 12px;font-weight:500}
 .legend-source-note{margin:12px 0 0}
 :root.light .main-category-tabs,:root.light .levels-table td{border-color:#e4e4e7}
@@ -216,7 +226,8 @@ html,body{height:100%;overflow:hidden}
 :root.light .period-segment{background:#f4f4f5;border-color:#e4e4e7}
 :root.light .period-tab[aria-pressed=true]{background:#fff;color:#0f172a;box-shadow:0 1px 2px #0f172a26}
 :root.light .inline-fields #inlineName{background:#fff;color:#0f172a;border-color:#a1a1aa}
-@media(max-width:767px){.main{padding:14px}.category-tab{font-size:14px;padding:0 10px}.panel{padding:12px}.levels-table th:first-child{width:52px}.levels-table th:last-child{width:86px}.levels-table td,.levels-table th{padding:10px 6px}.editing-row .level-actions .btn{padding:0 6px}.inline-fields{gap:8px}.inline-fields #inlineName{flex-basis:100%;max-width:100%}.reorder-handle{margin-right:2px}.level-content{gap:8px}.list-heading{font-size:15px}}
+:root.light .central-inline input:not([type=color]),:root.light .central-warning-table .range-input{background:#fff;color:#0f172a;border-color:#a1a1aa}:root.light .warning-alert-toggle:hover{background:#e4e4e7}
+@media(max-width:767px){.main{padding:14px}.category-tab{font-size:14px;padding:0 10px}.panel{padding:12px}.levels-table th:first-child{width:52px}.levels-table th:last-child{width:86px}.levels-table td,.levels-table th{padding:10px 6px}.editing-row .level-actions .btn{padding:0 6px}.inline-fields{gap:8px}.inline-fields #inlineName{flex-basis:100%;max-width:100%}.central-warning-container{max-width:none;overflow-x:auto}.central-warning-table{min-width:860px}.central-inline input:not([type=color]){width:260px;flex-basis:260px}.reorder-handle{margin-right:2px}.level-content{gap:8px}.list-heading{font-size:15px}}
 </style>
 </head>
 <body>
@@ -228,25 +239,28 @@ html,body{height:100%;overflow:hidden}
  <div class="nav" data-nav><span class="nav-symbol">▧</span> หน้าแผนที่</div>
  <div class="nav" data-nav><span class="nav-symbol">◉</span> สถานีตรวจวัด</div>
  <div class="nav" data-nav><span class="nav-symbol">♧</span> จัดการการแจ้งเตือน</div>
- <div class="navgrp" data-nav><div class="nav"><span class="nav-symbol">▣</span> การจัดการข้อมูลหลัก (Master Data)</div><div class="navsub">ข้อมูลสถานี</div><div class="navsub">อุปกรณ์และเซนเซอร์</div><div class="navsub active" aria-current="page">ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</div><div class="navsub">ข้อมูลอ้างอิง</div></div>
+ <button class="nav" type="button" data-nav onclick="goAudit()"><span class="nav-symbol">▤</span> ประวัติการเพิ่ม ลบ แก้ไข</button>
+ <div class="navgrp" data-nav><div class="nav"><span class="nav-symbol">▣</span> การจัดการข้อมูลหลัก (Master Data)</div><div class="navsub">ข้อมูลสถานี</div><div class="navsub">อุปกรณ์และเซนเซอร์</div><div class="navsub active" aria-current="page">ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง</div><div class="navsub">ข้อมูลอ้างอิง</div></div>
  <div class="nav" data-nav><span class="nav-symbol">⚙</span> ผู้ใช้และสิทธิ์</div>
  <div class="bottom"><div class="theme"><button id="lightButton" type="button" onclick="setTheme('light')">☀ สว่าง</button><button id="darkButton" type="button" onclick="setTheme('dark')">☾ มืด</button></div><div class="user">◉ &nbsp;ผู้ดูแลระบบ<small>Super admin</small></div><div class="nav"><span class="nav-symbol">⇥</span> ออกจากระบบ</div></div>
 </aside>
 <main class="main">
  <div class="mobile-bar"><button class="menu-trigger" type="button" aria-controls="mainSidebar" aria-expanded="false" id="menuTrigger" onclick="toggleMobileMenu()">☰ เมนู</button><span>ระบบบริหารจัดการ Sensor</span></div>
- <div class="crumb">หน้าแรก › ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</div>
- <header class="head"><div><h1>ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</h1><p>ตั้งค่าข้อมูลหลักของชื่อระดับและสีที่ใช้แสดงตามประเภทการตรวจวัด</p></div></header>
+ <div class="crumb">หน้าแรก › จัดการเกณฑ์การเตือนภัย › ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง</div>
+ <header class="head"><div><h1>ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง</h1><p>กำหนดค่าช่วง ชื่อระดับ และสีที่ใช้กับทุกสถานีที่เลือกเกณฑ์ Default</p></div></header>
  <div id="categorySelectors" class="main-category-tabs"></div>
- <section class="panel" aria-label="รายการชื่อเกณฑ์ตามประเภทการตรวจวัด">
-  <div class="panel-heading"><div><h2>ประเภทการตรวจวัด</h2><div class="subtext">เลือกประเภทการตรวจวัดเพื่อจัดการชื่อเกณฑ์การเตือนภัยและสีประจำเกณฑ์</div></div><span class="count-pill">9 ค่าตรวจวัด · 9 แท็บ</span></div>
+ <section class="panel" aria-label="ตั้งค่าเกณฑ์ระดับการเตือนภัยกลางตามประเภทการตรวจวัด">
+  <div class="panel-heading"><div><h2>ประเภทการตรวจวัด</h2><div class="subtext">เลือกประเภทการตรวจวัดเพื่อจัดการค่าช่วง ชื่อเกณฑ์ และสีประจำเกณฑ์</div></div><span class="count-pill">9 ค่าตรวจวัด · 9 แท็บ</span></div>
   <div class="tabs" id="tabs" role="tablist" aria-label="ประเภทการตรวจวัด"></div>
-  <div id="rainSelectors" class="rain-selectors"></div><div class="list-section"><div class="toolbar"><span class="list-heading">รายการชื่อเกณฑ์การเตือนภัย</span><span class="subtext" id="count"></span><button class="btn" type="button" onclick="openEditor()">＋ เพิ่มระดับ</button></div>
+  <div id="rainSelectors" class="rain-selectors"></div><div class="list-section"><div class="toolbar"><span class="list-heading">รายการชื่อเกณฑ์การเตือนภัย</span><span class="subtext" id="count"></span><span id="listActions"></span></div>
   <p id="inlineError" class="err" role="alert"></p><div id="content" role="tabpanel" aria-live="polite"></div><p id="referenceNote" class="subtext legend-source-note" hidden></p></div>
-  <p class="footnote">ข้อมูลชื่อและสีอ้างอิงจากตัวอย่างหน้าจอที่แนบ · <strong>PM2.5 และ PM10 แยกจัดการ โดยใช้ชื่อเกณฑ์และสีเริ่มต้นเหมือนกัน</strong> · การเปลี่ยนแปลงใน Mockup บันทึกในเบราว์เซอร์นี้เท่านั้น</p>
+  <p class="footnote">ข้อมูลเกณฑ์กลางใช้กับสถานีที่เลือก Default · <strong>PM2.5 และ PM10 แยกจัดการ โดยใช้ชื่อเกณฑ์และสีเริ่มต้นเหมือนกัน</strong> · การเปลี่ยนแปลงใน Mockup บันทึกในเบราว์เซอร์นี้เท่านั้น</p>
  </section>
 </main>
 </div>
-<div class="overlay" id="deleteOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteWarning"><div class="modalhead"><h2 class="danger-title" id="deleteTitle">ลบชื่อเกณฑ์การเตือนภัย</h2><button type="button" class="btn secondary small" onclick="closeDelete()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="delete-context"><span class="label">รายการที่ต้องการลบ</span><strong id="deleteName"></strong><span class="subtext" id="deleteType"></span></div><div class="delete-warning" id="deleteWarning">การลบชื่อเกณฑ์เป็นการดำเนินการที่มีความเสี่ยง หากมีการนำรายการนี้ไปอ้างอิงในระบบจริง อาจส่งผลต่อการทำงานที่เกี่ยวข้อง</div><label class="delete-confirm-label" for="deleteConfirmInput">พิมพ์ <code>ยืนยันการลบ</code> เพื่อยืนยันการลบ</label><input class="delete-confirm-input" type="text" id="deleteConfirmInput" placeholder="พิมพ์ ยืนยันการลบ" autocomplete="off" spellcheck="false" aria-describedby="deleteConfirmHint" oninput="updateDeleteState()"><div id="deleteConfirmHint" class="delete-confirm-hint" role="status">ปุ่มลบจะใช้งานได้เมื่อพิมพ์ “ยืนยันการลบ” ตรงตามที่กำหนด</div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeDelete()">ยกเลิก</button><button type="button" id="deleteConfirmButton" class="btn danger" onclick="confirmDelete()" disabled>ลบชื่อเกณฑ์</button></div></div></div>
+<div class="overlay" id="centralConfirmOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="centralConfirmTitle" aria-describedby="centralConfirmNote"><div class="modalhead"><h2 id="centralConfirmTitle">ยืนยันการแก้ไขเกณฑ์กลาง</h2><button type="button" class="btn secondary small" onclick="cancelCentralConfirm()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="central-confirm-context"><span class="label">ประเภทชุดเกณฑ์</span><strong id="centralConfirmType"></strong><span class="label items-label">รายการที่กำลังแก้ไข</span><strong id="centralConfirmScope"></strong><span class="detail" id="centralConfirmChange"></span></div><div class="central-confirm-impact" id="centralConfirmImpact"><span class="impact-icon">!</span><span><b>การเปลี่ยนแปลงนี้มีผลกับทุกสถานีที่ใช้เกณฑ์ Default</b><br>สถานีที่กำหนดเกณฑ์เฉพาะสถานี (Custom) จะไม่ถูกแก้ไข</span></div><p class="central-confirm-note" id="centralConfirmNote">ตรวจสอบชื่อ สี และค่าช่วงก่อนยืนยัน ระบบจะบันทึกการตั้งค่าเกณฑ์กลางในเบราว์เซอร์นี้</p></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="cancelCentralConfirm()">กลับไปแก้ไข</button><button type="button" class="btn" onclick="confirmCentralEdit()">ยืนยันการแก้ไข</button></div></div></div>
+<div class="overlay" id="deleteOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteWarning"><div class="modalhead"><h2 class="danger-title" id="deleteTitle">ยืนยันการลบเกณฑ์</h2><button type="button" class="btn secondary small" onclick="closeDelete()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="delete-context"><span class="label">รายการที่ต้องการลบ</span><strong id="deleteName"></strong><span class="subtext" id="deleteType"></span></div><div class="delete-warning" id="deleteWarning">เมื่อลบแล้ว ระดับเกณฑ์นี้จะไม่ถูกใช้ในการประเมินของสถานีที่อ้างอิงเกณฑ์กลาง กรุณาตรวจสอบก่อนยืนยัน</div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeDelete()">ยกเลิก</button><button type="button" id="deleteConfirmButton" class="btn danger" onclick="confirmDelete()">ยืนยันการลบ</button></div></div></div>
+<div class="overlay" id="warningAlertConfirmOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="warningAlertConfirmTitle" aria-describedby="warningAlertConfirmNote"><div class="modalhead"><h2 id="warningAlertConfirmTitle">ยืนยันการปิดการแจ้งเตือน</h2><button type="button" class="btn secondary small" onclick="cancelWarningAlertConfirmation()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="central-confirm-context"><span class="label">ระดับเกณฑ์</span><strong id="warningAlertConfirmLevel"></strong><span class="label items-label">ประเภทการตรวจวัด</span><strong id="warningAlertConfirmScope"></strong></div><div class="central-confirm-impact"><span class="impact-icon">!</span><span id="warningAlertConfirmNote">การปิดการแจ้งเตือนจะทำให้ระบบไม่ใช้ระดับเกณฑ์นี้ในการประเมิน Trigger Alert สำหรับสถานีในโครงการ แต่ยังคงแสดงค่าตรวจวัดและสีตามเกณฑ์ปกติ</span></div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="cancelWarningAlertConfirmation()">ยกเลิก</button><button type="button" class="btn danger" onclick="confirmWarningAlertOff()">ยืนยันการปิด</button></div></div></div>
 <div id="toast" class="toast" role="status"></div>
 <script src="./rainfall-legend-reference.js"></script>
 <script>
@@ -306,7 +320,7 @@ if(data[0].length===5 && data[0].every((row,i)=>row.name===initial[0][i][0] && r
  data[0]=data[0].map((row,i)=>({...row,color:initial[0][i][1]}));
  try {localStorage.setItem(STORAGE,JSON.stringify(data))}catch{}
 }
-let active=0,editingId=null,deletingId=null,toastTimer;
+let active=0,editingId=null,deletingId=null,pendingWarningAlert=null,toastTimer;
 const RAIN_NAMES_KEY='ndwc.rain-name-lists.v1';
 const rainPeriods={
  '1h':'ฝน 1 ชั่วโมง',
@@ -324,14 +338,17 @@ const rainPeriods={
  month:'ฝนรายเดือน',
  year:'ฝนรายปี'
 };
-let rainCategory='quantity',rainPeriod='24h',lastDailyPeriod='24h';
+let rainCategory='warning',rainPeriod='24h',lastDailyPeriod='24h';
 const initialView=new URLSearchParams(location.search);
 const initialMeasurement=Number(initialView.get('measurement'));
 if(Number.isInteger(initialMeasurement)&&initialMeasurement>=0&&initialMeasurement<types.length)active=initialMeasurement;
-if(initialView.get('category')==='warning')rainCategory='warning';
+if(initialView.get('category')==='quantity')rainCategory='quantity';
 if(Object.hasOwn(rainPeriods,initialView.get('period')))rainPeriod=initialView.get('period');
 if(!['month','year'].includes(rainPeriod))lastDailyPeriod=rainPeriod;
 let inlineDraft=null;
+let pendingCentralEdit=null;
+let centralEditing=false;
+let centralDrafts=[];
 const intensity=[
  ['ฝนละออง','#9dd9ef'],['ฝนเล็กน้อย','#90c881'],['ฝนปานกลาง','#f0d447'],
  ['ฝนหนัก','#f99c38'],['ฝนหนักมาก','#ff3656']
@@ -353,6 +370,117 @@ for(const category of ['quantity','warning']){
   }
  }
 }
+const WARNING_STORAGE='ndwc.warning-ddpm.v1';
+const AUDIT_LOG_STORAGE='ndwc.audit-log.v1';
+const warningValuePeriods=new Set(['1h','today','yesterday','24h','72h']);
+let warningSettings;
+try{warningSettings=JSON.parse(localStorage.getItem(WARNING_STORAGE)||'null')}catch{}
+warningSettings ??= {stations:{}};
+warningSettings.stations ??= {};
+function defaultWarningCuts(period,count){
+ const base=[10,20,35,90],factor=period==='1h'?0.4:period==='72h'?3:1;
+ return Array.from({length:Math.max(0,count-1)},(_,index)=>{
+  const value=base[index]??base.at(-1)*(index-base.length+2);
+  return Number((value*factor).toFixed(2));
+ });
+}
+function warningCuts(period,rows=rowsForActive()){
+ if(!warningValuePeriods.has(period))return null;
+ const expected=Math.max(0,rows.length-1);
+ let cuts=warningSettings.central?.[period];
+ if(!Array.isArray(cuts)||cuts.length!==expected||cuts.some((value,index)=>
+  !Number.isFinite(value)||value<=0||(index&&value<=cuts[index-1]))){
+  cuts=defaultWarningCuts(period,rows.length);
+ }
+ warningSettings.central ??= {};
+ warningSettings.centralIds ??= {};
+ warningSettings.central[period]=[...cuts];
+ warningSettings.centralIds[period]=rows.map(row=>row.id);
+ return warningSettings.central[period];
+}
+function warningAlertKey(){return active===0?`rainfall:${rainPeriod}`:`sensor:${active}`}
+function warningAlertLevels(){
+ warningSettings.alertLevels ??= {};
+ const key=warningAlertKey();
+ warningSettings.alertLevels[key] ??= {};
+ return warningSettings.alertLevels[key];
+}
+function isWarningAlertEnabled(levelId){return warningAlertLevels()[levelId]!==false}
+function warningAlertScopeLabel(){return active===0?`${types[active]} · ${rainPeriods[rainPeriod]}`:types[active]}
+function saveWarningAlert(levelId,enabled){
+ const levels=warningAlertLevels(),previous=levels[levelId];
+ levels[levelId]=enabled;
+ if(!persist()){
+  if(previous===undefined)delete levels[levelId];else levels[levelId]=previous;
+  renderList();
+  return false;
+ }
+ const row=rowsForActive().find(item=>item.id===levelId);
+ const levelName=row?displayName(row):'ระดับเกณฑ์';
+ addAuditLog('เกณฑ์การเฝ้าระวังภัย (ปภ.)','แก้ไข',`${warningAlertScopeLabel()} · ${levelName}`,enabled?'เปิดการแจ้งเตือนระดับเกณฑ์':'ปิดการแจ้งเตือนระดับเกณฑ์');
+ renderList();
+ toast(enabled?'เปิดการแจ้งเตือนระดับนี้แล้ว':'ปิดการแจ้งเตือนระดับนี้แล้ว');
+ return true;
+}
+function requestWarningAlertToggle(levelId){
+ if(centralEditing)return;
+ if(!isWarningAlertEnabled(levelId)){
+  saveWarningAlert(levelId,true);
+  return;
+ }
+ const row=rowsForActive().find(item=>item.id===levelId);
+ pendingWarningAlert={levelId,levelName:row?displayName(row):'ระดับเกณฑ์',scope:warningAlertScopeLabel()};
+ $('warningAlertConfirmLevel').textContent=pendingWarningAlert.levelName;
+ $('warningAlertConfirmScope').textContent=pendingWarningAlert.scope;
+ $('warningAlertConfirmOverlay').classList.add('open');
+}
+function cancelWarningAlertConfirmation(){
+ pendingWarningAlert=null;
+ $('warningAlertConfirmOverlay').classList.remove('open');
+}
+function confirmWarningAlertOff(){
+ const pending=pendingWarningAlert;
+ if(!pending)return;
+ const saved=saveWarningAlert(pending.levelId,false);
+ if(saved)cancelWarningAlertConfirmation();
+}
+const ruleUnits=['มม.','°C','%','ม./วินาที','องศา','hPa','ppm','µg/m³','µg/m³'];
+const measurementDefaultCuts={
+ 1:[25,30,35,40],2:[30,50,70,90],3:[1,5,10,20],4:[45,90,135,180,225,270,315],
+ 5:[980,1000,1020],6:[600,1000,1500],7:[15,25,37.5,75],8:[50,80,120,180]
+};
+function measurementCuts(rows=rowsForActive()){
+ if(active===0)return null;
+ const ordered=[4,5].includes(active)?rows:[...rows].reverse();
+ let rules,record;
+ if(active===1){
+  warningSettings.temperature ??= {stations:{}};
+  rules=warningSettings.temperature;
+  record=rules.central;
+ }else{
+  warningSettings.measurementRules ??= {};
+  warningSettings.measurementRules[active] ??= {stations:{}};
+  rules=warningSettings.measurementRules[active];
+  record=rules.central;
+ }
+ let cuts=record?.cuts??record;
+ const expected=Math.max(0,ordered.length-1),maximum=active===2?100:active===4?360:Infinity;
+ if(!Array.isArray(cuts)||cuts.length!==expected||cuts.some((value,index)=>
+  !Number.isFinite(value)||(active!==1&&value<=0)||(index&&value<=cuts[index-1])||value>=maximum)){
+  cuts=[...(measurementDefaultCuts[active]||[])].slice(0,expected);
+ }
+ rules.central={cuts:[...cuts],ids:ordered.map(row=>row.id)};
+ return rules.central.cuts;
+}
+function directRule(rows=rowsForActive()){
+ if(rainCategory!=='warning')return null;
+ if(active===0){
+  const cuts=warningCuts(rainPeriod,rows);
+  return cuts?{cuts,unit:'มม.',indexForRow:index=>index}:null;
+ }
+ const cuts=measurementCuts(rows);
+ return {cuts,unit:ruleUnits[active],indexForRow:index=>[4,5].includes(active)?index:rows.length-1-index};
+}
 const QUANTITY_NAMES_KEY='ndwc.quantity-other-names.v1';
 let quantityOther;
 try{quantityOther=JSON.parse(localStorage.getItem(QUANTITY_NAMES_KEY)||'null')}catch{}
@@ -363,16 +491,21 @@ function persist(){
   localStorage.setItem(STORAGE,JSON.stringify(data));
   localStorage.setItem(RAIN_NAMES_KEY,JSON.stringify(rainLists));
   localStorage.setItem(QUANTITY_NAMES_KEY,JSON.stringify(quantityOther));
+  localStorage.setItem(WARNING_STORAGE,JSON.stringify(warningSettings));
   return true;
  }catch{
   toast('บันทึกไม่ได้ กรุณาตรวจสอบพื้นที่จัดเก็บของเบราว์เซอร์');
   return false;
  }
 }
+function addAuditLog(item,action,target,detail){
+ const event={id:`audit-${Date.now()}-${Math.random().toString(16).slice(2,8)}`,item,action,target,basin:'-',actor:'Super admin',detail,at:new Intl.DateTimeFormat('th-TH-u-ca-buddhist',{dateStyle:'short',timeStyle:'short'}).format(new Date()).replace(',','')+' น.'};
+ try{const current=JSON.parse(localStorage.getItem(AUDIT_LOG_STORAGE)||'[]');localStorage.setItem(AUDIT_LOG_STORAGE,JSON.stringify([event,...(Array.isArray(current)?current:[])].slice(0,500)));}catch{}
+}
 function esc(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function rowsForActive(){return active===0?rainLists[rainCategory][rainPeriod]:(rainCategory==='quantity'?quantityOther[active]:data[active])}
 function scopeLabel(){
- return active===0?(rainCategory==='quantity'?'ปริมาณฝน':'ระดับเตือนภัย')+' · '+rainPeriods[rainPeriod]:types[active];
+ return active===0?(rainCategory==='quantity'?'เกณฑ์มาตรฐานอ้างอิง':'เกณฑ์การเฝ้าระวังภัย (ปภ.)')+' · '+rainPeriods[rainPeriod]:types[active];
 }
 function renderTabs(){
  $('tabs').innerHTML=types.map((t,i)=>({name:t,index:i})).map(type=>`<button type="button" role="tab" class="tab" aria-selected="${active===type.index}" onclick="pickTab(${type.index})">${esc(type.name)}</button>`).join('');
@@ -391,7 +524,7 @@ function pickRainGroup(group){
 }
 function renderRainSelectors(){
  $('categorySelectors').innerHTML='<div role="tablist" aria-label="ประเภทเกณฑ์สี">'+
- [['quantity','เกณฑ์สีตามปริมาณ'],['warning','เกณฑ์สีระดับเตือนภัย']].map(([key,label])=>
+ [['quantity','เกณฑ์มาตรฐานอ้างอิง'],['warning','เกณฑ์การเฝ้าระวังภัย (ปภ.)']].map(([key,label])=>
  `<button class="category-tab" role="tab" aria-selected="${rainCategory===key}" onclick="pickRainCategory('${key}')">${label}</button>`).join('')+'</div>';
  $('rainSelectors').hidden=active!==0;
  if(active!==0)return;
@@ -413,22 +546,70 @@ function rowMarkup(row,index,isNew=false){
  const edit=inlineDraft?.id===row.id;
  const name=displayName(row);
  const position=String(index+1).padStart(2,'0');
- const handle=!edit?`<button class="reorder-handle" draggable="true" aria-label="ย้ายลำดับ ${esc(name)}" title="ลากเพื่อย้ายลำดับ หรือใช้ Alt + ลูกศรขึ้น/ลง" ondragstart="event.dataTransfer.setData('text/plain','${esc(row.id)}')" onkeydown="reorderKey(event,'${esc(row.id)}')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"></path></svg></button>`:'';
+ const warningDirect=rainCategory==='warning';
+ const rule=directRule();
+ const cuts=rule?.cuts??null;
+ const cutIndex=rule?.indexForRow(index)??-1;
+ const editableLimit=!!cuts&&cutIndex>=0&&cutIndex<cuts.length;
+ const handle=!edit&&!warningDirect?`<button class="reorder-handle" draggable="true" aria-label="ย้ายลำดับ ${esc(name)}" title="ลากเพื่อย้ายลำดับ หรือใช้ Alt + ลูกศรขึ้น/ลง" ondragstart="event.dataTransfer.setData('text/plain','${esc(row.id)}')" onkeydown="reorderKey(event,'${esc(row.id)}')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"></path></svg></button>`:'';
  return `<tr class="${edit?'editing-row':''}" ondragover="event.preventDefault()" ondrop="dropLevel(event,'${esc(row.id)}')">
  <td class="level-position">${handle}<span>${position}</span></td>
  <td>${edit?
-  `<div class="inline-fields"><input id="inlineColor" type="color" aria-label="สีเกณฑ์" value="${esc(inlineDraft.color)}" oninput="inlineDraft.color=this.value;document.getElementById('inlineHex').textContent=this.value.toUpperCase()"><input id="inlineName" aria-label="ชื่อเกณฑ์" maxlength="150" value="${esc(inlineDraft.name)}" oninput="inlineDraft.name=this.value"><span class="hex" id="inlineHex">${esc(inlineDraft.color.toUpperCase())}</span></div>`:
-  `<div class="level-content"><span class="level-color" style="background:${esc(row.color)}"></span><div><span class="criterion-name">${esc(name)}</span><span class="hex">${esc(row.color.toUpperCase())}</span></div></div>`}
+  `<div class="inline-fields"><input id="inlineColor" type="color" aria-label="สีเกณฑ์" value="${esc(inlineDraft.color)}" oninput="inlineDraft.color=this.value;document.getElementById('inlineHex').textContent=this.value.toUpperCase()"><input id="inlineName" aria-label="ชื่อเกณฑ์" maxlength="150" value="${esc(inlineDraft.name)}" oninput="inlineDraft.name=this.value"><span class="hex" id="inlineHex">${esc(inlineDraft.color.toUpperCase())}</span>${editableLimit?`<label class="inline-threshold">ขอบบน <input id="inlineLimit" type="number" step="any" value="${esc(inlineDraft.limit)}" aria-label="ขอบบนระดับ ${esc(name)}" oninput="inlineDraft.limit=this.value===''?null:Number(this.value)"> ${esc(rule.unit)}</label>`:''}</div>`:
+  `<div class="level-content"><span class="level-color" style="background:${esc(row.color)}"></span><div><span class="criterion-name">${esc(name)}</span><span class="hex">${esc(row.color.toUpperCase())}</span>${cuts?`<span class="threshold-summary">${editableLimit?`ขอบบน <strong>${esc(cuts[cutIndex])} ${esc(rule.unit)}</strong>`:`ระดับปลายช่วง · อ้างอิงขอบ <strong>${esc(cutIndex<0?cuts[0]:cuts.at(-1))} ${esc(rule.unit)}</strong>`}</span>`:''}</div></div>`}
  </td>
  <td class="level-actions">${edit?
   '<button class="btn secondary" onclick="cancelInline()">ยกเลิก</button><button class="btn" onclick="saveInline()">บันทึก</button>':
-  `<button class="action-button icon-only" aria-label="แก้ไข ${esc(name)}" onclick="openEditor('${esc(row.id)}')">${iconEdit}</button><button class="action-button icon-only delete" aria-label="ลบ ${esc(name)}" onclick="openDelete('${esc(row.id)}')">${iconTrash}</button>`}</td></tr>`;
+  `<button class="action-button icon-only" aria-label="แก้ไข ${esc(name)}" onclick="openEditor('${esc(row.id)}')">${iconEdit}</button>${warningDirect?'':`<button class="action-button icon-only delete" aria-label="ลบ ${esc(name)}" onclick="openDelete('${esc(row.id)}')">${iconTrash}</button>`}`}</td></tr>`;
 }
 function makeList(rows){
+ if(rainCategory==='warning')return makeCentralWarningList(rows);
  const pending=inlineDraft?.isNew?rowMarkup({id:inlineDraft.id,name:inlineDraft.name,color:inlineDraft.color},rows.length,true):'';
- return '<div class="list-container"><table class="levels-table"><thead><tr><th>ลำดับ</th><th>ชื่อเกณฑ์</th><th class="level-actions">จัดการ</th></tr></thead><tbody>'+
+ return '<div class="list-container"><table class="levels-table"><thead><tr><th>ลำดับ</th><th>ชื่อ สี และค่าขอบช่วง</th><th class="level-actions">จัดการ</th></tr></thead><tbody>'+
  rows.map((row,index)=>rowMarkup(row,index)).join('')+pending+
  (!rows.length&&!pending?'<tr><td colspan="3" class="empty">ยังไม่มีรายการชื่อเกณฑ์ในช่วงนี้</td></tr>':'')+'</tbody></table></div>';
+}
+function warningRange(index,cuts,unit){
+ const start=index===0?'ตั้งแต่ 0':`> ${cuts[index-1]}`;
+ return index<cuts.length?`${start} ถึง ${cuts[index]} ${unit}`:`> ${cuts.at(-1)} ${unit}`;
+}
+function makeCentralWarningList(rows){
+ const rule=directRule(rows),cuts=rule?.cuts??[],unit=rule?.unit||'มม.';
+ const supportsTriggerAlert=Boolean(rule&&cuts.length&&rows.length);
+ const body=rows.map((row,index)=>{
+  const draft=centralDrafts[index]||{id:row.id,name:displayName(row),color:row.color,limit:index<cuts.length?cuts[index]:null};
+  const editable=index<cuts.length;
+  const range=centralEditing
+   ? `<span class="range-prefix">${index===0?'ตั้งแต่ 0 ถึง':`> ${cuts[index-1]} ถึง`}</span>${editable?`<input class="range-input" type="number" step="any" value="${esc(draft.limit)}" aria-label="ช่วงค่าสิ้นสุด ${esc(draft.name)}" oninput="setCentralDraft(${index},'limit',this.value)">`:''}<span class="range-unit">${unit}</span>`
+   : warningRange(index,cuts,unit);
+  const alertEnabled=isWarningAlertEnabled(row.id);
+  const alertToggle=supportsTriggerAlert?`<button class="warning-alert-toggle ${alertEnabled?'is-on':''}" type="button" role="switch" aria-checked="${alertEnabled}" aria-label="${alertEnabled?'ปิด':'เปิด'}การแจ้งเตือนระดับ ${esc(displayName(row))}" ${centralEditing?'disabled':''} onclick="requestWarningAlertToggle('${esc(row.id)}')"><span class="warning-alert-switch" aria-hidden="true"></span><span>${alertEnabled?'เปิด':'ปิด'}</span></button>`:'<span class="subtext">ไม่รองรับ Trigger Alert</span>';
+  return `<tr class="${centralEditing?'editing-row':''}"><td class="level-position"><span>${String(index+1).padStart(2,'0')}</span></td><td>${centralEditing?`<div class="inline-fields central-inline"><input type="color" aria-label="สีเกณฑ์ ${esc(draft.name)}" value="${esc(draft.color)}" oninput="setCentralDraft(${index},'color',this.value)"><input aria-label="ชื่อเกณฑ์ ${esc(draft.name)}" maxlength="150" value="${esc(draft.name)}" oninput="setCentralDraft(${index},'name',this.value)"><span class="hex">${esc(draft.color.toUpperCase())}</span></div>`:`<div class="level-content"><span class="level-color" style="background:${esc(row.color)}"></span><div><span class="criterion-name">${esc(displayName(row))}</span><span class="hex">${esc(row.color.toUpperCase())}</span></div></div>`}</td><td class="warning-range">${range}</td><td class="warning-alert-cell">${alertToggle}</td>${centralEditing?`<td class="level-actions"><button class="action-button icon-only delete" aria-label="ลบ ${esc(draft.name)}" onclick="openDelete('${esc(row.id)}')">${iconTrash}</button></td>`:''}</tr>`;
+ }).join('');
+ return `<div class="list-container central-warning-container"><table class="levels-table central-warning-table ${centralEditing?'is-editing':''}"><thead><tr><th class="level-position">ลำดับ</th><th class="criterion-column">ชื่อเกณฑ์</th><th>ช่วงค่า</th><th class="warning-alert-cell">การแจ้งเตือน</th>${centralEditing?'<th class="level-actions">จัดการ</th>':''}</tr></thead><tbody>${body}</tbody></table><p class="warning-alert-note">การเปิด/ปิดมีผลเฉพาะการประเมิน Trigger Alert สำหรับสถานีตรวจวัดในโครงการ ไม่กระทบค่าตรวจวัด สีตามเกณฑ์ หรือสถานีหน่วยงานอื่น</p></div>`;
+}
+function startCentralEdit(){
+ const rows=rowsForActive(),rule=directRule(rows),cuts=rule?.cuts??[];
+ centralDrafts=rows.map((row,index)=>({id:row.id,name:displayName(row),color:row.color,limit:index<cuts.length?cuts[index]:null}));
+ centralEditing=true;inlineDraft=null;renderList();
+}
+function setCentralDraft(index,key,value){
+ if(!centralDrafts[index])return;
+ centralDrafts[index][key]=key==='limit'?(value===''?null:Number(value)):value;
+}
+function cancelCentralEdit(){centralEditing=false;centralDrafts=[];renderList()}
+function saveCentralEdit(){
+ const rows=rowsForActive(),rule=directRule(rows),cuts=rule?.cuts??[];
+ if(!rule)return;
+ const drafts=centralDrafts.map(draft=>({...draft,name:String(draft.name||'').trim()}));
+ if(drafts.some(draft=>!draft.name)){ $('inlineError').textContent='กรุณาระบุชื่อเกณฑ์ให้ครบทุกระดับ';return; }
+ const nextCuts=drafts.slice(0,-1).map(draft=>draft.limit);
+ if(nextCuts.some((value,index)=>!Number.isFinite(value)||value<=0||(index&&value<=nextCuts[index-1]))){$('inlineError').textContent='กรุณาระบุช่วงค่าให้เรียงจากน้อยไปมาก';return;}
+ const rowsBefore=rows.map(row=>({...row})),cutsBefore=[...cuts];
+ rows.splice(0,rows.length,...rows.map((row,index)=>({...row,name:drafts[index].name,color:drafts[index].color,displayName:undefined})));
+ cuts.splice(0,cuts.length,...nextCuts);
+ pendingCentralEdit={mode:'all',rows,rowsBefore,cuts,cutsBefore,drafts,scope:scopeLabel(),count:rows.length,change:`แก้ไขชื่อ สี และช่วงค่า ${rows.length} ระดับ`};
+ openCentralConfirm();
 }
 function cancelInline(){inlineDraft=null;renderList()}
 function saveInline(){
@@ -436,6 +617,19 @@ function saveInline(){
  if(!name){$('inlineError').textContent='กรุณาระบุชื่อเกณฑ์';$('inlineName').focus();return;}
  const rows=rowsForActive();
  const index=rows.findIndex(row=>row.id===inlineDraft.id);
+ const rule=rainCategory==='warning'?directRule(rows):null;
+ const cuts=rule?.cuts??null;
+ const cutsBefore=cuts?[...cuts]:null;
+ const cutIndex=index>=0&&rule?rule.indexForRow(index):-1;
+ if(cuts&&cutIndex>=0&&cutIndex<cuts.length){
+  const limit=Number(inlineDraft.limit);
+  const previous=cutIndex?cuts[cutIndex-1]:(active===1?-Infinity:0),next=cutIndex<cuts.length-1?cuts[cutIndex+1]:(active===2?100:active===4?360:Infinity);
+  if(!Number.isFinite(limit)||limit<=previous||limit>=next){
+   $('inlineError').textContent=`ขอบบนต้องมากกว่า ${previous} และน้อยกว่า ${Number.isFinite(next)?next:'ระดับถัดไป'}`;
+   $('inlineLimit')?.focus();return;
+  }
+  cuts[cutIndex]=limit;
+ }
  const before=index>=0?{...rows[index]}:null;
  const row={...(before||{}),id:inlineDraft.id,name,color:inlineDraft.color};
  if(before?.range){
@@ -450,8 +644,52 @@ function saveInline(){
   }
  }
  if(index>=0)rows[index]=row;else rows.push(row);
- if(!persist()){if(index>=0)rows[index]=before;else rows.pop();return;}
- inlineDraft=null;renderList();toast('บันทึกชื่อและสีเกณฑ์เรียบร้อยแล้ว');
+ const isReferenceCriteria=active===0&&rainCategory==='quantity';
+ pendingCentralEdit={rows,index,before,row,cuts,cutsBefore,draft:{...inlineDraft},scope:scopeLabel(),count:1,change:isReferenceCriteria?'แก้ไขชื่อและสี 1 รายการ':`${name} · ${inlineDraft.color.toUpperCase()}${cuts&&cutIndex>=0&&cutIndex<cuts.length?` · ขอบบน ${cuts[cutIndex]} ${rule.unit}`:''}`};
+ openCentralConfirm();
+}
+function openCentralConfirm(){
+ if(!pendingCentralEdit)return;
+ const isWarningCriteria=active===0&&rainCategory==='warning';
+ const isReferenceCriteria=active===0&&rainCategory==='quantity';
+ const measurement=types[active];
+ const period=active===0?rainPeriods[rainPeriod]:'';
+ const warningItems=`${measurement}${period?` · ${period}`:''} · ${pendingCentralEdit.change}`;
+ $('centralConfirmTitle').textContent=isReferenceCriteria?'ยืนยันการแก้ไขเกณฑ์มาตรฐานอ้างอิง':(isWarningCriteria?'ยืนยันการแก้ไขเกณฑ์การเฝ้าระวังภัย (ปภ.)':'ยืนยันการแก้ไขเกณฑ์กลาง');
+ $('centralConfirmType').textContent=isReferenceCriteria?'เกณฑ์มาตรฐานอ้างอิง':(isWarningCriteria?'เกณฑ์การเฝ้าระวังภัย (ปภ.)':measurement);
+ $('centralConfirmScope').textContent=isReferenceCriteria?`${measurement}${period?` · ${period}`:''} · แก้ไข ${pendingCentralEdit.count??1} รายการ`:(isWarningCriteria?warningItems:pendingCentralEdit.scope);
+ $('centralConfirmChange').textContent=isWarningCriteria?'':pendingCentralEdit.change;
+ $('centralConfirmImpact').hidden=!isWarningCriteria;
+ $('centralConfirmNote').textContent=isReferenceCriteria
+  ? 'การเปลี่ยนแปลงนี้มีผลเฉพาะข้อความ Legend และสีที่ใช้แสดงผล โดยไม่เปลี่ยนแปลงค่าขอบช่วงของเกณฑ์มาตรฐานอ้างอิง'
+  : isWarningCriteria
+   ? 'ตรวจสอบชื่อ สี และค่าขอบช่วงก่อนยืนยัน ระบบจะบันทึกการตั้งค่าเกณฑ์กลางในเบราว์เซอร์นี้'
+   : 'ตรวจสอบชื่อ สี และค่าช่วงก่อนยืนยัน ระบบจะบันทึกการตั้งค่าเกณฑ์กลางในเบราว์เซอร์นี้';
+ $('centralConfirmOverlay').classList.add('open');
+}
+function cancelCentralConfirm(){
+ const pending=pendingCentralEdit;if(!pending)return;
+ if(pending.mode==='all'){
+  pending.rows.splice(0,pending.rows.length,...pending.rowsBefore);
+  pending.cuts.splice(0,pending.cuts.length,...pending.cutsBefore);
+  centralEditing=true;centralDrafts=pending.drafts;
+  pendingCentralEdit=null;$('centralConfirmOverlay').classList.remove('open');renderList();return;
+ }
+ if(pending.index>=0)pending.rows[pending.index]=pending.before;else pending.rows.pop();
+ if(pending.cuts&&pending.cutsBefore)pending.cuts.splice(0,pending.cuts.length,...pending.cutsBefore);
+ inlineDraft=pending.draft;pendingCentralEdit=null;
+ $('centralConfirmOverlay').classList.remove('open');
+ renderList();
+ setTimeout(()=>$('inlineName')?.focus(),0);
+}
+function confirmCentralEdit(){
+ if(!pendingCentralEdit)return;
+ if(!persist())return;
+ addAuditLog(active===0&&rainCategory==='quantity'?'เกณฑ์มาตรฐานอ้างอิง':'เกณฑ์การเฝ้าระวังภัย (ปภ.)','แก้ไข',pendingCentralEdit.scope||scopeLabel(),pendingCentralEdit.change||'ปรับข้อมูลเกณฑ์กลาง');
+ if(pendingCentralEdit.mode==='all'){centralEditing=false;centralDrafts=[];}
+ pendingCentralEdit=null;inlineDraft=null;
+ $('centralConfirmOverlay').classList.remove('open');
+ renderList();toast('บันทึกเกณฑ์กลางเรียบร้อยแล้ว');
 }
 function moveLevel(id,targetIndex){
  if(inlineDraft)return;
@@ -486,12 +724,19 @@ function renderList(){
  $('referenceNote').textContent=referenceNote;
  $('referenceNote').hidden=!referenceNote;
  $('count').textContent='';
- $('content').innerHTML=(active>=7?'<div class="shared-banner">PM2.5 และ PM10 ใช้ชื่อและสีเริ่มต้นเหมือนกัน แต่แยกแก้ไขข้อมูลของแต่ละประเภท</div>':'')+makeList(rows)
+ const warningDirect=rainCategory==='warning';
+ $('listActions').innerHTML=warningDirect
+  ? (centralEditing?'<button class="btn secondary" type="button" onclick="cancelCentralEdit()">ยกเลิก</button> <button class="btn" type="button" onclick="saveCentralEdit()">บันทึก</button>':'<button class="btn secondary" type="button" onclick="startCentralEdit()">แก้ไขเกณฑ์</button>')
+  : '<button class="btn" type="button" onclick="openEditor()">＋ เพิ่มระดับ</button>';
+ $('content').innerHTML=(warningDirect?`<div class="warning-direct-note">${centralEditing?'กำลังแก้ไข · แก้ไขชื่อ สี และช่วงค่าให้ครบ แล้วกด “บันทึก” เพื่อยืนยันการเปลี่ยนแปลง':'แก้ไขชื่อ สี และช่วงค่าได้จากรายการนี้โดยตรง · ค่าที่บันทึกจะใช้กับทุกสถานีที่เลือกเกณฑ์ Default'}</div>`:'')+(active>=7?'<div class="shared-banner">PM2.5 และ PM10 ใช้ชื่อและสีเริ่มต้นเหมือนกัน แต่แยกแก้ไขข้อมูลของแต่ละประเภท</div>':'')+makeList(rows)
 }
 function findCurrent(id){return rowsForActive().find(r=>r.id===id)}
 function openEditor(id){
  const row=id?findCurrent(id):null;
- inlineDraft={id:row?.id||uid(),name:row?displayName(row):'',color:row?.color||'#ef4444',isNew:!row};
+ const index=row?rowsForActive().findIndex(item=>item.id===row.id):-1;
+ const rule=rainCategory==='warning'?directRule():null;
+ const cutIndex=index>=0&&rule?rule.indexForRow(index):-1;
+ inlineDraft={id:row?.id||uid(),name:row?displayName(row):'',color:row?.color||'#ef4444',limit:cutIndex>=0&&cutIndex<rule.cuts.length?rule.cuts[cutIndex]:'',isNew:!row};
  renderList();
  $('inlineName').focus();
 }
@@ -500,33 +745,31 @@ function openDelete(id){
  deletingId=id;
  $('deleteName').textContent=row.name+' · '+row.color.toUpperCase();
  $('deleteType').textContent=scopeLabel();
- $('deleteConfirmInput').value='';
- updateDeleteState();
  $('deleteOverlay').classList.add('open');
- $('deleteConfirmInput').focus();
-}
-function updateDeleteState(){
- const matched=$('deleteConfirmInput').value==='ยืนยันการลบ';
- $('deleteConfirmButton').disabled=!matched;
- $('deleteConfirmInput').classList.toggle('ok',matched);
- $('deleteConfirmHint').textContent=matched?'ยืนยันข้อความถูกต้อง สามารถลบรายการได้':'ปุ่มลบจะใช้งานได้เมื่อพิมพ์ “ยืนยันการลบ” ตรงตามที่กำหนด';
 }
 function closeDelete(){
  deletingId=null;$('deleteOverlay').classList.remove('open');
- $('deleteConfirmInput').value='';updateDeleteState();
 }
 function confirmDelete(){
- if(!deletingId||$('deleteConfirmInput').value!=='ยืนยันการลบ')return;
+ if(!deletingId)return;
  const idx=rowsForActive().findIndex(r=>r.id===deletingId);
  if(idx<0){closeDelete();return;}
- rowsForActive().splice(idx,1);if(!persist())return;closeDelete();renderTabs();renderList();toast('ลบชื่อเกณฑ์เรียบร้อยแล้ว');
+ const row=rowsForActive()[idx];
+ rowsForActive().splice(idx,1);
+ if(centralEditing){centralEditing=false;centralDrafts=[];}
+ if(!persist())return;addAuditLog(rainCategory==='warning'?'เกณฑ์การเฝ้าระวังภัย (ปภ.)':'เกณฑ์มาตรฐานอ้างอิง','ลบ',row.name,'ลบรายการเกณฑ์กลาง');closeDelete();renderTabs();renderList();toast('ลบชื่อเกณฑ์เรียบร้อยแล้ว');
 }
 function toast(message){$('toast').textContent=message;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',2300)}
 function toggleMobileMenu(){const open=document.body.classList.toggle('menu-open');$('menuTrigger').setAttribute('aria-expanded',String(open))}
 function closeMobileMenu(){document.body.classList.remove('menu-open');$('menuTrigger').setAttribute('aria-expanded','false')}
+function goAudit(){
+ if(window.parent&&window.parent!==window){window.parent.location.hash='stations/audit';return;}
+ location.hash='stations/audit';
+}
 function setTheme(t){document.documentElement.classList.toggle('light',t==='light');$('lightButton').classList.toggle('on',t==='light');$('darkButton').classList.toggle('on',t==='dark');try{localStorage.setItem('ddpm_mock_theme',t)}catch{}}
 $('deleteOverlay').addEventListener('click',event=>{if(event.target===$('deleteOverlay'))closeDelete()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelInline();closeDelete();closeMobileMenu()}});
+$('warningAlertConfirmOverlay').addEventListener('click',event=>{if(event.target===$('warningAlertConfirmOverlay'))cancelWarningAlertConfirmation()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){cancelInline();closeDelete();cancelWarningAlertConfirmation();closeMobileMenu()}});
 $('menuSearch').addEventListener('input',e=>{const q=e.target.value.trim().toLocaleLowerCase('th-TH');document.querySelectorAll('[data-nav]').forEach(n=>n.style.display=n.textContent.toLocaleLowerCase('th-TH').includes(q)?'':'none')});
 persist();
 window.addEventListener('message',event=>{

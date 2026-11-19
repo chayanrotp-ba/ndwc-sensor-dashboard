@@ -1,5 +1,5 @@
 <script setup>
-defineProps({current:String,goMaster:Function,goCentral:Function});
+defineProps({current:String,goMaster:Function});
 </script>
 
 <template>
@@ -10,8 +10,7 @@ defineProps({current:String,goMaster:Function,goCentral:Function});
       <svg class="criteria-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
     </summary>
     <div class="criteria-items">
-      <button type="button" :aria-current="current==='master'?'page':undefined" @click="goMaster?.()">ชื่อเกณฑ์และระดับการแจ้งเตือนภัย</button>
-      <button v-if="goCentral" type="button" :aria-current="current==='central'?'page':undefined" @click="goCentral()">ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง</button>
+      <button type="button" :aria-current="['master','central'].includes(current)?'page':undefined" @click="goMaster?.()">ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง</button>
     </div>
   </details>
 </template>

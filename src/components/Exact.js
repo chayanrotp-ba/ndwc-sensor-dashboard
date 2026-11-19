@@ -1,5 +1,6 @@
 import { effectiveThreshold } from '../threshold-settings.js';
 import { RAIN_LEVELS, RAIN_COLORS } from '../rain-criteria.js';
+import { evaluateWarning, warningMaster, WARNING_PERIODS, seedWarningExamples } from '../warning-criteria.js';
 import { DCLogic, createElement } from '../runtime.js';
 
 export default class Component extends DCLogic {
@@ -34,15 +35,6 @@ export default class Component extends DCLogic {
     window.addEventListener('resize', this.fit);
     this.onKey = (e) => { if (e.key !== 'Escape') return; if (this.state.ssOpen) { this.setState({ ssOpen: false }); return; } if (this.state.dd) { this.setState({ dd: null }); return; } if (this.state.inbox) this.setState({ inbox: false }); else if (this.state.mOpen) this.setState({ mOpen: false }); else if (this.state.lyOpen) this.setState({ lyOpen: false }); else if (this.state.tw) this.setState({ tw: null }); else if (this.state.bmOpen) this.setState({ bmOpen: false }); else if (this.state.hist) this.setState({ hist: null }); else if (this.state.qr) this.setState({ qr: false }); else if (this.state.st) this.setState({ st: null }); };
     window.addEventListener('keydown', this.onKey);
-    // demo: a new alert arrives now and then (max 4)
-    this.sim = setInterval(() => {
-      const ex = this.state.extra || [];
-      if (ex.length >= 4) { clearInterval(this.sim); return; }
-      const { R } = this.data();
-      const pool = R.filter((r) => r[7] != null && r[7] > 20 && r[7] <= 35);
-      const r = pool[(ex.length * 7 + 3) % pool.length];
-      this.setState({ extra: [{ id: 'new' + ex.length + ':' + r[0], st: r[0], v: Math.round((36 + ex.length * 9.3) * 10) / 10 }].concat(ex) });
-    }, 25000);
   }
 
   // toasts close themselves ~8 s after they appear (hovering keeps one open)
@@ -65,11 +57,11 @@ export default class Component extends DCLogic {
   }
   componentDidUpdate() { this.scheduleToasts(); this.attachWheel(); }
 
-  componentWillUnmount() { if (this._wEl && this._onWheel) this._wEl.removeEventListener('wheel', this._onWheel); if (this._tT) Object.values(this._tT).forEach((t) => clearTimeout(t)); if (this.sim) clearInterval(this.sim); if (this.fit) window.removeEventListener('resize', this.fit); if (this.onKey) window.removeEventListener('keydown', this.onKey); }
+  componentWillUnmount() { if (this._wEl && this._onWheel) this._wEl.removeEventListener('wheel', this._onWheel); if (this._tT) Object.values(this._tT).forEach((t) => clearTimeout(t)); if (this.fit) window.removeEventListener('resize', this.fit); if (this.onKey) window.removeEventListener('keydown', this.onKey); }
 
   constructor(props) {
     super(props);
-    this.state = { theme: 'dark', crit: 'tw', amp: '', tam: '', zi: 0, zc: null, hl: true, basin: '', inbox: false, ibTab: 'all', ibLv: 'all', readIds: {}, gone: {}, extra: [], lyOwn: true, lyTw: true, nocl: false, layHid: { runoff: true, dam: true, vil: true }, rainExp: true, lyOpen: false, pnl: null, cctvOff: true, agDd: true, damDd: false, exB: false, exP: false, exA: false, exW: false, exR: false, wx: false, wxVar: 'cloud', rainObs: false, rainT: 2, rainFc: false, radar: false, mp: {}, bsel: {}, psel: {}, tw: null, metric: 'rain', mOpen: false, stAll: false, basemap: 'dark', bmOpen: false, hr: false, screen: globalThis.location?.hash.startsWith('#stations') ? 'admin' : 'map', period: 'd1', hidden: {}, legend: true, page: 1, size: 10, sel: null, tip: null, menu: false, prov: '' };
+    this.state = { theme: 'dark', crit: 'own', dpmSummary: true, dpmLevel: 'all', amp: '', tam: '', zi: 0, zc: null, hl: true, basin: '', inbox: false, ibTab: 'all', ibType: 'all', ibQuery: '', readIds: {}, gone: {}, lyOwn: true, lyTw: true, nocl: false, layHid: { runoff: true, dam: true, vil: true }, rainExp: true, lyOpen: false, pnl: null, cctvOff: true, agDd: true, damDd: false, exB: false, exP: false, exA: false, exW: false, exR: false, wx: false, wxVar: 'cloud', rainObs: false, rainT: 2, rainFc: false, radar: false, mp: {}, bsel: {}, psel: {}, tw: null, metric: 'rain', mOpen: false, stAll: false, basemap: 'dark', bmOpen: false, hr: false, screen: globalThis.location?.hash.startsWith('#stations') ? 'admin' : 'map', period: 'd1', hidden: {}, legend: true, page: 1, size: 10, sel: null, tip: null, menu: false, prov: '' };
   }
 
   data() {
@@ -654,7 +646,7 @@ export default class Component extends DCLogic {
       spBanText: DS.silent ? 'ไม่ได้รับข้อมูลจากสถานีมา ' + DS.seenMin + ' นาที (ส่งล่าสุด ' + DS.seenAt + ') · ปัญหาอยู่ที่อุปกรณ์หรือสัญญาณ ไม่มีค่าล่าสุดให้แสดง'
         : 'สถานียังส่งตามปกติ (ส่งล่าสุด ' + DS.seenAt + ') แต่ระบบประมวลผลตามไม่ทัน · ค่าที่แสดงเป็นของเวลา ' + DS.valAt + ' น.',
       spBanWho: DS.silent ? 'ส่งทีมออกหน้างาน' : 'แจ้งทีมระบบ',
-      spComparison, spIsRain: met.key === 'rain', spIsOther: met.key !== 'rain', spCount: MD.length, spMetric: met.name, spOne: [one], spStats: [], spHourly,
+      spComparison, spIsRain: met.key === 'rain', spShowWarningCriteria: met.key === 'rain' && s.crit === 'own', spIsOther: met.key !== 'rain', spCount: MD.length, spMetric: met.name, spOne: [one], spStats: [], spHourly,
       spMini: !!MINI, mnTitle: MINI ? MINI.hxTitle : '', mnGrans: MINI ? MINI.hxGrans : [], mnDaily: MINI ? MINI.hxDaily : false, mnCapOn: MINI ? MINI.hxCapOn : false, mnCap: MINI ? MINI.hxCap : '',
       mnRanges: MINI ? MINI.hxRanges : [], mnChart: MINI ? MINI.hxChart : null, mnSw: MINI ? MINI.hxSw : '', mnLegend: MINI ? MINI.hxLegend : '',
       mnMore: () => this.setState({ qr: false, hist: { id: st[0], sensor: met.hist, gran: sph.gran, range: sph.range, pg: 1, full: false } }),
@@ -775,14 +767,15 @@ export default class Component extends DCLogic {
   renderVals() { const v = this.renderVals0(); return Object.assign(v, this.ddVals(v), this.xlVals()); }
 
   agList() { return [
-    { name: 'กรมทรัพยากรน้ำ', code: 'DWR', abbr: 'ทน.', col: '#2c74d4' },
-    { name: 'สถาบันสารสนเทศทรัพยากรน้ำ (องค์การมหาชน)', code: 'HII', abbr: 'สสน.', col: '#0ea5e9' },
-    { name: 'กรมอุตุนิยมวิทยา', code: 'TMD', abbr: 'อต.', col: '#8b5cf6' },
-    { name: 'กรมป้องกันและบรรเทาสาธารณภัย', code: 'DDPM', abbr: 'ปภ.', col: '#ef4444' },
-    { name: 'กรมชลประทาน', code: 'RID', abbr: 'ชป.', col: '#10b981' },
+    { name: 'กรมทรัพยากรน้ำ', code: 'DWR', abbr: 'ทน.', col: '#2c74d4', logo: './assets/agency-dwr.png' },
+    { name: 'สถาบันสารสนเทศทรัพยากรน้ำ (องค์การมหาชน)', code: 'HII', abbr: 'สสน.', col: '#0ea5e9', logo: './assets/agency-hii.png' },
+    { name: 'กรมอุตุนิยมวิทยา', code: 'TMD', abbr: 'อต.', col: '#8b5cf6', logo: './assets/agency-tmd.png' },
+    { name: 'กรมป้องกันและบรรเทาสาธารณภัย', code: 'DDPM', abbr: 'ปภ.', col: '#ef4444', logo: './assets/agency-ddpm.png' },
+    { name: 'กรมชลประทาน', code: 'RID', abbr: 'ชป.', col: '#10b981', logo: './assets/agency-rid.png' },
     { name: 'บริษัท ไทยเบฟเวอเรจ จำกัด (มหาชน)', code: 'TBEV', abbr: 'ไทยเบฟ', col: '#f59e0b' }
   ]; }
   agLabel(name) { const m = this.agList().find((a) => a.name === name); return m ? m.abbr + ' · ' + name : name; }
+  agLogo(name) { return this.agList().find((a) => a.name === name)?.logo || ''; }
 
   renderVals0() {
     const s = this.state;
@@ -841,6 +834,7 @@ export default class Component extends DCLogic {
     const agOf = (r) => r[10] || DDPM;
     const agLabel = (name) => this.agLabel(name);
     const codeOf = (r) => (r[0].indexOf('tw-') === 0 ? r[0].slice(3) : 'G15006-' + (5501 + R.indexOf(r) * 13));
+    seedWarningExamples(R.map((r) => ({ code: codeOf(r) })));
     const lq = (s.lq || '').trim().toLowerCase();
     const matchQ = (r) => !lq || [r[1], r[2], r[3], r[4], codeOf(r)].some((x) => String(x).toLowerCase().indexOf(lq) >= 0);
     const shown = scoped.filter((r) => !s.hidden[catOf(val(r),r)] && (!s.dsf || DSall[r[0]].kind === s.dsf) && (!s.agf || agOf(r) === s.agf) && matchQ(r));
@@ -849,6 +843,54 @@ export default class Component extends DCLogic {
     const pick = (id) => () => this.setState({ sel: id, st: id, stPh: 0, qr: false, tip: null, stAll: false });
     const loc = (r) => 'ต.' + r[2] + ' อ.' + r[3] + ' จ.' + r[4];
     const vCol = (k) => (LVL[k] === 'bad' ? (lt ? '#dc2626' : '#fb2c36') : (lt ? '#b45309' : '#fbbf24'));
+
+    // The operational DDPM view intentionally starts at level 3.  "ติดตาม" and
+    // "เฝ้าระวัง" remain available in the station popup but do not appear in this
+    // incident-oriented summary.
+    const dpmPeriod = { '1h': '1h', today: 'today', yesterday: 'yesterday', d1: '24h', d3: '72h' }[s.period] || null;
+    let dpmLevels = [], dpmRows = [], dpmMaster = [], dpmError = '';
+    if (dpmPeriod) {
+      try {
+        const master = warningMaster(dpmPeriod);
+        dpmMaster = master;
+        const operational = master.slice(-3);
+        const order = Object.fromEntries(operational.map((level, index) => [level.id, index]));
+        dpmRows = R.filter((r) => this.inArea(s, r)).map((r) => {
+          const value = this.rainOf(r, s.period);
+          const result = evaluateWarning(codeOf(r), dpmPeriod, value, master);
+          if (!result.available || !order.hasOwnProperty(result.level.id)) return null;
+          const ds = this.dataStat(r);
+          const criteriaKind = result.source === 'Custom' ? 'custom' : 'default';
+          const criteriaLabel = criteriaKind === 'custom' ? 'เกณฑ์การเฝ้าระวังภัยรายสถานี (Custom)' : 'เกณฑ์การเฝ้าระวังภัย (ปภ.)';
+          return { id: r[0], name: r[1], loc: loc(r), ag: agLabel(r[10] || DDPM), agLogo: this.agLogo(r[10] || DDPM), criteriaLabel, criteriaCls: criteriaKind, criteria: Object.assign(this.criteriaContext(r, 'rain', s.period, value, 'มม.', 'ปริมาณน้ำฝน'), { criteriaLabel, criteriaKind, criteriaMode: 'warning' }), value, time: r[11] || (ds.silent ? ds.seenAt : ds.late ? ds.valAt : '11:00'), level: result.level, levelStyle: 'background: ' + result.level.color + '; color: #ffffff;', rank: order[result.level.id], pick: pick(r[0]) };
+        }).filter(Boolean).sort((a, b) => b.rank - a.rank || b.value - a.value);
+        const dpmQuery = (s.lq || '').trim().toLowerCase();
+        dpmRows = dpmRows.filter((row) => !dpmQuery || [row.name, row.loc, row.id].some((text) => String(text).toLowerCase().includes(dpmQuery)))
+          .filter(() => !s.agf || s.agf === 'กรมป้องกันและบรรเทาสาธารณภัย');
+        dpmLevels = operational.map((level, index) => {
+          const matched = dpmRows.filter((row) => row.level.id === level.id);
+          const on = s.dpmLevel === level.id;
+          return { id: level.id, label: level.name, color: level.color, n: matched.length, provinces: new Set(matched.map((row) => row.loc.split(' จ.')[1])).size,
+            on, cls: on ? 'on' : '', style: '--dpm:' + level.color, pick: () => this.setState({ dpmLevel: s.dpmLevel === level.id ? 'all' : level.id, page: 1 }) };
+        });
+      } catch (error) {
+        dpmError = 'ไม่สามารถอ่านเกณฑ์ระดับการเฝ้าระวังจาก Master Data ได้';
+      }
+    }
+    const dpmVisible = s.dpmLevel === 'all' ? dpmRows : dpmRows.filter((row) => row.level.id === s.dpmLevel);
+    const dpmPagesN = Math.max(1, Math.ceil(dpmVisible.length / s.size));
+    const dpmPage = Math.min(s.page, dpmPagesN);
+    const dpmPageRows = dpmVisible.slice((dpmPage - 1) * s.size, dpmPage * s.size).map((row) => Object.assign({}, row, {
+      // Keep the DPM result in the exact same row contract as the existing
+      // station table.  The template therefore only changes row data, not the
+      // table's hierarchy, spacing, controls, or interaction pattern.
+      cls: 'ex-tr', agCls: 'ag', tmCls: 'tm', plStyle: row.levelStyle,
+      val: row.value, gpCls: 'gp-d none', gpTxt: '',
+      gAria: 'ดูกราฟข้อมูลย้อนหลัง ' + row.name,
+      openHist: (event) => { if (event && event.stopPropagation) event.stopPropagation(); this.setState({ sel: row.id, hist: { id: row.id, sensor: 'rain', gran: 'day', range: null, pg: 1, full: false } }); }
+    }));
+    const dpmPageNums = dpmPagesN <= 5 ? Array.from({ length: dpmPagesN }, (_, index) => index + 1) : (dpmPage <= 3 ? [1, 2, 3, 'gap'] : [1, 'gap', dpmPage, 'gap']);
+    const dpmPageBtns = dpmPageNums.map((number) => number === 'gap' ? { n: '...', cls: 'ex-pb', gap: true, cur: undefined, pick: null } : { n: number, cls: number === dpmPage ? 'ex-pb on' : 'ex-pb', gap: false, cur: number === dpmPage ? 'page' : undefined, pick: () => this.setState({ page: number }) });
 
     const alerts = sorted.filter((r) => val(r) != null && (LVL[catOf(val(r),r)] === 'bad' || LVL[catOf(val(r),r)] === 'warn')).map((r) => {
       const k = catOf(val(r),r), c = CATS.find((x) => x[0] === k);
@@ -860,28 +902,59 @@ export default class Component extends DCLogic {
 
     const pages = Math.max(1, Math.ceil(sorted.length / s.size));
     const page = Math.min(s.page, pages);
-    const rows = sorted.slice((page - 1) * s.size, page * s.size).map((r) => {
+    const makeStationRow = (r) => {
       const k = catOf(val(r),r);
       const ds = DSall[r[0]];
-      return { criteria: this.criteriaContext(r, met.key, s.period, val(r), met.unitTh, met.name), name: r[1], loc: (r[0].indexOf('tw-') === 0 ? 'รหัส ' + r[0].slice(3) + ' · ' : '') + loc(r),
+      return { id: r[0], criteria: Object.assign(this.criteriaContext(r, met.key, s.period, val(r), met.unitTh, met.name), { criteriaMode: isRain && s.crit === 'own' ? 'warning' : 'reference' }), name: r[1], loc: (r[0].indexOf('tw-') === 0 ? 'รหัส ' + r[0].slice(3) + ' · ' : '') + loc(r),
         time: r[11] || (ds.silent ? ds.seenAt : ds.late ? ds.valAt : '11:00'), tmCls: ds.silent ? 'tm t-sil' : ds.late ? 'tm t-late' : 'tm',
-        ag: agLabel(r[10] || DDPM), agCls: 'ag',
+        ag: agLabel(r[10] || DDPM), agLogo: this.agLogo(r[10] || DDPM), agCls: 'ag',
         // abnormal-transmission indicator, always in the same slot (bottom-right of the row): ออฟไลน์ / ข้อมูลขาดช่วง
         gpCls: ds.silent ? 'gp-d gp-sil' : ds.gap ? 'gp-d gp-gap' : ds.late ? 'gp-d gp-late' : 'gp-d none',
         gpTxt: ds.silent ? 'ออฟไลน์ ' + ds.seenMin + ' นาที' : ds.gap ? 'ข้อมูลขาดช่วง ' + ds.gap + ' ช่วง' : ds.late ? 'ข้อมูลมาช้า ' + ds.late + ' นาที' : '',
         val: ds.silent ? 'ออฟไลน์' : met.dir && val(r) != null ? val(r) + '°' : fmt(val(r)), plStyle: 'background: ' + COL[k] + '; color: ' + ink(k) + ';', cls: s.sel === r[0] ? 'ex-tr on' : 'ex-tr', pick: pick(r[0]),
         gAria: 'ดูกราฟข้อมูลย้อนหลัง ' + r[1], openHist: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ sel: r[0], hist: { id: r[0], sensor: met.hist, gran: s.period === 'm' ? 'month' : s.period === 'y' ? 'year' : 'day', range: null, pg: 1, full: false } }); } };
-    });
+    };
+    const rows = sorted.slice((page - 1) * s.size, page * s.size).map(makeStationRow);
     let nums = pages <= 5 ? Array.from({ length: pages }, (_, i) => i + 1) : (page <= 3 ? [1, 2, 3, 'gap'] : [1, 'gap', page, 'gap']);
     const pageBtns = nums.map((n) => (n === 'gap' ? { n: '...', cls: 'ex-pb', gap: true, cur: undefined, pick: null } : { n, cls: n === page ? 'ex-pb on' : 'ex-pb', gap: false, cur: n === page ? 'page' : undefined, pick: () => this.setState({ page: n }) }));
+    const dpmById = Object.fromEntries(dpmRows.map((row) => [row.id, row]));
+    const dpmTableSource = s.dpmLevel === 'all' ? sorted : sorted.filter((row) => dpmById[row[0]]?.level.id === s.dpmLevel);
+    const dpmTablePagesN = Math.max(1, Math.ceil(dpmTableSource.length / s.size));
+    const dpmTablePage = Math.min(s.page, dpmTablePagesN);
+    const dpmTableRows = dpmTableSource.slice((dpmTablePage - 1) * s.size, dpmTablePage * s.size).map(makeStationRow).map((row) => {
+      const warning = dpmById[row.id];
+      const evaluated = !warning && dpmPeriod && dpmMaster.length
+        ? evaluateWarning(row.criteria.code, dpmPeriod, row.criteria.value, dpmMaster) : null;
+      const result = warning ? { level: warning.level, source: warning.criteriaCls === 'custom' ? 'Custom' : 'Default' }
+        : (evaluated && evaluated.available ? { level: evaluated.level, source: evaluated.source } : null);
+      const isCustom = result && result.source === 'Custom';
+      return Object.assign({}, row, {
+        levelLabel: result ? result.level.name : 'ไม่พบค่า',
+        criteriaBadge: result ? (isCustom ? 'เกณฑ์การเฝ้าระวังภัยรายสถานี' : 'เกณฑ์การเฝ้าระวังภัย (ปภ.)') : 'ไม่มีเกณฑ์',
+        criteriaBadgeCls: result ? (isCustom ? 'dpm-source-badge custom' : 'dpm-source-badge default') : 'dpm-source-badge unavailable',
+        levelStyle: result ? 'color: ' + result.level.color + ';' : 'color: #94a3b8;',
+        levelTitle: result ? (isCustom ? 'เกณฑ์การเฝ้าระวังภัยรายสถานี (Custom)' : 'เกณฑ์การเฝ้าระวังภัย (ปภ.) (Default)') : 'ไม่มีค่าที่ใช้ประเมินเกณฑ์'
+      });
+    });
+    const dpmTableNums = dpmTablePagesN <= 5 ? Array.from({ length: dpmTablePagesN }, (_, index) => index + 1) : (dpmTablePage <= 3 ? [1, 2, 3, 'gap'] : [1, 'gap', dpmTablePage, 'gap']);
+    const dpmTableBtns = dpmTableNums.map((number) => number === 'gap' ? { n: '...', cls: 'ex-pb', gap: true, cur: undefined, pick: null } : { n: number, cls: number === dpmTablePage ? 'ex-pb on' : 'ex-pb', gap: false, cur: number === dpmTablePage ? 'page' : undefined, pick: () => this.setState({ page: number }) });
 
     const LG = CATS;
+    // The DDPM view uses the very same value bands as the pins, but describes
+    // them as operational warning levels rather than rain-intensity names.
+    // Keep the mapping here so a colour changed in the master criteria is also
+    // reflected immediately in the map legend.
+    const dpmLegendNames = ['>90 มม. ต้องอพยพ', '>35–90 มม. อพยพ', '>10–35 มม. เตรียมรับมือ', '>0.5–10 มม. เฝ้าระวัง', '0–0.5 มม. ติดตาม'];
+    const dpmLegendLevels = isRain && s.crit === 'own' && dpmPeriod ? warningMaster(dpmPeriod).slice().reverse() : [];
     const step = Math.min(28, 202 / (LG.length - 1));
     const legend = LG.map((c, i) => {
       const on = !s.hidden[c[0]];
-      return { label: c[2], count: counts[c[0]] || 0, on, cls: on ? 'ex-lr' : 'ex-lr off', top: 'top: ' + Math.round(62 + i * step) + 'px;',
-        sw: on ? 'background: ' + c[4] + ';' : 'box-shadow: inset 0 0 0 2px ' + c[4] + ';',
-        cls2: on ? 'mlg-r' : 'mlg-r off', sw2: on ? 'background: ' + c[4] + '; box-shadow: inset 0 0 0 1px rgba(120,120,120,.45);' : 'background: transparent; box-shadow: inset 0 0 0 3px ' + c[4] + ';',
+      const dpmLevel = dpmLegendLevels[i];
+      const label = dpmLevel ? dpmLegendNames[i] : c[2];
+      const color = dpmLevel ? dpmLevel.color : c[4];
+      return { label, count: counts[c[0]] || 0, on, cls: on ? 'ex-lr' : 'ex-lr off', top: 'top: ' + Math.round(62 + i * step) + 'px;',
+        sw: on ? 'background: ' + color + ';' : 'box-shadow: inset 0 0 0 2px ' + color + ';',
+        cls2: on ? 'mlg-r' : 'mlg-r off', sw2: on ? 'background: ' + color + '; box-shadow: inset 0 0 0 1px rgba(120,120,120,.45);' : 'background: transparent; box-shadow: inset 0 0 0 3px ' + color + ';',
         toggle: () => this.setState({ hidden: Object.assign({}, s.hidden, { [c[0]]: on }), page: 1 }) };
     });
 
@@ -1038,12 +1111,11 @@ export default class Component extends DCLogic {
     const CRIT = s.crit || 'tw';
     this._alerts = this._alerts || {};
     if (!this._alerts[CRIT]) this._alerts[CRIT] = this.buildAlerts(CRIT);
-    const RD24 = this.metricDefs('d1', CRIT)[0];
     const byId0 = {}; LIST.forEach((r) => { byId0[r[0]] = r; });
-    const EXTRA = (s.extra || []).map((x) => { const c = RD24.cats.find((q) => q[1](x.v)) || RD24.cats[RD24.cats.length - 1]; return this.alertRec(byId0[x.st], RD24, x.v, c, 0, { id: x.id, fresh: true }); });
-    // alerts follow the filters in use: metric (ประเภทข้อมูล) + ลุ่มน้ำ + จังหวัด
-    const ALL = EXTRA.concat(this._alerts[CRIT]).filter((a) => { const r = byId0[a.st]; return r && a.metric === met.key && this.inArea(s, r); });
-    const fScope = met.name + (s.basin ? ' · ลุ่มน้ำ' + s.basin : '') + (s.prov ? ' · จ.' + s.prov : '') + (s.amp ? ' · อ.' + s.amp : '') + (s.tam ? ' · ต.' + s.tam : '');
+    // The inbox is cross-measurement: a user can narrow it by measurement
+    // type without losing notifications that were raised under another map view.
+    const ALL = this._alerts[CRIT].filter((a) => { const r = byId0[a.st]; return r && this.inArea(s, r); });
+    const fScope = (s.basin ? 'ลุ่มน้ำ' + s.basin : '') + (s.prov ? ' · จ.' + s.prov : '') + (s.amp ? ' · อ.' + s.amp : '') + (s.tam ? ' · ต.' + s.tam : '') || 'ทุกพื้นที่';
     const RD = s.readIds || {};
     const isUnread = (a) => !RD[a.id] && (a.fresh || a.ago < 90);
     const byId = {}; LIST.forEach((r) => { byId[r[0]] = r; });
@@ -1052,10 +1124,18 @@ export default class Component extends DCLogic {
     const lvCol = (a) => (a.color === '#f0d447' && lt ? '#a16207' : a.color);
     const openAlert = (a) => () => this.setState({ readIds: Object.assign({}, RD, { [a.id]: true }), gone: Object.assign({}, s.gone, { [a.id]: true }), inbox: false, metric: a.metric, period: a.metric === 'rain' ? 'd1' : s.period, sel: a.st, st: a.st, stPh: 0, qr: false, stAll: false, tip: null });
     const unreadN = ALL.filter(isUnread).length;
-    const ibF = ALL.filter((a) => (s.ibTab !== 'unread' || isUnread(a)) && (!s.ibLv || s.ibLv === 'all' || !ALL.some((x) => x.cat === s.ibLv) || a.cat === s.ibLv));
+    const inboxQuery = (s.ibQuery || '').trim().toLowerCase();
+    const ibF = ALL.filter((a) => {
+      const r = byId[a.st];
+      const matchesType = !s.ibType || s.ibType === 'all' || a.metric === s.ibType;
+      const index = r ? R.indexOf(r) : -1;
+      const stationCode = index >= 0 ? `G15006-${5501 + index * 13}` : (r?.[0] || '');
+      const text = `${r?.[0] || ''} ${stationCode} ${r?.[1] || ''} ${this.basinOf(r || ['', '', '', '', ''])} ${r?.[4] || ''} ${r?.[3] || ''} ${r?.[2] || ''} ${a.mName || ''}`.toLowerCase();
+      return (s.ibTab !== 'unread' || isUnread(a)) && matchesType && (!inboxQuery || text.includes(inboxQuery));
+    });
     const ibItems = ibF.slice(0, 80).map((a) => { const r = byId[a.st]; return {
       criteria: this.criteriaContext(r, a.metric, 'd1', a.v, a.unit, a.mName), cls: isUnread(a) ? 'ib-it unread' : 'ib-it', unread: isUnread(a), sw: 'background: ' + a.color + ';', lvl: lvTxt(a), lvStyle: 'color: ' + lvCol(a) + ';', metric: a.mName + ' ' + a.band.replace(' ' + a.label, ''),
-      name: r[1], loc: 'จ.' + r[4] + ' · ลุ่มน้ำ' + this.basinOf(r), val: a.v + (a.unit ? ' ' + a.unit : ''), vStyle: 'color: ' + lvCol(a) + ';', ago: agoTxt(a.ago), open: openAlert(a) }; });
+      name: r[1], loc: 'จ.' + r[4] + ' · ลุ่มน้ำ' + this.basinOf(r), agency: this.agLabel(r[10] || DDPM), agencyLogo: this.agLogo(r[10] || DDPM), val: a.v + (a.unit ? ' ' + a.unit : ''), vStyle: 'color: ' + lvCol(a) + ';', ago: agoTxt(a.ago), open: openAlert(a) }; });
     const tq = ALL.filter((a) => isUnread(a) && !(s.gone || {})[a.id]);
     const tqShow = s.tstCut ? tq.filter((a) => a.fresh) : tq;
     this._tq = tqShow.slice(0, 2).map((a) => a.id);
@@ -1075,7 +1155,8 @@ export default class Component extends DCLogic {
       inboxOpen: !!s.inbox, toggleInbox: () => this.setState({ inbox: !s.inbox, mOpen: false, lyOpen: false, bmOpen: false }), closeInbox: () => this.setState({ inbox: false }),
       readAll: () => { const o = Object.assign({}, RD); ALL.forEach((a) => { o[a.id] = true; }); this.setState({ readIds: o }); },
       ibTabs: [['all', 'ทั้งหมด'], ['unread', 'ยังไม่อ่าน']].map(([k, l]) => ({ label: l, on: (s.ibTab || 'all') === k, cls: (s.ibTab || 'all') === k ? 'on' : '', pick: () => this.setState({ ibTab: k }) })),
-      ibLv: [['all', 'ทุกเกณฑ์', '#a1a1aa']].concat(ALL.reduce((o, a) => { if (!o.find((q) => q[0] === a.cat)) o.push([a.cat, a.band.replace(' มม.', ''), a.color, a.lo]); return o; }, []).sort((x, y) => (y[3] || 0) - (x[3] || 0)).map((q) => [q[0], q[1], q[2]])).map(([k, l, c]) => ({ label: l, n: k === 'all' ? ALL.length : k === 'other' ? ALL.filter((a) => a.metric !== 'rain').length : ALL.filter((a) => a.cat === k).length, on: (s.ibLv || 'all') === k, cls: (s.ibLv || 'all') === k ? 'on' : '', sw: 'background: ' + c + ';', pick: () => this.setState({ ibLv: k }) })),
+      ibTypes: [['all', 'ทุกประเภท']].concat(ALL.reduce((out, alert) => out.some((item) => item[0] === alert.metric) ? out : out.concat([[alert.metric, alert.mName || alert.metric]]), [])).map(([key, label]) => ({ label, n: key === 'all' ? ALL.length : ALL.filter((alert) => alert.metric === key).length, on: (s.ibType || 'all') === key, cls: (s.ibType || 'all') === key ? 'on' : '', pick: () => this.setState({ ibType: key }) })),
+      ibQuery: s.ibQuery || '', setIbQuery: (event) => this.setState({ ibQuery: event.target.value }),
       ibScope: 'ตามตัวกรอง: ' + fScope + (met.key === 'rain' ? ' · ' + ((s.crit || 'tw') === 'own' ? 'ฝนหนักขึ้นไป (เกณฑ์ ปภ.)' : 'สีเหลืองขึ้นไป (สถาบันสารสนเทศทรัพยากรน้ำ)') : ''), ibItems, ibEmpty: ibItems.length === 0, ibEmptyScope: fScope, ibTotal: ALL.length,
       toasts, moreToasts: tq.length - toasts.length > 0, moreN: tq.length - toasts.length,
       ...zoomUI, twPins: twPinsV, twOn: twPins.length > 0, twOpen: false, twClose: () => this.setState({ tw: null }),
@@ -1143,7 +1224,10 @@ export default class Component extends DCLogic {
       rootCls: (lt ? 'ex lt' : 'ex') + (s.hl ? ' hl' : '') + (s.hr ? ' hr' : '') + (wide ? ' wd' : '') + ' bm-' + s.basemap, leftHidden: !!s.hl, rightHidden: !!s.hr,
       hideRight: () => this.setState({ hr: true, tip: null }), showRight: () => this.setState({ hr: false, tip: null }), isLight: lt, isDark: !lt, themeLabel: lt ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง',
       toggleTheme: () => this.setState({ theme: lt ? 'dark' : 'light' }), theme: s.theme, setThemeFn: (v) => this.setState({ theme: v }),
-      onMap: s.screen !== 'admin', onAdmin: s.screen === 'admin', goAdmin: () => this.setState({ screen: 'admin', menu: false, st: null, hist: null, qr: false }), goMap: () => this.setState({ screen: 'map' }),
+      onMap: s.screen === 'map', onReport: s.screen === 'report', onAdmin: s.screen === 'admin',
+      goReport: () => this.setState({ screen: 'report', menu: false, inbox: false, st: null, hist: null, qr: false }),
+      goAdmin: () => this.setState({ screen: 'admin', menu: false, st: null, hist: null, qr: false }),
+      goMap: () => this.setState({ screen: 'map', menu: false }),
       menu: s.menu, toggleMenu: () => this.setState({ menu: !s.menu }), menuChev: s.menu ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6-6',
       prov: s.prov, setProv: (e) => this.setState({ prov: e.target.value, amp: '', tam: '', page: 1, ibLv: 'all' }),
       ...(() => {   // อำเภอ / ตำบล follow จังหวัด (and ลุ่มน้ำ); disabled until a province is chosen
@@ -1170,19 +1254,24 @@ export default class Component extends DCLogic {
       noAlerts: alerts.length === 0, noAlertsMsg: met.dir ? 'ทิศทางลมไม่มีเกณฑ์เฝ้าระวัง · ดูค่าของแต่ละสถานีได้ในตารางด้านขวา' : 'ไม่มีสถานีที่' + met.name + 'ถึงเกณฑ์เฝ้าระวัง',
       dsChips: [['ok', 'ปกติ', 'สถานีส่งข้อมูลครบทุกช่วง'], ['gap', 'ข้อมูลขาดช่วง', 'สถานียังส่งอยู่ แต่ข้อมูลบางช่วงหายไป (ได้ไม่ครบ 144 ค่าใน 24 ชม.)'], ['late', 'ข้อมูลมาช้า', 'ค่าล่าสุดมาถึงช้ากว่าปกติ (เกิน 10 นาที)'], ['silent', 'ออฟไลน์', 'สถานีไม่ส่งข้อมูลเกิน 30 นาที → ออกหน้างาน']].map(([k, l, h]) => ({
         label: l, hint: h + ' · กดเพื่อกรอง', n: scoped.filter((r) => DSall[r[0]].kind === k).length, on: s.dsf === k, cls: 'mlg-r mlg-ds ' + k + (s.dsf === k ? ' on' : ''), pick: () => this.setState({ dsf: s.dsf === k ? null : k, page: 1, tip: null }) })),
-      isRain, notRain: !isRain, legendTitle: met.title, critSw: isRain ? [['tw', 'สถาบันสารสนเทศทรัพยากรน้ำ', 'เกณฑ์สีตาม thaiwater.net'], ['own', 'ปภ.', 'เกณฑ์ระดับฝนรายสถานีตรวจวัด (ของเรา) · 5 ระดับ']].map(([k, l, h]) => ({ label: l, hint: h, on: (s.crit || 'tw') === k, cls: (s.crit || 'tw') === k ? 'on' : '', pick: () => this.setState({ crit: k, hidden: {}, ibLv: 'all', page: 1 }) })) : [], hasCritSw: isRain, critNote: ((s.crit || 'tw')==='own' ? 'เกณฑ์ ปภ. · ' : 'เกณฑ์ สถาบันสารสนเทศทรัพยากรน้ำ · ') + (this.periods().find(q=>q[0]===s.period)||[0,'24 ชม.'])[1] + ' · รายสถานีที่ตั้งเฉพาะ ดูช่วงค่าใน Popup', colTop: met.col, colUnit: met.unitTh,
+      isRain, notRain: !isRain, legendTitle: isRain && s.crit === 'own' ? 'คำอธิบายสัญลักษณ์' : met.title, legendSectionTitle: isRain && s.crit === 'own' ? 'สถานีตรวจวัดสภาพอากาศ' : '', showLegendSources: isRain && s.crit === 'own', critSw: isRain ? [['own', 'เกณฑ์การเฝ้าระวังภัย (ปภ.)', 'เกณฑ์การเฝ้าระวังภัย ปภ. · สรุประดับเตรียมรับมือขึ้นไป'], ['tw', 'เกณฑ์มาตรฐานอ้างอิง', 'เกณฑ์สีมาตรฐานอ้างอิงจากสถาบันสารสนเทศทรัพยากรน้ำ']].map(([k, l, h]) => ({ label: l, hint: h, on: (s.crit || 'own') === k, cls: (s.crit || 'own') === k ? 'on' : '', pick: () => this.setState({ crit: k, dpmSummary: k === 'own', dpmLevel: 'all', period: k === 'own' ? 'd1' : s.period, hidden: {}, ibLv: 'all', page: 1 }) })) : [], hasCritSw: isRain, critNote: ((s.crit || 'own')==='own' ? 'เกณฑ์การเฝ้าระวังภัย (ปภ.) · ' : 'เกณฑ์มาตรฐานอ้างอิง · ') + (this.periods().find(q=>q[0]===s.period)||[0,'24 ชม.'])[1] + ' · รายสถานีที่ตั้งเฉพาะ ดูช่วงค่าใน Popup', colTop: met.col, colUnit: met.unitTh,
+      // The summary is an additive panel above the original station-table
+      // controls. Its rows still use the same table contract as the standard
+      // list: header, row content, history control, and pagination.
+      dpmSummary: !!(isRain && s.dpmSummary && s.crit === 'own'), notDpmSummary: !(isRain && s.dpmSummary && s.crit === 'own'), dpmPeriodLabel: dpmPeriod ? (WARNING_PERIODS[dpmPeriod] || '') : '', dpmLevels, dpmRows: dpmTableRows, dpmEmpty: dpmTableSource.length === 0, dpmTotal: dpmRows.length, dpmError, dpmUnsupported: !dpmPeriod, dpmPages: dpmTableBtns, dpmPrevDis: dpmTablePage <= 1, dpmNextDis: dpmTablePage >= dpmTablePagesN, dpmPrev: () => this.setState({ page: Math.max(1, dpmTablePage - 1) }), dpmNext: () => this.setState({ page: Math.min(dpmTablePagesN, dpmTablePage + 1) }),
+      dpmAllOn: s.dpmLevel === 'all', dpmAllCls: s.dpmLevel === 'all' ? 'on' : '', dpmAllPick: () => this.setState({ dpmLevel: 'all', page: 1 }), openDpmSummary: () => this.setState({ crit: 'own', dpmSummary: true, dpmLevel: 'all', period: 'd1', hidden: {}, page: 1 }), closeDpmSummary: () => this.setState({ dpmSummary: false, dpmLevel: 'all' }),
       mLabel: met.label, mAria: 'ประเภทข้อมูล: ' + met.label, mOpen: !!s.mOpen, mChev: s.mOpen ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6-6',
       toggleM: () => this.setState({ mOpen: !s.mOpen, dd: null }), closeM: () => this.setState({ mOpen: false }),
       metrics: MD.map((x) => ({ label: x.label, on: x.key === met.key, cls: x.key === met.key ? 'on' : '', pick: () => this.setState({ metric: x.key, mOpen: false, page: 1, tip: null }) })),
       pins: pinsV, tip: s.tip ? s.tip.t : '', tipStyle: s.tip ? 'left: ' + s.tip.x + 'px; top: ' + s.tip.y + 'px;' : '',
       rightCls: 'abs ex-p ex-right', mName: met.name, mlgCls: s.legend ? 'abs mlg' : 'abs mlg closed', mlgChev: s.legend ? 'm6 9 6 6 6-6' : 'm18 15-6-6-6 6',
       lq: s.lq || '', setLq: (e) => this.setState({ lq: e.target.value, page: 1 }), setAgf: (e) => this.setState({ agf: e.target.value, page: 1 }),
-      agAllN: scoped.length, agOpts: AGL.map((a) => ({ v: a, on: s.agf === a, label: agLabel(a) + ' (' + scoped.filter((r) => agOf(r) === a).length + ')' })), noRows: shown.length === 0,
+      agAllN: scoped.length, agOpts: AGL.map((a) => ({ v: a, on: s.agf === a, label: agLabel(a) + ' (' + scoped.filter((r) => agOf(r) === a).length + ')' })), noRows: isRain && s.crit === 'own' ? dpmVisible.length === 0 : shown.length === 0,
       total: scoped.length, legendOpen: s.legend, toggleLegend: () => this.setState({ legend: !s.legend }),
       legendBtn: s.legend ? 'ซ่อนเกณฑ์' : 'แสดงเกณฑ์', legendIcon: s.legend ? 'M12 12h0' : 'M12 5v14', legend,
       tabs, prevPeriod: () => this.setState({ period: per[(pi + per.length - 1) % per.length], page: 1 }, () => this.scrollTab()), nextPeriod: () => this.setState({ period: per[(pi + 1) % per.length], page: 1 }, () => this.scrollTab()),
-      rows, pages: pageBtns, prevDis: page <= 1, nextDis: page >= pages,
-      prevPage: () => this.setState({ page: page - 1 }), nextPage: () => this.setState({ page: page + 1 }),
+      rows: isRain && s.crit === 'own' ? dpmPageRows : rows, pages: isRain && s.crit === 'own' ? dpmPageBtns : pageBtns, prevDis: isRain && s.crit === 'own' ? dpmPage <= 1 : page <= 1, nextDis: isRain && s.crit === 'own' ? dpmPage >= dpmPagesN : page >= pages,
+      prevPage: () => this.setState({ page: isRain && s.crit === 'own' ? Math.max(1, dpmPage - 1) : page - 1 }), nextPage: () => this.setState({ page: isRain && s.crit === 'own' ? Math.min(dpmPagesN, dpmPage + 1) : page + 1 }),
       sizes: [10, 20, 50].map((v) => ({ v, on: s.size === v })), setSize: (e) => this.setState({ size: +e.target.value, page: 1 })
     });
   }

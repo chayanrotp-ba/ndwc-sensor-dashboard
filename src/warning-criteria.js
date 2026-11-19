@@ -128,10 +128,13 @@ export function saveCentralWarning(values, levels) {
 }
 
 export function seedWarningExamples(stations) {
-  if (warningSettings.error || warningSettings.examplesInitialized) return;
+  if (warningSettings.error) return;
   try {
     const levels = warningMaster();
     const next = JSON.parse(JSON.stringify(warningSettings));
+    // A previous screen may have initialized examples for a different station
+    // catalog. Seed this catalog once when none of its station codes exist yet.
+    if (next.examplesInitialized && stations.some((station) => next.stations?.[station.code])) return;
     const candidates = stations.filter(s => !next.stations[s.code]);
     // Preserve the previous session's reviewed station and existing custom values.
     const eligible = candidates.filter(s => s.code !== 'G15006-5501');

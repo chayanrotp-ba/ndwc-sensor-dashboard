@@ -91,7 +91,7 @@ body{margin:0;background:#191919}
 .ex-tr.on{background:#1e2a44}
 .ex-tr .nm{position:absolute;left:15px;top:9px;width:380px;font-size:16px;line-height:22px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ex-tr .lc{position:absolute;left:15px;top:31px;font-size:14px;line-height:20px;color:#e2e8f0}
-.ex-tr .ag{position:absolute;left:15px;top:53px;font-size:14px;line-height:20px;color:#94a3b8}
+.ex-tr .ag{position:absolute;left:15px;top:53px;font-size:14px;line-height:20px;color:#94a3b8;display:flex;align-items:center;gap:5px}.ag-logo{width:16px;height:16px;object-fit:contain;flex:0 0 auto}
 .ex-tr .tm{position:absolute;left:412px;top:32px;font-size:14px;line-height:20px}
 .ex-tr .pl{position:absolute;right:39px;top:31px;min-width:32px;padding:0 6px;border-radius:6px;font-size:13px;line-height:22px;font-weight:600;text-align:center;color:#ffffff}
 .ex-tr .ic{position:absolute;right:13px;top:36px;color:#e2e8f0}
@@ -605,10 +605,10 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ib-seg{display:flex;padding:3px;border-radius:9999px;background:#262626;align-self:flex-start}
 .ib-seg button{height:28px;padding:0 14px;border:0;border-radius:9999px;background:transparent;color:#94a3b8;font:inherit;font-size:13px}
 .ib-seg button.on{background:#2563eb;color:#ffffff;font-weight:600}
-.ib-chips{display:flex;gap:6px;flex-wrap:wrap}
-.ib-chips button{height:28px;padding:0 10px;border:0;border-radius:9999px;background:#262626;color:#cbd5e1;font:inherit;font-size:12px;display:flex;align-items:center;gap:6px;box-shadow:inset 0 0 0 1px #404040}
-.ib-chips button i{width:10px;height:10px;border-radius:9999px}
-.ib-chips button.on{box-shadow:inset 0 0 0 2px #60a5fa;color:#ffffff}
+.ib-types{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0}.ib-types::-webkit-scrollbar{display:none}
+.ib-types button{height:28px;flex:0 0 auto;padding:0 10px;border:0;border-radius:9999px;background:#262626;color:#cbd5e1;font:inherit;font-size:12px;display:flex;align-items:center;gap:6px;box-shadow:inset 0 0 0 1px #404040;white-space:nowrap}
+.ib-types button.on{box-shadow:inset 0 0 0 2px #60a5fa;color:#ffffff}
+.ib-search{height:32px;display:flex;align-items:center;gap:7px;padding:0 9px;border-radius:6px;background:#18181b;box-shadow:inset 0 0 0 1px #404040;color:#94a3b8}.ib-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#f8fafc;font:inherit;font-size:12px}.ib-search input::placeholder{color:#94a3b8}
 .ib-list{flex:1;min-height:0;overflow-y:auto;padding:6px}
 .ib-it{position:relative;width:100%;display:flex;align-items:stretch;gap:10px;padding:10px 12px 10px 10px;border:0;border-radius:10px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .ib-it:hover{background:#2a2a2a}
@@ -617,7 +617,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ib-tx{flex:1;min-width:0;display:flex;flex-direction:column}
 .ib-t1{font-size:12px;line-height:17px;color:#94a3b8}
 .ib-t2{font-size:14px;line-height:20px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ib-t3{font-size:12px;line-height:17px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib-t3{font-size:12px;line-height:17px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ib-ag{display:flex;align-items:center;gap:5px;min-width:0;font-size:11px;line-height:17px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ib-ag img{width:16px;height:16px;object-fit:contain;flex:0 0 auto}
 .ib-r{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;flex-shrink:0}
 .ib-r b{font-size:15px;line-height:20px}
 .ib-r span{font-size:11px;color:#94a3b8}
@@ -625,13 +625,13 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ib-empty{margin:24px;text-align:center;color:#94a3b8;font-size:13px}
 .ib-ft{padding:10px 16px;border-top:1px solid #404040;font-size:11px;color:#94a3b8}
 .ex.lt .ib{background:#ffffff;border-color:#e2e8f0;color:#0f172a;box-shadow:0 24px 48px -12px rgba(15,23,42,.25)}
-.ex.lt .ib-h span,.ex.lt .ib-t1,.ex.lt .ib-t3,.ex.lt .ib-r span,.ex.lt .ib-ft,.ex.lt .ib-empty{color:#64748b}
+.ex.lt .ib-h span,.ex.lt .ib-t1,.ex.lt .ib-t3,.ex.lt .ib-ag,.ex.lt .ib-r span,.ex.lt .ib-ft,.ex.lt .ib-empty{color:#64748b}
 .ex.lt .ib-f,.ex.lt .ib-ft{border-color:#e2e8f0}
-.ex.lt .ib-seg,.ex.lt .ib-chips button{background:#f1f5f9;color:#334155;box-shadow:inset 0 0 0 1px #e2e8f0}
+.ex.lt .ib-seg,.ex.lt .ib-types button{background:#f1f5f9;color:#334155;box-shadow:inset 0 0 0 1px #e2e8f0}
 .ex.lt .ib-seg{box-shadow:none}
 .ex.lt .ib-seg button{color:#475569}
 .ex.lt .ib-seg button.on{background:#2563eb;color:#ffffff}
-.ex.lt .ib-chips button.on{box-shadow:inset 0 0 0 2px #2563eb;color:#0f172a}
+.ex.lt .ib-types button.on{box-shadow:inset 0 0 0 2px #2563eb;color:#0f172a}.ex.lt .ib-search{background:#ffffff;box-shadow:inset 0 0 0 1px #cbd5e1;color:#64748b}.ex.lt .ib-search input{color:#0f172a}
 .ex.lt .ib-it:hover{background:#f8fafc}
 .ex.lt .ib-it.unread{background:#eff6ff}
 .ex.lt .ib-all{color:#2563eb}
@@ -692,7 +692,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ex .ib-r b{font-size:16px}
 .ex .ib-r span{font-size:12px}
 .ex .ib-h h3{font-size:19px}
-.ex .ib-h span,.ex .ib-chips button,.ex .ib-seg button{font-size:13px}
+.ex .ib-h span,.ex .ib-types button,.ex .ib-seg button{font-size:13px}
 .ex .ly-tx b{font-size:15px}
 .ex .ly-tx span{font-size:13px}
 .ex .sp-info dt{font-size:14px}
@@ -703,9 +703,9 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ex-right .ex-tabs::-webkit-scrollbar{display:none}
 .ex-right.lg0 .ex-tabs{top:149px}
 .ex .ex-right .ex-tabs .ex-tab{position:static;flex:0 0 auto;width:auto;min-width:96px;padding:0 20px;height:42px;font-size:16px;white-space:nowrap}
-.ex .ib-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0}
-.ex .ib-chips::-webkit-scrollbar{display:none}
-.ex .ib-chips button{flex:0 0 auto;white-space:nowrap}
+.ex .ib-types{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0}
+.ex .ib-types::-webkit-scrollbar{display:none}
+.ex .ib-types button{flex:0 0 auto;white-space:nowrap}
 .sp-bd.b-cat{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
 
 /* criteria set switch (ThaiWater / ปภ.) */
@@ -755,15 +755,18 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ex .tst .tst-go{margin-top:0;width:auto;height:30px;padding:0 8px 0 12px;font-size:13px;flex-shrink:0;gap:2px;border-radius:8px}
 
 /* criteria switch v2: label outside, equal segments */
-.ex .ex-crit{left:1342px;top:113px;height:44px;display:flex;align-items:center;gap:10px;padding:0;background:transparent;box-shadow:none;border-radius:0}
+.ex .ex-crit{left:1438px;top:113px;height:44px;display:flex;align-items:center;gap:10px;padding:0;background:transparent;box-shadow:none;border-radius:0}
 .ex .ex-crit-l{padding:0;font-size:15px;color:#94a3b8;white-space:nowrap}
 .ex-crit-t{display:flex;gap:2px;height:44px;padding:4px;border-radius:12px;background:#262626;box-shadow:inset 0 0 0 1px #404040}
-.ex .ex-crit-t button{min-width:112px;height:36px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:#94a3b8;font:inherit;font-size:15px;font-weight:500;white-space:nowrap;transition:background 150ms ease,color 150ms ease}
+.ex .ex-crit-t button{min-width:0;height:36px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:#94a3b8;font:inherit;font-size:15px;font-weight:500;white-space:nowrap;transition:background 150ms ease,color 150ms ease}
 .ex .ex-crit-t button:hover{color:#f8fafc;background:rgba(255,255,255,.05)}
 .ex .ex-crit-t button.on{background:#2563eb;color:#ffffff;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.3)}
 .ex .ex-crit-t button:focus-visible{outline:2px solid #93c5fd;outline-offset:1px}
+.ex .ex-crit button.ex-crit-l{height:42px;padding:0;border:0;background:transparent;color:#94a3b8;font-size:15px;font-weight:600;cursor:pointer}
+.ex .ex-crit button.ex-crit-l:hover{color:#e2e8f0}
 .ex.lt .ex-crit{background:transparent;box-shadow:none}
 .ex.lt .ex-crit-l{color:#64748b}
+.ex.lt .ex-crit button.ex-crit-l{color:#475569}.ex.lt .ex-crit button.ex-crit-l:hover{color:#0f172a}
 .ex.lt .ex-crit-t{background:#f1f5f9;box-shadow:inset 0 0 0 1px #e2e8f0}
 .ex.lt .ex-crit-t button{color:#475569}
 .ex.lt .ex-crit-t button:hover{color:#0f172a;background:rgba(15,23,42,.04)}
@@ -774,6 +777,25 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ex .ex-crit{left:1602px;justify-content:flex-end}
 .ex-fit .ex .ex-crit,.ex-fit .ex-crit{left:calc(1602px + var(--dw,0px))}
 .ex .ex-out{z-index:12}
+
+/* DDPM operational summary — the incident view starts at "เตรียมรับมือ". */
+.dpm-sum{left:17px;top:16px;width:551px;height:852px;border-radius:12px;background:#17191f;box-shadow:inset 0 0 0 1px #3d4758;overflow:hidden}
+.dpm-sum-h{height:102px;padding:18px 18px 14px;display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #333b49}
+.dpm-sum-h span{display:block;color:#93c5fd;font-size:13px;font-weight:700}.dpm-sum-h h2{margin:3px 0 1px;color:#f8fafc;font-size:21px;line-height:27px}.dpm-sum-h p{margin:0;color:#94a3b8;font-size:13px}
+.dpm-sum-h button{width:36px;height:36px;border:1px solid #475569;border-radius:9px;background:#242a35;color:#cbd5e1;display:grid;place-items:center}.dpm-sum-h button:hover{background:#334155;color:#fff}
+.dpm-note{margin:12px 16px 0;padding:9px 11px;border:1px solid #475569;border-radius:8px;background:#1e293b;color:#bfdbfe;font-size:13px;line-height:18px}.dpm-note.err{border-color:#7f1d1d;background:#2b171b;color:#fecaca}
+.dpm-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:14px 16px 12px}.dpm-cards button{min-height:104px;padding:10px 8px;border:1px solid color-mix(in srgb,var(--dpm),55%,#334155);border-top:4px solid var(--dpm);border-radius:10px;background:#22252c;color:#e2e8f0;text-align:center}.dpm-cards button:hover,.dpm-cards button.on{background:color-mix(in srgb,var(--dpm),18%,#20232a);box-shadow:inset 0 0 0 1px var(--dpm)}
+.dpm-cards b{display:block;font-size:14px;line-height:18px;color:var(--dpm)}.dpm-cards strong{display:block;margin:7px 0 1px;font-size:27px;line-height:28px;color:#fff}.dpm-cards span{display:block;font-size:11px;color:#94a3b8;white-space:nowrap}
+.dpm-list-h{height:42px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #303846;border-bottom:1px solid #303846;color:#f8fafc;font-size:15px}.dpm-list-h button{min-width:68px;height:26px;padding:0 8px;border:1px solid #475569;border-radius:999px;background:#20242c;color:#cbd5e1;font:inherit;font-size:12px}.dpm-list-h button.on{border-color:#2563eb;background:#1e3a8a;color:#dbeafe}
+.dpm-list{height:474px;overflow-y:auto;scrollbar-width:thin}.dpm-row{width:100%;min-height:72px;padding:10px 12px;border:0;border-bottom:1px solid #2c3340;background:transparent;color:#e5e7eb;display:flex;align-items:center;gap:10px;text-align:left}.dpm-row:hover{background:#232b38}.dpm-row>i{width:8px;height:42px;border-radius:99px;flex:0 0 auto}.dpm-row>span{min-width:0;flex:1}.dpm-row b{display:block;font-size:14px;line-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dpm-row small{display:block;margin-top:1px;color:#94a3b8;font-size:12px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dpm-row em{min-width:97px;font-style:normal;text-align:right}.dpm-row em b{font-size:12px}.dpm-row em strong{display:block;margin-top:1px;color:#fff;font-size:15px}.dpm-row svg{flex:0 0 auto;color:#94a3b8}.dpm-empty{padding:24px 16px;color:#94a3b8;text-align:center;font-size:14px}.dpm-foot{margin:0;padding:11px 16px;color:#94a3b8;font-size:12px;line-height:17px;background:#15171c;border-top:1px solid #303846}
+.ex.lt .dpm-sum{background:#fff;box-shadow:inset 0 0 0 1px #cbd5e1}.ex.lt .dpm-sum-h{border-color:#e2e8f0}.ex.lt .dpm-sum-h h2,.ex.lt .dpm-list-h,.ex.lt .dpm-cards strong,.ex.lt .dpm-row em strong{color:#0f172a}.ex.lt .dpm-sum-h p,.ex.lt .dpm-cards span,.ex.lt .dpm-row small,.ex.lt .dpm-empty,.ex.lt .dpm-foot{color:#64748b}.ex.lt .dpm-cards button{background:#f8fafc}.ex.lt .dpm-list-h,.ex.lt .dpm-row,.ex.lt .dpm-foot{border-color:#e2e8f0}.ex.lt .dpm-list-h{background:#f8fafc}.ex.lt .dpm-list-h button{background:#fff;color:#334155}.ex.lt .dpm-row{color:#1e293b}.ex.lt .dpm-row:hover{background:#f1f5f9}.ex.lt .dpm-foot{background:#f8fafc}.ex.lt .dpm-sum-h button{background:#f8fafc;color:#475569}
+
+/* DDPM summary follows the existing filter and comes before its station list. */
+.ex-right .dpm-summary-box{left:17px;top:178px;width:551px;height:112px;padding:8px 10px 9px;border:1px solid #3b4555;border-radius:10px;background:#202126;box-shadow:none}.dpm-summary-h{height:22px;display:flex;align-items:center;justify-content:space-between;color:#e2e8f0;font-size:13px;font-weight:700}.dpm-summary-h span{display:flex;align-items:center;gap:6px}.dpm-summary-h span:before{content:'';width:4px;height:14px;border-radius:2px;background:#2563eb}.dpm-summary-h button{height:22px;padding:0 8px;border:1px solid #475569;border-radius:999px;background:#262a31;color:#cbd5e1;font:inherit;font-size:11px}.dpm-summary-h button.on{border-color:#2563eb;background:#1e3a8a;color:#dbeafe}
+.ex-right .dpm-cards{height:70px;padding:7px 0 0;gap:7px}.ex-right .dpm-cards button{min-height:62px;padding:6px;border-radius:7px;background:#262830}.ex-right .dpm-cards b{font-size:12px;line-height:15px}.ex-right .dpm-cards strong{margin:2px 0 0;font-size:20px;line-height:22px}.ex-right .dpm-cards span{font-size:10px}
+.ex-right .dpm-rhead{left:17px;top:302px;width:551px;height:34px;padding:0 12px;display:flex;align-items:center;gap:9px;border-radius:8px 8px 0 0;background:#24262d;color:#e5e7eb;box-shadow:inset 0 1px 0 rgba(255,255,255,.05);font-size:14px}.dpm-rhead b{font-size:15px}.dpm-rhead span{color:#94a3b8;font-size:12px}.dpm-rhead button{margin-left:auto;height:25px;padding:0 8px;border:1px solid #475569;border-radius:6px;background:#20242b;color:#cbd5e1;font:inherit;font-size:12px}.dpm-rhead button:hover{background:#334155;color:#fff}
+.ex .ex-right .dpm-th{left:17px;top:302px}.ex .ex-right .dpm-list.ex-rows{left:17px;top:358px;width:551px;height:454px;border:0;background:transparent;overflow-y:auto;scrollbar-width:none}.ex .ex-right .dpm-list.ex-rows::-webkit-scrollbar{display:none}.ex .ex-right .dpm-list .ex-tr{height:84px!important}.ex .ex-right .dpm-list .ex-tr .nm{width:310px}.ex .ex-right .dpm-list .dpm-row-level{position:absolute;left:318px;top:10px;width:86px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;font-size:13px;line-height:22px;font-weight:700}.ex .ex-right .dpm-pg{left:17px;top:828px}
+.ex-right .dpm-note{left:28px;top:342px;z-index:2;width:528px;margin:0}.ex.lt .dpm-rhead{background:#f1f5f9;color:#0f172a;box-shadow:inset 0 1px 0 #fff}.ex.lt .dpm-rhead span{color:#64748b}.ex.lt .dpm-rhead button{background:#fff;color:#334155}.ex.lt .dpm-list{background:#fff;border-color:#e2e8f0}.ex.lt .dpm-summary-box{background:#fff;border-color:#cbd5e1;box-shadow:none}.ex.lt .dpm-summary-h{color:#1e293b}.ex.lt .dpm-summary-h button{background:#fff;color:#334155}.ex.lt .dpm-cards button{background:#f8fafc}
 
 /* popup with the hourly rain chart: open higher so nothing is cut off */
 .sp.one.hr{top:150px;max-height:910px}
@@ -805,7 +827,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ex .ib-h > div > span{font-size:14px;line-height:20px}
 .ex .ib-all{font-size:15px;height:34px}
 .ex .ib-seg button{font-size:15px;height:34px;padding:0 16px}
-.ex .ib-chips button{font-size:14px;height:32px}
+.ex .ib-types button{font-size:14px;height:32px}
 .ex .ib-t1{font-size:14px;line-height:20px}
 .ex .ib-t2{font-size:17px;line-height:24px}
 .ex .ib-t3{font-size:14px;line-height:20px}
@@ -1008,7 +1030,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 /* inbox */
 .ex .ib{width:540px;left:calc(1649px + var(--dw,0px) - 540px)}
 .ex .ib-h h3{font-size:22px}.ex .ib-h > div > span{font-size:16px;line-height:22px}
-.ex .ib-all{font-size:16px}.ex .ib-seg button{font-size:16px}.ex .ib-chips button{font-size:15px;height:34px}
+.ex .ib-all{font-size:16px}.ex .ib-seg button{font-size:16px}.ex .ib-types button{font-size:15px;height:34px}
 .ex .ib-t1{font-size:15px;line-height:21px}.ex .ib-t2{font-size:19px;line-height:26px}.ex .ib-t3{font-size:15px;line-height:21px}
 .ex .ib-r > b{font-size:19px}.ex .ib-r > span{font-size:15px}.ex .ib-ft{font-size:15px}
 /* popup */
@@ -1216,6 +1238,12 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 .ex-right .ex-lf{left:17px;top:124px;width:551px;height:44px;display:flex;gap:8px}
 .ex .ex-right .ex-th{top:178px}
 .ex .ex-right .ex-rows{top:234px;height:578px}
+/* DPM reference layout: filter -> summary -> section title -> native table. */
+.ex .ex-right .dpm-rhead{left:17px;top:302px;width:551px;height:34px;padding:0 12px;background:transparent;border-radius:0;box-shadow:none}
+.ex .ex-right .dpm-rhead:before{content:'';width:4px;height:18px;border-radius:2px;background:#ef4444;flex:0 0 auto}
+.ex .ex-right .dpm-th{left:17px;top:336px}
+.ex .ex-right .dpm-list.ex-rows{left:17px;top:392px;width:551px;height:420px}.ex .ex-right .dpm-list .ex-tr{height:124px!important}.ex .ex-right .dpm-list .ex-tr .nm,.ex .ex-right .dpm-list .ex-tr .lc,.ex .ex-right .dpm-list .ex-tr .ag{width:278px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ex .ex-right .dpm-list .ex-tr .nm{top:9px;font-size:17px;line-height:22px}.ex .ex-right .dpm-list .ex-tr .lc{top:35px;font-size:13px;line-height:18px}.ex .ex-right .dpm-list .ex-tr .ag{top:56px;font-size:12px;line-height:16px}.ex .ex-right .dpm-list .dpm-row-level{left:307px;top:29px;width:122px;min-height:50px;padding:4px 7px 4px 9px;border-left:3px solid currentColor;border-radius:0 7px 7px 0;background:rgba(255,255,255,.035);display:flex;flex-direction:column;justify-content:center;text-align:left;box-sizing:border-box;overflow:hidden;white-space:normal}.ex .ex-right .dpm-list .dpm-row-level b{font-size:13px;line-height:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dpm-source-badge{position:absolute;left:15px;top:84px;display:inline-flex;max-width:245px;padding:1px 7px;border:1px solid currentColor;border-radius:999px;font-size:10px;line-height:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dpm-source-badge.default{color:#93c5fd;background:#172554}.dpm-source-badge.custom{color:#fbbf24;background:#422006}.dpm-source-badge.unavailable{color:#94a3b8;background:#27272a}.ex .ex-right .dpm-list .ex-tr .pl{right:39px;top:31px}.ex .ex-right .dpm-list .ex-tr .tm{left:auto;right:39px;top:58px;min-width:48px;text-align:right;font-size:12px;line-height:16px;color:#94a3b8}.ex .ex-right .dpm-list .ex-tr .ex-gb{top:38px}
+.ex .ex-right .dpm-pg{left:17px;top:828px}
 .ex-lf-q,.ex-lf-ag{position:relative;height:44px;border-radius:8px;border:1px solid #404040;background:#262626;color:#e2e8f0}
 .ex-lf-q{flex:1;min-width:0}
 .ex-lf-ag{width:236px;flex-shrink:0}
@@ -1567,15 +1595,15 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 <nav class="ex-navw" aria-label="เมนูหลัก">
 <button class="abs ex-nav-on" aria-current="page"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>แผนที่</button>
 <button class="abs ex-nb" style="left: 1054px;" aria-label="จอแสดงผล"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path></svg></button>
-<button class="abs ex-nb" style="left: 1132px;" aria-label="รายงานข้อมูล"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 20h18"></path><path d="M4 16c2.5-6 5-9 8-9 2.5 0 3.5 3 6 4"></path><path d="M9 12l2 2"></path></svg></button>
+<button class="abs ex-nb" style="left: 1132px;" aria-label="รายงานข้อมูล" title="Dashboard ติดตามปริมาณน้ำฝน" onClick="{{goReport}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 20h18"></path><path d="M4 16c2.5-6 5-9 8-9 2.5 0 3.5 3 6 4"></path><path d="M9 12l2 2"></path></svg></button>
 <button class="abs ex-nb" style="left: 1210px;" aria-label="ตั้งค่า · ไปหน้าจัดการสถานี" title="ตั้งค่า · จัดการสถานีและเกณฑ์" onClick="{{goAdmin}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg></button>
 </nav>
 <button class="{{bellCls}}" aria-label="{{bellAria}}" title="การแจ้งเตือน" aria-haspopup="dialog" aria-expanded="{{inboxOpen}}" onClick="{{toggleInbox}}"><svg class="i" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><sc-if value="{{hasUnread}}" hint-placeholder-val="{{true}}"><span class="ex-bell-n">{{unreadN}}</span></sc-if></button>
 <sc-if value="{{inboxOpen}}" hint-placeholder-val="{{false}}"><div class="abs ib-catch" aria-hidden="true" onClick="{{closeInbox}}"></div>
 <section class="abs ib" role="dialog" aria-labelledby="ib-t">
 <header class="ib-h"><div><h3 id="ib-t">การแจ้งเตือน</h3><span>{{unreadN}} ยังไม่อ่าน · {{ibScope}}</span></div><button class="ib-all" onClick="{{readAll}}">อ่านทั้งหมด</button></header>
-<div class="ib-f"><div class="ib-seg" role="tablist"><sc-for list="{{ibTabs}}" as="x" hint-placeholder-count="2"><button class="{{x.cls}}" role="tab" aria-selected="{{x.on}}" onClick="{{x.pick}}">{{x.label}}</button></sc-for></div><div class="ib-chips"><sc-for list="{{ibLv}}" as="x" hint-placeholder-count="3"><button class="{{x.cls}}" aria-pressed="{{x.on}}" onClick="{{x.pick}}"><i style="{{x.sw}}"></i>{{x.label}} <b>{{x.n}}</b></button></sc-for></div></div>
-<div class="ib-list"><sc-for list="{{ibItems}}" as="a" hint-placeholder-count="6"><div class="criteria-alert-item"><button class="{{a.cls}}" onClick="{{a.open}}"><span class="ib-bar" style="{{a.sw}}"></span><span class="ib-tx"><span class="ib-t1"><b style="{{a.lvStyle}}">{{a.lvl}}</b> · {{a.metric}}</span><span class="ib-t2">{{a.name}}</span><span class="ib-t3">{{a.loc}}</span></span><span class="ib-r"><b style="{{a.vStyle}}">{{a.val}}</b><span>{{a.ago}}</span></span><sc-if value="{{a.unread}}" hint-placeholder-val="{{false}}"><span class="ib-dot" aria-label="ยังไม่อ่าน"></span></sc-if></button><dc-import name="CriteriaResults" station="{{a.criteria}}" compact=""></dc-import></div></sc-for>
+<div class="ib-f"><div class="ib-seg" role="tablist"><sc-for list="{{ibTabs}}" as="x" hint-placeholder-count="2"><button class="{{x.cls}}" role="tab" aria-selected="{{x.on}}" onClick="{{x.pick}}">{{x.label}}</button></sc-for></div><div class="ib-types" role="group" aria-label="ประเภทการตรวจวัด"><sc-for list="{{ibTypes}}" as="x" hint-placeholder-count="3"><button class="{{x.cls}}" aria-pressed="{{x.on}}" onClick="{{x.pick}}">{{x.label}} <b>{{x.n}}</b></button></sc-for></div><label class="ib-search"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" value="{{ibQuery}}" placeholder="รหัสสถานี ชื่อสถานี ลุ่มน้ำ จังหวัด อำเภอ ตำบล" onInput="{{setIbQuery}}"></label></div>
+<div class="ib-list"><sc-for list="{{ibItems}}" as="a" hint-placeholder-count="6"><div class="criteria-alert-item"><button class="{{a.cls}}" onClick="{{a.open}}"><span class="ib-bar" style="{{a.sw}}"></span><span class="ib-tx"><span class="ib-t1"><b style="{{a.lvStyle}}">{{a.lvl}}</b> · {{a.metric}}</span><span class="ib-t2">{{a.name}}</span><span class="ib-t3">{{a.loc}}</span><span class="ib-ag"><sc-if value="{{a.agencyLogo}}" hint-placeholder-val="{{false}}"><img src="{{a.agencyLogo}}" alt="" width="16" height="16"></sc-if>{{a.agency}}</span></span><span class="ib-r"><b style="{{a.vStyle}}">{{a.val}}</b><span>{{a.ago}}</span></span><sc-if value="{{a.unread}}" hint-placeholder-val="{{false}}"><span class="ib-dot" aria-label="ยังไม่อ่าน"></span></sc-if></button><dc-import name="CriteriaResults" station="{{a.criteria}}" compact=""></dc-import></div></sc-for>
 <sc-if value="{{ibEmpty}}" hint-placeholder-val="{{false}}"><p class="ib-empty">ไม่มีการแจ้งเตือนของ{{ibEmptyScope}}</p></sc-if></div>
 <footer class="ib-ft">เก็บย้อนหลัง 24 ชม. · {{ibTotal}} รายการ · กดรายการเพื่อเปิดข้อมูลสถานี</footer>
 </section></sc-if>
@@ -1592,7 +1620,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 <div class="{{ddAmp.cls}}" style="left: 798px; width: 220px;" title="{{ampHint}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddAmp.open}}" aria-label="{{ddAmp.aria}}" disabled="{{ddAmp.dis}}" onClick="{{ddAmp.toggle}}"><span class="dd-v">{{ddAmp.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddAmp.chev}}"></path></svg></button><sc-if value="{{ddAmp.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddAmp.clrAria}}" title="{{ddAmp.clrAria}}" onClick="{{ddAmp.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddAmp.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddAmp.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddAmp.name}}"><sc-for list="{{ddAmp.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
 <div class="{{ddTam.cls}}" style="left: 1034px; width: 220px;" title="{{tamHint}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddTam.open}}" aria-label="{{ddTam.aria}}" disabled="{{ddTam.dis}}" onClick="{{ddTam.toggle}}"><span class="dd-v">{{ddTam.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddTam.chev}}"></path></svg></button><sc-if value="{{ddTam.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddTam.clrAria}}" title="{{ddTam.clrAria}}" onClick="{{ddTam.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddTam.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddTam.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddTam.name}}"><sc-for list="{{ddTam.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div>
 <button class="abs ex-clr" disabled="{{clrDis}}" onClick="{{clearFilters}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.4;"><path d="M3 6h18"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>ล้างตัวกรอง<sc-if value="{{clrN}}" hint-placeholder-val="{{false}}"><b>{{clrN}}</b></sc-if></button>
-<sc-if value="{{hasCritSw}}" hint-placeholder-val="{{true}}"><div class="abs ex-crit"><span class="ex-crit-l" id="ex-crit-l">เกณฑ์สี</span><div class="ex-crit-t" role="radiogroup" aria-labelledby="ex-crit-l"><sc-for list="{{critSw}}" as="c" hint-placeholder-count="2"><button class="{{c.cls}}" role="radio" aria-checked="{{c.on}}" title="{{c.hint}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div></sc-if>
+<sc-if value="{{hasCritSw}}" hint-placeholder-val="{{true}}"><div class="abs ex-crit"><div class="ex-crit-t" role="radiogroup" aria-label="เกณฑ์การแสดงผล"><sc-for list="{{critSw}}" as="c" hint-placeholder-count="2"><button class="{{c.cls}}" role="radio" aria-checked="{{c.on}}" title="{{c.hint}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div></sc-if>
 
 
 <section class="abs ex-p ex-mapp" aria-label="แผนที่สถานีวัดปริมาณน้ำฝน">
@@ -1619,11 +1647,12 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 <section class="{{mlgCls}}" aria-labelledby="mlg-t">
 <div class="mlg-h"><b id="mlg-t">{{legendTitle}}</b><button class="mlg-tg" aria-expanded="{{legendOpen}}" aria-label="{{legendBtn}}" title="{{legendBtn}}" onClick="{{toggleLegend}}"><svg class="i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="stroke-width: 2.5;"><path d="{{mlgChev}}"></path></svg></button></div>
 <sc-if value="{{legendOpen}}" hint-placeholder-val="{{true}}"><div class="mlg-b">
+<sc-if value="{{showLegendSources}}" hint-placeholder-val="{{false}}"><div class="mlg-sec mlg-source-sec">หน่วยงาน</div><div class="mlg-src" aria-label="หน่วยงานข้อมูลสถานี"><span><i class="own"><svg viewBox="0 0 24 24"><path d="M6.5 3a3.5 3.5 0 0 1 3.5 3.5v11a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 3 17.5v-11A3.5 3.5 0 0 1 6.5 3z M11.4 12a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0 M16.2 8.2a5.4 5.4 0 0 1 0 7.6 M19.2 5.2a9.6 9.6 0 0 1 0 13.6"></path></svg></i>สถานีกรมป้องกันและบรรเทาสาธารณภัย</span><span><i class="twd"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></i>สถาบันสารสนเทศทรัพยากรน้ำ</span></div><div class="mlg-sec mlg-metric-sec">{{legendSectionTitle}}</div></sc-if>
 <sc-if value="{{hasCritSw}}" hint-placeholder-val="{{true}}"><p class="mlg-cn">{{critNote}}</p></sc-if>
 <div class="mlg-list"><sc-for list="{{legend}}" as="l" hint-placeholder-count="8"><label class="{{l.cls2}}"><input type="checkbox" checked="{{l.on}}" onChange="{{l.toggle}}"><span class="mlg-sw" style="{{l.sw2}}"></span><span class="t">{{l.label}}</span><span class="n">{{l.count}}</span></label></sc-for></div>
 <div class="mlg-sec">สถานะการรับข้อมูล <span>กดเพื่อกรอง</span></div>
 <sc-for list="{{dsChips}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" aria-pressed="{{c.on}}" title="{{c.hint}}" onClick="{{c.pick}}"><span class="mlg-sw"></span><span class="t">{{c.label}}</span><span class="n">{{c.n}}</span></button></sc-for>
-<sc-if value="{{twOn}}" hint-placeholder-val="{{true}}"><div class="mlg-src" aria-label="แหล่งสถานี"><span><i class="own"><svg viewBox="0 0 24 24"><path d="M6.5 3a3.5 3.5 0 0 1 3.5 3.5v11a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 3 17.5v-11A3.5 3.5 0 0 1 6.5 3z M11.4 12a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0 M16.2 8.2a5.4 5.4 0 0 1 0 7.6 M19.2 5.2a9.6 9.6 0 0 1 0 13.6"></path></svg></i>สถานี ปภ.</span><span><i class="twd"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></i>สถาบันสารสนเทศทรัพยากรน้ำ</span></div></sc-if>
+<sc-if value="{{twOn}}" hint-placeholder-val="{{true}}"><sc-if value="{{showLegendSources}}" hint-placeholder-val="{{false}}"><div class="mlg-src" aria-label="แหล่งสถานี"><span><i class="own"><svg viewBox="0 0 24 24"><path d="M6.5 3a3.5 3.5 0 0 1 3.5 3.5v11a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 3 17.5v-11A3.5 3.5 0 0 1 6.5 3z M11.4 12a1.4 1.4 0 1 0 2.8 0 1.4 1.4 0 1 0-2.8 0 M16.2 8.2a5.4 5.4 0 0 1 0 7.6 M19.2 5.2a9.6 9.6 0 0 1 0 13.6"></path></svg></i>สถานี ปภ.</span><span><i class="twd"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></i>สถาบันสารสนเทศทรัพยากรน้ำ</span></div></sc-if></sc-if>
 <sc-if value="{{runoffOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เกณฑ์ระดับน้ำท่า (น้ำท่า)</div><div class="mlg-leg"><sc-for list="{{runLegend}}" as="g" hint-placeholder-count="5"><span class="mlg-leg-i"><i class="mlg-leg-sw" style="{{g.style}}"></i>{{g.t}}</span></sc-for></div></sc-if>
 <sc-if value="{{damLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เกณฑ์น้ำในอ่าง</div><div class="mlg-leg"><sc-for list="{{damLegend}}" as="g" hint-placeholder-count="5"><span class="mlg-leg-i"><i class="mlg-leg-sw sq" style="{{g.style}}"></i>{{g.t}}</span></sc-for></div></sc-if>
 <sc-if value="{{cctvLgOn}}" hint-placeholder-val="{{false}}"><div class="mlg-sec">เกณฑ์ CCTV</div><div class="mlg-leg"><sc-for list="{{cctvLegend}}" as="g" hint-placeholder-count="5"><span class="mlg-leg-i"><i class="mlg-cam" style="{{g.style}}"><svg viewBox="0 0 24 24" width="9" height="9"><path d="M2 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z M15 10l5-3v10l-5-3"></path></svg></i>{{g.t}}</span></sc-for></div></sc-if>
@@ -1675,6 +1704,22 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 
 <section class="{{rightCls}}" aria-labelledby="ex-lg">
 <span class="abs ex-bar" aria-hidden="true"></span>
+<sc-if value="{{dpmSummary}}" hint-placeholder-val="{{false}}">
+<h2 id="ex-lg" class="abs ex-h2" style="left: 36px; top: 23px;">รายการสถานี <span class="ex-h2n">{{total}} สถานี · {{mName}}</span></h2>
+<button class="abs ex-col" style="left: 522px; top: 16px; height: 35px;" aria-label="ย่อแผงเกณฑ์" onClick="{{hideRight}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M15 3v18"></path><path d="m8 9 3 3-3 3"></path></svg></button>
+<button class="abs ex-arr" style="left: 13px;" aria-label="ช่วงก่อนหน้า" onClick="{{prevPeriod}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<div class="abs ex-tabs" role="tablist" aria-label="ช่วงเวลาฝนสะสม"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div>
+<button class="abs ex-arr" style="left: 544px;" aria-label="ช่วงถัดไป" onClick="{{nextPeriod}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+<div class="abs ex-lf" role="search" aria-label="ค้นหาและกรองรายการสถานี"><label class="ex-lf-q"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหาสถานี</span><input type="search" placeholder="ค้นหาชื่อ รหัส หรือพื้นที่" value="{{lq}}" onInput="{{setLq}}"></label><div class="{{ddAg.cls}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddAg.open}}" aria-label="{{ddAg.aria}}" disabled="{{ddAg.dis}}" onClick="{{ddAg.toggle}}"><span class="dd-v">{{ddAg.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddAg.chev}}"></path></svg></button><sc-if value="{{ddAg.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddAg.clrAria}}" title="{{ddAg.clrAria}}" onClick="{{ddAg.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddAg.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddAg.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddAg.name}}"><sc-for list="{{ddAg.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div></div>
+<div class="abs dpm-summary-box" aria-label="สรุปสถานีตามเกณฑ์การเฝ้าระวังภัย ปภ."><div class="dpm-summary-h"><span>เกณฑ์การเฝ้าระวังภัย (ปภ.)</span><button class="{{dpmAllCls}}" aria-pressed="{{dpmAllOn}}" onClick="{{dpmAllPick}}">ทั้งหมด {{dpmTotal}}</button></div><div class="dpm-cards"><sc-for list="{{dpmLevels}}" as="level" hint-placeholder-count="3"><button class="{{level.cls}}" style="{{level.style}}" aria-pressed="{{level.on}}" onClick="{{level.pick}}"><b>{{level.label}}</b><strong>{{level.n}}</strong><span>{{level.provinces}} จังหวัด</span></button></sc-for></div></div>
+<div class="abs dpm-rhead"><b>รายการสถานีที่เข้าเกณฑ์</b><span>{{dpmPeriodLabel}}</span></div>
+<div class="abs ex-th dpm-th" role="row"><span style="left: 15px; top: 19px;">สถานี <svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg></span><span style="left: 307px; top: 19px; width: 122px; white-space: nowrap;">ประเภทเกณฑ์</span><span style="left: 439px; top: 11px; width: 89px; display: block; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ฝนสะสม<br>(มม.)</span><svg class="i abs" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="left: 532px; top: 21px;"><path d="M3 5h18l-7 8v6l-4 2v-8z"></path></svg></div>
+<sc-if value="{{dpmUnsupported}}" hint-placeholder-val="{{false}}"><div class="abs dpm-note">สรุปเกณฑ์ ปภ. รองรับฝน 1 ชั่วโมง, วันนี้, วานนี้, 24 ชั่วโมง และ 3 วัน</div></sc-if>
+<sc-if value="{{dpmError}}" hint-placeholder-val="{{false}}"><div class="abs dpm-note err">{{dpmError}}</div></sc-if>
+<div class="abs ex-rows dpm-list"><sc-if value="{{dpmEmpty}}" hint-placeholder-val="{{false}}"><p class="ex-empty">ไม่พบสถานีที่ตรงกับการค้นหาหรือตัวกรอง</p></sc-if><sc-for list="{{dpmRows}}" as="r" hint-placeholder-count="4"><div class="{{r.cls}}" onClick="{{r.pick}}"><span class="nm"><span class="{{r.gpCls}}" role="img" aria-label="{{r.gpTxt}}" title="{{r.gpTxt}}"></span>{{r.name}}</span><span class="lc">{{r.loc}}</span><span class="{{r.agCls}}"><sc-if value="{{r.agLogo}}" hint-placeholder-val="{{false}}"><img class="ag-logo" src="{{r.agLogo}}" alt="" width="16" height="16"></sc-if>{{r.ag}}</span><span class="{{r.criteriaBadgeCls}}" title="{{r.levelTitle}}">{{r.criteriaBadge}}</span><span class="dpm-row-level" style="{{r.levelStyle}}" title="{{r.levelTitle}}"><b>{{r.levelLabel}}</b></span><span class="{{r.tmCls}}">{{r.time}}</span><span class="pl" style="{{r.plStyle}}">{{r.val}}</span><button class="ex-gb" aria-label="{{r.gAria}}" title="ดูกราฟข้อมูลย้อนหลัง" onClick="{{r.openHist}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 16v-4"></path><path d="M11 16V8"></path><path d="M15 16v-6"></path><path d="M19 16V5"></path></svg></button></div></sc-for></div>
+<div class="abs ex-pg dpm-pg"><span>แสดง</span><div class="{{ddSize.cls}}"><button class="ex-ddb" aria-haspopup="listbox" aria-expanded="{{ddSize.open}}" aria-label="{{ddSize.aria}}" disabled="{{ddSize.dis}}" onClick="{{ddSize.toggle}}"><span class="dd-v">{{ddSize.label}}</span><svg class="i chev" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="{{ddSize.chev}}"></path></svg></button><sc-if value="{{ddSize.hasV}}" hint-placeholder-val="{{false}}"><button class="dd-clr" aria-label="{{ddSize.clrAria}}" title="{{ddSize.clrAria}}" onClick="{{ddSize.clear}}"><svg class="i" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="stroke-width: 2.5;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></sc-if><sc-if value="{{ddSize.open}}" hint-placeholder-val="{{false}}"><div class="ex-ddc" aria-hidden="true" onClick="{{ddSize.close}}"></div><ul class="ex-ddl dd-l" role="listbox" aria-label="{{ddSize.name}}"><sc-for list="{{ddSize.items}}" as="o" hint-placeholder-count="6"><li role="none"><button class="{{o.cls}}" role="option" aria-selected="{{o.on}}" disabled="{{o.dis}}" onClick="{{o.pick}}"><span class="t">{{o.t}}</span><span class="{{o.nCls}}">{{o.n}}</span><svg class="i dd-ck" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button></li></sc-for></ul></sc-if></div><span>รายการ</span><span style="flex: 1;"></span><nav style="display: flex; gap: 5px;" aria-label="แบ่งหน้ารายการเกณฑ์ ปภ."><button class="ex-pb" aria-label="หน้าก่อน" disabled="{{dpmPrevDis}}" onClick="{{dpmPrev}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m15 18-6-6 6-6"></path></svg></button><sc-for list="{{dpmPages}}" as="g" hint-placeholder-count="4"><button class="{{g.cls}}" aria-current="{{g.cur}}" disabled="{{g.gap}}" onClick="{{g.pick}}">{{g.n}}</button></sc-for><button class="ex-pb" aria-label="หน้าถัดไป" disabled="{{dpmNextDis}}" onClick="{{dpmNext}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m9 18 6-6-6-6"></path></svg></button></nav></div>
+</sc-if>
+<sc-if value="{{notDpmSummary}}" hint-placeholder-val="{{true}}">
 <h2 id="ex-lg" class="abs ex-h2" style="left: 36px; top: 23px;">รายการสถานี <span class="ex-h2n">{{total}} สถานี · {{mName}}</span></h2>
 <button class="abs ex-col" style="left: 522px; top: 16px; height: 35px;" aria-label="ย่อแผงเกณฑ์" onClick="{{hideRight}}"><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M15 3v18"></path><path d="m8 9 3 3-3 3"></path></svg></button>
 <sc-if value="{{isRain}}" hint-placeholder-val="{{true}}">
@@ -1693,7 +1738,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 <sc-if value="{{noRows}}" hint-placeholder-val="{{false}}"><p class="ex-empty">ไม่พบสถานีที่ตรงกับการค้นหาหรือตัวกรอง</p></sc-if>
 <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
 <div class="{{r.cls}}" onClick="{{r.pick}}">
-<span class="nm"><span class="{{r.gpCls}}" role="img" aria-label="{{r.gpTxt}}" title="{{r.gpTxt}}"></span>{{r.name}}</span><span class="lc">{{r.loc}}</span><span class="{{r.agCls}}">{{r.ag}}</span>
+<span class="nm"><span class="{{r.gpCls}}" role="img" aria-label="{{r.gpTxt}}" title="{{r.gpTxt}}"></span>{{r.name}}</span><span class="lc">{{r.loc}}</span><span class="{{r.agCls}}"><sc-if value="{{r.agLogo}}" hint-placeholder-val="{{false}}"><img class="ag-logo" src="{{r.agLogo}}" alt="" width="16" height="16"></sc-if>{{r.ag}}</span>
 <dc-import name="CriteriaResults" station="{{r.criteria}}"></dc-import>
 <span class="{{r.tmCls}}">{{r.time}}</span><span class="pl" style="{{r.plStyle}}">{{r.val}}</span>
 <button class="ex-gb" aria-label="{{r.gAria}}" title="ดูกราฟข้อมูลย้อนหลัง" onClick="{{r.openHist}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 16v-4"></path><path d="M11 16V8"></path><path d="M15 16v-6"></path><path d="M19 16V5"></path></svg></button>
@@ -1711,6 +1756,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 <button class="ex-pb" aria-label="หน้าถัดไป" disabled="{{nextDis}}" onClick="{{nextPage}}"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="stroke-width: 2.5;"><path d="m9 18 6-6-6-6"></path></svg></button>
 </nav>
 </div>
+</sc-if>
 </section>
 <sc-if value="{{stOpen}}" hint-placeholder-val="{{false}}">
 <div class="abs hx-ovl" aria-hidden="true" onClick="{{stClose}}"></div>
@@ -1730,7 +1776,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 <div class="sp-mh"><h3>ค่าล่าสุด <span>อัปเดต {{spTime}}</span></h3><sc-if value="{{spInt}}" hint-placeholder-val="{{true}}"><button class="sp-sec" onClick="{{spShowAll}}" title="ดูทุกค่าที่สถานีนี้ตรวจวัด"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>ค่าทั้งหมด <b>{{spCount}}</b></button></sc-if></div>
 
 <dc-import name="ReadingCards" readings="{{spOne}}" note="{{spNote}}" stats="{{spStats}}" hourly="{{spHourly}}" theme="{{theme}}"></dc-import>
-<sc-if value="{{spIsRain}}"><dc-import name="CriteriaComparison" context="{{spComparison}}"></dc-import></sc-if><sc-if value="{{spIsOther}}"><dc-import name="CriteriaResults" station="{{spCriteria}}" compact=""></dc-import></sc-if>
+<sc-if value="{{spShowWarningCriteria}}"><dc-import name="CriteriaComparison" context="{{spComparison}}"></dc-import></sc-if><sc-if value="{{spIsOther}}"><dc-import name="CriteriaResults" station="{{spCriteria}}" compact=""></dc-import></sc-if>
 <sc-if value="{{spMini}}" hint-placeholder-val="{{true}}"><div class="hx-card sp-mini"><div class="sp-mini-h"><h3>{{mnTitle}}</h3><button class="sp-sec" onClick="{{mnMore}}" title="เปิดกราฟเต็ม พร้อมตารางบันทึกและดาวน์โหลด PDF"><svg class="i" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>ขยายกราฟ</button></div><div class="hx-gr" role="tablist" aria-label="ช่วงการสรุป"><sc-for list="{{mnGrans}}" as="g" hint-placeholder-count="3"><button class="{{g.cls}}" role="tab" aria-selected="{{g.on}}" onClick="{{g.pick}}">{{g.label}}</button></sc-for></div><div class="hx-tools"><sc-if value="{{mnDaily}}" hint-placeholder-val="{{true}}"><div class="hx-rng" role="group" aria-label="ช่วงเวลา"><sc-for list="{{mnRanges}}" as="q" hint-placeholder-count="7"><button class="{{q.cls}}" aria-pressed="{{q.on}}" onClick="{{q.pick}}">{{q.label}}</button></sc-for></div></sc-if><sc-if value="{{mnCapOn}}" hint-placeholder-val="{{false}}"><span class="hx-cap">{{mnCap}}</span></sc-if></div><div class="hx-chart">{{mnChart}}</div><p class="hx-lg"><i style="{{mnSw}}"></i>{{mnLegend}}</p></div></sc-if>
 </div>
 <sc-if value="{{spInt}}" hint-placeholder-val="{{true}}"><aside class="sp-side">
@@ -1811,6 +1857,7 @@ button.mlg-r{width:100%;border:0;background:transparent;color:inherit;font:inher
 </div>
 </div>
 </sc-if>
+<sc-if value="{{onReport}}" hint-placeholder-val="{{false}}"><dc-import name="RainfallMonitorDashboard" go-map="{{goMap}}" go-admin="{{goAdmin}}" theme="{{theme}}" set-theme="{{setThemeFn}}"></dc-import></sc-if>
 <sc-if value="{{onAdmin}}" hint-placeholder-val="{{false}}"><dc-import name="Stations" go-map="{{goMap}}" theme="{{theme}}" set-theme="{{setThemeFn}}"></dc-import></sc-if>
 
 <style>.sp-scan-example{font-size:12px;color:#1d4ed8;text-decoration:underline;padding:6px 0;line-height:18px}.sp-side>.sp-inf3{margin-top:0}</style>

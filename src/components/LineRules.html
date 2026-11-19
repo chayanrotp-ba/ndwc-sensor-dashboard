@@ -58,6 +58,8 @@ p,h1,h2,h3{margin:0}
 /* LINE notification rules — classes prefixed lr- */
 .lr-main{padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px;min-width:0;min-height:0;overflow:auto}
 .lr-card{background:#0e0e10;border:1px solid #262626;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:12px}
+.lr-type-panel{background:#0e0e10;border:1px solid #262626;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}.lr-type-panel-h{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.lr-type-panel-h h2{font-size:16px;line-height:24px}.lr-type-panel-h p{font-size:12px;color:#94a3b8}.lr-type-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}.lr-type-action{height:30px;padding:0 10px;border:1px solid #404040;border-radius:6px;background:#18181b;color:#cbd5e1;font-size:12px;font-weight:500}.lr-type-action:hover:not(:disabled){border-color:#2563eb;background:#172554;color:#dbeafe}.lr-type-action:disabled{opacity:.45;cursor:not-allowed}.lr-type-count{padding:4px 10px;border-radius:999px;background:#172554;color:#bfdbfe;font-size:12px;white-space:nowrap}.lr-type-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.lr-type-setting{min-height:68px;border:1px solid #404040;border-radius:9px;background:#18181b;color:#94a3b8;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;text-align:left}.lr-type-setting.on{border-color:#1d4ed8;background:#111c35;color:#f8fafc}.lr-type-setting b,.lr-type-setting small{display:block}.lr-type-setting b{font-size:13px}.lr-type-setting small{margin-top:3px;font-size:10px;color:#94a3b8}.lr-type-switch{position:relative;width:36px;height:20px;border-radius:999px;background:#525252;align-self:center}.lr-type-switch::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff}.lr-type-switch.on{background:#2563eb}.lr-type-switch.on::after{transform:translateX(16px)}.lr-type-policy{display:flex;gap:8px;align-items:center;padding:8px 10px;border:1px solid #1e3a8a;border-radius:7px;background:#0f1a33;color:#bfdbfe;font-size:11px}.lr-tag.paused{opacity:.55;filter:saturate(.2)}
+.lr-frequency-panel{background:#0e0e10;border:1px solid #262626;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}.lr-frequency-title{display:flex;align-items:center;gap:7px;font-size:16px;line-height:24px}.lr-info{width:16px;height:16px;border-radius:50%;background:#525252;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-style:normal}.lr-frequency-panel>p{font-size:12px;color:#94a3b8}.lr-freq-tabs{display:flex;gap:2px;width:max-content;max-width:100%;padding:3px;border:1px solid #404040;border-radius:8px;background:#18181b}.lr-freq-tabs button{height:30px;padding:0 12px;border:0;border-radius:6px;background:transparent;color:#cbd5e1;font-size:12px}.lr-freq-tabs button.on{background:#2563eb;color:#fff;font-weight:500}.lr-freq-body{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px;border:1px solid #303034;border-radius:9px;background:#141416}.lr-freq-option{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 10px;border:1px solid #404040;border-radius:7px;background:#18181b;color:#cbd5e1;font-size:12px}.lr-freq-option.on{border-color:#2563eb;background:#172554;color:#dbeafe}.lr-freq-option input{width:16px;height:16px;margin:0;accent-color:#2563eb}.lr-freq-rule{display:flex;align-items:center;gap:8px;min-width:240px}.lr-freq-rule label{font-size:12px;color:#cbd5e1;white-space:nowrap}.lr-freq-rule select{height:34px;min-width:0;flex:1;padding:0 10px;border:1px solid #525252;border-radius:6px;background:#262626;color:#f8fafc}.lr-frequency-note{display:flex;gap:8px;align-items:flex-start;padding:9px 10px;border-left:3px solid #f59e0b;border-radius:6px;background:#21170a;color:#fde68a;font-size:12px;line-height:18px}.lr-freq-actions{display:flex;justify-content:space-between;align-items:center;gap:12px}.lr-freq-summary{font-size:12px;color:#94a3b8}.lr-freq-save{height:34px;padding:0 14px;border:0;border-radius:6px;background:#2563eb;color:#fff;font-weight:500}.lr-freq-save:disabled{opacity:.55;cursor:not-allowed}.lr-freq-save:not(:disabled):hover{background:#1d4ed8}.lr-tag.paused{opacity:.55;filter:saturate(.2)}
 .lr-head{display:flex;align-items:flex-start;gap:12px}
 .lr-logo{width:44px;height:44px;border-radius:9999px;background:#06c755;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:12px;font-weight:700;letter-spacing:.02em;flex-shrink:0}
 .lr-t{font-size:20px;line-height:28px;font-weight:600}
@@ -117,6 +119,7 @@ p,h1,h2,h3{margin:0}
 .lr-tcw.ov:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
 .lr-tag{display:inline-flex;align-items:center;gap:4px;border-radius:9999px;padding:2px 8px;font-size:12px;line-height:16px;font-weight:500;white-space:nowrap}
 .lr-tag i{width:6px;height:6px;border-radius:9999px;display:inline-block}
+.lr-tag{background:var(--tag-bg);color:var(--tag-color)}.lr-tag i{background:var(--tag-color)}
 .lr-t1{background:#2a1f05;color:#fde68a}.lr-t1 i{background:#eab308}
 .lr-t2{background:#2a1405;color:#fed7aa}.lr-t2 i{background:#f97316}
 .lr-t3{background:#2a0f0f;color:#fecaca}.lr-t3 i{background:#ef4444}
@@ -168,20 +171,20 @@ p,h1,h2,h3{margin:0}
 .cr-wrap .l{position:absolute;left:12px;top:11px;color:#94a3b8;pointer-events:none}
 .cr-wrap .cr-in.ps{padding-left:38px}
 .cr-box{border:1px solid #262626;border-radius:10px;background:#141416;overflow:hidden}
-.cr-box-h{display:flex;gap:8px;padding:12px}
+.cr-box-h{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}.cr-box-h .cr-filter-wide{grid-column:1/-1}.cr-other{display:flex;align-items:center;gap:7px;padding:0 2px;font-size:12px;color:#cbd5e1;cursor:pointer}.cr-other input{width:16px;height:16px;margin:0;accent-color:#2563eb}.cr-scope-error{margin:0;padding-left:23px;font-size:11px;line-height:16px;color:#fca5a5}
 .cr-box-h>*{flex:1}
 .cr-meta{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-top:1px solid #262626;border-bottom:1px solid #262626;font-size:12px;line-height:16px;color:#94a3b8}
 .cr-lk{border:0;background:transparent;color:#93c5fd;padding:0;font-size:12px;font-weight:500}
-.cr-list{max-height:216px;overflow:auto}
+.cr-list{max-height:420px;overflow:auto}
 .cr-empty{padding:20px 12px;font-size:13px;color:#94a3b8}
-.cr-row{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;border-bottom:1px solid #1f1f22}
+.cr-row{position:relative;display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;border-bottom:1px solid #1f1f22}.cr-row>input{margin-top:5px}.cr-rt{flex:1;min-width:0}.cr-station-title{display:flex;align-items:center;gap:7px;min-width:0;flex-wrap:wrap}.cr-source-badge,.cr-support-badge{display:inline-flex;align-items:center;flex:0 0 auto;padding:1px 6px;border:1px solid;border-radius:999px;font-size:10px;line-height:15px;font-weight:500}.cr-source-badge.dpm{border-color:#1d4ed8;background:#172554;color:#bfdbfe}.cr-source-badge.other{border-color:#a16207;background:#422006;color:#fde68a}.cr-support-badge{align-self:center;margin-left:auto;border-color:#166534;background:#052e1b;color:#bbf7d0;white-space:nowrap}.cr-support-badge.dpm-support{padding:0 5px;font-size:9px;line-height:14px}.cr-support-button{cursor:pointer;font-family:inherit}.cr-support-button:hover{background:#14532d}.cr-type-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.cr-type-badge{display:inline-flex;padding:1px 5px;border:1px solid #334155;border-radius:999px;color:#cbd5e1;font-size:10px;line-height:14px}.cr-type-popover{position:absolute;z-index:5;right:10px;top:34px;width:min(320px,calc(100% - 48px));padding:8px;border:1px solid #1d4ed8;border-radius:7px;background:#101a30;box-shadow:0 12px 24px rgba(0,0,0,.42)}.cr-type-popover>span{display:block;margin-bottom:5px;font-size:10px;color:#93c5fd}.cr-type-popover .cr-type-badges{margin-top:0}
 .cr-row:hover{background:#1c1c20}
 .cr-row input{width:16px;height:16px;accent-color:#2563eb;margin:0}
 .cr-rt{flex:1;min-width:0}
 .cr-rt b{display:block;font-size:13px;line-height:18px;font-weight:500;color:#f8fafc}
 .cr-rt small{display:block;font-size:12px;line-height:16px;color:#94a3b8}
 .cr-cnt{border-radius:9999px;padding:2px 10px;border:1px solid #1e3a8a;background:#0f1a33;color:#93c5fd;font-size:12px;line-height:16px;font-weight:600;white-space:nowrap}
-.cr-sbh{display:flex;align-items:center;gap:8px;padding:12px;background:#18181b}
+.cr-sbh{display:flex;align-items:center;gap:8px;padding:12px;background:#18181b}.cr-coverage{display:flex;flex-direction:column;gap:7px;padding:12px;border-bottom:1px solid #262626;background:#111216}.cr-coverage-title{font-size:12px;color:#cbd5e1;font-weight:600}.cr-coverage-key{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:11px;color:#94a3b8}.cr-coverage-key span{display:inline-flex;align-items:center;gap:5px}.cr-coverage-key i{width:7px;height:7px;border-radius:999px}.cr-coverage-key .project{background:#3b82f6}.cr-coverage-key .external{background:#f59e0b}.cr-coverage-item{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:0;border:0;background:transparent;color:#e2e8f0;font-size:12px;line-height:18px;text-align:left;cursor:pointer}.cr-coverage-item b{font-weight:500}.cr-coverage-item span{padding:2px 8px;border:1px solid #1e3a8a;border-radius:999px;background:#0f1a33;color:#bfdbfe;font-size:11px;white-space:nowrap}.cr-coverage-item.open b{text-decoration:underline;text-decoration-color:#60a5fa;text-underline-offset:3px}.cr-coverage-more{font-size:11px;color:#94a3b8}.cr-coverage-detail{padding:9px 12px;border-bottom:1px solid #262626;background:#0e0e10}.cr-coverage-detail>span{display:block;margin-bottom:8px;font-size:11px;color:#94a3b8}.cr-detail-source+.cr-detail-source{margin-top:9px}.cr-detail-source>span{display:block;margin-bottom:5px;font-size:11px;color:#cbd5e1}.cr-detail-stations{display:flex;flex-wrap:wrap;gap:5px}.cr-detail-station{display:inline-flex;align-items:center;gap:2px;padding:3px 3px 3px 8px;border:1px solid;border-radius:999px;background:transparent;font-size:11px}.cr-detail-station.project{border-color:#1d4ed8;color:#bfdbfe}.cr-detail-station.external{border-color:#b45309;color:#fde68a}.cr-detail-station:hover{background:#1e293b}.cr-detail-station .cr-detail-remove{display:inline-flex;align-items:center;justify-content:center;flex:0 0 18px;width:18px;height:16px;margin-left:4px;padding:0;border:0;border-radius:999px;background:transparent;color:inherit;font-size:17px;line-height:16px;cursor:pointer}.cr-detail-station .cr-detail-remove:hover{background:#334155;color:#fff}
 .cr-chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
 .cr-chip{display:inline-flex;align-items:center;gap:2px;height:28px;padding:0 4px 0 10px;border-radius:9999px;background:#172554;color:#bfdbfe;font-size:12px;line-height:16px}
 .cr-chip button{width:22px;height:22px;border:0;border-radius:9999px;background:transparent;color:#bfdbfe;display:flex;align-items:center;justify-content:center;padding:0}
@@ -207,6 +210,7 @@ p,h1,h2,h3{margin:0}
 .cr-tt b{display:block;font-size:15px;line-height:22px;font-weight:600;color:#f8fafc}
 .cr-tt small{display:block;font-size:12px;line-height:16px;color:#94a3b8}
 .cr-type input{width:18px;height:18px;margin:0 0 0 auto;accent-color:var(--c)}
+.cr-measurements{display:flex;flex-wrap:wrap;gap:8px}.cr-measurement{min-height:38px;padding:8px 13px;border:1px solid #404040;border-radius:999px;background:#18181b;color:#cbd5e1;cursor:pointer}.cr-measurement.on{background:#172554;border-color:#3b82f6;color:#bfdbfe}.cr-level-groups{display:grid;gap:8px}.cr-level-group{border:1px solid #303034;border-radius:9px;padding:11px 12px;background:#111216;transition:border-color 120ms ease,background 120ms ease}.cr-level-group.on{border-color:#2563eb;background:#101a30}.cr-level-group header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;margin:0}.cr-level-group header b{font-size:14px;color:#e2e8f0}.cr-level-group header small{font-size:11px;line-height:15px;color:#94a3b8;text-align:right;max-width:230px}.cr-group-enable{display:inline-flex;align-items:center;gap:8px;cursor:pointer;min-width:0}.cr-group-enable input{width:16px;height:16px;margin:0;accent-color:#2563eb;flex:0 0 auto}.cr-levels{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}.cr-level{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:44px;padding:7px 12px 7px 15px;border:1px solid var(--c);border-radius:8px;background:#18181b;color:#e2e8f0;cursor:pointer;overflow:hidden}.cr-level::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}.cr-level-copy{display:flex;flex-direction:column;gap:2px;min-width:0}.cr-level-copy b{font-size:13px;line-height:18px;font-weight:600}.cr-level-copy small{font-size:11px;line-height:15px;color:#94a3b8}.cr-level.on{background:var(--bg);box-shadow:inset 0 0 0 1px var(--c);color:#fff}.cr-level.disabled{opacity:.48;cursor:not-allowed}.cr-level input{width:16px;height:16px;margin:0;accent-color:var(--c);flex:0 0 auto}@media(max-width:560px){.cr-level-group header{grid-template-columns:1fr;gap:4px}.cr-level-group header small{text-align:left;max-width:none;padding-left:24px}}
 .cr-f2{display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid #262626;background:#0e0e10}
 .cr-ok{flex:1;height:44px;border:0;border-radius:8px;background:#1d4ed8;color:#ffffff;font-weight:600}
 .cr-ok:hover{background:#1e40af}
@@ -277,6 +281,7 @@ body{margin:0;background:#f4f4f5}
 .lt /* LINE notification rules — classes prefixed lr- */
 .lr-main{padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px;min-width:0;min-height:0;overflow:auto}
 .lt .lr-card{background:#ffffff;border:1px solid #e4e4e7;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:12px}
+.lt .lr-type-panel{background:#fff;border-color:#e4e4e7}.lt .lr-type-panel-h p,.lt .lr-type-setting small{color:#64748b}.lt .lr-type-setting{background:#f8fafc;border-color:#d4d4d8;color:#64748b}.lt .lr-type-setting.on{background:#eff6ff;border-color:#2563eb;color:#0f172a}.lt .lr-type-policy{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
 .lt .lr-head{display:flex;align-items:flex-start;gap:12px}
 .lt .lr-logo{width:44px;height:44px;border-radius:9999px;background:#06c755;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:12px;font-weight:700;letter-spacing:.02em;flex-shrink:0}
 .lt .lr-t{font-size:20px;line-height:28px;font-weight:600}
@@ -429,6 +434,7 @@ body{margin:0;background:#f4f4f5}
 .lt .cr-tt b{display:block;font-size:15px;line-height:22px;font-weight:600;color:#0f172a}
 .lt .cr-tt small{display:block;font-size:12px;line-height:16px;color:#64748b}
 .lt .cr-type input{width:18px;height:18px;margin:0 0 0 auto;accent-color:var(--c)}
+.lt .cr-measurement{background:#f4f4f5;border-color:#d4d4d8;color:#334155}.lt .cr-measurement.on{background:#dbeafe;border-color:#2563eb;color:#1e40af}.lt .cr-level-group{background:#fff;border-color:#e4e4e7}.lt .cr-level-group header small{color:#64748b}.lt .cr-level{background:#f8fafc;border-color:#d4d4d8;color:#334155}.lt .cr-level.on{background:var(--bg);border-color:var(--c);color:#0f172a}
 .lt .cr-f2{display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid #e4e4e7;background:#ffffff}
 .lt .cr-ok{flex:1;height:44px;border:0;border-radius:8px;background:#1d4ed8;color:#ffffff;font-weight:600}
 .lt .cr-ok:hover{background:#1e40af}
@@ -471,17 +477,20 @@ body{margin:0;background:#f4f4f5}
 .sx.lt .lr-mn button:hover{background:#f4f4f5}
 .sx.lt .lr-mn .dz{color:#dc2626}
 .sx.lt .lr-mn .dz:hover{background:#fef2f2}
+@media(max-width:1200px){.lr-type-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.lr-type-grid{grid-template-columns:1fr}.lr-type-panel-h{flex-direction:column}.lr-type-count{align-self:flex-start}}
+.lr-freq-helper{margin-top:-5px}.lr-basin-search{display:flex;align-items:center;gap:10px;margin-bottom:9px}.lr-basin-search input{width:280px;max-width:100%;height:34px;padding:0 10px;border:1px solid #525252;border-radius:6px;background:#18181b;color:#f8fafc}.lr-basin-count{font-size:12px;color:#94a3b8}.lr-basin-empty{margin:0;padding:18px;border:1px dashed #3f3f46;border-radius:8px;color:#94a3b8;text-align:center}.lr-basin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.lr-basin-card{border:1px solid #303034;border-radius:8px;background:#141416;padding:10px}.lr-basin-card header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.lr-basin-card b,.lr-basin-card small{display:block}.lr-basin-card b{font-size:13px}.lr-basin-card small{font-size:11px;color:#94a3b8;margin-top:2px}.lr-basin-card header>span{font-size:11px;color:#bfdbfe;white-space:nowrap}.lr-basin-options{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.lr-basin-options button{height:27px;padding:0 8px;border:1px solid #404040;border-radius:5px;background:#18181b;color:#cbd5e1;font-size:11px}.lr-basin-options button.on{border-color:#2563eb;background:#172554;color:#dbeafe}.lr-basin-options .lr-basin-reset{margin-left:auto;color:#93c5fd}@media(max-width:760px){.lr-basin-search{align-items:stretch;flex-direction:column}.lr-basin-search input{width:100%}.lr-basin-grid{grid-template-columns:1fr}}
 </style>
 </helmet>
 <div class="{{rootCls}}">
-<dc-import name="BackofficeMenu" go-light="{{setLight}}" go-dark="{{setDark}}" current="line" go-central="{{goCentral}}" go-master="{{goMaster}}" go-map="{{goMap}}" go-stations="{{goStations}}" go-line="{{goLine}}"></dc-import>
+<dc-import name="BackofficeMenu" go-light="{{setLight}}" go-dark="{{setDark}}" current="line" go-central="{{goCentral}}" go-master="{{goMaster}}" go-map="{{goMap}}" go-stations="{{goStations}}" go-line="{{goLine}}" go-audit="{{goAudit}}"></dc-import>
 <aside class="side" aria-label="เมนูหลัก">
 <div class="brandx"><img src="./assets/b820c1ee4f82dbfcefb07b5f5491f09e.png" alt="ตราสัญลักษณ์ ปภ." width="31" height="44"><span><b>ระบบบริหารจัดการ Sensor</b><span>System Management Sensor</span></span></div>
 <label class="sfld"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหาเมนู</span><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input type="search" placeholder="Search..."></label>
 <button class="mi" onClick="{{goMap}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14"></path><path d="M15 6v14"></path></svg>หน้าแผนที่</button>
 <button class="mi" onClick="{{goStations}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8a6 6 0 0 1 0 8.4"></path><path d="M7.8 16.2a6 6 0 0 1 0-8.4"></path><path d="M19.1 4.9a10 10 0 0 1 0 14.2"></path><path d="M4.9 19.1a10 10 0 0 1 0-14.2"></path></svg>รายการสถานี Sensor</button>
 <dc-import name="CriteriaNavigation" current="line" go-master="{{goMaster}}" go-central="{{goCentral}}"></dc-import>
-<button class="mi on" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>จัดการการแจ้งเตือนไลน์</button>
+<div class="mgrp"><div class="mi on" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span>จัดการการแจ้งเตือนไลน์</span></div><button class="{{rulesMenuCls}}" onClick="{{goRules}}">ตั้งค่าการแจ้งเตือน</button><button class="{{frequencyMenuCls}}" onClick="{{goFrequency}}">ตั้งค่าความถี่การแจ้งเตือน</button></div>
+<button class="mi" onClick="{{goAudit}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l2 3h2a1 1 0 0 1 1 1v14H3V7a1 1 0 0 1 1-1h2z"></path><path d="M8 11h8M8 15h6"></path></svg>ประวัติการเพิ่ม ลบ แก้ไข</button>
 <div class="ubox">
 <div class="thm" role="radiogroup" aria-label="โหมดการแสดงผล"><button class="{{thLightCls}}" role="radio" aria-checked="{{isLight}}" onClick="{{setLight}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>สว่าง</button><button class="{{thDarkCls}}" role="radio" aria-checked="{{isDark}}" onClick="{{setDark}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"></path></svg>มืด</button></div>
 <div class="ucard"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path><path d="M4 21a8 8 0 0 1 16 0"></path></svg><span><b>ผู้ดูแลระบบ</b><span>Super admin</span></span></div>
@@ -492,9 +501,9 @@ body{margin:0;background:#f4f4f5}
 <main class="lr-main">
 <div class="phx">
 <div style="flex: 1;"><nav aria-label="breadcrumb"><ol class="bc"><li><a href="#"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px;"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>หน้าแรก</a></li><li><svg class="ic sep" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg><span aria-current="page">จัดการการแจ้งเตือนไลน์</span></li></ol></nav>
-<div class="ttlrow"><div><h1 id="lr-title" class="h1x">จัดการการแจ้งเตือนไลน์</h1><p class="ph-sub">ใช้เกณฑ์ชุดเดียวกับหน้ารายการสถานี · ตั้งค่ากลุ่มผู้รับ ช่วงเวลา และช่องทาง LINE ที่นี่</p></div></div>
+<div class="ttlrow"><div><h1 id="lr-title" class="h1x">{{pageTitle}}</h1><p class="ph-sub">{{pageSubtitle}}</p></div></div>
 </div>
-<div class="ph-r">
+<sc-if value="{{showRules}}" hint-placeholder-val="{{false}}"><div class="ph-r">
 <button class="{{quotaCls}}" aria-expanded="{{quotaOpen}}" onClick="{{toggleQuota}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 15v2"></path><path d="M11 11v6"></path><path d="M15 8v9"></path><path d="M19 5v12"></path></svg>แสดง status limit การส่งข้อความ LINE</button>
 <button class="lr-btn" onClick="{{openCreate}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>สร้างกฎใหม่</button>
 <sc-if value="{{quotaOpen}}" hint-placeholder-val="{{false}}">
@@ -506,9 +515,28 @@ body{margin:0;background:#f4f4f5}
 <div class="lr-kv"><span>รีเซ็ตโควตา</span><b>1 พ.ย. 2569</b></div>
 </div>
 </sc-if>
+</div></sc-if>
 </div>
+<sc-if value="{{showRules}}" hint-placeholder-val="{{false}}"><section class="lr-type-panel" aria-labelledby="lr-type-title">
+<header class="lr-type-panel-h"><div><h2 id="lr-type-title">ประเภทข้อมูล Sensor สำหรับ LINE OA</h2><p>เปิดหรือปิดการประเมินแยกตามประเภท โดยไม่ลบเงื่อนไขเดิมในกฎ</p></div><div class="lr-type-actions"><button class="lr-type-action" disabled="{{allTypesEnabled}}" onClick="{{enableAllTypes}}">เปิดทั้งหมด</button><button class="lr-type-action" disabled="{{allTypesDisabled}}" onClick="{{disableAllTypes}}">ปิดทั้งหมด</button><span class="lr-type-count">เปิด {{enabledTypeCount}} จาก {{lineTypeTotal}} ประเภท</span></div></header>
+<div class="lr-type-grid">
+<sc-for list="{{lineTypes}}" as="t" hint-placeholder-count="8"><button type="button" class="{{t.cls}}" role="switch" aria-checked="{{t.enabled}}" aria-label="{{t.label}} {{t.status}}" onClick="{{t.toggle}}"><span><b>{{t.label}}</b><small>{{t.hint}} · {{t.status}}</small></span><i class="{{t.switchCls}}" aria-hidden="true"></i></button></sc-for>
 </div>
-<section class="lr-card" aria-label="ค้นหาและกรองกฎ">
+<div class="lr-type-policy"><b>ควบคุมการแจ้งเตือนซ้ำ</b><span>กำหนดความถี่ของทั้งระบบได้จากเมนู “ตั้งค่าความถี่การแจ้งเตือน”</span></div>
+</section></sc-if>
+<sc-if value="{{showFrequency}}" hint-placeholder-val="{{false}}"><section id="lr-frequency" class="lr-frequency-panel" aria-labelledby="lr-frequency-title">
+<h2 id="lr-frequency-title" class="lr-frequency-title">ความถี่การแจ้งเตือน <i class="lr-info" title="ควบคุมการส่งซ้ำของสถานีที่ยังเข้าเกณฑ์">i</i></h2>
+<p>กำหนดช่วงเวลาที่อนุญาตให้แจ้งซ้ำ โดยผูกตามลุ่มน้ำของสถานี ไม่ใช่ลุ่มน้ำแรกของกฎ</p>
+<div class="lr-freq-tabs" role="tablist" aria-label="ขอบเขตการตั้งค่าความถี่"><button class="{{frequencySystemTabCls}}" role="tab" aria-selected="{{showFrequencySystem}}" data-value="system" onClick="{{setFrequencyTab}}">ค่าเริ่มต้นระบบ</button><button class="{{frequencyBasinTabCls}}" role="tab" aria-selected="{{showFrequencyBasins}}" data-value="basin" onClick="{{setFrequencyTab}}">ตั้งค่าแยกรายลุ่มน้ำ</button></div>
+<sc-if value="{{showFrequencySystem}}" hint-placeholder-val="{{false}}"><div class="lr-freq-body" role="radiogroup" aria-label="ความถี่เริ่มต้นของระบบ">
+<sc-for list="{{frequencyHourOptions}}" as="o" hint-placeholder-count="3"><label class="{{o.cls}}"><input type="radio" name="lr-frequency" checked="{{o.on}}" onChange="{{o.pick}}">{{o.label}}</label></sc-for>
+<label class="{{frequencyOnUpdateCls}}"><input type="radio" name="lr-frequency" checked="{{frequencyOnUpdate}}" onChange="{{setFrequencyMode}}" data-value="on-update">ทุกครั้งเมื่อมีข้อมูลใหม่</label>
+</div><p class="lr-freq-helper">ใช้กับทุกสถานี เว้นแต่ลุ่มน้ำที่ตั้งค่าเฉพาะไว้</p></sc-if>
+<sc-if value="{{showFrequencyBasins}}" hint-placeholder-val="{{false}}"><div class="lr-basin-search"><input type="search" value="{{frequencyQuery}}" placeholder="ค้นหาลุ่มน้ำ" onInput="{{setFrequencyQuery}}"><span class="lr-basin-count">{{frequencyBasinCount}}</span></div><sc-if value="{{frequencyBasinsEmpty}}" hint-placeholder-val="{{false}}"><p class="lr-basin-empty">ไม่พบลุ่มน้ำที่ตรงกับคำค้นหา</p></sc-if><div class="lr-basin-grid"><sc-for list="{{frequencyBasins}}" as="b" hint-placeholder-count="22"><article class="lr-basin-card"><header><div><b>{{b.basin}}</b><small>{{b.defaultLabel}}</small></div><span>{{b.summary}}</span></header><div class="lr-basin-options"><sc-for list="{{b.hours}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" aria-pressed="{{o.on}}" onClick="{{o.pick}}">{{o.label}}</button></sc-for><button class="{{b.onUpdateCls}}" aria-pressed="{{b.onUpdate}}" onClick="{{b.setOnUpdate}}">ข้อมูลใหม่</button><sc-if value="{{b.isCustom}}" hint-placeholder-val="{{false}}"><button class="lr-basin-reset" onClick="{{b.reset}}">ใช้ค่าเริ่มต้น</button></sc-if></div></article></sc-for></div></sc-if>
+<div class="lr-frequency-note"><b>การควบคุมการแจ้งเตือน</b><span>ไม่แจ้งซ้ำภายในช่วงเวลาที่กำหนด และหากระดับลดลงแต่ยังเข้าเกณฑ์จะไม่แจ้งซ้ำ ระดับเท่าเดิมหรือสูงขึ้นจะแจ้งซ้ำได้ตามความถี่ที่ตั้งไว้</span></div>
+<div class="lr-freq-actions"><span class="lr-freq-summary">{{frequencySummary}}</span><button class="lr-freq-save" disabled="{{frequencySaveDisabled}}" onClick="{{saveFrequency}}">บันทึกการตั้งค่า</button></div>
+</section></sc-if>
+<sc-if value="{{showRules}}" hint-placeholder-val="{{false}}"><section class="lr-card" aria-label="ค้นหาและกรองกฎ">
 <div class="lr-bar2">
 <label for="lr-q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">ค้นหา</label>
 <div class="lr-srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="lr-q" type="search" placeholder="ค้นหาชื่อกฎ / กลุ่มไลน์" value="{{q}}" onInput="{{setQ}}"></div>
@@ -529,7 +557,7 @@ body{margin:0;background:#f4f4f5}
 <th scope="col" style="width: 16%;" aria-sort="{{ariaGroup}}"><button class="{{sortGroupCls}}" onClick="{{sortGroup}}">Line Group<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="{{iconGroup}}"></path></svg></button></th>
 <th scope="col" style="width: 9%;">สถานี</th>
 <th scope="col" style="width: 11%;">ช่วงเวลา</th>
-<th scope="col" style="width: 250px;">การแจ้งเตือน</th>
+<th scope="col" style="width: 300px;">เงื่อนไขการแจ้งเตือน</th>
 <th scope="col" style="width: 120px;">สถานะ</th>
 <th scope="col" style="width: 80px; text-align: center;">จัดการ</th>
 </tr></thead>
@@ -542,9 +570,9 @@ body{margin:0;background:#f4f4f5}
 <td class="lr-num">{{r.st}} สถานี</td>
 <td class="lr-num">{{r.time}}</td>
 <td class="lr-tc"><div class="{{r.tcwCls}}" tabindex="{{r.tabIdx}}" aria-label="{{r.tagsAria}}">
-<div class="{{r.tagsCls}}" data-rule-tags="{{r.id}}"><sc-for list="{{r.tags}}" as="t" hint-placeholder-count="2"><span class="{{t.cls}}"><i></i>{{t.label}}</span></sc-for></div>
+<div class="{{r.tagsCls}}" data-rule-tags="{{r.id}}"><sc-for list="{{r.tags}}" as="t" hint-placeholder-count="2"><span class="{{t.cls}}" style="{{t.vars}}"><i></i>{{t.label}}</span></sc-for></div>
 <sc-if value="{{r.more}}" hint-placeholder-val="{{false}}"><span class="lr-more" aria-hidden="true">+{{r.more}}</span></sc-if>
-<sc-if value="{{r.more}}" hint-placeholder-val="{{false}}"><div class="lr-tip" role="tooltip"><p>การแจ้งเตือนทั้งหมด ({{r.tagCount}})</p><sc-for list="{{r.tags}}" as="t" hint-placeholder-count="3"><span class="{{t.cls}}" style="align-self: flex-start;"><i></i>{{t.label}}</span></sc-for></div></sc-if>
+<sc-if value="{{r.more}}" hint-placeholder-val="{{false}}"><div class="lr-tip" role="tooltip"><p>เงื่อนไขทั้งหมด ({{r.tagCount}})</p><sc-for list="{{r.tags}}" as="t" hint-placeholder-count="3"><span class="{{t.cls}}" style="{{t.vars}};align-self:flex-start"><i></i>{{t.label}}</span></sc-for></div></sc-if>
 </div></td>
 <td><button class="{{r.stCls}}" role="switch" aria-checked="{{r.on}}" aria-label="{{r.stAria}}" onClick="{{r.toggle}}"><span class="lr-tg"></span>{{r.stLabel}}</button></td>
 <td class="lr-kc"><div class="lr-kw">
@@ -566,7 +594,7 @@ body{margin:0;background:#f4f4f5}
 <span>กำลังแสดง <b>{{from}}</b> ถึง <b>{{to}}</b> จาก <b>{{total}}</b> รายการ</span>
 <nav class="lr-pg" aria-label="แบ่งหน้า"><button class="lr-pb" aria-label="หน้าก่อน" disabled="{{true}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button><button class="lr-pb on" aria-current="page">1</button><button class="lr-pb" aria-label="หน้าถัดไป" disabled="{{true}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></nav>
 </div>
-</section>
+</section></sc-if>
 </main>
 
 <sc-if value="{{quotaOpen}}" hint-placeholder-val="{{false}}"><div class="lr-scrim" onClick="{{toggleQuota}}"></div></sc-if>
@@ -583,28 +611,32 @@ body{margin:0;background:#f4f4f5}
 </section>
 
 <section class="cr-sec" aria-labelledby="cr-s2">
-<div class="cr-sh"><span class="cr-n">2</span><div><h3 id="cr-s2" class="cr-st">ขอบเขตพื้นที่</h3><p class="cr-ss">เลือกกลุ่มน้ำและสถานี เพื่อส่งเตือนเมื่อมีการตรวจจับสถานการณ์</p></div></div>
+<div class="cr-sh"><span class="cr-n">2</span><div><h3 id="cr-s2" class="cr-st">ขอบเขตพื้นที่</h3><p class="cr-ss">เริ่มต้นแสดงสถานีหลัก 70 สถานีในโครงการ ปภ. และเลือกสถานีจากหน่วยงานอื่นเพิ่มเติมได้</p></div></div>
 <span class="cr-l">รายการสถานีในขอบเขตที่เลือก <em>*</em></span>
 <div class="cr-box">
 <div class="cr-box-h">
+<div class="cr-wrap"><select class="cr-sel" aria-label="เลือกประเภทการตรวจวัด" onChange="{{cr.setStationType}}"><sc-for list="{{cr.stationTypeOpts}}" as="o" hint-placeholder-count="9"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select><svg class="ic r" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
 <div class="cr-wrap"><select class="cr-sel" aria-label="เลือกลุ่มแม่น้ำ" onChange="{{cr.setBasin}}"><sc-for list="{{cr.basinOpts}}" as="o" hint-placeholder-count="5"><option value="{{o.v}}" selected="{{o.on}}">{{o.l}}</option></sc-for></select><svg class="ic r" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
-<div class="cr-wrap"><svg class="ic l" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input class="cr-in ps" type="search" aria-label="ค้นหาชื่อสถานี / รหัสสถานี" placeholder="ค้นหาชื่อสถานี / รหัสสถานี" value="{{cr.sq}}" onInput="{{cr.setSq}}" disabled="{{cr.noBasin}}"></div>
+<div class="cr-wrap cr-filter-wide"><svg class="ic l" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input class="cr-in ps" type="search" aria-label="ค้นหาชื่อสถานี รหัสสถานี ตำบล อำเภอ หรือจังหวัด" placeholder="ค้นหาชื่อสถานี รหัสสถานี ตำบล อำเภอ หรือจังหวัด" value="{{cr.sq}}" onInput="{{cr.setSq}}"></div>
+<label class="cr-other cr-filter-wide"><input type="checkbox" checked="{{cr.includeOther}}" onChange="{{cr.toggleIncludeOther}}">รวมสถานีจากหน่วยงานอื่น</label>
+<sc-if value="{{cr.otherScopeError}}" hint-placeholder-val="{{false}}"><p class="cr-scope-error cr-filter-wide">{{cr.otherScopeError}}</p></sc-if>
 </div>
-<div class="cr-meta"><span>รายการสถานีในลุ่มน้ำที่เลือก</span><span style="display: flex; gap: 12px; align-items: center;"><sc-if value="{{cr.hasList}}" hint-placeholder-val="{{false}}"><button class="cr-lk" onClick="{{cr.toggleAll}}">{{cr.allLabel}}</button></sc-if><span>ทั้งหมด {{cr.listCount}} สถานี</span></span></div>
-<sc-if value="{{cr.noBasin}}" hint-placeholder-val="{{true}}"><p class="cr-empty">กรุณาเลือกลุ่มแม่น้ำก่อน</p></sc-if>
-<sc-if value="{{cr.hasList}}" hint-placeholder-val="{{false}}"><div class="cr-list sbar"><sc-for list="{{cr.list}}" as="x" hint-placeholder-count="5"><label class="cr-row"><input type="checkbox" checked="{{x.on}}" onChange="{{x.toggle}}"><span class="cr-rt"><b>{{x.name}}</b><small>{{x.code}} · {{x.loc}}</small></span></label></sc-for></div></sc-if>
-<sc-if value="{{cr.noMatch}}" hint-placeholder-val="{{false}}"><p class="cr-empty">ไม่พบสถานีที่ค้นหา</p></sc-if>
+<div class="cr-meta"><span>รายการสถานีตามตัวกรอง</span><span style="display: flex; gap: 12px; align-items: center;"><sc-if value="{{cr.hasList}}" hint-placeholder-val="{{false}}"><button class="cr-lk" onClick="{{cr.toggleAll}}">{{cr.allLabel}}</button></sc-if><span>ทั้งหมด {{cr.listCount}} สถานี</span></span></div>
+<sc-if value="{{cr.hasList}}" hint-placeholder-val="{{false}}"><div class="cr-list sbar"><sc-for list="{{cr.list}}" as="x" hint-placeholder-count="70"><label class="cr-row"><input type="checkbox" checked="{{x.on}}" onChange="{{x.toggle}}"><span class="cr-rt"><span class="cr-station-title"><b>{{x.name}}</b><span class="{{x.sourceCls}}">{{x.sourceLabel}}</span></span><small>{{x.code}} · {{x.loc}}</small><small>หน่วยงาน: {{x.agency}}</small><span class="cr-type-badges"><sc-for list="{{x.typeBadges}}" as="t" hint-placeholder-count="9"><span class="cr-type-badge">{{t.label}}</span></sc-for></span></span><span class="{{x.supportCls}}" title="{{x.supportDetail}}">{{x.supportLabel}}</span></label></sc-for></div></sc-if>
+<sc-if value="{{cr.noMatch}}" hint-placeholder-val="{{false}}"><p class="cr-empty">ไม่พบสถานีที่ตรงกับเงื่อนไข</p></sc-if>
 </div>
 <div class="cr-box">
 <div class="cr-sbh"><div style="flex: 1;"><b style="display: block; font-size: 14px; line-height: 20px;">สถานีที่เลือกแล้ว</b><span class="cr-ss">แสดงรายการที่เลือกทั้งหมด (เลือกข้ามลุ่มน้ำได้)</span></div><span class="cr-cnt">{{cr.selCount}} สถานี</span></div>
+<sc-if value="{{cr.hasCoverage}}" hint-placeholder-val="{{false}}"><div class="cr-coverage"><span class="cr-coverage-title">ประเภทการตรวจวัดของสถานีที่เลือก</span><span class="cr-coverage-key"><span><i class="project"></i>สถานีโครงการ ปภ.</span><span><i class="external"></i>สถานีหน่วยงานอื่น</span></span><sc-for list="{{cr.coverage}}" as="x" hint-placeholder-count="9"><button type="button" class="{{x.cls}}" aria-pressed="{{x.open}}" onClick="{{x.toggle}}"><b>{{x.label}}</b><span>{{x.supported}} สถานี</span></button></sc-for><sc-if value="{{cr.hasHiddenTypes}}" hint-placeholder-val="{{true}}"><span class="cr-coverage-more">ไม่ต้องแสดงอีก {{cr.hiddenTypeCount}} ประเภทที่สถานีที่เลือกไม่รองรับ</span></sc-if></div></sc-if>
+<sc-if value="{{cr.hasCoverageDetail}}" hint-placeholder-val="{{false}}"><div class="cr-coverage-detail"><span>สถานีที่รองรับ {{cr.coverageDetailTitle}}</span><sc-if value="{{cr.hasCoverageProject}}" hint-placeholder-val="{{false}}"><div class="cr-detail-source"><span>สถานีในโครงการ ปภ.</span><div class="cr-detail-stations"><sc-for list="{{cr.coverageProject}}" as="x" hint-placeholder-count="5"><span class="cr-detail-station project">{{x.name}}<button class="cr-detail-remove" aria-label="{{x.aria}}" onClick="{{x.rm}}">×</button></span></sc-for></div></div></sc-if><sc-if value="{{cr.hasCoverageOther}}" hint-placeholder-val="{{false}}"><div class="cr-detail-source"><span>สถานีหน่วยงานอื่น</span><div class="cr-detail-stations"><sc-for list="{{cr.coverageOther}}" as="x" hint-placeholder-count="5"><span class="cr-detail-station external">{{x.name}}<button class="cr-detail-remove" aria-label="{{x.aria}}" onClick="{{x.rm}}">×</button></span></sc-for></div></div></sc-if></div></sc-if>
 <sc-if value="{{cr.noSel}}" hint-placeholder-val="{{true}}"><p class="cr-empty">ยังไม่ได้เลือกสถานี</p></sc-if>
-<sc-if value="{{cr.hasSel}}" hint-placeholder-val="{{false}}"><div class="cr-chips"><sc-for list="{{cr.sel}}" as="c" hint-placeholder-count="3"><span class="cr-chip">{{c.name}}<button aria-label="{{c.aria}}" onClick="{{c.rm}}"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></span></sc-for></div></sc-if>
 </div>
 <sc-if value="{{cr.eSt}}" hint-placeholder-val="{{false}}"><span class="cr-err">{{cr.eSt}}</span></sc-if>
+<sc-if value="{{cr.eSupport}}" hint-placeholder-val="{{false}}"><div class="cr-sum"><b>{{cr.eSupport}}</b><sc-for list="{{cr.unsupported}}" as="x" hint-placeholder-count="3"><div>{{x.name}} ({{x.code}}) · {{x.agency}}</div></sc-for></div></sc-if>
 </section>
 
 <section class="cr-sec" aria-labelledby="cr-s3">
-<div class="cr-sh"><span class="cr-n">3</span><div><h3 id="cr-s3" class="cr-st">เงื่อนไขการแจ้งเตือน</h3><p class="cr-ss">กำหนดช่วงเวลาและประเภทการแจ้งเตือนที่ต้องการใช้งาน</p></div></div>
+<div class="cr-sh"><span class="cr-n">3</span><div><h3 id="cr-s3" class="cr-st">เงื่อนไขการแจ้งเตือน</h3><p class="cr-ss">เลือกประเภทการตรวจวัด แล้วเลือกระดับแจ้งเตือนตามชื่อและสีของเกณฑ์กลาง</p></div></div>
 <div class="cr-in2">
 <div class="cr-tgrow"><div style="flex: 1;"><b style="display: block; font-size: 14px; line-height: 20px;">ช่วงเวลาแจ้งเตือน</b><span class="cr-ss">ถ้าปิด ระบบจะถือว่าส่งได้ตลอด 24 ชั่วโมง</span></div><button class="{{cr.timeTg}}" role="switch" aria-checked="{{cr.timeOn}}" aria-label="ช่วงเวลาแจ้งเตือน" onClick="{{cr.toggleTime}}"></button></div>
 <sc-if value="{{cr.timeOn}}" hint-placeholder-val="{{true}}">
@@ -617,10 +649,11 @@ body{margin:0;background:#f4f4f5}
 </sc-if>
 </div>
 <div class="cr-in2">
-<span class="cr-l">ประเภทการแจ้งเตือน <em>*</em></span>
-<div class="cr-types">
-<sc-for list="{{cr.types}}" as="t" hint-placeholder-count="3"><label class="{{t.cls}}" style="{{t.vars}}"><span class="cr-tt"><b>{{t.label}}</b><small>{{t.desc}}</small></span><input type="checkbox" checked="{{t.on}}" onChange="{{t.toggle}}"></label></sc-for>
-</div>
+<span class="cr-l">ประเภทการตรวจวัดและระดับที่ต้องการแจ้งเตือน <em>*</em></span>
+<p class="cr-ss" style="margin-top:2px">เลือกประเภทและระดับที่ต้องการเริ่มแจ้งเตือน ระบบจะประเมินตามชุดเกณฑ์ของแต่ละสถานี (Custom หรือเกณฑ์กลาง ปภ.)</p>
+<sc-if value="{{cr.hasMeasurements}}" hint-placeholder-val="{{true}}"><div class="cr-level-groups">
+<sc-for list="{{cr.conditionGroups}}" as="g" hint-placeholder-count="9"><section class="{{g.cls}}"><header><label class="cr-group-enable"><input type="checkbox" checked="{{g.on}}" onChange="{{g.toggle}}"><b>{{g.name}}</b></label><small>{{g.note}}</small></header><sc-if value="{{g.on}}" hint-placeholder-val="{{true}}"><div class="cr-levels"><sc-for list="{{g.levels}}" as="lv" hint-placeholder-count="5"><label class="{{lv.cls}}" style="{{lv.vars}}"><span class="cr-level-copy"><b>{{lv.name}}</b></span><input type="checkbox" checked="{{lv.on}}" disabled="{{lv.disabled}}" onChange="{{lv.toggle}}"></label></sc-for></div></sc-if></section></sc-for>
+</div></sc-if>
 <sc-if value="{{cr.eType}}" hint-placeholder-val="{{false}}"><span class="cr-err">{{cr.eType}}</span></sc-if>
 </div>
 <div class="cr-in2">

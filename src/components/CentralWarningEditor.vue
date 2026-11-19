@@ -54,7 +54,7 @@ function save() {
   <p>ใช้กับทุกสถานีที่เลือก Default ส่วนสถานี Custom ใช้เกณฑ์เฉพาะของตน</p>
   <small>ข้อมูลสาธิต · บันทึกในเบราว์เซอร์นี้</small></header>
   <div class="central-panel">
-  <div class="central-master-link"><span>ชื่อและสีของระดับเตือนภัย</span><a :href="masterNamesUrl" target="_blank" rel="noopener" aria-label="แก้ไขชื่อเกณฑ์และสี (เปิดในแท็บใหม่)">แก้ไขชื่อเกณฑ์และสี ↗</a></div>
+  <div class="central-master-link"><span>เกณฑ์การเฝ้าระวังภัย (ปภ.) · ชื่อและสีของระดับ</span><a :href="masterNamesUrl" target="_blank" rel="noopener" aria-label="แก้ไขชื่อเกณฑ์และสี (เปิดในแท็บใหม่)">แก้ไขชื่อเกณฑ์และสี ↗</a></div>
   <MeasurementTypes v-model="type" :disabled="dirty || otherDirty" />
 <MeasurementRules v-if="type!==0" :key="type" :type="type"  @dirty="otherDirty=$event" />
 <section v-else-if="draft" class="warning-form">

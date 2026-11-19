@@ -12,5 +12,5 @@ function syncTheme(){
 watch(()=>props.theme,syncTheme);
 </script>
 <template>
-  <iframe ref="frame" title="ชื่อเกณฑ์และระดับการแจ้งเตือนภัย" :src="url" @load="syncTheme"></iframe>
+  <iframe ref="frame" title="ตั้งค่าเกณฑ์ระดับการเตือนภัยกลาง" :src="url" @load="syncTheme"></iframe>
 </template>

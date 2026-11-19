@@ -5,8 +5,9 @@ export default class Component extends DCLogic {
     super(props);
     this.state = { page:'stations', q:'', basin:'', stat:'', criterion:'', menu:null, modal:null, hidden:{'G15006-2204':true,'G15006-4006':true}, toast:'' };
     if(globalThis.location?.hash === '#stations/master') this.state.page='master';
+    if(globalThis.location?.hash === '#stations/audit') this.state.page='audit';
     seedWarningExamples(this.stations());
-    if(globalThis.location?.hash === "#stations/default") this.state.page="central";
+    if(globalThis.location?.hash === "#stations/default") this.state.page="master";
     const direct = /^#stations\/(G\d+-\d+)\/thresholds$/.exec(globalThis.location?.hash || '');
     if (direct && this.stations().some(station => station.code === direct[1])) this.state.modal = direct[1];
   }
@@ -59,8 +60,8 @@ export default class Component extends DCLogic {
     return {
       isLight:theme==='light',isDark:theme!=='light',thLightCls:theme==='light'?'on':'',thDarkCls:theme!=='light'?'on':'',
       setLight:()=>setTheme('light'),setDark:()=>setTheme('dark'),rootCls:theme==='light'?'sx lt':'sx',theme,setThemeFn:setTheme,
-      goMap:()=>this.props.goMap?.(),masterCurrent:s.page,onBackoffice:s.page!=='line',onMaster:s.page==='master',stationNav:s.page==='stations'?'mi on':'mi',masterNav:s.page==='master'?'mi on':'mi',masterUrl:import.meta.env.BASE_URL+'master-data.html'+(masterQuery.size?'?'+masterQuery:''),onStations:s.page==='stations',onLine:s.page==='line',
-      onCentral:s.page==="central",centralNav:s.page==="central"?"mi on":"mi",goCentral:()=>this.setState({page:"central",menu:null,modal:null}),goMaster:()=>this.setState({page:'master',menu:null,modal:null}),goStations:()=>this.setState({page:'stations'}),goLine:()=>this.setState({page:'line',menu:null,modal:null}),
+      goMap:()=>this.props.goMap?.(),masterCurrent:s.page,onBackoffice:s.page!=='line',onMaster:s.page==='master',onAudit:s.page==='audit',stationNav:s.page==='stations'?'mi on':'mi',masterNav:s.page==='master'?'mi on':'mi',auditNav:s.page==='audit'?'mi on':'mi',masterUrl:import.meta.env.BASE_URL+'master-data.html'+(masterQuery.size?'?'+masterQuery:''),onStations:s.page==='stations',onLine:s.page==='line',
+      onCentral:false,centralNav:s.page==="master"?"mi on":"mi",goCentral:()=>this.setState({page:"master",menu:null,modal:null}),goMaster:()=>{globalThis.history?.replaceState(null,'','#stations/master');this.setState({page:'master',menu:null,modal:null})},goStations:()=>{globalThis.history?.replaceState(null,'','#stations');this.setState({page:'stations'})},goLine:()=>this.setState({page:'line',menu:null,modal:null}),goAudit:()=>{globalThis.history?.replaceState(null,'','#stations/audit');this.setState({page:'audit',menu:null,modal:null})},
       q:s.q,setQ:e=>this.setState({q:e.target.value}),
       basinOpts:[{v:'',l:'ลุ่มแม่น้ำ: ทั้งหมด',on:!s.basin},...Array.from(new Set(stations.map(x=>x.basin))).map(b=>({v:b,l:b,on:s.basin===b}))],
       setBasin:e=>this.setState({basin:e.target.value}),
