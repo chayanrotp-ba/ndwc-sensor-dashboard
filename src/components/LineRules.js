@@ -14,6 +14,17 @@ function frequencyShape(value) {
   };
 }
 
+function lineRuleAuditFields(rule) {
+  const selectedTypes = Object.keys(rule.conditions || {}).map(Number).filter(Number.isFinite);
+  return {
+    lineGroup: rule.group || '—',
+    stationCount: `${rule.st ?? rule.sel?.length ?? 0} สถานี`,
+    timeWindow: rule.time || '24 ชั่วโมง',
+    trigger: selectedTypes.length ? selectedTypes.map((type) => measurements[type]).filter(Boolean).join(', ') : 'ยังไม่ระบุ',
+    status: rule.on ? 'เปิดใช้งาน' : 'ปิดใช้งาน',
+  };
+}
+
 export default class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -88,13 +99,13 @@ export default class Component extends DCLogic {
     const current = this.state.measurementEnabled;
     const measurementEnabled = saveLineTypeState({ ...current, [type]: current[type] === false });
     this.setState({ measurementEnabled });
-    recordAudit({ item: 'ประเภทข้อมูล Sensor สำหรับ LINE OA', action: 'แก้ไข', target: measurements[type], detail: measurementEnabled[type] ? 'เปิดใช้งานประเภทข้อมูลสำหรับ LINE OA' : 'ปิดการใช้งานประเภทข้อมูลสำหรับ LINE OA' });
+    recordAudit({ item: 'ประเภทข้อมูล Sensor สำหรับ LINE OA', action: 'แก้ไข', target: measurements[type], detail: measurementEnabled[type] ? 'เปิดใช้งานประเภทข้อมูลสำหรับ LINE OA' : 'ปิดการใช้งานประเภทข้อมูลสำหรับ LINE OA', fields: { measurement: measurements[type], lineEnabled: measurementEnabled[type] ? 'เปิดใช้งาน' : 'ปิดใช้งาน', criterionSource: type === 0 ? 'เกณฑ์การเฝ้าระวังภัย (ปภ.)' : 'เกณฑ์กลาง' } });
   }
 
   setAllMeasurementTypes(enabled) {
     const measurementEnabled = saveLineTypeState(Object.fromEntries(LINE_SENSOR_TYPES.map((type) => [type, enabled])));
     this.setState({ measurementEnabled });
-    recordAudit({ item: 'ประเภทข้อมูล Sensor สำหรับ LINE OA', action: 'แก้ไข', target: 'ทุกประเภทตรวจวัด', detail: enabled ? 'เปิดใช้งานทุกประเภท' : 'ปิดการใช้งานทุกประเภท' });
+    recordAudit({ item: 'ประเภทข้อมูล Sensor สำหรับ LINE OA', action: 'แก้ไข', target: 'ทุกประเภทตรวจวัด', detail: enabled ? 'เปิดใช้งานทุกประเภท' : 'ปิดการใช้งานทุกประเภท', fields: { measurement: 'ทุกประเภทตรวจวัด', lineEnabled: enabled ? 'เปิดใช้งาน' : 'ปิดใช้งาน', criterionSource: 'ตามเกณฑ์กลางแต่ละประเภท' } });
   }
 
 
@@ -181,7 +192,7 @@ export default class Component extends DCLogic {
       tagsCls: (s.ov || {})[r.id] ? 'lr-tags ov' : 'lr-tags', tcwCls: (s.ov || {})[r.id] ? 'lr-tcw ov' : 'lr-tcw',
       tabIdx: (s.ov || {})[r.id] ? '0' : undefined, tagsAria: 'เงื่อนไขการแจ้งเตือน: ' + conditionTags.map((tag) => tag.label).join(', '),
       on: r.on, stLabel: r.on ? 'เปิด' : 'ปิด', stCls: r.on ? 'lr-st on' : 'lr-st', stAria: 'เปิดการแจ้งเตือน ' + r.name,
-      toggle: () => { this.setState({ rules: s.rules.map((q) => (q.id === r.id ? Object.assign({}, q, { on: !q.on }) : q)) }); recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'แก้ไข', target: r.name, detail: r.on ? 'ปิดการใช้งานกฎ' : 'เปิดการใช้งานกฎ' }); },
+      toggle: () => { const nextRule = Object.assign({}, r, { on: !r.on }); this.setState({ rules: s.rules.map((q) => (q.id === r.id ? nextRule : q)) }); recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'แก้ไข', target: r.name, detail: r.on ? 'ปิดการใช้งานกฎ' : 'เปิดการใช้งานกฎ', fields: lineRuleAuditFields(nextRule) }); },
       edAria: 'แก้ไข ' + r.name, delAria: 'ลบ ' + r.name,
       menu: s.rowMenu === r.id, kbCls: s.rowMenu === r.id ? 'lr-kb on' : 'lr-kb', kbAria: 'จัดการ ' + r.name,
       mnCls: i >= sorted.length - 2 && sorted.length > 3 ? 'lr-mn up' : 'lr-mn',
@@ -347,9 +358,9 @@ export default class Component extends DCLogic {
           if (!ok) { setF({ tried: true }); return; }
           const id = fm.editId || 'r' + (s.seq + 1);
           const rule = { id, sel: fm.sel.slice(), name: fm.name.trim(), group: fm.group, st: fm.sel.length, time: fm.timeOn ? fm.from + ' – ' + fm.to + (fm.overnight ? ' (+1)' : '') : '24 ชั่วโมง', conditions:Object.fromEntries(Object.entries(fm.conditions).map(([type,ids])=>[type,[...ids]])), on: fm.on };
-          if (fm.editId) { this.setState({ rules: s.rules.map((q) => (q.id === id ? rule : q)), form: null }); recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'แก้ไข', target: rule.name, basin: fm.basin || '-', detail: 'ปรับข้อมูลกฎและเงื่อนไขการแจ้งเตือน' }); say('บันทึกการแก้ไข "' + rule.name + '" แล้ว'); return; }
+          if (fm.editId) { this.setState({ rules: s.rules.map((q) => (q.id === id ? rule : q)), form: null }); recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'แก้ไข', target: rule.name, basin: fm.basin || '-', detail: 'ปรับข้อมูลกฎและเงื่อนไขการแจ้งเตือน', fields: lineRuleAuditFields(rule) }); say('บันทึกการแก้ไข "' + rule.name + '" แล้ว'); return; }
           this.setState({ rules: s.rules.concat(rule), seq: s.seq + 1, form: null, filter: 'all', q: '' });
-          recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'เพิ่ม', target: rule.name, basin: fm.basin || '-', detail: 'สร้างกฎการแจ้งเตือนใหม่' });
+          recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'เพิ่ม', target: rule.name, basin: fm.basin || '-', detail: 'สร้างกฎการแจ้งเตือนใหม่', fields: lineRuleAuditFields(rule) });
           say('สร้างกฎ "' + rule.name + '" แล้ว');
         }
       };
@@ -361,7 +372,7 @@ export default class Component extends DCLogic {
     const dl = dr ? {
       open: true, name: dr.name, group: dr.group, st: dr.st, isOn: dr.on,
       cancel: () => this.setState({ delId: null }),
-      confirm: () => { const prev = s.rules; this.setState({ rules: s.rules.filter((q) => q.id !== dr.id), delId: null }); recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'ลบ', target: dr.name, detail: 'ลบกฎการแจ้งเตือน' }); say('ลบกฎ "' + dr.name + '" แล้ว', prev); }
+      confirm: () => { const prev = s.rules; this.setState({ rules: s.rules.filter((q) => q.id !== dr.id), delId: null }); recordAudit({ item: 'กฎแจ้งเตือน LINE', action: 'ลบ', target: dr.name, detail: 'ลบกฎการแจ้งเตือน', fields: lineRuleAuditFields(dr) }); say('ลบกฎ "' + dr.name + '" แล้ว', prev); }
     } : { open: false };
     const frequency = frequencyShape(s.frequency);
     const updateFrequency = (patch) => this.setState({ frequency: { ...frequency, ...patch }, frequencyDirty: true });
@@ -433,7 +444,7 @@ export default class Component extends DCLogic {
           onUpdate: target.mode === 'on-update', onUpdateCls: target.mode === 'on-update' ? 'on' : '', setOnUpdate: () => updateBasinFrequency(basin, { mode: 'on-update' }), reset: () => resetBasinFrequency(basin) };
       }),
       frequencyDirty: s.frequencyDirty, frequencySaveDisabled: !s.frequencyDirty,
-      saveFrequency: () => { const saved = saveLineFrequencyState(frequency); this.setState({ frequency: saved, frequencyDirty: false, toast: 'บันทึกการตั้งค่าความถี่การแจ้งเตือนแล้ว' }); recordAudit({ item: 'ความถี่การแจ้งเตือน', action: 'แก้ไข', target: 'ค่าเริ่มต้นของระบบ', detail: frequency.mode === 'on-update' ? 'แจ้งเมื่อมีข้อมูลใหม่' : `ห้ามแจ้งซ้ำภายใน ${frequency.hours} ชั่วโมง` }); },
+      saveFrequency: () => { const saved = saveLineFrequencyState(frequency); this.setState({ frequency: saved, frequencyDirty: false, toast: 'บันทึกการตั้งค่าความถี่การแจ้งเตือนแล้ว' }); recordAudit({ item: 'ความถี่การแจ้งเตือน', action: 'แก้ไข', target: 'ค่าเริ่มต้นของระบบ', detail: frequency.mode === 'on-update' ? 'แจ้งเมื่อมีข้อมูลใหม่' : `ห้ามแจ้งซ้ำภายใน ${frequency.hours} ชั่วโมง`, fields: { scope: 'ทุกลุ่มน้ำ', frequency: frequency.mode === 'on-update' ? 'ตามข้อมูลใหม่' : `ทุก ${frequency.hours} ชั่วโมง`, repeatPolicy: 'ไม่แจ้งซ้ำเมื่อระดับลดลง' } }); },
       frequencySummary: frequency.mode === 'on-update' ? 'แจ้งเมื่อมีข้อมูลใหม่ (เฉพาะระดับเท่าเดิมหรือสูงขึ้น)' : `แจ้งซ้ำได้ทุก ${frequency.hours} ชั่วโมง เมื่อระดับเท่าเดิมหรือสูงขึ้น`,
       scrollFrequency: () => globalThis.document?.getElementById('lr-frequency')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
       goStations: () => { if (this.props && typeof this.props.goStations === 'function') this.props.goStations(); },
