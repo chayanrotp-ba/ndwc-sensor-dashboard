@@ -14,6 +14,14 @@ test('audit history starts with usable records and persists CRUD records first',
   assert.equal(saved[0].target, 'กลุ่มทดสอบ');
 });
 
+test('audit examples include add edit and delete for every active feature', () => {
+  const examples = loadAuditLog(storage());
+  AUDIT_TARGETS.forEach((target) => {
+    const actions = new Set(examples.filter((row) => row.item === target).map((row) => row.action));
+    assert.deepEqual(actions, new Set(['เพิ่ม', 'แก้ไข', 'ลบ']), `${target} is missing a CRUD example`);
+  });
+});
+
 test('audit target selector contains every mutable feature from the Station menu', () => {
   [
     'รายการสถานี Sensor',
@@ -31,6 +39,7 @@ test('every audit feature owns its own UI column set', () => {
   AUDIT_TARGETS.forEach((target) => assert.ok(auditColumnsFor(target).length > 0, `${target} has no audit columns`));
   assert.deepEqual(auditColumnsFor('รายการสถานี Sensor').map(([key]) => key), ['station', 'location', 'basin', 'frequency', 'owner', 'updatedAt', 'status', 'visible']);
   assert.ok(auditColumnsFor('ตั้งค่าเกณฑ์รายสถานี').some(([key]) => key === 'criterionSource'));
+  assert.ok(auditDetailFieldsFor('ตั้งค่าเกณฑ์รายสถานี').some(([key]) => key === 'criterionMap'));
   assert.ok(auditColumnsFor('กฎแจ้งเตือน LINE').some(([key]) => key === 'trigger'));
   assert.ok(auditDetailFieldsFor('ตั้งค่า Popup แจ้งเตือนข่าว').some(([key]) => key === 'icon'));
   assert.ok(auditDetailFieldsFor('รายการสถานี Sensor').some(([key]) => key === 'latitude'));
@@ -67,6 +76,12 @@ test('feature-specific audit fields are preserved for dynamic audit columns', ()
   const store = storage();
   recordAudit({ item: 'จัดการ Story Map', target: 'แผนที่ทดสอบ', fields: { link: 'example.test', image: 'อัปเดตรูปภาพ', status: 'เปิด' } }, store);
   assert.deepEqual(loadAuditLog(store)[0].fields, { link: 'example.test', image: 'อัปเดตรูปภาพ', status: 'เปิด' });
+});
+
+test('audit events preserve a before and after snapshot for the detail dialog', () => {
+  const store = storage();
+  recordAudit({ item: 'จัดการ Story Map', target: 'แผนที่ทดสอบ', changes: { status: { before: 'ปิด', after: 'เปิด' } } }, store);
+  assert.deepEqual(loadAuditLog(store)[0].changes, { status: { before: 'ปิด', after: 'เปิด' } });
 });
 
 test('central criteria events are grouped under the central setting with their selected criteria set', () => {
