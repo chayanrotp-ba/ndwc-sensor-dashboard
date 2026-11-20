@@ -4,7 +4,18 @@ export const SETTINGS_KEY = 'ndwc.station-thresholds.v2';
 export const defaultRain = () => Object.fromEntries(Object.entries(RAIN_CRITERIA).map(([key, value]) => [key, [...value.cuts]]));
 let saved;
 try { saved = JSON.parse(globalThis.localStorage?.getItem(SETTINGS_KEY) || 'null'); } catch { /* Use demo defaults if storage is unavailable. */ }
-export const thresholdSettings = reactive({ types: saved?.types || { rain: defaultRain() }, stations: saved?.stations || {} });
+// Older mockups can leave an incomplete or non-object record in Local Storage.
+// Normalise it before creating the reactive object so one stale browser value
+// cannot prevent the whole dashboard from mounting.
+const plainRecord = value => value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+const savedRecord = plainRecord(saved);
+const savedTypes = plainRecord(savedRecord.types);
+const savedStations = plainRecord(savedRecord.stations);
+export const thresholdSettings = reactive({
+  types: { ...savedTypes, rain: plainRecord(savedTypes.rain) },
+  stations: savedStations,
+});
+if (!Object.keys(thresholdSettings.types.rain).length) thresholdSettings.types.rain = defaultRain();
 // Seed one visible prototype example once; returning it to Default stays respected.
 thresholdSettings.customDemoSeeded = true;
 if (!saved?.customDemoSeeded) {
@@ -17,7 +28,7 @@ if (!saved?.customDemoSeeded) {
   try { globalThis.localStorage?.setItem(SETTINGS_KEY,JSON.stringify(thresholdSettings)); } catch { /* Keep the example usable in memory. */ }
 }
 // Upgrade prior demo data to the linked daily windows and lower hourly bounds.
-for (const values of [thresholdSettings.types.rain, ...Object.values(thresholdSettings.stations).map(s=>s.rain)]) {
+for (const values of [thresholdSettings.types.rain, ...Object.values(thresholdSettings.stations).map(s=>s?.rain)]) {
   if (!values?.['24h']) continue;
   values.today=[...values['24h']]; values.yesterday=[...values['24h']];
   if(values['1h']?.some((v,i)=>v>=values['24h'][i])) values['1h']=values['24h'].map(v=>Math.round(v*0.4*10000)/10000);

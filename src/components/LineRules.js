@@ -438,6 +438,7 @@ export default class Component extends DCLogic {
       scrollFrequency: () => globalThis.document?.getElementById('lr-frequency')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
       goStations: () => { if (this.props && typeof this.props.goStations === 'function') this.props.goStations(); },
       goAudit: () => { if (this.props && typeof this.props.goAudit === 'function') this.props.goAudit(); },
+      goRainReport: () => { if (this.props && typeof this.props.goRainReport === 'function') this.props.goRainReport(); },
       q: s.q, setQ: (e) => this.setState({ q: e.target.value }),
       filters: [['all', 'ทั้งหมด'], ['on', 'เปิดการแจ้งเตือน'], ['off', 'ปิดการแจ้งเตือน']].map(([v, l]) => ({ label: l, count: cnt[v], on: s.filter === v, cls: s.filter === v ? 'on' : '', pick: () => this.setState({ filter: v }) })),
       rows, empty: rows.length === 0,

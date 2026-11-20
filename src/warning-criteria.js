@@ -23,17 +23,23 @@ const warningLevels = [
 export function warningMaster(period='24h') {
   const periodData=globalThis.localStorage?.getItem('ndwc.rain-name-lists.v1');
   if (periodData) {
-    const rows=JSON.parse(periodData)?.warning?.[period];
-    if (!Array.isArray(rows)||rows.length<2||rows.some(row=>!row.id||!row.name||!/^#[0-9a-f]{6}$/i.test(row.color))) throw Error('รายการชื่อเกณฑ์ช่วงนี้ต้องมีอย่างน้อย 2 ระดับ พร้อมชื่อและสี');
-    return rows.map(row=>({...row}));
+    try {
+      const rows=JSON.parse(periodData)?.warning?.[period];
+      if (Array.isArray(rows)&&rows.length>=2&&!rows.some(row=>!row?.id||!row?.name||!/^#[0-9a-f]{6}$/i.test(row.color))) {
+        return rows.map(row=>({...row}));
+      }
+    } catch { /* Fall back to the built-in DDPM list below. */ }
   }
-  const raw=globalThis.localStorage?.getItem('ddpm_masterdata_levelnames_split_v5');
-  const rows=raw ? JSON.parse(raw)?.[0] : null;
-  if (!rows || rows.length===6 && rows.every(row=>row.name?.startsWith('ฝน'))) {
+  let rows=null;
+  try {
+    const raw=globalThis.localStorage?.getItem('ddpm_masterdata_levelnames_split_v5');
+    rows=raw ? JSON.parse(raw)?.[0] : null;
+  } catch { rows=null; }
+  if (!Array.isArray(rows) || rows.length===6 && rows.every(row=>row?.name?.startsWith('ฝน'))) {
     return warningLevels.map(level=>({...level}));
   }
-  if (!Array.isArray(rows) || rows.length<2 || rows.some(row=>!row.id || !row.name || !/^#[0-9a-f]{6}$/i.test(row.color))) {
-    throw Error('ข้อมูล Master ชื่อและสีเกณฑ์น้ำฝนไม่พร้อมใช้งาน');
+  if (rows.length<2 || rows.some(row=>!row?.id || !row?.name || !/^#[0-9a-f]{6}$/i.test(row.color))) {
+    return warningLevels.map(level=>({...level}));
   }
   const ordered = [...rows].reverse();
   const previousColors = ['#86efac','#facc15','#fb923c','#ef4444','#a855f7'];

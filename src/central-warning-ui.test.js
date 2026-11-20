@@ -22,3 +22,16 @@ test('central criteria opens warning colors and edits bounds, names and colors i
   assert.match(master, /warningSettings\.measurementRules/);
   assert.match(master, /localStorage\.setItem\(WARNING_STORAGE/);
 });
+
+test('all rainfall periods default to alerting only at preparedness and above', () => {
+  assert.match(master, /const RAIN_ALERT_DEFAULTS=\[false,false,true,true,true\]/);
+  assert.match(master, /function defaultWarningAlertEnabled/);
+  assert.match(master, /RAIN_ALERT_DEFAULTS\[index\]\?\?true/);
+});
+
+test('turning either alert state on or off requires an explicit confirmation', () => {
+  assert.match(master, /ยืนยันการเปิดการแจ้งเตือน/);
+  assert.match(master, /ยืนยันการปิดการแจ้งเตือน/);
+  assert.match(master, /function confirmWarningAlertChange\(\)/);
+  assert.match(master, /saveWarningAlert\(pending\.levelId,pending\.enabled\)/);
+});

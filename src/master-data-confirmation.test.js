@@ -7,13 +7,16 @@ const source = await readFile(new URL('../public/master-data.html', import.meta.
 test('central criteria edits require an explicit confirmation before persistence', () => {
   assert.match(source, /id="centralConfirmOverlay"/);
   assert.match(source, /ยืนยันการแก้ไขเกณฑ์การเฝ้าระวังภัย \(ปภ\.\)/);
-  assert.match(source, /ทุกสถานีที่ใช้เกณฑ์ Default/);
-  assert.match(source, /สถานีที่กำหนดเกณฑ์เฉพาะสถานี \(Custom\) จะไม่ถูกแก้ไข/);
+  assert.match(source, /function impactedCustomStations\(\)/);
+  assert.match(source, /const impacts=boundsChanged\?impactedCustomStations\(\):\[\]/);
+  assert.match(source, /รายการสถานีที่ได้รับผลกระทบ/);
+  assert.match(source, /เปลี่ยนจากเกณฑ์เฉพาะสถานี \(Custom\) มาใช้เกณฑ์กลาง \(Default\)/);
   assert.match(source, /function saveInline\(\)[\s\S]*?pendingCentralEdit=\{/);
-  assert.match(source, /function confirmCentralEdit\(\)\{[\s\S]*?if\(!persist\(\)\)return/);
+  assert.match(source, /function confirmCentralEdit\(\)\{[\s\S]*?removeImpactedCustomStations/);
+  assert.match(source, /if\(!persist\(\)\)\{[\s\S]*?restoreImpacts\?\.\(\)/);
   assert.match(source, /function cancelCentralConfirm\(\)[\s\S]*?cuts\.splice/);
   assert.match(source, /const isWarningCriteria=active===0&&rainCategory==='warning'/);
-  assert.match(source, /centralConfirmImpact'\)\.hidden=!isWarningCriteria/);
+  assert.match(source, /centralConfirmImpact'\)\.hidden=!hasImpactAssessment/);
   assert.match(source, /ยืนยันการแก้ไขเกณฑ์มาตรฐานอ้างอิง/);
   assert.match(source, /id="centralConfirmType"/);
   assert.match(source, /การเปลี่ยนแปลงนี้มีผลเฉพาะข้อความ Legend และสีที่ใช้แสดงผล โดยไม่เปลี่ยนแปลงค่าขอบช่วงของเกณฑ์มาตรฐานอ้างอิง/);
@@ -30,8 +33,8 @@ test('central warning table keeps compact columns and uses the deletion confirma
   assert.match(source, /id="warningAlertConfirmOverlay"/);
   assert.match(source, /ยืนยันการปิดการแจ้งเตือน/);
   assert.match(source, /การปิดการแจ้งเตือนจะทำให้ระบบไม่ใช้ระดับเกณฑ์นี้ในการประเมิน Trigger Alert สำหรับสถานีในโครงการ/);
-  assert.match(source, /function confirmWarningAlertOff\(\)[\s\S]*?saveWarningAlert\(pending\.levelId,false\)/);
-  assert.match(source, /function requestWarningAlertToggle\(levelId\)[\s\S]*?saveWarningAlert\(levelId,true\)/);
+  assert.match(source, /function confirmWarningAlertChange\(\)[\s\S]*?saveWarningAlert\(pending\.levelId,pending\.enabled\)/);
+  assert.match(source, /function requestWarningAlertToggle\(levelId\)[\s\S]*?const enabled=!isWarningAlertEnabled\(levelId\)/);
   assert.match(source, /สถานีตรวจวัดในโครงการ ไม่กระทบค่าตรวจวัด สีตามเกณฑ์ หรือสถานีหน่วยงานอื่น/);
   assert.match(source, /class="action-button icon-only delete"[\s\S]*?onclick="openDelete/);
   assert.match(source, />ยืนยันการลบ<\/button>/);

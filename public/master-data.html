@@ -39,7 +39,7 @@ if(window.self===window.top){const backoffice=new URL('./',location.href);backof
 .btn.danger:disabled{opacity:.4;cursor:not-allowed;filter:none}
 
 /* Confirmation before changing a central rule: Default stations are affected. */
-.central-confirm-context{border:1px solid #2563eb66;background:var(--primary-bg);border-radius:9px;padding:13px 14px;margin-bottom:14px}.central-confirm-context .label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.central-confirm-context .items-label{margin-top:12px}.central-confirm-context strong{display:block;font-size:15px;color:var(--text)}.central-confirm-context .detail{display:block;margin-top:5px;font-size:13px;color:var(--sub);line-height:1.55}.central-confirm-impact{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid #f59e0b66;background:#f59e0b12;border-radius:8px;color:var(--sub);font-size:13px;line-height:1.65}.central-confirm-impact b{color:var(--text)}.central-confirm-impact .impact-icon{flex:0 0 23px;width:23px;height:23px;border-radius:50%;background:#f59e0b;color:#111827;display:grid;place-items:center;font-weight:800}.central-confirm-note{margin:13px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+.central-confirm-context{border:1px solid #2563eb66;background:var(--primary-bg);border-radius:9px;padding:13px 14px;margin-bottom:14px}.central-confirm-context .label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.central-confirm-context .items-label{margin-top:12px}.central-confirm-context strong{display:block;font-size:15px;color:var(--text)}.central-confirm-context .detail{display:block;margin-top:5px;font-size:13px;color:var(--sub);line-height:1.55}.central-confirm-impact{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid #f59e0b66;background:#f59e0b12;border-radius:8px;color:var(--sub);font-size:13px;line-height:1.65}.central-confirm-impact b{color:var(--text)}.central-confirm-impact .impact-icon{flex:0 0 23px;width:23px;height:23px;border-radius:50%;background:#f59e0b;color:#111827;display:grid;place-items:center;font-weight:800}.central-impact-stations{margin-top:12px;border:1px solid var(--edge);border-radius:8px;background:var(--surface);overflow:hidden}.central-impact-stations-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:10px 12px;border-bottom:1px solid var(--edge);font-size:13px}.central-impact-stations-head strong{color:var(--text)}.central-impact-stations-head span{font-size:12px;color:var(--muted);white-space:nowrap}.central-impact-stations ul{margin:0;padding:0;list-style:none;max-height:154px;overflow:auto}.central-impact-stations li{padding:8px 12px;border-bottom:1px solid var(--edge);font-size:13px;color:var(--sub)}.central-impact-stations li:last-child{border-bottom:0}.central-impact-stations code{font:inherit;color:#93c5fd;margin-right:7px}.central-impact-stations small{color:var(--muted)}.central-confirm-note{margin:13px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
 
 /* Edit confirmation: Thai type-to-confirm field, within the editor */
 .edit-confirm{margin-top:18px;padding:14px;border:1px solid var(--edge);border-radius:9px;background:var(--surface)}
@@ -258,9 +258,9 @@ html,body{height:100%;overflow:hidden}
  </section>
 </main>
 </div>
-<div class="overlay" id="centralConfirmOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="centralConfirmTitle" aria-describedby="centralConfirmNote"><div class="modalhead"><h2 id="centralConfirmTitle">ยืนยันการแก้ไขเกณฑ์กลาง</h2><button type="button" class="btn secondary small" onclick="cancelCentralConfirm()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="central-confirm-context"><span class="label">ประเภทชุดเกณฑ์</span><strong id="centralConfirmType"></strong><span class="label items-label">รายการที่กำลังแก้ไข</span><strong id="centralConfirmScope"></strong><span class="detail" id="centralConfirmChange"></span></div><div class="central-confirm-impact" id="centralConfirmImpact"><span class="impact-icon">!</span><span><b>การเปลี่ยนแปลงนี้มีผลกับทุกสถานีที่ใช้เกณฑ์ Default</b><br>สถานีที่กำหนดเกณฑ์เฉพาะสถานี (Custom) จะไม่ถูกแก้ไข</span></div><p class="central-confirm-note" id="centralConfirmNote">ตรวจสอบชื่อ สี และค่าช่วงก่อนยืนยัน ระบบจะบันทึกการตั้งค่าเกณฑ์กลางในเบราว์เซอร์นี้</p></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="cancelCentralConfirm()">กลับไปแก้ไข</button><button type="button" class="btn" onclick="confirmCentralEdit()">ยืนยันการแก้ไข</button></div></div></div>
+<div class="overlay" id="centralConfirmOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="centralConfirmTitle" aria-describedby="centralConfirmNote"><div class="modalhead"><h2 id="centralConfirmTitle">ยืนยันการแก้ไขเกณฑ์กลาง</h2><button type="button" class="btn secondary small" onclick="cancelCentralConfirm()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="central-confirm-context"><span class="label">ประเภทชุดเกณฑ์</span><strong id="centralConfirmType"></strong><span class="label items-label">รายการที่กำลังแก้ไข</span><strong id="centralConfirmScope"></strong><span class="detail" id="centralConfirmChange"></span></div><div class="central-confirm-impact" id="centralConfirmImpact" hidden><span class="impact-icon">!</span><span id="centralConfirmImpactText"></span></div><section class="central-impact-stations" id="centralConfirmStations" hidden><div class="central-impact-stations-head"><strong>รายการสถานีที่ได้รับผลกระทบ</strong><span id="centralConfirmStationCount"></span></div><ul id="centralConfirmStationList"></ul></section><p class="central-confirm-note" id="centralConfirmNote">ตรวจสอบชื่อ สี และค่าช่วงก่อนยืนยัน ระบบจะบันทึกการตั้งค่าเกณฑ์กลางในเบราว์เซอร์นี้</p></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="cancelCentralConfirm()">กลับไปแก้ไข</button><button type="button" class="btn" onclick="confirmCentralEdit()">ยืนยันการแก้ไข</button></div></div></div>
 <div class="overlay" id="deleteOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteWarning"><div class="modalhead"><h2 class="danger-title" id="deleteTitle">ยืนยันการลบเกณฑ์</h2><button type="button" class="btn secondary small" onclick="closeDelete()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="delete-context"><span class="label">รายการที่ต้องการลบ</span><strong id="deleteName"></strong><span class="subtext" id="deleteType"></span></div><div class="delete-warning" id="deleteWarning">เมื่อลบแล้ว ระดับเกณฑ์นี้จะไม่ถูกใช้ในการประเมินของสถานีที่อ้างอิงเกณฑ์กลาง กรุณาตรวจสอบก่อนยืนยัน</div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeDelete()">ยกเลิก</button><button type="button" id="deleteConfirmButton" class="btn danger" onclick="confirmDelete()">ยืนยันการลบ</button></div></div></div>
-<div class="overlay" id="warningAlertConfirmOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="warningAlertConfirmTitle" aria-describedby="warningAlertConfirmNote"><div class="modalhead"><h2 id="warningAlertConfirmTitle">ยืนยันการปิดการแจ้งเตือน</h2><button type="button" class="btn secondary small" onclick="cancelWarningAlertConfirmation()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="central-confirm-context"><span class="label">ระดับเกณฑ์</span><strong id="warningAlertConfirmLevel"></strong><span class="label items-label">ประเภทการตรวจวัด</span><strong id="warningAlertConfirmScope"></strong></div><div class="central-confirm-impact"><span class="impact-icon">!</span><span id="warningAlertConfirmNote">การปิดการแจ้งเตือนจะทำให้ระบบไม่ใช้ระดับเกณฑ์นี้ในการประเมิน Trigger Alert สำหรับสถานีในโครงการ แต่ยังคงแสดงค่าตรวจวัดและสีตามเกณฑ์ปกติ</span></div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="cancelWarningAlertConfirmation()">ยกเลิก</button><button type="button" class="btn danger" onclick="confirmWarningAlertOff()">ยืนยันการปิด</button></div></div></div>
+<div class="overlay" id="warningAlertConfirmOverlay" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="warningAlertConfirmTitle" aria-describedby="warningAlertConfirmNote"><div class="modalhead"><h2 id="warningAlertConfirmTitle">ยืนยันการเปลี่ยนสถานะการแจ้งเตือน</h2><button type="button" class="btn secondary small" onclick="cancelWarningAlertConfirmation()" aria-label="ปิดหน้าต่าง">✕</button></div><div class="modalbody"><div class="central-confirm-context"><span class="label">ระดับเกณฑ์</span><strong id="warningAlertConfirmLevel"></strong><span class="label items-label">ประเภทการตรวจวัด</span><strong id="warningAlertConfirmScope"></strong></div><div class="central-confirm-impact"><span class="impact-icon">!</span><span id="warningAlertConfirmNote"></span></div></div><div class="modalfoot"><button type="button" class="btn secondary" onclick="cancelWarningAlertConfirmation()">ยกเลิก</button><button type="button" id="warningAlertConfirmAction" class="btn" onclick="confirmWarningAlertChange()">ยืนยัน</button></div></div></div>
 <div id="toast" class="toast" role="status"></div>
 <script src="./rainfall-legend-reference.js"></script>
 <script>
@@ -372,11 +372,58 @@ for(const category of ['quantity','warning']){
 }
 const WARNING_STORAGE='ndwc.warning-ddpm.v1';
 const AUDIT_LOG_STORAGE='ndwc.audit-log.v1';
+const STATION_DIRECTORY={
+ 'G15006-1801':['ที่ว่าการอำเภอเมืองชัยนาท','ชัยนาท'], 'G15006-1802':['ศูนย์พัฒนาเด็กเล็ก วัดฝาง','ชัยนาท'],
+ 'G15006-2201':['หอประชุม ม.17','จันทบุรี'], 'G15006-2202':['เทศบาลตำบลบ่อเวฬุ ม.2','จันทบุรี'],
+ 'G15006-2203':['ศาลา ม.6','จันทบุรี'], 'G15006-2204':['ศาลา ม.8','จันทบุรี'],
+ 'G15006-4001':['เทศบาลตำบลสะอาด','ขอนแก่น'], 'G15006-4002':['ที่ว่าการอำเภอน้ำพอง','ขอนแก่น'],
+ 'G15006-4006':['อบต.ป่าปอ','ขอนแก่น'], 'G15006-0512':['สถานีบ้านกอ','น่าน'],
+ 'G15006-0515':['โรงเรียนบ้านน้ำปาย','น่าน'], 'G15006-0821':['อบต.ปิงโค้ง','เชียงใหม่'],
+ 'G15006-5501':['องค์การบริหารส่วนตำบลขุนน่าน','น่าน']
+};
+// Default ของเกณฑ์ฝนต้องเหมือนกันทุกช่วงสะสม: ติดตาม/เฝ้าระวังปิด,
+// เตรียมรับมือ/อพยพ/ต้องอพยพเปิด เพื่อจำกัด Trigger Alert ที่ไม่จำเป็น.
+const RAIN_ALERT_DEFAULTS=[false,false,true,true,true];
 const warningValuePeriods=new Set(['1h','today','yesterday','24h','72h']);
 let warningSettings;
 try{warningSettings=JSON.parse(localStorage.getItem(WARNING_STORAGE)||'null')}catch{}
 warningSettings ??= {stations:{}};
 warningSettings.stations ??= {};
+function stationMeta(code){
+ const [name,province]=STATION_DIRECTORY[code]||[`สถานี ${code}`,'ไม่ระบุจังหวัด'];
+ return {code,name,province};
+}
+function customStationRulesForActive(){
+ if(active===0)return warningSettings.stations??{};
+ if(active===1)return warningSettings.temperature?.stations??{};
+ return warningSettings.measurementRules?.[active]?.stations??{};
+}
+function isCustomRuleAffected(record){
+ if(active===0){
+  const values=record?.values;
+  return Array.isArray(values?.[rainPeriod])||(rainPeriod==='yesterday'&&Array.isArray(values?.['24h']));
+ }
+ return Array.isArray(record?.cuts??record);
+}
+function impactedCustomStations(){
+ return Object.entries(customStationRulesForActive())
+  .filter(([,record])=>isCustomRuleAffected(record))
+  .map(([code])=>stationMeta(code))
+  .sort((a,b)=>a.code.localeCompare(b.code));
+}
+function removeImpactedCustomStations(impacts){
+ const rules=customStationRulesForActive();
+ const before={};
+ impacts.forEach(({code})=>{
+  if(!Object.hasOwn(rules,code))return;
+  before[code]=JSON.parse(JSON.stringify(rules[code]));
+  delete rules[code];
+ });
+ return ()=>Object.entries(before).forEach(([code,record])=>{rules[code]=record});
+}
+function boundsSummary(cuts,unit){
+ return cuts.length?`ค่าขอบช่วงใหม่ ${cuts.map(value=>`${value} ${unit}`).join(' / ')}`:'ไม่มีการกำหนดค่าขอบช่วง';
+}
 function defaultWarningCuts(period,count){
  const base=[10,20,35,90],factor=period==='1h'?0.4:period==='72h'?3:1;
  return Array.from({length:Math.max(0,count-1)},(_,index)=>{
@@ -405,7 +452,15 @@ function warningAlertLevels(){
  warningSettings.alertLevels[key] ??= {};
  return warningSettings.alertLevels[key];
 }
-function isWarningAlertEnabled(levelId){return warningAlertLevels()[levelId]!==false}
+function defaultWarningAlertEnabled(levelId){
+ if(active!==0)return true;
+ const index=rowsForActive().findIndex(row=>row.id===levelId);
+ return index<0?true:(RAIN_ALERT_DEFAULTS[index]??true);
+}
+function isWarningAlertEnabled(levelId){
+ const saved=warningAlertLevels()[levelId];
+ return typeof saved==='boolean'?saved:defaultWarningAlertEnabled(levelId);
+}
 function warningAlertScopeLabel(){return active===0?`${types[active]} · ${rainPeriods[rainPeriod]}`:types[active]}
 function saveWarningAlert(levelId,enabled){
  const levels=warningAlertLevels(),previous=levels[levelId];
@@ -424,24 +479,28 @@ function saveWarningAlert(levelId,enabled){
 }
 function requestWarningAlertToggle(levelId){
  if(centralEditing)return;
- if(!isWarningAlertEnabled(levelId)){
-  saveWarningAlert(levelId,true);
-  return;
- }
  const row=rowsForActive().find(item=>item.id===levelId);
- pendingWarningAlert={levelId,levelName:row?displayName(row):'ระดับเกณฑ์',scope:warningAlertScopeLabel()};
+ const enabled=!isWarningAlertEnabled(levelId);
+ pendingWarningAlert={levelId,enabled,levelName:row?displayName(row):'ระดับเกณฑ์',scope:warningAlertScopeLabel()};
  $('warningAlertConfirmLevel').textContent=pendingWarningAlert.levelName;
  $('warningAlertConfirmScope').textContent=pendingWarningAlert.scope;
+ $('warningAlertConfirmTitle').textContent=enabled?'ยืนยันการเปิดการแจ้งเตือน':'ยืนยันการปิดการแจ้งเตือน';
+ $('warningAlertConfirmNote').textContent=enabled
+  ? 'การเปิดการแจ้งเตือนจะทำให้ระบบนำระดับเกณฑ์นี้ไปใช้ในการประเมิน Trigger Alert สำหรับสถานีตรวจวัดในโครงการ และอาจมีการแจ้งเตือนผ่าน LINE OA ตามกฎที่เปิดใช้งาน'
+  : 'การปิดการแจ้งเตือนจะทำให้ระบบไม่ใช้ระดับเกณฑ์นี้ในการประเมิน Trigger Alert สำหรับสถานีในโครงการ แต่ยังคงแสดงค่าตรวจวัดและสีตามเกณฑ์ปกติ';
+ const action=$('warningAlertConfirmAction');
+ action.textContent=enabled?'ยืนยันการเปิด':'ยืนยันการปิด';
+ action.className=enabled?'btn':'btn danger';
  $('warningAlertConfirmOverlay').classList.add('open');
 }
 function cancelWarningAlertConfirmation(){
  pendingWarningAlert=null;
  $('warningAlertConfirmOverlay').classList.remove('open');
 }
-function confirmWarningAlertOff(){
+function confirmWarningAlertChange(){
  const pending=pendingWarningAlert;
  if(!pending)return;
- const saved=saveWarningAlert(pending.levelId,false);
+ const saved=saveWarningAlert(pending.levelId,pending.enabled);
  if(saved)cancelWarningAlertConfirmation();
 }
 const ruleUnits=['มม.','°C','%','ม./วินาที','องศา','hPa','ppm','µg/m³','µg/m³'];
@@ -608,7 +667,9 @@ function saveCentralEdit(){
  const rowsBefore=rows.map(row=>({...row})),cutsBefore=[...cuts];
  rows.splice(0,rows.length,...rows.map((row,index)=>({...row,name:drafts[index].name,color:drafts[index].color,displayName:undefined})));
  cuts.splice(0,cuts.length,...nextCuts);
- pendingCentralEdit={mode:'all',rows,rowsBefore,cuts,cutsBefore,drafts,scope:scopeLabel(),count:rows.length,change:`แก้ไขชื่อ สี และช่วงค่า ${rows.length} ระดับ`};
+ const boundsChanged=nextCuts.some((value,index)=>value!==cutsBefore[index]);
+ const impacts=boundsChanged?impactedCustomStations():[];
+ pendingCentralEdit={mode:'all',rows,rowsBefore,cuts,cutsBefore,drafts,scope:scopeLabel(),count:rows.length,boundsChanged,impacts,unit:rule.unit,change:`แก้ไขชื่อ สี และช่วงค่า ${rows.length} ระดับ`};
  openCentralConfirm();
 }
 function cancelInline(){inlineDraft=null;renderList()}
@@ -655,11 +716,22 @@ function openCentralConfirm(){
  const measurement=types[active];
  const period=active===0?rainPeriods[rainPeriod]:'';
  const warningItems=`${measurement}${period?` · ${period}`:''} · ${pendingCentralEdit.change}`;
- $('centralConfirmTitle').textContent=isReferenceCriteria?'ยืนยันการแก้ไขเกณฑ์มาตรฐานอ้างอิง':(isWarningCriteria?'ยืนยันการแก้ไขเกณฑ์การเฝ้าระวังภัย (ปภ.)':'ยืนยันการแก้ไขเกณฑ์กลาง');
+ const hasImpactAssessment=isWarningCriteria&&pendingCentralEdit.boundsChanged;
+ const impacts=pendingCentralEdit.impacts??[];
+ $('centralConfirmTitle').textContent=isReferenceCriteria?'ยืนยันการแก้ไขเกณฑ์มาตรฐานอ้างอิง':(hasImpactAssessment?'ยืนยันการแก้ไขเกณฑ์กลาง':(isWarningCriteria?'ยืนยันการแก้ไขเกณฑ์การเฝ้าระวังภัย (ปภ.)':'ยืนยันการแก้ไขเกณฑ์กลาง'));
  $('centralConfirmType').textContent=isReferenceCriteria?'เกณฑ์มาตรฐานอ้างอิง':(isWarningCriteria?'เกณฑ์การเฝ้าระวังภัย (ปภ.)':measurement);
  $('centralConfirmScope').textContent=isReferenceCriteria?`${measurement}${period?` · ${period}`:''} · แก้ไข ${pendingCentralEdit.count??1} รายการ`:(isWarningCriteria?warningItems:pendingCentralEdit.scope);
- $('centralConfirmChange').textContent=isWarningCriteria?'':pendingCentralEdit.change;
- $('centralConfirmImpact').hidden=!isWarningCriteria;
+ $('centralConfirmChange').textContent=hasImpactAssessment?boundsSummary(pendingCentralEdit.cuts,pendingCentralEdit.unit):(isWarningCriteria?'':pendingCentralEdit.change);
+ $('centralConfirmImpact').hidden=!hasImpactAssessment;
+ $('centralConfirmStations').hidden=!(hasImpactAssessment&&impacts.length);
+ if(hasImpactAssessment){
+  const stationCount=new Set(impacts.map(item=>item.code)).size;
+  $('centralConfirmImpactText').textContent=impacts.length
+   ? `การแก้ไขค่าขอบช่วงเกณฑ์กลางจะส่งผลต่อเกณฑ์รายสถานีจำนวน ${impacts.length} รายการ จาก ${stationCount} สถานี โดยรายการดังกล่าวจะเปลี่ยนจากเกณฑ์เฉพาะสถานี (Custom) มาใช้เกณฑ์กลาง (Default) กรุณาตรวจสอบก่อนยืนยัน`
+   : 'ไม่พบเกณฑ์รายสถานี (Custom) ที่สัมพันธ์กับประเภทการตรวจวัดและช่วงเวลาที่แก้ไข';
+  $('centralConfirmStationCount').textContent=`${stationCount} สถานี · ${impacts.length} รายการ`;
+  $('centralConfirmStationList').innerHTML=impacts.map(item=>`<li><code>${esc(item.code)}</code><strong>${esc(item.name)}</strong> <small>จ.${esc(item.province)}</small></li>`).join('');
+ }
  $('centralConfirmNote').textContent=isReferenceCriteria
   ? 'การเปลี่ยนแปลงนี้มีผลเฉพาะข้อความ Legend และสีที่ใช้แสดงผล โดยไม่เปลี่ยนแปลงค่าขอบช่วงของเกณฑ์มาตรฐานอ้างอิง'
   : isWarningCriteria
@@ -684,12 +756,29 @@ function cancelCentralConfirm(){
 }
 function confirmCentralEdit(){
  if(!pendingCentralEdit)return;
- if(!persist())return;
- addAuditLog(active===0&&rainCategory==='quantity'?'เกณฑ์มาตรฐานอ้างอิง':'เกณฑ์การเฝ้าระวังภัย (ปภ.)','แก้ไข',pendingCentralEdit.scope||scopeLabel(),pendingCentralEdit.change||'ปรับข้อมูลเกณฑ์กลาง');
- if(pendingCentralEdit.mode==='all'){centralEditing=false;centralDrafts=[];}
+ const pending=pendingCentralEdit;
+ const restoreImpacts=pending.boundsChanged?removeImpactedCustomStations(pending.impacts??[]):null;
+ if(!persist()){
+  restoreImpacts?.();
+  if(pending.mode==='all'){
+   pending.rows.splice(0,pending.rows.length,...pending.rowsBefore);
+   pending.cuts.splice(0,pending.cuts.length,...pending.cutsBefore);
+   centralEditing=true;centralDrafts=pending.drafts;
+  }else if(pending.index>=0){
+   pending.rows[pending.index]=pending.before;
+   if(pending.cuts&&pending.cutsBefore)pending.cuts.splice(0,pending.cuts.length,...pending.cutsBefore);
+  }
+  pendingCentralEdit=null;inlineDraft=pending.draft??null;
+  $('centralConfirmOverlay').classList.remove('open');renderList();
+  $('inlineError').textContent='บันทึกไม่สำเร็จ ระบบไม่ได้เปลี่ยนแปลงข้อมูล';
+  return;
+ }
+ addAuditLog(active===0&&rainCategory==='quantity'?'เกณฑ์มาตรฐานอ้างอิง':'เกณฑ์การเฝ้าระวังภัย (ปภ.)','แก้ไข',pending.scope||scopeLabel(),pending.change||'ปรับข้อมูลเกณฑ์กลาง');
+ if(pending.impacts?.length)addAuditLog('เกณฑ์การเฝ้าระวังภัย (ปภ.)','แก้ไข',pending.scope||scopeLabel(),`ปรับ ${pending.impacts.length} เกณฑ์ Custom จาก ${new Set(pending.impacts.map(item=>item.code)).size} สถานีให้ใช้ Default`);
+ if(pending.mode==='all'){centralEditing=false;centralDrafts=[];}
  pendingCentralEdit=null;inlineDraft=null;
  $('centralConfirmOverlay').classList.remove('open');
- renderList();toast('บันทึกเกณฑ์กลางเรียบร้อยแล้ว');
+ renderList();toast(pending.impacts?.length?`บันทึกเกณฑ์กลางแล้ว · ${pending.impacts.length} รายการเปลี่ยนเป็น Default`:'บันทึกเกณฑ์กลางเรียบร้อยแล้ว');
 }
 function moveLevel(id,targetIndex){
  if(inlineDraft)return;

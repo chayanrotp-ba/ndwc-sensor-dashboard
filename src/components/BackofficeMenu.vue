@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import CriteriaNavigation from './CriteriaNavigation.vue';
-const props = defineProps({goMap:Function,goStations:Function,goLine:Function,goAudit:Function,goCentral:Function,goMaster:Function,goLight:Function,goDark:Function,current:String});
+const props = defineProps({goMap:Function,goStations:Function,goLine:Function,goRainReport:Function,goAudit:Function,goCentral:Function,goMaster:Function,goLight:Function,goDark:Function,current:String});
 const menu=ref(null);
 function navigate(action){menu.value.open=false;action?.();}
 </script>
@@ -15,6 +15,7 @@ function navigate(action){menu.value.open=false;action?.();}
         <button :aria-current="current==='stations'?'page':undefined" @click="navigate(goStations)">รายการสถานี Sensor</button>
         <CriteriaNavigation :current="current" :go-master="()=>navigate(goMaster)" :go-central="goCentral?()=>navigate(goCentral):undefined" />
         <button :aria-current="current==='line'?'page':undefined" @click="navigate(goLine)">จัดการการแจ้งเตือนไลน์</button>
+        <button :aria-current="current==='rain-report'?'page':undefined" @click="navigate(goRainReport)">การออกรายงานปริมาณน้ำฝน</button>
         <button :aria-current="current==='audit'?'page':undefined" @click="navigate(goAudit)">ประวัติการเพิ่ม ลบ แก้ไข</button>
         <div class="bo-mobile-theme"><button v-if="goLight" @click="navigate(goLight)">☼ สว่าง</button><button v-if="goDark" @click="navigate(goDark)">☾ มืด</button></div>
       </nav>
