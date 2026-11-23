@@ -15,7 +15,7 @@ const cuts = computed(() => {
   catch { return []; }
 });
 const source = computed(() => warningCustom(props.context.code) ? 'Custom' : 'Default');
-const sourceLabel = computed(() => source.value === 'Custom' ? 'เกณฑ์การเฝ้าระวังภัยรายสถานี (Custom)' : 'เกณฑ์การเฝ้าระวังภัย (ปภ.)');
+const sourceLabel = computed(() => source.value === 'Custom' ? 'เกณฑ์การเฝ้าระวังภัยรายสถานี' : 'เกณฑ์การเฝ้าระวังภัย (ปภ.)');
 const result = computed(() => {
   if (!supported.value || !levels.value.length) return { available: false };
   try { return evaluateWarning(props.context.code, period.value, props.context.value, levels.value); }
@@ -31,14 +31,14 @@ const bands = computed(() => levels.value.map((level, index) => ({
 
 <template>
   <section class="criteria-comparison" aria-label="รายละเอียดเกณฑ์การเฝ้าระวังภัย">
-    <header class="comparison-header"><h3><span aria-hidden="true">▤</span> เกณฑ์การเฝ้าระวังภัยที่ใช้ประเมิน</h3></header>
+    <header class="comparison-header"><h3><span aria-hidden="true">▤</span> ช่วงค่าตามเกณฑ์เฝ้าระวังภัย (ปภ.) รายสถานี</h3></header>
     <div class="comparison-periods" role="group" aria-label="ช่วงฝนสะสมเพื่อเปรียบเทียบเกณฑ์">
       <span>ช่วงฝนสะสม</span><button v-for="period in context.periods" :key="period.key" type="button" :aria-pressed="period.selected" :class="{ selected: period.selected }" @click="period.pick">{{ period.label }}</button>
     </div>
     <div v-if="context.dailyGroup" class="comparison-periods comparison-daily" role="group" aria-label="ตัวเลือกภายในกลุ่ม 24 ชั่วโมง"><button v-for="period in context.dailyOptions" :key="period.key" type="button" :aria-pressed="period.selected" :class="{selected:period.selected}" @click="period.pick">{{period.label}}</button><p>{{ context.dailyDescription }} · เวลาอ้างอิงของข้อมูลสาธิต</p></div>
     <div class="comparison-observation"><span>ฝนสะสมที่ใช้ประเมิน · {{ context.periodLabel }}</span><strong>{{ amount }}</strong></div>
     <article class="comparison-row warning-source">
-      <header class="comparison-source"><span class="comparison-source-icon" aria-hidden="true">▥</span><div class="comparison-source-title"><strong>{{ sourceLabel }}</strong><span>{{ context.code }} · {{ source === 'Custom' ? 'ใช้ช่วงที่กำหนดเฉพาะสถานีนี้' : 'ใช้ช่วงเกณฑ์กลาง ปภ.' }}</span></div><span :class="['comparison-source-badge', source.toLowerCase()]">{{ source }}</span></header>
+      <header class="comparison-source"><span class="comparison-source-icon" aria-hidden="true">▥</span><div class="comparison-source-title"><strong>{{ sourceLabel }}</strong><span>{{ context.code }} · {{ source === 'Custom' ? 'ใช้ช่วงที่กำหนดเฉพาะสถานีนี้' : 'ใช้ช่วงเกณฑ์กลาง ปภ.' }}</span></div><span :class="['comparison-source-badge', source.toLowerCase()]">{{ source === 'Custom' ? 'เกณฑ์การเฝ้าระวังภัยรายสถานี' : 'เกณฑ์การเฝ้าระวังภัย (ปภ.)' }}</span></header>
       <div class="comparison-result">
         <div v-if="result.available"><span class="comparison-state">ผลประเมินตามเกณฑ์ที่ใช้งานจริง</span><strong :style="{color:result.level.color}">{{ result.level.name }}</strong></div>
         <div v-else><span class="comparison-state">ยังไม่มีผลประเมินจากเกณฑ์ ปภ.</span><strong>ไม่รองรับช่วงนี้</strong></div>

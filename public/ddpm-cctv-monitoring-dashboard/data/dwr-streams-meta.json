@@ -1,0 +1,13 @@
+{
+  "source": "Department of Water Resources NAT_STREAM",
+  "crs": "EPSG:4326",
+  "featureCount": 489807,
+  "mainCount": 21900,
+  "branchCount": 467907,
+  "generatedAt": "2026-08-31T10:24:55.052Z",
+  "basins": {
+    "09": 40604,
+    "08": 29229,
+    "04": 30005
+  }
+}

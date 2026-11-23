@@ -21,8 +21,30 @@ export default class Component extends DCLogic {
     } catch (e) {}
   }
   componentDidMount() {
+    // The rainfall overview embeds only the existing map canvas.  Fit the
+    // original 1920×1080 scene around its map region instead of its full UI
+    // chrome, so the map fills the left dashboard pane without empty space.
+    this.mapEmbed = new URLSearchParams(window.location.search).get('embed') === 'map';
     this.fit = () => {
       const w = window.innerWidth || 1920, h = window.innerHeight || 1080;
+      if (this.mapEmbed) {
+        const map = { x: 393, y: 169, w: 905, h: 887 };
+        // Contain the whole original map panel.  This preserves its legend,
+        // top-right controls and minimap instead of cropping them away.
+        const k = Math.min(w / map.w, h / map.h);
+        const f = {
+          k,
+          dw: 0,
+          x: Math.round((w - map.w * k) / 2 - map.x * k),
+          // Pin the map to the top of the split view.  Centering it in a
+          // tall pane created an empty band above the map and separated the
+          // controls from the dashboard header.
+          y: Math.round(-map.y * k),
+        };
+        const o = this.state.fit;
+        if (!o || Math.abs(o.k - f.k) > 0.0005 || o.x !== f.x || o.y !== f.y || o.dw !== f.dw) this.setState({ fit: f });
+        return;
+      }
       const k = Math.min(w / 1920, h / 1080);
       const dw = Math.max(0, Math.floor(w / k - 1920));
       const f = { k, dw, x: dw ? 0 : Math.round((w - 1920 * k) / 2), y: Math.round((h - 1080 * k) / 2) };
@@ -30,10 +52,10 @@ export default class Component extends DCLogic {
       if (!o || Math.abs(o.k - f.k) > 0.0005 || o.x !== f.x || o.y !== f.y || o.dw !== f.dw) this.setState({ fit: f });
     };
     this.fit();
-    this.scheduleToasts();
+    if (!this.mapEmbed) this.scheduleToasts();
     this.attachWheel();
     window.addEventListener('resize', this.fit);
-    this.onKey = (e) => { if (e.key !== 'Escape') return; if (this.state.ssOpen) { this.setState({ ssOpen: false }); return; } if (this.state.dd) { this.setState({ dd: null }); return; } if (this.state.inbox) this.setState({ inbox: false }); else if (this.state.mOpen) this.setState({ mOpen: false }); else if (this.state.lyOpen) this.setState({ lyOpen: false }); else if (this.state.tw) this.setState({ tw: null }); else if (this.state.bmOpen) this.setState({ bmOpen: false }); else if (this.state.hist) this.setState({ hist: null }); else if (this.state.qr) this.setState({ qr: false }); else if (this.state.st) this.setState({ st: null }); };
+    this.onKey = (e) => { if (e.key !== 'Escape') return; if (this.state.dashboardMenu) { this.setState({ dashboardMenu: false }); return; } if (this.state.ssOpen) { this.setState({ ssOpen: false }); return; } if (this.state.dd) { this.setState({ dd: null }); return; } if (this.state.inbox) this.setState({ inbox: false }); else if (this.state.mOpen) this.setState({ mOpen: false }); else if (this.state.lyOpen) this.setState({ lyOpen: false }); else if (this.state.tw) this.setState({ tw: null }); else if (this.state.bmOpen) this.setState({ bmOpen: false }); else if (this.state.hist) this.setState({ hist: null }); else if (this.state.qr) this.setState({ qr: false }); else if (this.state.st) this.setState({ st: null }); };
     window.addEventListener('keydown', this.onKey);
   }
 
@@ -61,7 +83,7 @@ export default class Component extends DCLogic {
 
   constructor(props) {
     super(props);
-    this.state = { theme: 'dark', crit: 'own', dpmSummary: true, dpmLevel: 'all', amp: '', tam: '', zi: 0, zc: null, hl: true, basin: '', inbox: false, ibTab: 'all', ibType: 'all', ibQuery: '', readIds: {}, gone: {}, lyOwn: true, lyTw: true, nocl: false, layHid: { runoff: true, dam: true, vil: true }, rainExp: true, lyOpen: false, pnl: null, cctvOff: true, agDd: true, damDd: false, exB: false, exP: false, exA: false, exW: false, exR: false, wx: false, wxVar: 'cloud', rainObs: false, rainT: 2, rainFc: false, radar: false, mp: {}, bsel: {}, psel: {}, tw: null, metric: 'rain', mOpen: false, stAll: false, basemap: 'dark', bmOpen: false, hr: false, screen: globalThis.location?.hash.startsWith('#stations') ? 'admin' : 'map', period: 'd1', hidden: {}, legend: true, page: 1, size: 10, sel: null, tip: null, menu: false, prov: '' };
+    this.state = { theme: 'dark', crit: 'own', dpmSummary: true, dpmLevel: 'all', amp: '', tam: '', zi: 0, zc: null, hl: true, basin: '', inbox: false, ibTab: 'all', ibType: 'all', ibQuery: '', readIds: {}, gone: {}, lyOwn: true, lyTw: true, nocl: false, layHid: { runoff: true, dam: true, vil: true }, rainExp: true, lyOpen: false, pnl: null, cctvOff: false, cctv: null, agDd: true, damDd: false, exB: false, exP: false, exA: false, exW: false, exR: false, wx: false, wxVar: 'cloud', rainObs: false, rainT: 2, rainFc: false, radar: false, mp: {}, bsel: {}, psel: {}, tw: null, metric: 'rain', mOpen: false, stAll: false, basemap: 'dark', bmOpen: false, hr: false, screen: globalThis.location?.hash.startsWith('#stations') ? 'admin' : 'map', period: 'd1', hidden: {}, legend: true, page: 1, size: 10, sel: null, tip: null, menu: false, prov: '' };
   }
 
   data() {
@@ -918,7 +940,10 @@ export default class Component extends DCLogic {
     let nums = pages <= 5 ? Array.from({ length: pages }, (_, i) => i + 1) : (page <= 3 ? [1, 2, 3, 'gap'] : [1, 'gap', page, 'gap']);
     const pageBtns = nums.map((n) => (n === 'gap' ? { n: '...', cls: 'ex-pb', gap: true, cur: undefined, pick: null } : { n, cls: n === page ? 'ex-pb on' : 'ex-pb', gap: false, cur: n === page ? 'page' : undefined, pick: () => this.setState({ page: n }) }));
     const dpmById = Object.fromEntries(dpmRows.map((row) => [row.id, row]));
-    const dpmTableSource = s.dpmLevel === 'all' ? sorted : sorted.filter((row) => dpmById[row[0]]?.level.id === s.dpmLevel);
+    // The homepage summary must list only stations that actually matched the
+    // active warning-period/search/agency filters; the regular `sorted` list
+    // also contains stations below the operational warning threshold.
+    const dpmTableSource = sorted.filter((row) => dpmById[row[0]] && (s.dpmLevel === 'all' || dpmById[row[0]].level.id === s.dpmLevel));
     const dpmTablePagesN = Math.max(1, Math.ceil(dpmTableSource.length / s.size));
     const dpmTablePage = Math.min(s.page, dpmTablePagesN);
     const dpmTableRows = dpmTableSource.slice((dpmTablePage - 1) * s.size, dpmTablePage * s.size).map(makeStationRow).map((row) => {
@@ -1004,9 +1029,14 @@ export default class Component extends DCLogic {
       ['เขื่อนกิ่วลม', 'M', 700, 120, 71], ];
     // sample CCTV cameras — kind: run (water-level station) / dam
     const CAMS = [
-      ['CCTV ระดับน้ำ · ท่าน้ำนนทบุรี', 'run', 853, 655, 1], ['CCTV ระดับน้ำ · บางไทร', 'run', 814, 310, 0],
-      ['CCTV ระดับน้ำ · แม่น้ำยม ร้องกวาง', 'run', 824, 62, 3], ['CCTV ระดับน้ำ · แม่น้ำวัง', 'run', 703, 166, 2],
-      ['CCTV ระดับน้ำ · สมุทรปราการ', 'run', 853, 640, 4]
+      // Keep camera points spread across the province view; these are virtual
+      // map coordinates (not screen pixels) and intentionally avoid stacking
+      // on the same rainfall station pins.
+      ['CCTV ระดับน้ำ · ท่าน้ำนนทบุรี', 'run', 545, 410, 1],
+      ['CCTV ระดับน้ำ · บางไทร', 'run', 735, 275, 0],
+      ['CCTV ระดับน้ำ · แม่น้ำยม ร้องกวาง', 'run', 930, 520, 3],
+      ['CCTV ระดับน้ำ · แม่น้ำวัง', 'run', 1115, 330, 2],
+      ['CCTV ระดับน้ำ · สมุทรปราการ', 'run', 1260, 700, 4],
     ];
     const damCol = (p) => p > 100 ? '#9333ea' : p >= 81 ? '#2563eb' : p >= 51 ? '#22c55e' : p >= 31 ? '#f59e0b' : '#ef4444';
     const damBand = (p) => p > 100 ? 'เกินความจุ' : p >= 81 ? 'น้ำมาก' : p >= 51 ? 'ปกติ' : p >= 31 ? 'น้ำน้อย' : 'น้ำน้อยวิกฤต';
@@ -1033,10 +1063,24 @@ export default class Component extends DCLogic {
       const p = mkMark(o[1], o[2]); if (!onScreen(p[0], p[1])) return null;
       return Object.assign({ cls: 'ex-mk mk-run', style: 'left: ' + p[0] + 'px; top: ' + p[1] + 'px; --mc: ' + runCol(o[3]) + ';', label: o[0] + ' · ระดับ ' + o[3] + '% ของตลิ่ง (' + runBand(o[3]) + ')' }, tipAt(p[0], p[1], o[0] + ' · ' + o[3] + '% · ' + runBand(o[3])));
     }).filter(Boolean) : [];
+    // Keep CCTV pins readable even when a rainfall station already occupies a
+    // nearby coordinate. Pick the candidate with the greatest clearance from
+    // all visible pins and previously placed cameras.
+    const occupiedPins = pins.map((pin) => [pin.sx, pin.sy]).concat(twAll.map((pin) => [pin.x, pin.y]));
+    const placedCameras = [];
+    const placeCamera = (base) => {
+      const offsets = [[0, 0], [34, -22], [-34, -22], [42, 28], [-42, 28], [0, -48], [0, 48], [58, 0], [-58, 0], [82, -54], [-82, -54], [82, 54], [-82, 54], [0, -86], [0, 86]];
+      const candidates = offsets.map(([ox, oy]) => [base[0] + ox, base[1] + oy]).filter(([x, y]) => onScreen(x, y));
+      const score = ([x, y]) => Math.min(...occupiedPins.concat(placedCameras).map(([px, py]) => Math.hypot(x - px, y - py)).concat([999]));
+      const chosen = candidates.sort((a, b) => score(b) - score(a))[0] || base;
+      placedCameras.push(chosen);
+      return chosen;
+    };
     const camPins = (s.dd || s.st || s.cctvOff ? [] : CAMS).filter((c) => !hid['cam:' + c[1]]).map((c) => {
-      const p = mkMark(c[2], c[3]); if (!onScreen(p[0], p[1])) return null;
+      const p = placeCamera(mkMark(c[2], c[3])); if (!onScreen(p[0], p[1])) return null;
       const CL = this.cctvLv()[c[4] || 0];
-      return Object.assign({ cls: 'ex-mk mk-cam c-' + c[1], style: 'left: ' + p[0] + 'px; top: ' + p[1] + 'px; --mc: ' + CL[1] + ';', label: c[0] + ' · ' + CL[0] }, tipAt(p[0], p[1], c[0] + ' · ' + CL[0]));
+      const label = c[0] + ' · ' + CL[0];
+      return Object.assign({ cls: 'ex-mk mk-cam c-' + c[1], style: 'left: ' + p[0] + 'px; top: ' + p[1] + 'px; --mc: ' + CL[1] + ';', label, open: () => this.setState({ cctv: { title: c[0], level: CL[0], color: CL[1], x: p[0], y: p[1] }, tip: null }) }, tipAt(p[0], p[1], label));
     }).filter(Boolean);
     const PERL = 'ฝน ' + (this.periods().find((q) => q[0] === s.period) || [0, '24 ชม.'])[1];
     const twShow = TW_ENABLED && isRain && rainOn && !s.dsf;
@@ -1207,6 +1251,9 @@ export default class Component extends DCLogic {
       damRows: [['L', 'ขนาดใหญ่'], ['M', 'ขนาดกลาง'], ['S', 'ขนาดเล็ก']].map(([sz, lb]) => ({ sz, label: lb, n: damN[sz], on: !hid['dam:' + sz],
         toggle: () => this.setState({ layHid: Object.assign({}, hid, { ['dam:' + sz]: !hid['dam:' + sz] }) }) })),
       camPins, damPins, runPins,
+      cctvOpen: !!s.cctv,
+      cctvTitle: s.cctv ? s.cctv.title : '', cctvLevel: s.cctv ? s.cctv.level : '', cctvColor: s.cctv ? s.cctv.color : '',
+      cctvCardStyle: s.cctv ? 'left: ' + s.cctv.x + 'px; top: ' + (s.cctv.y + 28) + 'px;' : '', cctvClose: () => this.setState({ cctv: null }),
       runoffOn: !hid.runoff, runoffN: RUNOFF.length,
       runoffToggle: () => this.setState({ layHid: Object.assign({}, hid, { runoff: !hid.runoff }) }),
       runLegend: [['ล้นตลิ่ง', '#9333ea'], ['น้ำมาก', '#f97316'], ['ปกติ', '#22c55e'], ['น้ำน้อย', '#38bdf8'], ['วิกฤต', '#94a3b8']].map(([t2, c]) => ({ t: t2, style: 'background: ' + c + ';' })),
@@ -1224,10 +1271,13 @@ export default class Component extends DCLogic {
       rootCls: (lt ? 'ex lt' : 'ex') + (s.hl ? ' hl' : '') + (s.hr ? ' hr' : '') + (wide ? ' wd' : '') + ' bm-' + s.basemap, leftHidden: !!s.hl, rightHidden: !!s.hr,
       hideRight: () => this.setState({ hr: true, tip: null }), showRight: () => this.setState({ hr: false, tip: null }), isLight: lt, isDark: !lt, themeLabel: lt ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง',
       toggleTheme: () => this.setState({ theme: lt ? 'dark' : 'light' }), theme: s.theme, setThemeFn: (v) => this.setState({ theme: v }),
-      onMap: s.screen === 'map', onReport: s.screen === 'report', onAdmin: s.screen === 'admin',
-      goReport: () => this.setState({ screen: 'report', menu: false, inbox: false, st: null, hist: null, qr: false }),
+      onMap: s.screen === 'map', onReport: s.screen === 'report', onDevices: s.screen === 'devices', onAdmin: s.screen === 'admin',
+      dashboardMenuOpen: !!s.dashboardMenu,
+      toggleDashboardMenu: () => this.setState({ dashboardMenu: !s.dashboardMenu }),
+      goReport: () => this.setState({ screen: 'report', dashboardMenu: false, menu: false, inbox: false, st: null, hist: null, qr: false }),
+      goDevices: () => this.setState({ screen: 'devices', dashboardMenu: false, menu: false, inbox: false, st: null, hist: null, qr: false }),
       goAdmin: () => this.setState({ screen: 'admin', menu: false, st: null, hist: null, qr: false }),
-      goMap: () => this.setState({ screen: 'map', menu: false }),
+      goMap: () => this.setState({ screen: 'map', dashboardMenu: false, menu: false }),
       menu: s.menu, toggleMenu: () => this.setState({ menu: !s.menu }), menuChev: s.menu ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6-6',
       prov: s.prov, setProv: (e) => this.setState({ prov: e.target.value, amp: '', tam: '', page: 1, ibLv: 'all' }),
       ...(() => {   // อำเภอ / ตำบล follow จังหวัด (and ลุ่มน้ำ); disabled until a province is chosen
@@ -1258,7 +1308,7 @@ export default class Component extends DCLogic {
       // The summary is an additive panel above the original station-table
       // controls. Its rows still use the same table contract as the standard
       // list: header, row content, history control, and pagination.
-      dpmSummary: !!(isRain && s.dpmSummary && s.crit === 'own'), notDpmSummary: !(isRain && s.dpmSummary && s.crit === 'own'), dpmPeriodLabel: dpmPeriod ? (WARNING_PERIODS[dpmPeriod] || '') : '', dpmLevels, dpmRows: dpmTableRows, dpmEmpty: dpmTableSource.length === 0, dpmTotal: dpmRows.length, dpmError, dpmUnsupported: !dpmPeriod, dpmPages: dpmTableBtns, dpmPrevDis: dpmTablePage <= 1, dpmNextDis: dpmTablePage >= dpmTablePagesN, dpmPrev: () => this.setState({ page: Math.max(1, dpmTablePage - 1) }), dpmNext: () => this.setState({ page: Math.min(dpmTablePagesN, dpmTablePage + 1) }),
+      dpmSummary: !!(isRain && s.dpmSummary && s.crit === 'own'), notDpmSummary: !(isRain && s.dpmSummary && s.crit === 'own'), dpmPeriodLabel: dpmPeriod ? (WARNING_PERIODS[dpmPeriod] || '') : '', dpmFilterHint: (() => { const parts = []; if ((s.lq || '').trim()) parts.push('ค้นหา “' + s.lq.trim() + '”'); if (s.agf) parts.push('หน่วยงาน ' + agLabel(s.agf)); if (s.dpmLevel !== 'all') parts.push('ระดับ ' + (dpmLevels.find((level) => level.id === s.dpmLevel)?.label || 'ที่เลือก')); return parts.length ? parts.join(' · ') + ' · ' + dpmTableSource.length + ' สถานี' : 'ทั้งหมด ' + dpmTableSource.length + ' สถานี'; })(), dpmLevels, dpmRows: dpmTableRows, dpmEmpty: dpmTableSource.length === 0, dpmTotal: dpmRows.length, dpmError, dpmUnsupported: !dpmPeriod, dpmPages: dpmTableBtns, dpmPrevDis: dpmTablePage <= 1, dpmNextDis: dpmTablePage >= dpmTablePagesN, dpmPrev: () => this.setState({ page: Math.max(1, dpmTablePage - 1) }), dpmNext: () => this.setState({ page: Math.min(dpmTablePagesN, dpmTablePage + 1) }),
       dpmAllOn: s.dpmLevel === 'all', dpmAllCls: s.dpmLevel === 'all' ? 'on' : '', dpmAllPick: () => this.setState({ dpmLevel: 'all', page: 1 }), openDpmSummary: () => this.setState({ crit: 'own', dpmSummary: true, dpmLevel: 'all', period: 'd1', hidden: {}, page: 1 }), closeDpmSummary: () => this.setState({ dpmSummary: false, dpmLevel: 'all' }),
       mLabel: met.label, mAria: 'ประเภทข้อมูล: ' + met.label, mOpen: !!s.mOpen, mChev: s.mOpen ? 'm18 15-6-6-6 6' : 'm6 9 6 6 6-6',
       toggleM: () => this.setState({ mOpen: !s.mOpen, dd: null }), closeM: () => this.setState({ mOpen: false }),

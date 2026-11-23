@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Mockup เมนูสืบค้นข้อมูลและสถานะอุปกรณ์สำหรับเจ้าหน้าที่เทคนิค">
+  <title>สืบค้นข้อมูลและสถานะอุปกรณ์ — DDPM CCTV Mockup</title>
+  <link rel="preconnect" href="https://js.arcgis.com">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.31/esri/themes/light/main.css">
+  <link rel="stylesheet" href="mockup.css">
+</head>
+<body class="mockup-body" data-page="monitor">
+  <main class="system-shell monitor-shell">
+    <section class="map-pane monitor-map" aria-label="แผนที่สถานีทั้งหมด">
+      <div class="map-fallback monitor-fallback" aria-hidden="true">
+        <svg viewBox="0 0 620 900" preserveAspectRatio="xMidYMid slice">
+          <defs><pattern id="monitorRoads" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><path d="M0 12H70 M0 54H70 M22 0V70" fill="none" stroke="#ddd8ce" stroke-width="1.4"/></pattern></defs>
+          <rect width="620" height="900" fill="#f4f2ec"/><rect width="620" height="900" fill="url(#monitorRoads)"/>
+          <path class="river-line" d="M314 22 C294 122 348 170 310 269 C284 334 336 405 303 497 C273 580 332 643 300 735 C284 787 310 839 327 886"/>
+          <g class="monitor-points"><circle class="online" cx="300" cy="136" r="9"/><circle class="warning" cx="359" cy="250" r="10"/><circle class="offline" cx="255" cy="358" r="9"/><circle class="online" cx="340" cy="470" r="9"/><circle class="online" cx="245" cy="596" r="9"/><circle class="warning" cx="358" cy="694" r="10"/><circle class="online" cx="309" cy="792" r="9"/></g>
+        </svg>
+      </div>
+      <div id="viewDiv" class="map-canvas" data-map-mode="monitor"></div>
+      <div class="map-loading-overlay" role="status" aria-live="polite">
+        <i aria-hidden="true"></i>
+        <b>กำลังโหลดแผนที่</b>
+        <span>กำลังเชื่อมต่อข้อมูลแผนที่และขอบเขตพื้นที่</span>
+      </div>
+      <div class="map-title-card surface"><span class="agency-mark">ปภ.</span><span><b>สถานีตรวจวัดทั้งหมด</b><small id="monitorMapSummary">ออนไลน์ 168 · ล่าช้า 0 · ออฟไลน์ 12 จุด</small></span></div>
+      <div class="map-tools surface"><button id="homeBtn" type="button">⌂</button><button id="zoomIn" type="button">＋</button><button id="zoomOut" type="button">−</button></div>
+      <div class="map-legend monitor-device-legend surface"><b>สถานะอุปกรณ์ · จุดที่มีพิกัด</b><span><img src="assets/cctv-markers/CCTV_WATER_LOW.png" alt="สัญลักษณ์สถานะออนไลน์">ออนไลน์ / อ่านค่าระดับน้ำได้</span><span><img src="assets/cctv-markers/CCTV_WATER_NONE.png" alt="สัญลักษณ์อ่านค่าน้ำไม่ได้">กล้องอ่านค่าน้ำไม่ได้</span><span><img src="assets/cctv-markers/CCTV_STATION_CAMERA_MAINTANANCE_LOW.png" alt="สัญลักษณ์กล้องออนไลน์หนึ่งตัว">กล้อง 1 ตัวมีสถานะออนไลน์</span><span><img src="assets/cctv-markers/CCTV_STATION_CAMERA_OFFLINE.png" alt="สัญลักษณ์กล้องขัดข้อง">กล้องทั้ง 2 ตัวติดเหตุขัดข้อง</span></div>
+      <div class="mock-label surface" id="monitorCoordinateNote">พิกัดอ้างอิงจาก CCTV สรุปจุด.xlsx</div>
+    </section>
+
+    <section class="content-pane monitor-content">
+      <header class="monitor-header">
+        <div><p>DATA QUERY & STATUS MONITOR</p><h1>สืบค้นข้อมูลและสถานะอุปกรณ์</h1><span>สำหรับทีมมอนิเตอร์ระบบและเจ้าหน้าที่เทคนิค</span></div>
+        <button class="export-button" id="exportCsv" type="button">⇩ ส่งออก CSV</button>
+      </header>
+
+      <nav class="monitor-tabs monitor-scope-tabs" aria-label="ขอบเขตสถานี">
+        <button class="active" type="button" data-monitor-mode="threshold" aria-selected="true">รายการทั้งหมดตามเกณฑ์ที่แจ้งเตือน <b id="allStationTabCount">180</b></button>
+        <button type="button" data-monitor-mode="region" aria-selected="false">รายการทั้งหมดตามภาค <b id="regionTabCount">5 ภาค</b></button>
+      </nav>
+
+      <section class="monitor-panel active">
+        <div class="monitor-filters">
+          <label class="search-control"><span>⌕</span><input id="monitorSearch" type="search" placeholder="ค้นหารหัสสถานี ชื่อ หรือจังหวัด"></label>
+          <select id="deviceStatus"><option value="all">ทุกสถานะ</option><option value="online">กล้องออนไลน์</option><option value="water-none">อ่านค่าน้ำไม่ได้</option><option value="delay">กล้อง 1 ตัวออนไลน์</option><option value="offline">กล้อง 2 ตัวขัดข้อง</option></select>
+          <select id="monitorRegion"><option value="all">ทุกภาค</option></select>
+          <select id="monitorProvince"><option value="all">ทุกจังหวัด</option></select>
+          <button id="monitorRefresh" type="button">↻ รีเฟรช</button>
+        </div>
+        <div class="monitor-overview-grid">
+          <article class="monitor-region-card">
+            <header><div><p id="monitorOverviewEyebrow">THRESHOLD OVERVIEW</p><h2 id="monitorOverviewTitle">สรุปสถานะตามเกณฑ์</h2></div><span id="monitorOverviewHint">เปลี่ยนตามภาคและจังหวัดที่เลือก</span></header>
+            <div class="monitor-region-chart">
+              <div class="monitor-region-donut" id="monitorRegionDonut"><div><b>180</b><span>สถานีทั้งหมด</span></div></div>
+              <div class="monitor-region-list" id="monitorRegionList"></div>
+            </div>
+          </article>
+          <article class="monitor-province-card">
+            <header><div><p>PROVINCE DISTRIBUTION</p><h2 id="monitorProvinceTitle">จังหวัดที่มีสถานีสูงสุด</h2></div><span id="monitorProvinceHint">ข้อมูลจริง 23 จังหวัด</span></header>
+            <div class="monitor-province-bars" id="monitorProvinceBars"></div>
+          </article>
+        </div>
+        <div class="monitor-live"><span class="pulse-dot"></span><b id="monitorConnectionText">กำลังเชื่อมต่อสถานี 180 จุด</b><small>ข้อมูลรายงานประจำวันที่ 2 ก.ย. 2569 · <time id="clock">--:--:--</time></small></div>
+        <div class="table-wrap monitor-station-table-wrap">
+          <table class="data-table monitor-station-table">
+            <thead><tr><th>รหัสสถานี</th><th>ชื่อสถานี</th><th>อำเภอ</th><th>ตำบล</th><th>จังหวัด</th><th>ภาค</th><th>สถานะกล้อง 1</th><th>สถานะกล้อง 2</th><th>ระดับน้ำ</th><th>ข้อมูลล่าสุด</th></tr></thead>
+            <tbody id="deviceTable"></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="deviceResult">แสดง 180 จาก 180 สถานี</span><span id="monitorDataSource">ที่มา: Daily Report CCTV - 02092569.xlsx</span></footer>
+      </section>
+    </section>
+
+    <nav class="footer-navigation surface" aria-label="เมนูหลัก">
+      <a href="index.html"><span>⌂</span><b>หน้าหลัก</b></a>
+      <a href="basin.html"><span>♒</span><b>เส้นทางน้ำ</b></a>
+      <a class="active" href="monitor.html" aria-current="page"><span>◕</span><b>มอนิเตอร์</b></a>
+    </nav>
+  </main>
+  <script src="data/onwr-basins-22.js"></script>
+  <script src="data/monitor-stations.js"></script>
+  <script src="data/monitor-coordinates.js"></script>
+  <script src="https://js.arcgis.com/4.31/"></script>
+  <script src="app.js"></script>
+</body>
+</html>

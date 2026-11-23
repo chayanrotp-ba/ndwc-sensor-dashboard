@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="DDPM Sensor Monitoring prototype based on existing CCTV dashboard. Mock data only.">
+<title>DDPM Sensor Monitoring · Prototype</title>
+<link rel="stylesheet" href="https://js.arcgis.com/4.31/esri/themes/light/main.css">
+<link rel="stylesheet" href="mockup.css">
+<style>
+:root{--p:#4e61f6;--line:#e6e9f0;--muted:#777f8f;--text:#273040}
+body{font-size:13px}
+[hidden]{display:none!important}
+.content-pane{padding:23px 22px 94px;background:#fff}
+.map-title-card{max-width:75%}
+.map-title-card .agency-logo{width:41px;height:41px;object-fit:contain}
+.map-title-card strong{display:block;color:#29324c;font-size:13px}
+.map-title-card small{font-size:9px}
+.map-fallback{background:#e8ecf0}
+.map-fallback .fallback-message{position:absolute;top:48%;left:12%;right:12%;background:#fff;border-radius:15px;padding:18px;text-align:center;box-shadow:0 6px 22px #33415524;font-size:12px}
+.map-extra{position:absolute;top:196px;right:17px;z-index:6;width:182px;border-radius:12px;padding:11px}
+.map-extra label{display:block;font-size:10px;font-weight:700;margin-bottom:4px}
+.map-extra select{width:100%;background:#f6f7fb;border:1px solid var(--line);border-radius:7px;padding:6px;font-size:11px}
+.map-extra .map-toggle{display:flex;align-items:center;gap:8px;margin-top:7px;font-size:11px;cursor:pointer}
+.map-extra input{accent-color:#4e61f6}
+.map-legend{min-width:208px}
+.map-legend span{font-size:10px}
+.mock-label{right:18px;bottom:18px}
+.footer-navigation{z-index:20}
+.footer-navigation button{min-width:90px;height:46px;border:0;border-radius:10px;background:transparent;color:#626879;padding:4px 10px;display:grid;justify-items:center;align-content:center;cursor:pointer}
+.footer-navigation button span{font-size:18px}
+.footer-navigation button b{font-size:9px}
+.footer-navigation button.active{background:#eef0ff;color:#293b9e}
+.prototype-flag{display:inline-flex;align-items:center;gap:5px;border:1px solid #f8dfaa;background:#fff8e9;color:#966b18;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:700}
+.prototype-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
+.prototype-head h1{font-size:21px;line-height:1.35;margin:5px 0}
+.prototype-head p{font-size:11px;color:var(--muted);margin:0;line-height:1.6}
+.kicker{font-size:10px;color:var(--p);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.now-chip{text-align:right;font-size:10px;color:var(--muted);white-space:nowrap}
+.now-chip strong{display:block;color:#344054;font-size:11px}
+.notice-strip{background:#f5f7ff;border:1px solid #e2e7fd;color:#505e88;padding:10px 12px;border-radius:10px;font-size:11px;margin-bottom:13px;line-height:1.7}
+.notice-strip.warn{background:#fff8ed;border-color:#f6e0b7;color:#835b1d}
+.control-card{padding:13px 14px}
+.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.input-field{min-width:0;display:block}
+.input-field > span{display:block;margin-bottom:5px;font-size:10px;font-weight:700;color:#626b7d}
+.input-field select,.input-field input{width:100%;padding:9px 11px;background:#fff;border:1px solid #dce1eb;border-radius:9px;color:#3e4758;font-size:12px;outline-color:#6371ea}
+.input-field.full{grid-column:1/-1}
+.button-line{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.action-btn{background:#fff;border:1px solid #dfe3eb;color:#3e4758;border-radius:8px;padding:8px 12px;font-size:11px;font-weight:600;cursor:pointer}
+.action-btn.primary,.action-btn.active{background:#5366eb;color:#fff;border-color:#5366eb}
+.action-btn:hover{filter:brightness(.97)}
+.action-btn:disabled{opacity:.42;cursor:not-allowed}
+.section-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:17px 0 9px}
+.section-title h2{margin:0;font-size:15px}
+.section-title small{font-size:10px;color:var(--muted)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.kpi{border:1px solid #e8eaf0;border-radius:11px;padding:13px 12px;background:#fff;min-width:0;position:relative}
+.kpi:before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:2px;background:#9ea8bb}
+.kpi.warning:before{background:#e35258}
+.kpi.info:before{background:#5e7be9}
+.kpi.success:before{background:#35b48c}
+.kpi strong{display:block;font-size:22px;line-height:1.35;margin:4px 0 2px;color:#252f46}
+.kpi.warning strong{color:#d84c56}
+.kpi span,.kpi small{display:block;font-size:10px;color:#7a8291;line-height:1.5}
+.kpi small{font-size:9px}
+.overview-grid{display:grid;grid-template-columns:210px minmax(0,1fr);gap:11px}
+.panel{border:1px solid #e7eaf0;border-radius:12px;background:#fff;padding:13px}
+.panel h3{font-size:12px;margin:0 0 9px}
+.ring-wrap{display:grid;justify-items:center;gap:9px}
+.status-ring{width:125px;height:125px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#dbdee6 0 100%);position:relative}
+.status-ring::after{content:"";position:absolute;width:86px;height:86px;border-radius:50%;background:#fff}
+.ring-inner{position:relative;z-index:1;text-align:center}
+.ring-inner b{display:block;font-size:26px;line-height:1.1}
+.ring-inner span{display:block;font-size:9px;color:var(--muted)}
+.level-list{width:100%;display:grid;gap:6px}
+.level-list div{display:flex;justify-content:space-between;font-size:10px;gap:5px}
+.level-list em{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.level-list span{color:#677183}
+.summary-note{font-size:10px;color:#7d8594;margin-top:9px;line-height:1.7}
+.table-wrap{overflow-x:auto}
+.prototable{width:100%;border-collapse:collapse;min-width:540px}
+.prototable th{font-size:10px;background:#f7f8fb;color:#657085;text-align:left;padding:10px 8px;white-space:nowrap}
+.prototable td{border-bottom:1px solid #edf0f4;padding:10px 8px;font-size:11px;vertical-align:middle}
+.prototable tbody tr:hover{background:#f8f9ff}
+.prototable td small{display:block;color:#89909d;font-size:9px}
+.prototable .number{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.inline-link{border:0;background:none;color:#4e61dd;cursor:pointer;padding:0;font-weight:700;font-size:11px;text-align:left}
+.inline-link:hover{text-decoration:underline}
+.level-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:999px;font-size:10px;white-space:nowrap;background:#f3f4f8;color:#536073}
+.level-pill i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.health-pill{display:inline-flex;gap:5px;align-items:center;border-radius:999px;padding:4px 7px;background:#f3f4f7;color:#5d6576;font-size:10px;white-space:nowrap}
+.health-pill.online{background:#e5f7ef;color:#147a53}
+.health-pill.late{background:#fff4df;color:#a46b14}
+.health-pill.gap{background:#fff0e5;color:#a65d2c}
+.health-pill.offline{background:#edf0f3;color:#596579}
+.health-pill:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ranking-controls{display:flex;gap:5px;flex-wrap:wrap}
+.rank-item{width:100%;display:grid;grid-template-columns:28px 1fr 72px 70px;gap:9px;text-align:left;align-items:center;border:0;border-bottom:1px solid #edf0f4;background:#fff;padding:10px 2px;cursor:pointer}
+.rank-item:hover{background:#f7f8ff}
+.rank-item .rank-no{font-size:12px;color:#a1a9b6;font-weight:700}
+.rank-item strong{display:block;font-size:11px}
+.rank-item small{display:block;color:#8b94a2;font-size:9px}
+.rank-item .rain-num{text-align:right;font-size:14px;font-weight:700}
+.empty-state{padding:26px;text-align:center;color:#8b93a1;font-size:11px;background:#f8f9fb;border-radius:9px}
+.basin-caption{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font-size:11px;color:#6f7786}
+.basin-caption strong{font-size:15px;color:#28314c}
+.metric-shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.metric-shelf div{padding:11px;border-radius:9px;background:#f7f8fc}
+.metric-shelf span{display:block;font-size:10px;color:#7c8493}
+.metric-shelf b{display:block;font-size:17px}
+.quality-hint{font-size:10px;color:#7d8592;line-height:1.65}
+.monitor-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.monitor-summary button{background:#fff;border:1px solid #e7eaf0;border-radius:11px;text-align:left;padding:12px;cursor:pointer}
+.monitor-summary button.active{border:2px solid #5063ec;background:#f6f7ff}
+.monitor-summary span{display:block;font-size:10px;color:#7d8797}
+.monitor-summary strong{display:block;font-size:22px;color:#263148}
+.drawer-shade{position:fixed;inset:0;background:#25304a78;z-index:50}
+.detail-drawer{position:fixed;right:0;top:0;bottom:0;z-index:51;background:#fff;width:min(480px,100vw);box-shadow:-8px 0 35px #17244a40;overflow-y:auto;padding:24px 25px 45px}
+.drawer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.drawer-top h2{font-size:18px;margin:3px 0}
+.drawer-top p{font-size:11px;color:#757e8e;margin:0}
+.close-btn{width:34px;height:34px;border:1px solid #e5e8ee;border-radius:8px;background:#fff;cursor:pointer;font-size:20px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.detail-grid article{padding:10px;border:1px solid #ecedf2;border-radius:9px}
+.detail-grid label{display:block;font-size:9px;color:#788292}
+.detail-grid strong{display:block;font-size:14px;margin-top:4px}
+.mini-chart{display:flex;align-items:end;gap:6px;height:110px;background:linear-gradient(0deg,#f3f5fb,white);border-bottom:1px solid #d5dbea;padding:10px 5px 0}
+.mini-chart div{flex:1;background:linear-gradient(#7395ed,#5169d6);border-radius:4px 4px 0 0;min-height:3px}
+.readings-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.readings-grid div{padding:10px;background:#f6f8fc;border-radius:8px}
+.readings-grid span{display:block;font-size:9px;color:#798394}
+.readings-grid b{display:block;font-size:12px;margin-top:4px}
+.mini-labels{display:flex;justify-content:space-between;color:#929aaa;font-size:9px}
+@media(max-width:1180px){.system-shell{grid-template-columns:minmax(340px,40%) minmax(580px,60%)}.kpi-grid{grid-template-columns:repeat(2,1fr)}.overview-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.mockup-body{overflow:auto}.system-shell{display:flex;flex-direction:column;height:auto}.map-pane{height:360px;flex:none;border-right:0;border-bottom:8px solid #fff}.content-pane{overflow:visible;padding:18px 14px 100px}.map-extra{top:144px;right:10px;width:160px}.map-title-card{left:10px;top:10px;max-width:70%}.map-tools{right:10px;top:10px}.map-legend{left:10px;bottom:10px;min-width:170px}.mock-label{display:none}.footer-navigation{bottom:8px}.prototype-head{flex-wrap:wrap}.now-chip{text-align:left}.filter-grid{grid-template-columns:1fr 1fr}.overview-grid{grid-template-columns:1fr}.monitor-summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.filter-grid,.detail-grid,.readings-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}.metric-shelf{grid-template-columns:1fr 1fr}.map-extra{top:121px;right:10px}.map-title-card strong{font-size:10px}.footer-navigation button{min-width:74px}}
+</style>
+</head>
+<body class="mockup-body map-failed">
+<main class="system-shell">
+<section class="map-pane" aria-label="แผนที่สถานการณ์ Sensor">
+  <div class="map-fallback" aria-hidden="true">
+    <svg viewBox="0 0 620 900" preserveAspectRatio="xMidYMid slice">
+      <rect width="620" height="900" fill="#e8edf2"/>
+      <path d="M285 0 C210 135 355 200 280 330 S340 570 270 690 S335 820 250 900" stroke="#94bfda" fill="none" stroke-width="22" opacity=".7"/>
+      <path d="M160 55 C300 200 180 275 310 410 M430 180 C320 300 410 420 285 515" stroke="#acc9dd" fill="none" stroke-width="9"/>
+      <path d="M260 94 L421 150 L390 380 L320 548 L190 445 L170 245Z" fill="#b8c9dd" stroke="#fff" stroke-width="5" opacity=".48"/>
+      <path d="M115 510 L291 475 L347 674 L270 835 L131 754Z" fill="#d8c9a7" stroke="#fff" stroke-width="5" opacity=".45"/>
+      <circle cx="260" cy="230" r="16" fill="#e34b4b" stroke="#fff" stroke-width="5"/>
+      <circle cx="314" cy="430" r="14" fill="#efb939" stroke="#fff" stroke-width="5"/>
+      <circle cx="245" cy="680" r="13" fill="#42a2cf" stroke="#fff" stroke-width="5"/>
+    </svg>
+    <div class="fallback-message"><strong>แผนที่ ArcGIS ยังไม่พร้อมใช้งาน</strong><div style="margin-top:6px">สามารถทดลองกรองข้อมูลและเปิดรายละเอียดสถานีจากตารางด้านขวาได้ตามปกติ</div></div>
+  </div>
+  <div id="viewDiv" class="map-canvas" aria-label="แผนที่ ArcGIS"></div>
+  <div class="map-loading-overlay"><i></i><b>กำลังโหลดแผนที่</b><span>ArcGIS Maps SDK · ONWR 22 ลุ่มน้ำ</span></div>
+  <div class="map-title-card surface">
+    <img class="agency-logo" src="assets/round-logo.png" alt="ตรา ปภ.">
+    <span><strong>DDPM SENSOR MONITORING</strong><small>ระบบเฝ้าระวังสถานการณ์ฝนและติดตามสถานี Sensor</small></span>
+  </div>
+  <div class="map-tools surface" aria-label="เครื่องมือแผนที่">
+    <button id="homeBtn" type="button" title="กลับมุมมองประเทศไทย">⌂</button>
+    <button id="zoomIn" type="button" title="ขยายแผนที่">＋</button>
+    <button id="zoomOut" type="button" title="ย่อแผนที่">−</button>
+  </div>
+  <div class="map-extra surface">
+    <label for="basemapSelect">แผนที่ฐาน (Base Map)</label>
+    <select id="basemapSelect">
+      <option value="dark-gray-vector" selected>โหมดมืด</option>
+      <option value="topo-vector">ภูมิประเทศ (แบบเดิม)</option>
+      <option value="satellite">ภาพดาวเทียม</option>
+    </select>
+    <label class="map-toggle"><input id="showBasins" type="checkbox" checked>ขอบเขต 22 ลุ่มน้ำ</label>
+    <label class="map-toggle"><input id="showStations" type="checkbox" checked>สถานี Sensor</label>
+  </div>
+  <div class="map-legend surface" id="mapLegend"><b>ระดับตามเกณฑ์ (ข้อมูลจำลอง)</b></div>
+  <div class="mock-label surface">ONWR boundaries · Mock Sensor Data · Not Real-time</div>
+</section>
+
+<section class="content-pane" aria-live="polite">
+  <div id="screen-overview">
+    <div class="prototype-head">
+      <div><span class="kicker">Situation Monitoring / DDPMSOF</span><h1>ภาพรวมการเฝ้าระวังสถานการณ์ฝน</h1><p>ข้อมูลสถานีตรวจวัด · เกณฑ์การเฝ้าระวังภัย (ปภ.) · รายลุ่มน้ำและพื้นที่</p></div>
+      <div class="now-chip"><span class="prototype-flag">DEMO / MOCK DATA</span><strong id="clockLabel">ข้อมูลจำลอง</strong><span>ไม่เชื่อมต่อ Sensor API จริง</span></div>
+    </div>
+    <div class="notice-strip"><strong>แนวทางใหม่:</strong> แยก “ระดับการเตือนภัย” ออกจาก “สถานะอุปกรณ์” และแยกช่วงฝนที่ใช้ Trigger Alert ออกจากช่วงฝนที่ใช้แสดงข้อมูลเท่านั้น โดยใช้ฐานแผนที่เดิม</div>
+    <div class="control-card">
+      <div class="filter-grid">
+        <label class="input-field"><span>ช่วงเวลาฝนสะสม</span><select id="periodSelect"></select></label>
+        <label class="input-field"><span>มุมมองสีบนแผนที่</span><select id="modeSelect"><option value="warning">ระดับการเฝ้าระวังภัย (ปภ.)</option><option value="reference">ช่วงปริมาณฝน (Reference)</option></select></label>
+        <label class="input-field"><span>ลุ่มน้ำ</span><select id="basinFilter"></select></label>
+        <label class="input-field"><span>จังหวัด</span><select id="provinceFilter"></select></label>
+        <label class="input-field full"><span>ค้นหาสถานี / รหัส / พื้นที่</span><input id="searchFilter" placeholder="เช่น NAN-AWS-01, น่าน, เฉลิมพระเกียรติ"></label>
+      </div>
+      <div class="button-line"><button class="action-btn active" type="button" data-severity="all">ทุกระดับ</button><button class="action-btn" type="button" data-severity="2">เตรียมรับมือขึ้นไป</button><button class="action-btn" type="button" data-severity="3">อพยพขึ้นไป</button><button class="action-btn" type="button" data-action="reset">ล้างตัวกรอง</button></div>
+    </div>
+    <div id="periodNotice" class="notice-strip warn" hidden></div>
+    <div class="kpi-grid" id="overviewKpis"></div>
+    <div class="section-title"><h2>สรุปการตรวจวัดตามเกณฑ์</h2><small>สรุปเฉพาะสถานีที่อยู่ในตัวกรอง</small></div>
+    <div class="overview-grid">
+      <div class="panel"><h3>สัดส่วนสถานีตามระดับเกณฑ์</h3><div class="ring-wrap"><div class="status-ring" id="statusRing"><div class="ring-inner" id="statusRingInner"></div></div><div class="level-list" id="levelCounts"></div></div></div>
+      <div class="panel"><div class="section-title" style="margin:0 0 8px"><h2>สถานีที่ต้องติดตาม</h2><div class="ranking-controls"><button type="button" class="action-btn active" data-rank="risk">ระดับเตือนภัย</button><button type="button" class="action-btn" data-rank="rain">ฝนสูงสุด</button></div></div><div id="rankingList"></div></div>
+    </div>
+    <div class="section-title"><h2>ข้อมูลสถานีตรวจวัด</h2><small id="overviewResult"></small></div>
+    <div class="panel" style="padding:0;overflow:hidden">
+      <div class="table-wrap"><table class="prototable"><thead><tr><th>สถานี</th><th>พื้นที่/ลุ่มน้ำ</th><th>ฝนสะสม</th><th>เกณฑ์</th><th>ระดับ/สถานะ</th><th>เวลาล่าสุด</th></tr></thead><tbody id="overviewTable"></tbody></table></div>
+    </div>
+    <p class="summary-note">ข้อมูลเกณฑ์ใน Prototype เป็นค่าจำลองเพื่อทดลองการแสดงผล ไม่ใช่ค่าขอบช่วงที่ ปภ. อนุมัติ • อ้างอิงแนวทาง DDPMSOF-403, 358, 153, 155, 157</p>
+  </div>
+
+  <div id="screen-basin" hidden>
+    <div class="prototype-head">
+      <div><span class="kicker">Basin & Station Drill-down</span><h1 id="basinTitle">รายละเอียดลุ่มน้ำ</h1><p>ค่าฝนสะสมตามช่วงที่เลือก · เกณฑ์รายสถานี · ข้อมูลย้อนหลัง</p></div>
+      <button class="action-btn" type="button" data-view="overview">← กลับภาพรวม</button>
+    </div>
+    <div class="control-card"><div class="filter-grid">
+      <label class="input-field"><span>เลือกลุ่มน้ำ</span><select id="basinDetailSelect"></select></label>
+      <label class="input-field"><span>ช่วงฝนสะสม</span><select id="basinPeriodSelect"></select></label>
+    </div></div>
+    <div class="notice-strip"><strong>คำอธิบาย:</strong> สรุปจากค่าของสถานีตัวอย่างภายในลุ่มน้ำ ไม่ใช่ค่าปริมาณฝนเฉลี่ยหรือพื้นที่เสี่ยงทั้งลุ่มน้ำ และยังไม่มี Aggregation Rule ที่อนุมัติ</div>
+    <div class="metric-shelf" id="basinMetrics"></div>
+    <div class="section-title"><h2>สถานี Sensor ในลุ่มน้ำ</h2><small>กดรายการเพื่อดู Popup และกราฟย้อนหลัง</small></div>
+    <div class="panel" style="padding:0;overflow:hidden"><div class="table-wrap"><table class="prototable"><thead><tr><th>สถานี / ที่ตั้ง</th><th>ค่าฝนสะสม</th><th>เกณฑ์ปัจจุบัน</th><th>ระดับ</th><th>สถานะข้อมูล</th></tr></thead><tbody id="basinTable"></tbody></table></div></div>
+    <div class="section-title"><h2>แนวทางการดูข้อมูลย้อนหลัง</h2><small>DDPMSOF-160 / 506</small></div>
+    <div class="panel"><div class="quality-hint">กดรหัสสถานีเพื่อเปิดรายละเอียด Sensor ทั้ง 9 ประเภท และตัวอย่างกราฟปริมาณฝนย้อนหลังในรูปแบบ Bar Chart โดยมุมมองนี้ยังเป็นข้อมูลจำลอง ไม่ใช่ข้อมูลจากสถานีจริง</div></div>
+  </div>
+
+  <div id="screen-monitor" hidden>
+    <div class="prototype-head">
+      <div><span class="kicker">Station & Device Monitoring</span><h1>ติดตามสถานีและคุณภาพข้อมูล Sensor</h1><p>ตรวจสอบสถานีที่ไม่ส่งข้อมูล ข้อมูลล่าช้า ข้อมูลขาดช่วง และ Data Quality</p></div>
+      <button class="action-btn" id="exportCsv" type="button">⇩ ส่งออก CSV</button>
+    </div>
+    <div class="notice-strip"><strong>แยกจากภัย:</strong> Online / Late / Gap / Offline ไม่ใช่ระดับความรุนแรงของฝน โดยสถานีที่ไม่มีข้อมูลไม่ถือว่า “ฝน 0 มม.” หรือ “ปลอดภัย”</div>
+    <div class="monitor-summary" id="monitorKpis"></div>
+    <div class="section-title"><h2>รายการสถานีตรวจวัด</h2><small id="monitorResult"></small></div>
+    <div class="control-card"><div class="filter-grid">
+      <label class="input-field"><span>กรองสถานะการส่งข้อมูล</span><select id="healthSelect"><option value="all">ทุกสถานะ</option><option value="online">Online</option><option value="late">Late</option><option value="gap">Gap</option><option value="offline">Offline</option></select></label>
+      <label class="input-field"><span>กรองจังหวัด</span><select id="monitorProvinceSelect"></select></label>
+      <label class="input-field full"><span>ค้นหารหัสหรือชื่อสถานี</span><input id="monitorSearch" placeholder="ค้นหาสถานี Sensor"></label>
+    </div></div>
+    <div class="panel" style="padding:0;overflow:hidden"><div class="table-wrap"><table class="prototable"><thead><tr><th>รหัส / สถานี</th><th>จังหวัด</th><th>ความถี่ส่ง</th><th>สถานะ</th><th>คุณภาพข้อมูล</th><th>ข้อมูลล่าสุด</th><th>รายละเอียด</th></tr></thead><tbody id="monitorTable"></tbody></table></div></div>
+    <p class="summary-note">Status ใน Prototype เป็นการกำหนดเพื่อสาธิตเท่านั้น • ต้องยืนยัน Timeout, นิยาม Late/Gap และ Station Aggregation Rule จาก DDPMSOF-116/117 ก่อนใช้จริง</p>
+  </div>
+</section>
+
+<nav class="footer-navigation surface" aria-label="เมนู Dashboard">
+  <button type="button" class="active" data-view="overview"><span>⌂</span><b>เฝ้าระวังภัย</b></button>
+  <button type="button" data-view="basin"><span>♒</span><b>รายละเอียดลุ่มน้ำ</b></button>
+  <button type="button" data-view="monitor"><span>◕</span><b>ติดตามสถานี</b></button>
+</nav>
+</main>
+
+<div id="drawerShade" class="drawer-shade" hidden data-action="close"></div>
+<aside id="stationDrawer" class="detail-drawer" aria-label="รายละเอียดสถานี Sensor" hidden>
+  <div class="drawer-top"><div><span class="kicker">Station Detail · Mock Data</span><h2 id="drawerName"></h2><p id="drawerWhere"></p></div><button class="close-btn" type="button" data-action="close" aria-label="ปิด">×</button></div>
+  <div style="margin:17px 0" id="drawerMain"></div>
+  <div class="section-title"><h2>ค่าตรวจวัดจาก Sensor (9 ประเภท)</h2><small>ตัวอย่างการแสดงผล</small></div>
+  <div class="readings-grid" id="drawerReadings"></div>
+  <div class="section-title"><h2>ตัวอย่างกราฟปริมาณฝนย้อนหลัง</h2><small>Rainfall Bar Chart</small></div>
+  <div class="mini-chart" id="drawerChart"></div><div class="mini-labels"><span>ย้อนหลัง 7 วัน</span><span>ล่าสุด</span></div>
+  <p class="summary-note">เฉพาะการสาธิต UX/UI • กราฟและค่า Sensor อื่นเป็นข้อมูลจำลอง • Story DDPMSOF-156, 157, 160, 506</p>
+</aside>
+
+<script src="data/onwr-basins-22.js"></script>
+<script src="https://js.arcgis.com/4.31/"></script>
+<script>
+(function(){
+'use strict';
+var $ = function(q){return document.querySelector(q)};
+var $$ = function(q){return Array.from(document.querySelectorAll(q))};
+var periods = [
+  {id:'1h',name:'ฝน 1 ชั่วโมง',factor:.13,trigger:true},
+  {id:'today',name:'ฝนวันนี้ (07:00–ปัจจุบัน)',factor:.61,trigger:true},
+  {id:'yesterday',name:'ฝนวานนี้ (07:00–07:00)',factor:.78,trigger:true},
+  {id:'24h',name:'ฝน 24 ชั่วโมง (Default)',factor:1,trigger:true},
+  {id:'3d',name:'ฝน 3 วัน',factor:1.78,trigger:true},
+  {id:'7d',name:'ฝน 7 วัน',factor:2.5,trigger:false},
+  {id:'15d',name:'ฝน 15 วัน',factor:3.7,trigger:false},
+  {id:'month',name:'ฝนรายเดือน',factor:4.8,trigger:false},
+  {id:'year',name:'ฝนรายปี',factor:7,trigger:false}
+];
+var levels = ['ปกติ','เฝ้าระวัง','เตรียมรับมือ','อพยพ','ต้องอพยพ'];
+var referenceLevels = ['ฝนน้อย','ฝนเล็กน้อย','ฝนปานกลาง','ฝนหนัก','ฝนหนักมาก'];
+var levelColors = ['#36b88e','#4b96d7','#f3c440','#ee8b34','#e3545e'];
+var healthLabels = {online:'Online',late:'Late',gap:'Gap',offline:'Offline'};
+var stations = [
+{id:'NAN-AWS-01',name:'สถานีตัวอย่างขุนน่าน',province:'น่าน',district:'เฉลิมพระเกียรติ',sub:'ขุนน่าน',basin:'09',lat:19.484641,lon:101.154311,rain:126.4,health:'online',quality:'valid',custom:false},
+{id:'NAN-AWS-02',name:'สถานีตัวอย่างท่าวังผา',province:'น่าน',district:'ท่าวังผา',sub:'ท่าวังผา',basin:'09',lat:19.124,lon:100.781,rain:103.2,health:'online',quality:'valid',custom:true},
+{id:'UTT-AWS-01',name:'สถานีตัวอย่างลับแล',province:'อุตรดิตถ์',district:'ลับแล',sub:'ฝายหลวง',basin:'09',lat:17.651,lon:100.035,rain:88.2,health:'late',quality:'valid',custom:false},
+{id:'PRE-AWS-01',name:'สถานีตัวอย่างสูงเม่น',province:'แพร่',district:'สูงเม่น',sub:'สูงเม่น',basin:'08',lat:18.041,lon:100.115,rain:91.1,health:'gap',quality:'suspect',custom:true},
+{id:'PRE-AWS-02',name:'สถานีตัวอย่างลอง',province:'แพร่',district:'ลอง',sub:'ห้วยอ้อ',basin:'08',lat:18.082,lon:99.841,rain:31.6,health:'online',quality:'valid',custom:false},
+{id:'KKN-AWS-01',name:'สถานีตัวอย่างเมืองขอนแก่น',province:'ขอนแก่น',district:'เมืองขอนแก่น',sub:'บ้านเป็ด',basin:'04',lat:16.460,lon:102.789,rain:76.9,health:'online',quality:'valid',custom:false},
+{id:'CPM-AWS-01',name:'สถานีตัวอย่างภูเขียว',province:'ชัยภูมิ',district:'ภูเขียว',sub:'บ้านแก้ง',basin:'04',lat:16.390,lon:102.105,rain:18.4,health:'online',quality:'valid',custom:false},
+{id:'MHS-AWS-01',name:'สถานีตัวอย่างสบเมย',province:'แม่ฮ่องสอน',district:'สบเมย',sub:'แม่คะตวน',basin:'01',lat:17.933,lon:97.951,rain:149.2,health:'offline',quality:'invalid',custom:false},
+{id:'CRI-AWS-01',name:'สถานีตัวอย่างเชียงแสน',province:'เชียงราย',district:'เชียงแสน',sub:'เวียง',basin:'02',lat:20.264,lon:100.087,rain:47.5,health:'online',quality:'valid',custom:false},
+{id:'CRI-AWS-02',name:'สถานีตัวอย่างแม่สาย',province:'เชียงราย',district:'แม่สาย',sub:'เวียงพางคำ',basin:'02',lat:20.433,lon:99.887,rain:86.0,health:'online',quality:'valid',custom:true},
+{id:'STN-AWS-01',name:'สะพานสามแยกศาลเจ้า (ตัวอย่าง)',province:'สตูล',district:'มะนัง',sub:'ปาล์มพัฒนา',basin:null,lat:6.978700,lon:99.966000,rain:56.8,health:'online',quality:'valid',custom:false},
+{id:'STN-AWS-02',name:'สะพานสามแยกป่าพน (ตัวอย่าง)',province:'สตูล',district:'มะนัง',sub:'ปาล์มพัฒนา',basin:null,lat:7.087100,lon:99.982600,rain:0,health:'online',quality:'valid',custom:false},
+{id:'CTI-AWS-01',name:'สถานีตัวอย่างตกพรม',province:'จันทบุรี',district:'ขลุง',sub:'ตกพรม',basin:null,lat:12.505,lon:102.220,rain:119.2,health:'online',quality:'valid',custom:true},
+{id:'CTI-AWS-02',name:'สถานีตัวอย่างบ่อเวฬุ',province:'จันทบุรี',district:'ขลุง',sub:'บ่อเวฬุ',basin:null,lat:12.605,lon:102.156,rain:27.6,health:'late',quality:'suspect',custom:false},
+{id:'TAK-AWS-01',name:'สถานีตัวอย่างพบพระ',province:'ตาก',district:'พบพระ',sub:'พบพระ',basin:null,lat:16.38,lon:98.69,rain:67.8,health:'gap',quality:'suspect',custom:false},
+{id:'RNN-AWS-01',name:'สถานีตัวอย่างละอุ่น',province:'ระนอง',district:'ละอุ่น',sub:'ละอุ่นเหนือ',basin:null,lat:9.977,lon:98.800,rain:150.1,health:'online',quality:'valid',custom:false}
+];
+var basinFeatures = (window.ONWR_BASINS && window.ONWR_BASINS.features) || [];
+var basinNames = {};
+basinFeatures.forEach(function(f){basinNames[f.properties.code]=f.properties.name_th});
+var state = {screen:'overview',period:'24h',mode:'warning',basin:'all',province:'all',query:'',severity:'all',rank:'risk',health:'all',monitorProvince:'all',monitorQuery:'',detailBasin:'09',showBasins:true,showStations:true};
+var map,view,Graphic,basinLayer,markerLayer;
+
+function period(){return periods.find(function(p){return p.id===state.period}) || periods[3]}
+function rainfall(s){return Math.round(s.rain*period().factor*10)/10}
+function thresholds(s){var base=s.custom?[15,45,100,160]:[10,35,90,150];var p=period();return base.map(function(x){return x*p.factor})}
+function isTrusted(s){return s.health==='online' && s.quality==='valid'}
+function band(s){var v=rainfall(s),bounds=thresholds(state.mode==='reference'?{custom:false}:s);var n=0;bounds.forEach(function(b){if(v>=b)n++});return Math.min(4,n)}
+function alertEligible(s){return period().trigger&&isTrusted(s)}
+function labelFor(s){if(!isTrusted(s))return 'ยังประเมินไม่ได้';return (state.mode==='warning'&&period().trigger?levels:referenceLevels)[band(s)]}
+function colorFor(s){return isTrusted(s)?levelColors[band(s)]:'#96a0ad'}
+function basinName(code){return code?('ลุ่มน้ำ'+(basinNames[code]||code)):'รอผูกข้อมูลลุ่มน้ำ'}
+function formatNum(n){return Number(n).toLocaleString('th-TH',{maximumFractionDigits:1,minimumFractionDigits:1})}
+function escapeHtml(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function qualityLabel(s){return {valid:'ปกติ (Valid)',suspect:'น่าสงสัย (Suspect)',invalid:'ผิดปกติ (Invalid)'}[s.quality]}
+function statusHtml(s){return '<span class="health-pill '+s.health+'">'+healthLabels[s.health]+'</span>'}
+function levelHtml(s){
+  if(!isTrusted(s))return '<span class="level-pill"><i style="background:#98a0ad"></i>ไม่พร้อมประเมิน</span>';
+  return '<span class="level-pill" style="background:'+colorFor(s)+'20;color:#394256"><i style="background:'+colorFor(s)+'"></i>'+escapeHtml(labelFor(s))+'</span>';
+}
+function stationMatches(s){
+ return (state.basin==='all'||s.basin===state.basin) &&
+ (state.province==='all'||s.province===state.province) &&
+ (!state.query||[s.id,s.name,s.province,s.district,s.sub].join(' ').toLowerCase().includes(state.query.toLowerCase())) &&
+ (state.severity==='all'||(alertEligible(s)&&band(s)>=Number(state.severity)));
+}
+function visibleStations(){return stations.filter(stationMatches)}
+function sortStations(rows){
+ var arr=rows.slice();
+ arr.sort(function(a,b){
+  if(state.rank==='rain')return rainfall(b)-rainfall(a);
+  var av=alertEligible(a)?band(a):-1,bv=alertEligible(b)?band(b):-1;
+  return bv-av||rainfall(b)-rainfall(a);
+ });
+ return arr;
+}
+function renderLegend(){
+ var warn=period().trigger&&state.mode==='warning';
+ var names=warn?levels:referenceLevels;
+ $('#mapLegend').innerHTML='<b>'+(warn?'ระดับการเฝ้าระวังภัย':'ช่วงปริมาณฝน (ไม่ใช่ Alert)')+'</b>'+
+  names.map(function(n,i){return '<span><i class="dot" style="background:'+levelColors[i]+'"></i>'+n+'</span>'}).join('')+
+  '<span><i class="dot gray"></i>ไม่มี/ข้อมูลไม่พร้อมประเมิน</span>'+
+  '<small style="font-size:9px;color:#838c9b;margin-top:2px">ระดับและค่าขอบช่วงเป็นข้อมูลจำลอง</small>';
+}
+function populateOptions(){
+ var periodOptions=periods.map(function(p){return '<option value="'+p.id+'">'+p.name+(p.trigger?'':' · แสดงผลเท่านั้น')+'</option>'}).join('');
+ $('#periodSelect').innerHTML=periodOptions;
+ $('#basinPeriodSelect').innerHTML=periodOptions;
+ var basinOptions='<option value="all">ทุกลุ่มน้ำ (22 ลุ่มน้ำ)</option>'+basinFeatures.map(function(f){return '<option value="'+f.properties.code+'">ลุ่มน้ำ'+escapeHtml(f.properties.name_th)+'</option>'}).join('')+'<option value="unmapped">ยังไม่ผูกลุ่มน้ำ</option>';
+ $('#basinFilter').innerHTML=basinOptions;
+ var stationBasinCodes=[...new Set(stations.map(function(s){return s.basin}).filter(Boolean))];
+ $('#basinDetailSelect').innerHTML=stationBasinCodes.map(function(code){return '<option value="'+code+'">'+escapeHtml(basinName(code))+'</option>'}).join('');
+ var provinces=[...new Set(stations.map(function(s){return s.province}))].sort(function(a,b){return a.localeCompare(b,'th')});
+ var provinceOptions='<option value="all">ทุกจังหวัด</option>'+provinces.map(function(p){return '<option value="'+p+'">'+p+'</option>'}).join('');
+ $('#provinceFilter').innerHTML=provinceOptions;
+ $('#monitorProvinceSelect').innerHTML=provinceOptions;
+}
+function refreshControls(){
+ $('#periodSelect').value=state.period;$('#basinPeriodSelect').value=state.period;
+ $('#modeSelect').value=state.mode;$('#basinFilter').value=state.basin===null?'unmapped':state.basin;
+ $('#provinceFilter').value=state.province;$('#searchFilter').value=state.query;
+ $('#basinDetailSelect').value=state.detailBasin;
+ $('#healthSelect').value=state.health;
+ $('#monitorProvinceSelect').value=state.monitorProvince;$('#monitorSearch').value=state.monitorQuery;
+ $$('[data-severity]').forEach(function(b){b.classList.toggle('active',b.dataset.severity===state.severity)});
+ $$('[data-rank]').forEach(function(b){b.classList.toggle('active',b.dataset.rank===state.rank)});
+ $$('[data-view]').forEach(function(b){b.classList.toggle('active',b.dataset.view===state.screen)});
+ $('#showBasins').checked=state.showBasins;$('#showStations').checked=state.showStations;
+ var notTrigger=!period().trigger;
+ $('#periodNotice').hidden=!notTrigger;
+ if(notTrigger)$('#periodNotice').innerHTML='<strong>ช่วงนี้ไม่รองรับ Trigger Alert:</strong> '+period().name+' แสดงค่าฝนและสีประกอบเท่านั้น ไม่สรุปจำนวนสถานีที่เกิด Alert ตาม DDPMSOF-403';
+}
+function renderKpis(rows){
+ var trusted=rows.filter(isTrusted),alerts=trusted.filter(function(s){return period().trigger&&band(s)>0});
+ var highest=trusted.length?trusted.slice().sort(function(a,b){return rainfall(b)-rainfall(a)})[0]:null;
+ var out=[
+ {label:'สถานีที่อยู่ในตัวกรอง',value:rows.length,sub:'จาก '+stations.length+' สถานีตัวอย่าง',cls:'info'},
+ {label:'สถานีถึงเกณฑ์',value:period().trigger?alerts.length:'—',sub:period().trigger?'ข้อมูลพร้อมประเมินเท่านั้น':'ช่วงนี้ไม่ Trigger Alert',cls:'warning'},
+ {label:'ฝนสะสมสูงสุด',value:highest?formatNum(rainfall(highest))+' มม.':'—',sub:highest?highest.id:'ไม่มีข้อมูลพร้อมใช้งาน',cls:'info'},
+ {label:'สถานีข้อมูลไม่พร้อม',value:rows.length-trusted.length,sub:'Late / Gap / Offline / Quality',cls:'success'}
+ ];
+ $('#overviewKpis').innerHTML=out.map(function(k){return '<article class="kpi '+k.cls+'"><span>'+k.label+'</span><strong>'+k.value+'</strong><small>'+k.sub+'</small></article>'}).join('');
+ var totals=[0,0,0,0,0];trusted.forEach(function(s){totals[band(s)]++});
+ var total=totals.reduce(function(a,b){return a+b},0),a=0;
+ var stops=totals.map(function(n,i){var start=a;a+=total?n/total*100:0;return levelColors[i]+' '+start.toFixed(2)+'% '+a.toFixed(2)+'%'}).join(',');
+ $('#statusRing').style.background=total?'conic-gradient('+stops+')':'#dce1e7';
+ $('#statusRingInner').innerHTML='<b>'+total+'</b><span>สถานีพร้อมประเมิน</span>';
+ $('#levelCounts').innerHTML=totals.map(function(n,i){return '<div><span><em style="background:'+levelColors[i]+'"></em>'+escapeHtml(period().trigger&&state.mode==='warning'?levels[i]:referenceLevels[i])+'</span><b>'+n+'</b></div>'}).join('');
+}
+function renderOverview(){
+ var rows=visibleStations(),ordered=sortStations(rows);
+ renderKpis(rows);renderLegend();
+ $('#overviewResult').textContent='แสดง '+rows.length+' / '+stations.length+' สถานีตัวอย่าง';
+ $('#rankingList').innerHTML=ordered.length?ordered.slice(0,6).map(function(s,i){
+  return '<button class="rank-item" type="button" data-station="'+s.id+'"><span class="rank-no">'+String(i+1).padStart(2,'0')+'</span><span><strong>'+s.id+'</strong><small>'+escapeHtml(s.name)+' · '+s.province+'</small></span><span class="rain-num">'+formatNum(rainfall(s))+'<small>มม.</small></span><span>'+levelHtml(s)+'</span></button>';
+ }).join(''):'<div class="empty-state">ไม่พบสถานีตามเงื่อนไข</div>';
+ $('#overviewTable').innerHTML=ordered.length?ordered.map(function(s){
+ return '<tr><td><button class="inline-link" type="button" data-station="'+s.id+'">'+s.id+'</button><small>'+escapeHtml(s.name)+'</small></td><td>'+s.province+'<small>'+escapeHtml(basinName(s.basin))+'</small></td><td class="number">'+(s.health==='offline'?'—':formatNum(rainfall(s))+' มม.')+'</td><td><span class="level-pill">'+(s.custom?'Custom':'Default')+'</span></td><td>'+levelHtml(s)+'</td><td><small>'+(s.health==='offline'?'ไม่มีข้อมูลล่าสุด':'20/11/2569 10:40 (จำลอง)')+'</small>'+statusHtml(s)+'</td></tr>';
+ }).join(''):'<tr><td colspan="6"><div class="empty-state">ไม่พบข้อมูลสถานี</div></td></tr>';
+}
+function renderBasin(){
+ var code=state.detailBasin,rows=stations.filter(function(s){return s.basin===code}),trusted=rows.filter(isTrusted);
+ $('#basinTitle').textContent=basinName(code);
+ var peak=trusted.slice().sort(function(a,b){return rainfall(b)-rainfall(a)})[0];
+ var alertN=trusted.filter(function(s){return period().trigger&&band(s)>0}).length;
+ $('#basinMetrics').innerHTML='<div><span>สถานีตัวอย่างในลุ่มน้ำ</span><b>'+rows.length+' สถานี</b></div><div><span>ค่าฝนสูงสุด</span><b>'+(peak?formatNum(rainfall(peak))+' มม.':'—')+'</b></div><div><span>สถานีถึงเกณฑ์</span><b>'+(period().trigger?alertN:'ไม่ประเมิน')+'</b></div>';
+ $('#basinTable').innerHTML=rows.length?rows.map(function(s){
+ return '<tr><td><button class="inline-link" type="button" data-station="'+s.id+'">'+s.id+'</button><small>ต.'+s.sub+' อ.'+s.district+' จ.'+s.province+'</small></td><td class="number">'+(s.health==='offline'?'—':formatNum(rainfall(s))+' มม.')+'</td><td>'+(s.custom?'Custom':'Default')+'<small>DDPMSOF-358</small></td><td>'+levelHtml(s)+'</td><td>'+statusHtml(s)+'</td></tr>';
+ }).join(''):'<tr><td colspan="5" class="empty-state">ไม่มีสถานีตัวอย่างในลุ่มน้ำนี้</td></tr>';
+}
+function monitorRows(){return stations.filter(function(s){
+ return (state.health==='all'||s.health===state.health) &&
+ (state.monitorProvince==='all'||s.province===state.monitorProvince) &&
+ (!state.monitorQuery||[s.id,s.name,s.province,s.district].join(' ').toLowerCase().includes(state.monitorQuery.toLowerCase()));
+})}
+function renderMonitor(){
+ var counts={online:0,late:0,gap:0,offline:0};stations.forEach(function(s){counts[s.health]++});
+ $('#monitorKpis').innerHTML=Object.keys(counts).map(function(k){
+ return '<button type="button" data-health="'+k+'" class="'+(state.health===k?'active':'')+'"><span>'+healthLabels[k]+'</span><strong>'+counts[k]+'</strong><span>สถานีตัวอย่าง</span></button>';
+ }).join('');
+ var rows=monitorRows();
+ $('#monitorResult').textContent='แสดง '+rows.length+' / '+stations.length+' สถานี';
+ $('#monitorTable').innerHTML=rows.length?rows.map(function(s){
+  return '<tr><td><button class="inline-link" type="button" data-station="'+s.id+'">'+s.id+'</button><small>'+escapeHtml(s.name)+'</small></td><td>'+s.province+'</td><td>15 นาที<small>ตัวอย่าง</small></td><td>'+statusHtml(s)+'</td><td><span class="level-pill">'+qualityLabel(s)+'</span></td><td>'+(s.health==='offline'?'ไม่พบข้อมูลล่าสุด':'เวลาตัวอย่าง 10:40')+'</td><td><button class="inline-link" type="button" data-station="'+s.id+'">รายละเอียด ›</button></td></tr>';
+ }).join(''):'<tr><td colspan="7" class="empty-state">ไม่พบสถานีตามตัวกรอง</td></tr>';
+}
+function showScreen(name){
+ state.screen=name;
+ ['overview','basin','monitor'].forEach(function(n){$('#screen-'+n).hidden=n!==name});
+ refreshControls();
+ renderOverview();renderBasin();renderMonitor();refreshMap();
+ $('.content-pane').scrollTop=0;
+}
+function openStation(id){
+ var s=stations.find(function(t){return t.id===id});if(!s)return;
+ $('#drawerName').textContent=s.id;
+ $('#drawerWhere').textContent=s.name+' · ต.'+s.sub+' อ.'+s.district+' จ.'+s.province;
+ var values=[['สถานะการส่งข้อมูล',healthLabels[s.health]],['คุณภาพข้อมูล',qualityLabel(s)],['เกณฑ์การเตือนภัย',s.custom?'Custom — รายสถานี':'Default — เกณฑ์กลาง'],['ปริมาณฝน '+period().name,s.health==='offline'?'ไม่มีข้อมูลพร้อมใช้':formatNum(rainfall(s))+' มม.'],['ผลประเมิน',period().trigger?labelFor(s):'ช่วงนี้ไม่ Trigger Alert'],['ลุ่มน้ำ',basinName(s.basin)]];
+ $('#drawerMain').innerHTML='<div class="detail-grid">'+values.map(function(v){return '<article><label>'+escapeHtml(v[0])+'</label><strong>'+escapeHtml(v[1])+'</strong></article>'}).join('')+'</div>';
+ var extras=[['ปริมาณฝนสะสม',formatNum(rainfall(s))+' มม.'],['อุณหภูมิ','27.4 °C'],['ความชื้นสัมพัทธ์','78 %'],['ความเร็วลม','8.6 กม./ชม.'],['ทิศทางลม','240°'],['ความกดอากาศ','1,009 hPa'],['CO₂','520 ppm'],['PM2.5','23 µg/m³'],['PM10','41 µg/m³']];
+ $('#drawerReadings').innerHTML=extras.map(function(x){return '<div><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join('');
+ var factors=[.49,.28,.68,.41,.8,.52,1];
+ $('#drawerChart').innerHTML=factors.map(function(f){return '<div title="ตัวอย่าง '+formatNum(s.rain*f/2)+' มม." style="height:'+Math.max(3,Math.round(f*100))+'%"></div>'}).join('');
+ $('#drawerShade').hidden=false;$('#stationDrawer').hidden=false;
+ if(view){view.goTo({center:[s.lon,s.lat],zoom:10},{duration:450}).catch(function(){})}
+}
+function closeStation(){$('#drawerShade').hidden=true;$('#stationDrawer').hidden=true}
+function updateClock(){
+ var d=new Date();
+ $('#clockLabel').textContent='เวลาบนเครื่อง: '+d.toLocaleString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' น.';
+}
+function downloadCsv(){
+ var head=['station_id','station_name','province','district','subdistrict','basin','data_status','quality','rain_24h_mock'];
+ var rows=monitorRows().map(function(s){return [s.id,s.name,s.province,s.district,s.sub,s.basin||'',s.health,s.quality,s.rain]});
+ var csv='\ufeff'+[head].concat(rows).map(function(row){return row.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(',')}).join('\r\n');
+ var url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ var a=document.createElement('a');a.href=url;a.download='ddpm-sensor-demo.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},500);
+}
+function initMap(){
+ if(!window.require){document.body.classList.add('map-failed');return}
+ window.require(['esri/Map','esri/views/MapView','esri/layers/GraphicsLayer','esri/Graphic'],function(Map,MapView,GraphicsLayer,G){
+  Graphic=G;basinLayer=new GraphicsLayer({title:'22 ลุ่มน้ำ ONWR'});markerLayer=new GraphicsLayer({title:'สถานี Sensor (Mock)'});
+  map=new Map({basemap:$('#basemapSelect').value,layers:[basinLayer,markerLayer]});
+  view=new MapView({container:'viewDiv',map:map,center:[100.5,13.45],zoom:5.7,ui:{components:[]},constraints:{minZoom:5}});
+  view.when(function(){document.body.classList.remove('map-failed');document.body.classList.add('map-ready');refreshMap()}).catch(function(){document.body.classList.add('map-failed')});
+  $('#homeBtn').addEventListener('click',function(){view.goTo({center:[100.5,13.45],zoom:5.7})});
+  $('#zoomIn').addEventListener('click',function(){view.zoom+=1});
+  $('#zoomOut').addEventListener('click',function(){view.zoom-=1});
+  $('#basemapSelect').addEventListener('change',function(){map.basemap=this.value});
+  view.on('click',function(event){view.hitTest(event).then(function(result){
+    var g=result.results.map(function(r){return r.graphic}).find(function(x){return x && x.attributes && x.attributes.kind});
+    if(!g)return;
+    if(g.attributes.kind==='station')openStation(g.attributes.id);
+    if(g.attributes.kind==='basin'){state.detailBasin=g.attributes.code;showScreen('basin')}
+  }).catch(function(){})});
+  refreshMap();
+ },function(){document.body.classList.add('map-failed')});
+}
+function refreshMap(){
+ if(!Graphic||!basinLayer||!markerLayer)return;
+ basinLayer.removeAll();markerLayer.removeAll();
+ var rows=state.screen==='monitor'?monitorRows():state.screen==='basin'?stations.filter(function(s){return s.basin===state.detailBasin}):visibleStations();
+ if(state.showBasins){
+ basinFeatures.forEach(function(f){
+ var polygon=f.geometry.coordinates.flatMap(function(p){return p});
+ var selected=(state.screen==='basin'&&state.detailBasin===f.properties.code);
+ try{basinLayer.add(new Graphic({geometry:{type:'polygon',rings:polygon,spatialReference:{wkid:4326}},symbol:{type:'simple-fill',color:selected?[86,116,229,.2]:[105,129,159,.045],outline:{color:selected?[88,110,225,.9]:[107,137,166,.45],width:selected?1.9:.65}},attributes:{kind:'basin',code:f.properties.code},popupEnabled:false}))}catch(e){}
+ });
+ }
+ if(state.showStations){
+ rows.forEach(function(s){
+ var c=state.screen==='monitor'?(s.health==='online'?'#28b385':s.health==='late'?'#edc049':s.health==='gap'?'#ee9046':'#8a96a5'):colorFor(s);
+ markerLayer.add(new Graphic({geometry:{type:'point',longitude:s.lon,latitude:s.lat,spatialReference:{wkid:4326}},symbol:{type:'simple-marker',style:'circle',color:c,size:11,outline:{color:'#ffffff',width:2}},attributes:{kind:'station',id:s.id},popupTemplate:{title:s.id,content:s.name+' · '+s.province}}));
+ });
+ }
+}
+function onChange(selector,cb,eventName){
+ $(selector).addEventListener(eventName||'change',cb);
+}
+function rerender(){refreshControls();renderOverview();renderBasin();renderMonitor();refreshMap()}
+populateOptions();refreshControls();renderOverview();renderBasin();renderMonitor();renderLegend();updateClock();setInterval(updateClock,1000);
+onChange('#periodSelect',function(e){state.period=e.target.value;if(!period().trigger)state.mode='reference';rerender()});
+onChange('#basinPeriodSelect',function(e){state.period=e.target.value;if(!period().trigger)state.mode='reference';rerender()});
+onChange('#modeSelect',function(e){state.mode=e.target.value;if(!period().trigger&&state.mode==='warning')state.mode='reference';rerender()});
+onChange('#basinFilter',function(e){state.basin=e.target.value==='unmapped'?null:e.target.value;rerender()});
+onChange('#provinceFilter',function(e){state.province=e.target.value;rerender()});
+onChange('#searchFilter',function(e){state.query=e.target.value.trim();rerender()},'input');
+onChange('#basinDetailSelect',function(e){state.detailBasin=e.target.value;rerender()});
+onChange('#healthSelect',function(e){state.health=e.target.value;rerender()});
+onChange('#monitorProvinceSelect',function(e){state.monitorProvince=e.target.value;rerender()});
+onChange('#monitorSearch',function(e){state.monitorQuery=e.target.value.trim();rerender()},'input');
+onChange('#showBasins',function(e){state.showBasins=e.target.checked;refreshMap()});
+onChange('#showStations',function(e){state.showStations=e.target.checked;refreshMap()});
+document.addEventListener('click',function(e){
+ var btn=e.target.closest('[data-view],[data-station],[data-action],[data-severity],[data-rank],[data-health]');
+ if(!btn)return;
+ if(btn.dataset.view){closeStation();showScreen(btn.dataset.view)}
+ if(btn.dataset.station){openStation(btn.dataset.station)}
+ if(btn.dataset.action==='close'){closeStation()}
+ if(btn.dataset.action==='reset'){state.period='24h';state.mode='warning';state.basin='all';state.province='all';state.query='';state.severity='all';rerender()}
+ if(btn.dataset.severity){state.severity=btn.dataset.severity;rerender()}
+ if(btn.dataset.rank){state.rank=btn.dataset.rank;rerender()}
+ if(btn.dataset.health){state.health=btn.dataset.health===state.health?'all':btn.dataset.health;rerender()}
+});
+$('#exportCsv').addEventListener('click',downloadCsv);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeStation()});
+initMap();
+})();
+</script>
+</body>
+</html>

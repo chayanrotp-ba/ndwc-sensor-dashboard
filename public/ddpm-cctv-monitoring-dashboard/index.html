@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Mockup แดชบอร์ดเฝ้าระวังภัยพิบัติแบบลุ่มน้ำสำหรับผู้บริหาร">
+  <title>ภาพรวมสถานการณ์รายลุ่มน้ำ — DDPM CCTV Mockup</title>
+  <script>document.documentElement.dataset.theme=new URLSearchParams(location.search).get('theme')==='light'?'light':'dark';</script>
+  <link rel="preconnect" href="https://js.arcgis.com">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.31/esri/themes/light/main.css">
+  <link rel="stylesheet" href="mockup.css">
+</head>
+<body class="mockup-body" data-page="overview">
+  <main class="system-shell">
+    <section class="map-pane" aria-label="แผนที่สถานการณ์รายลุ่มน้ำ">
+      <iframe class="main-map-frame" src="../?embed=map" title="แผนที่สถานี Sensor"></iframe>
+      <div class="map-fallback" aria-hidden="true">
+        <svg viewBox="0 0 620 900" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="minorRoads" width="92" height="92" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+              <path d="M 0 18 H 92 M 0 70 H 92" fill="none" stroke="#dfd9cb" stroke-width="2"/>
+              <path d="M 24 0 V 92 M 72 0 V 92" fill="none" stroke="#eee9df" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="620" height="900" fill="#f4f2ec"/>
+          <rect width="620" height="900" fill="url(#minorRoads)" opacity=".78"/>
+          <path class="river-line" d="M340 48 C310 132 358 186 320 258 C284 328 354 385 326 462 C296 542 344 608 308 690 C286 740 304 800 334 874"/>
+          <path class="river-line thin" d="M214 90 C268 165 240 260 316 327 M424 154 C372 224 398 311 331 382 M178 455 C256 470 254 535 322 574 M442 560 C382 604 378 686 315 731"/>
+          <g class="fallback-basins">
+            <path class="basin-shape severity-red" d="M278 66 L375 80 L423 174 L391 285 L320 361 L252 302 L232 181 Z"/>
+            <path class="basin-shape severity-orange" d="M183 165 L263 139 L286 307 L247 448 L166 405 L136 269 Z"/>
+            <path class="basin-shape severity-yellow" d="M405 276 L518 292 L558 430 L520 544 L424 516 L368 397 Z"/>
+            <path class="basin-shape severity-muted" d="M248 376 L372 354 L421 526 L363 662 L255 624 L208 501 Z"/>
+            <path class="basin-shape severity-muted" d="M172 472 L240 451 L271 636 L230 756 L149 699 L118 576 Z"/>
+            <path class="basin-shape severity-muted" d="M337 630 L408 594 L457 704 L418 835 L347 808 L303 708 Z"/>
+          </g>
+          <g class="fallback-labels">
+            <text x="319" y="194">ลุ่มน้ำน่าน</text><text x="183" y="306">ลุ่มน้ำยม</text>
+            <text x="438" y="406">ลุ่มน้ำชี</text><text x="285" y="516">เจ้าพระยา</text>
+            <text x="155" y="608">แม่กลอง</text><text x="348" y="735">บางปะกง</text>
+          </g>
+        </svg>
+      </div>
+      <div id="viewDiv" class="map-canvas" data-map-mode="overview"></div>
+      <div class="map-loading-overlay" role="status" aria-live="polite">
+        <i aria-hidden="true"></i>
+        <b>กำลังโหลดแผนที่</b>
+        <span>กำลังเชื่อมต่อข้อมูลแผนที่และขอบเขตพื้นที่</span>
+      </div>
+
+      <div class="map-title-card brand-title-card surface" aria-label="ระบบเฝ้าระวังภัยพิบัติทางธรรมชาติตามลุ่มน้ำและชุมชน">
+        <img class="agency-logo" src="assets/round-logo.png" alt="ตราสัญลักษณ์กรมป้องกันและบรรเทาสาธารณภัย">
+        <span class="brand-title-copy"><b>ระบบเฝ้าระวังภัยพิบัติทางธรรมชาติ</b><strong>ตามลุ่มน้ำ และชุมชน</strong></span>
+      </div>
+      <div class="map-tools surface" aria-label="เครื่องมือแผนที่">
+        <button id="homeBtn" type="button" title="ชั้นข้อมูลแผนที่">▱</button>
+        <button id="zoomIn" type="button" title="ชั้นข้อมูลสภาพอากาศ">☁</button>
+        <button id="zoomOut" type="button" title="สถานะสัญญาณสถานี">◉</button>
+      </div>
+      <div class="map-legend surface">
+        <b>คำอธิบายสัญลักษณ์</b>
+        <strong>หน่วยงาน</strong>
+        <span>◉ สถานีกรมป้องกันและบรรเทาสาธารณภัย</span>
+        <span>◉ สถานีบริหารทรัพยากรน้ำ</span>
+        <strong>สถานีตรวจวัดสภาพอากาศ</strong>
+        <small>เกณฑ์การเฝ้าระวังภัย (ปภ.) · ฝนสะสม 24 ชม.</small>
+        <span><i class="dot red"></i>&gt;90 มม. ต้องอพยพ</span>
+        <span><i class="dot orange"></i>&gt;35–90 มม. อพยพ</span>
+        <span><i class="dot yellow"></i>&gt;10–35 มม. เตรียมรับมือ</span>
+        <span><i class="dot blue"></i>&gt;0.5–10 มม. เฝ้าระวัง</span>
+        <span><i class="dot green"></i>0–0.5 มม. ติดตาม</span>
+        <strong>สถานะการรับข้อมูล</strong>
+        <span><i class="dot green"></i>ปกติ</span>
+        <span><i class="dot purple"></i>ข้อมูลขาดช่วง</span>
+        <span><i class="dot yellow"></i>ข้อมูลมาช้า</span>
+      </div>
+      <div class="mock-label surface">ขอบเขตจริง ONWR · สถานการณ์จำลอง</div>
+    </section>
+
+    <section class="content-pane" aria-label="สรุปสถานการณ์">
+      <div class="page-heading">
+        <div><span>หน้าหลัก / Dashboard</span><h1>ภาพรวมสถานการณ์รายลุ่มน้ำ</h1><p>แสดงเฉพาะพื้นที่และสถานีที่มีค่าเกินเกณฑ์สำหรับผู้บริหาร</p></div>
+        <div class="data-source-chip"><b>ข้อมูลล่าสุด</b><time>28/08/2569 10:40 น.</time><small>ขอบเขตลุ่มน้ำ: ONWR Open Data</small></div>
+      </div>
+      <header class="control-card">
+        <div class="scope-toolbar">
+          <div class="scope-switch"><button class="active" type="button">ทั่วประเทศ</button><button type="button">จังหวัด</button></div>
+          <span>ขอบเขตพื้นที่ 22 ลุ่มน้ำตามพระราชกฤษฎีกากำหนดลุ่มน้ำ</span>
+        </div>
+        <div class="control-row top-control-row">
+          <label class="select-control">
+            <span>ลุ่มน้ำ</span>
+            <select id="basinSelect">
+              <option value="all">ลุ่มน้ำทั้งหมด 22 ลุ่มน้ำ</option>
+              <option value="09">ลุ่มน้ำน่าน</option>
+              <option value="08">ลุ่มน้ำยม</option>
+              <option value="04">ลุ่มน้ำชี</option>
+            </select>
+          </label>
+          <label class="search-control">
+            <span aria-hidden="true">⌕</span>
+            <input id="basinSearch" type="search" placeholder="ค้นหาลุ่มน้ำ จังหวัด หรือสถานี">
+          </label>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">กรองตามระดับสถานการณ์:</span>
+          <div class="filter-buttons" id="severityFilters">
+            <button class="filter-button active" type="button" data-severity="all">ทั้งหมด <b>3</b></button>
+            <button class="filter-button yellow" type="button" data-severity="yellow"><i></i>เฝ้าระวัง <b>1</b></button>
+            <button class="filter-button orange" type="button" data-severity="orange"><i></i>อพยพ <b>1</b></button>
+            <button class="filter-button red" type="button" data-severity="red"><i></i>ต้องอพยพ <b>1</b></button>
+          </div>
+        </div>
+
+        <div class="live-status">
+          <div><span class="pulse-dot"></span><b>กำลังเชื่อมต่อข้อมูลสด</b><small>อัปเดตล่าสุด <time id="clock">--:--:--</time></small></div>
+          <button id="refreshBtn" type="button">↻ รีเฟรชตอนนี้</button>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="ตัวเลขสรุป">
+        <article class="summary-card critical-summary">
+          <span>ลุ่มน้ำวิกฤตสูงสุด</span><strong>1</strong><small>ลุ่มน้ำน่าน · 16 จุดเข้าเกณฑ์</small>
+        </article>
+        <article class="summary-card">
+          <span>สถานีที่ต้องติดตาม</span><strong>22</strong><small>จาก 180 สถานีทั่วประเทศ</small>
+        </article>
+        <article class="summary-card">
+          <span>Sensor ถึงเกณฑ์</span><strong>15</strong><small>น้ำท่า 7 · ฝนสะสม 24 ชม. 8 จุด</small>
+        </article>
+        <article class="summary-card hazard-summary">
+          <span>ภัยอื่นที่เกินเกณฑ์</span><strong>2</strong><small>ฝนหนัก 1 · PM2.5 1 พื้นที่</small>
+        </article>
+      </section>
+
+      <section class="national-overview" aria-labelledby="nationalOverviewTitle">
+        <div class="overview-chart-heading">
+          <div><p>NATIONAL OVERVIEW</p><h2 id="nationalOverviewTitle">สรุปสถานการณ์ 22 ลุ่มน้ำ</h2></div>
+          <span id="chartSelection" aria-live="polite">กำลังแสดง 3 ลุ่มน้ำ · 22 จุดเข้าเกณฑ์</span>
+        </div>
+        <div class="overview-chart-layout">
+          <div class="basin-donut" role="img" aria-label="จาก 22 ลุ่มน้ำ ไม่พบเหตุเกินเกณฑ์ 19 ลุ่มน้ำ เฝ้าระวัง 1 ลุ่มน้ำ อพยพ 1 ลุ่มน้ำ และต้องอพยพ 1 ลุ่มน้ำ">
+            <div><strong>22</strong><span>ลุ่มน้ำทั้งหมด</span></div>
+          </div>
+          <dl class="basin-status-totals">
+            <div><dt><i class="dot gray"></i>ไม่พบเหตุเกินเกณฑ์</dt><dd>19 <small>ลุ่มน้ำ</small></dd></div>
+            <div><dt><i class="dot yellow"></i>เฝ้าระวัง</dt><dd>1 <small>ลุ่มน้ำ</small></dd></div>
+            <div><dt><i class="dot orange"></i>อพยพ</dt><dd>1 <small>ลุ่มน้ำ</small></dd></div>
+            <div><dt><i class="dot red"></i>ต้องอพยพ</dt><dd>1 <small>ลุ่มน้ำ</small></dd></div>
+          </dl>
+          <div class="threshold-points">
+            <div class="threshold-points-head"><span>จุดตรวจวัดที่เข้าเกณฑ์</span><strong id="activePointTotal">22 <small>จุด</small></strong></div>
+            <div class="threshold-bar" role="img" aria-label="จุดเข้าเกณฑ์ทั้งหมด 22 จุด ต้องอพยพ 6 จุด อพยพ 6 จุด เฝ้าระวัง 10 จุด">
+              <i class="red" style="width:27.273%"></i><i class="orange" style="width:27.273%"></i><i class="yellow" style="width:45.454%"></i>
+            </div>
+            <div class="threshold-legend"><span><i class="dot red"></i><b>6</b> ต้องอพยพ</span><span><i class="dot orange"></i><b>6</b> อพยพ</span><span><i class="dot yellow"></i><b>10</b> เฝ้าระวัง</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-heading">
+        <div><p>HIGH PEAK BY BASIN</p><h1>ลุ่มน้ำที่ต้องติดตาม</h1></div>
+        <span id="resultCount">แสดง 3 ลุ่มน้ำที่เกินเกณฑ์</span>
+      </div>
+
+      <section class="basin-list" id="basinList">
+        <div class="basin-table-head" aria-hidden="true"><span></span><span>ลำดับ</span><span>พื้นที่ลุ่มน้ำและจังหวัดที่เกี่ยวข้อง</span><span>ค่าสูงสุด</span><span>จำนวนจุด</span><span></span></div>
+        <article class="basin-card" data-severity="red" data-basin="09" data-points="16" data-search="ลุ่มน้ำน่าน น่าน อุตรดิตถ์ พิษณุโลก ต้องอพยพ">
+          <button class="basin-main" type="button" data-open-basin="09">
+            <span class="severity-bar red"></span>
+            <span class="basin-rank">01</span>
+            <span class="basin-copy"><small>ระดับสูงสุด · ต้องอพยพ</small><b>ลุ่มน้ำน่าน</b><em>น่าน · อุตรดิตถ์ · พิษณุโลก · นครสวรรค์</em></span>
+            <span class="peak-value"><small>High Peak</small><b>8.42 ม.</b><em>+0.38 ม./ชม.</em></span>
+            <span class="basin-count"><b>16</b><small>จุดเข้าเกณฑ์</small></span>
+            <span class="open-icon">›</span>
+          </button>
+          <div class="basin-meta"><span>กล้อง NAN01</span><span>ฝนสะสม 126 มม.</span><strong>น้ำท่าเกินเกณฑ์ 1 จุด</strong></div>
+        </article>
+
+        <article class="basin-card" data-severity="orange" data-basin="08" data-points="3" data-search="ลุ่มน้ำยม สุโขทัย พิษณุโลก อพยพ">
+          <button class="basin-main" type="button" data-open-basin="08">
+            <span class="severity-bar orange"></span>
+            <span class="basin-rank">02</span>
+            <span class="basin-copy"><small>ระดับสูงสุด · อพยพ</small><b>ลุ่มน้ำยม</b><em>แพร่ · สุโขทัย · พิษณุโลก</em></span>
+            <span class="peak-value"><small>High Peak</small><b>6.86 ม.</b><em>+0.19 ม./ชม.</em></span>
+            <span class="basin-count"><b>3</b><small>จุดเข้าเกณฑ์</small></span>
+            <span class="open-icon">›</span>
+          </button>
+          <div class="basin-meta"><span>กล้อง YOM-04</span><span>ฝนสะสม 104 มม.</span><strong>น้ำท่าเกินเกณฑ์ 1 จุด</strong></div>
+        </article>
+
+        <article class="basin-card" data-severity="yellow" data-basin="04" data-points="3" data-search="ลุ่มน้ำชี ขอนแก่น มหาสารคาม เฝ้าระวัง">
+          <button class="basin-main" type="button" data-open-basin="04">
+            <span class="severity-bar yellow"></span>
+            <span class="basin-rank">03</span>
+            <span class="basin-copy"><small>ระดับสูงสุด · เฝ้าระวัง</small><b>ลุ่มน้ำชี</b><em>ขอนแก่น · มหาสารคาม · ร้อยเอ็ด</em></span>
+            <span class="peak-value"><small>High Peak</small><b>5.24 ม.</b><em>+0.08 ม./ชม.</em></span>
+            <span class="basin-count"><b>3</b><small>จุดเข้าเกณฑ์</small></span>
+            <span class="open-icon">›</span>
+          </button>
+          <div class="basin-meta"><span>กล้อง CHI-07</span><span>ฝนสะสม 82 มม.</span><strong>แนวโน้มเพิ่มขึ้นต่อเนื่อง</strong></div>
+        </article>
+      </section>
+
+      <section class="hazard-section">
+        <div class="section-heading compact"><div><p>MULTI-HAZARD EXCEPTION</p><h2>สัญญาณอื่นที่เกินเกณฑ์</h2></div><span>แสดงเฉพาะค่าผิดปกติ</span></div>
+        <div class="hazard-grid">
+          <article><i class="hazard-icon rain">☂</i><span><b>ฝนตกหนัก</b><small>น่าน · 126 มม./24 ชม.</small></span><strong class="orange-text">เกินเกณฑ์</strong></article>
+          <article><i class="hazard-icon air">PM</i><span><b>PM2.5</b><small>เชียงใหม่ · 78 µg/m³</small></span><strong class="red-text">มีผลต่อสุขภาพ</strong></article>
+        </div>
+      </section>
+    </section>
+
+    <nav class="footer-navigation surface" aria-label="เมนูหลัก">
+      <a class="active" href="index.html" aria-current="page"><span>⌂</span><b>หน้าหลัก</b></a>
+      <a href="basin.html"><span>♒</span><b>เส้นทางน้ำ</b></a>
+      <a href="monitor.html"><span>◕</span><b>มอนิเตอร์</b></a>
+    </nav>
+  </main>
+  <script src="data/onwr-basins-22.js"></script>
+  <script src="https://js.arcgis.com/4.31/"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Mockup รายละเอียดลุ่มน้ำและตารางสรุปสถานี">
+  <title>รายละเอียดลุ่มน้ำน่าน — DDPM CCTV Mockup</title>
+  <link rel="preconnect" href="https://js.arcgis.com">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.31/esri/themes/light/main.css">
+  <link rel="stylesheet" href="mockup.css">
+</head>
+<body class="mockup-body" data-page="basin">
+  <main class="system-shell basin-shell">
+    <section class="map-pane" aria-label="แผนที่สถานีในลุ่มน้ำน่าน">
+      <div class="map-fallback basin-fallback" aria-hidden="true">
+        <svg viewBox="0 0 620 900" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="detailRoads" width="76" height="76" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
+              <path d="M0 16H76 M0 58H76 M20 0V76" fill="none" stroke="#ded9cf" stroke-width="1.5"/>
+            </pattern>
+          </defs>
+          <rect width="620" height="900" fill="#f4f2ec"/><rect width="620" height="900" fill="url(#detailRoads)" opacity=".8"/>
+          <path class="detail-basin-area" d="M222 54 L418 71 L468 190 L425 356 L466 508 L398 695 L329 842 L208 786 L164 624 L206 468 L158 320 L181 168 Z"/>
+          <path class="water-route" d="M304 95 C275 182 351 222 302 315 C266 387 350 434 318 525 C292 594 349 646 314 730 C301 761 314 800 332 827"/>
+          <g class="route-stations">
+            <circle class="station red" cx="304" cy="177" r="13"/><circle class="station orange" cx="306" cy="395" r="12"/><circle class="station yellow" cx="320" cy="651" r="11"/>
+            <text x="330" y="170">NAN01 · น่าน</text><text x="330" y="388">UTT05 · อุตรดิตถ์</text><text x="344" y="644">NAN03 · น่าน</text>
+          </g>
+        </svg>
+      </div>
+      <div id="viewDiv" class="map-canvas" data-map-mode="basin"></div>
+      <div class="map-loading-overlay" role="status" aria-live="polite">
+        <i aria-hidden="true"></i>
+        <b>กำลังโหลดแผนที่</b>
+        <span>กำลังเชื่อมต่อข้อมูลแผนที่และขอบเขตพื้นที่</span>
+      </div>
+      <div class="map-title-card surface">
+        <a class="back-link" href="index.html" aria-label="กลับหน้าภาพรวม">‹</a>
+        <span><b>ลุ่มน้ำน่าน</b><small>ตำแหน่งสถานีแจ้งเตือนในลุ่มน้ำ</small></span>
+      </div>
+      <div class="map-tools surface" aria-label="เครื่องมือแผนที่">
+        <button id="homeBtn" type="button" title="แสดงลุ่มน้ำทั้งหมด">⌂</button>
+        <button id="zoomIn" type="button" title="ขยายแผนที่">＋</button>
+        <button id="zoomOut" type="button" title="ย่อแผนที่">−</button>
+        <button class="sensor-layer-control-toggle" id="sensorLayerControlToggle" type="button" title="เปิดหรือปิดตัวเลือกข้อมูล Sensor" aria-label="เปิดหรือปิดตัวเลือกข้อมูล Sensor" aria-expanded="false" aria-controls="sensorLayerPanel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h2m2-4v8m3-11v14m3-11v8m3-4h3"/></svg>
+        </button>
+      </div>
+      <div class="sensor-layer-panel surface" id="sensorLayerPanel" aria-label="ควบคุม Layer ข้อมูล Sensor" hidden>
+        <header><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h2m2-4v8m3-11v14m3-11v8m3-4h3"/></svg><b>ข้อมูล Sensor</b></header>
+        <button class="sensor-layer-option is-on" type="button" role="switch" aria-checked="true" data-sensor-layer-toggle="flow">
+          <i class="sensor-map-symbol flow blue" aria-hidden="true"></i><span>สถานีวัดระดับน้ำท่า</span><em aria-hidden="true"></em>
+        </button>
+        <button class="sensor-layer-option is-on" type="button" role="switch" aria-checked="true" data-sensor-layer-toggle="rain">
+          <img src="assets/sensor-rain.png" alt=""><span>สถานีวัดระดับน้ำฝน</span><em aria-hidden="true"></em>
+        </button>
+      </div>
+      <div class="map-legend surface route-legend" id="basinLegend">
+        <button class="legend-toggle" id="basinLegendToggle" type="button" aria-expanded="true" aria-controls="basinLegendItems">
+          <b>สัญลักษณ์บนแผนที่</b><span aria-hidden="true">−</span>
+        </button>
+        <div id="basinLegendItems"></div>
+      </div>
+      <div class="mock-label surface">ขอบเขต ONWR · เส้นทางน้ำ DWR</div>
+    </section>
+
+    <section class="content-pane basin-content">
+      <header class="basin-header">
+        <div class="breadcrumb"><a href="index.html">ภาพรวมประเทศ</a><span>›</span><b>ลุ่มน้ำน่าน</b></div>
+        <div class="basin-title-row">
+          <div><p>สถานการณ์สูงสุดในลุ่มน้ำ</p><h1>ลุ่มน้ำน่าน</h1><span class="province-line">ติดตั้งใน 2 จังหวัด · น่าน อุตรดิตถ์</span></div>
+        </div>
+        <div class="province-chips" aria-label="จังหวัดที่ติดตั้ง"><button class="active" type="button">ทุกจังหวัด</button><button type="button">น่าน</button><button type="button">อุตรดิตถ์</button></div>
+        <div class="criteria-filter" id="criteriaFilter" aria-label="กรองตามระดับสถานการณ์">
+          <span>กรองระดับสถานการณ์</span>
+          <button class="active" type="button" data-criteria="all">ทั้งหมด</button>
+          <button type="button" data-criteria="red"><i class="filter-dot red"></i>ต้องอพยพ</button>
+          <button type="button" data-criteria="orange"><i class="filter-dot orange"></i>อพยพ</button>
+          <button type="button" data-criteria="yellow"><i class="filter-dot yellow"></i>เตรียมรับมือ</button>
+          <button type="button" data-criteria="blue"><i class="filter-dot blue"></i>เฝ้าระวัง</button>
+          <button type="button" data-criteria="green"><i class="filter-dot green"></i>ติดตาม</button>
+        </div>
+      </header>
+
+      <section class="detail-summary-grid high-peak-summary-grid" aria-label="สรุปตัวเลขสถานการณ์ลุ่มน้ำ">
+        <article class="critical"><span>สถานีที่เข้าเกณฑ์เฝ้าระวัง</span><b id="summaryStationTotal">16 จุด</b><small class="criteria-breakdown" id="summaryStationBreakdown"><span class="red"><i></i>ต้องอพยพ 6</span><span class="orange"><i></i>อพยพ 4</span><span class="yellow"><i></i>เตรียมรับมือ 2</span><span class="blue"><i></i>เฝ้าระวัง 2</span><span class="green"><i></i>ติดตาม 2</span></small></article>
+        <article class="high-risk-focus"><span>สถานีเสี่ยงสูงสุด · High Peak</span><b id="summaryHighPeakValue">8.42 ม.</b><small id="summaryHighPeakNote">NAN01 · เกินเกณฑ์ +0.62 ม.</small></article>
+        <article><span>แนวโน้มเพิ่มสูงสุด</span><b id="summaryTrendValue">+0.38 ม./ชม.</b><small id="summaryTrendNote">NAN01 · สะพานปอน</small></article>
+        <article><span>ข้อมูลล่าสุด</span><b>10:40 น.</b><small>28/08/2569 · อัปเดตทุก 5 นาที</small></article>
+      </section>
+
+      <section class="station-section top-risk-section">
+        <div class="top-risk-heading">
+          <div class="top-risk-title"><p>TOP RISK CCTV</p><h2>สถานีเฝ้าระวัง ความเสี่ยงสูงสุด</h2><strong id="topRiskHeadline"><i class="filter-dot red"></i>ต้องอพยพ 6 จุด <small>· แสดงครบทุกสถานี</small></strong><span class="top-risk-scope" id="topRiskScope">ทุกจังหวัด · 16 สถานี</span></div>
+          <div class="top-risk-side">
+            <div class="risk-summary" id="riskSummary" aria-label="สรุปจำนวนสถานีเร่งด่วน 3 ระดับ"><span class="red"><i></i>ต้องอพยพ <b>6</b></span><span class="orange"><i></i>อพยพ <b>4</b></span><span class="yellow"><i></i>เตรียมรับมือ <b>2</b></span></div>
+          </div>
+        </div>
+        <p class="station-table-note" id="basinStationNote">แสดงเฉพาะ 3 ระดับเร่งด่วนตามตัวกรอง · กดหัวตารางเพื่อเรียงข้อมูล</p>
+        <div class="table-wrap basin-station-table-wrap">
+          <table class="data-table basin-station-table">
+            <thead><tr><th>ลำดับ</th><th><button class="table-sort-button" type="button" data-table-sort="risk" data-sort-key="code">CCTV / สถานี / ที่ตั้ง</button></th><th><button class="table-sort-button" type="button" data-table-sort="risk" data-sort-key="level">ระดับน้ำ</button></th><th><button class="table-sort-button" type="button" data-table-sort="risk" data-sort-key="bank">ระดับตลิ่ง</button></th><th><button class="table-sort-button" type="button" data-table-sort="risk" data-sort-key="excess">เกินเกณฑ์</button></th><th><button class="table-sort-button" type="button" data-table-sort="risk" data-sort-key="trend">แนวโน้ม</button></th><th><button class="table-sort-button active desc" type="button" data-table-sort="risk" data-sort-key="severity">ระดับเตือนภัย</button></th><th>เวลาล่าสุด</th><th>เครื่องมือ</th></tr></thead>
+            <tbody id="basinStationRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="station-section basin-all-stations-section">
+        <div class="section-heading compact station-summary-heading"><div><p>STATION SUMMARY</p><h2>ตารางสรุปสถานีในลุ่มน้ำ</h2></div><div class="station-summary-tools"><div class="risk-summary station-summary-risk station-follow-summary" id="stationSummaryRisk" aria-label="สรุปสถานีที่ต้องติดตาม"><span class="blue"><i></i>เฝ้าระวัง <b>2</b></span><span class="green"><i></i>ติดตาม <b>4</b></span></div><div class="station-summary-metric"><span>สถานีตามตัวกรอง</span><b id="basinAllStationCount">6 จุด</b><small id="stationSummaryBreakdown">เฉพาะเฝ้าระวังและติดตาม · ทุกจังหวัด</small></div></div></div>
+        <p class="station-table-note">แสดงเฉพาะสถานีระดับเฝ้าระวังสีฟ้าและติดตามสีเขียวตามจังหวัด · ค่าเริ่มต้นเรียงรหัสสถานี และกดหัวตารางเพื่อเปลี่ยนลำดับ</p>
+        <div class="table-wrap basin-all-station-table-wrap">
+          <table class="data-table basin-all-station-table">
+            <thead><tr><th>ลำดับ</th><th><button class="table-sort-button active asc" type="button" data-table-sort="summary" data-sort-key="code">CCTV / สถานี / ที่ตั้ง</button></th><th><button class="table-sort-button" type="button" data-table-sort="summary" data-sort-key="level">ระดับน้ำ</button></th><th><button class="table-sort-button" type="button" data-table-sort="summary" data-sort-key="bank">ระดับตลิ่ง</button></th><th><button class="table-sort-button" type="button" data-table-sort="summary" data-sort-key="excess">เกินเกณฑ์</button></th><th><button class="table-sort-button" type="button" data-table-sort="summary" data-sort-key="trend">แนวโน้ม</button></th><th><button class="table-sort-button" type="button" data-table-sort="summary" data-sort-key="severity">ระดับเตือนภัย</button></th><th>เวลาล่าสุด</th><th>เครื่องมือ</th></tr></thead>
+            <tbody id="basinAllStationRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sensor-section">
+        <div class="section-heading compact"><div><p>THRESHOLD SENSOR ALERTS</p><h2>Sensor ที่ถึงเกณฑ์ในลุ่มน้ำ</h2></div><span id="sensorAlertCount">2 รายการ</span></div>
+        <p class="sensor-section-note">แสดงเฉพาะ Sensor น้ำท่าและปริมาณฝน 24 ชั่วโมงที่มีค่าเข้าเกณฑ์เตรียมรับมือ</p>
+        <div class="sensor-alert-grid" id="sensorAlertCards"></div>
+      </section>
+
+      <section class="station-section sensor-summary-section">
+        <div class="section-heading compact"><div><p>SENSOR SUMMARY</p><h2>ตารางสรุป Sensor ในลุ่มน้ำ</h2></div><span id="sensorTableCount">6 สถานี</span></div>
+        <div class="sensor-table-tabs" id="sensorTableTabs" role="tablist" aria-label="เลือกประเภท Sensor">
+          <button class="active" type="button" role="tab" aria-selected="true" data-sensor-table="flow"><i class="sensor-map-symbol flow red" aria-hidden="true"></i>สถานีวัดระดับน้ำท่า</button>
+          <button type="button" role="tab" aria-selected="false" data-sensor-table="rain"><img src="assets/sensor-rain.png" alt="">สถานีวัดปริมาณฝน 24 ชม.</button>
+        </div>
+        <p class="station-table-note">เลือกประเภท Sensor เพื่อแสดงรายละเอียดสถานี หน่วยงาน เวลาล่าสุด และค่าตรวจวัดที่เกี่ยวข้อง</p>
+        <div class="table-wrap sensor-summary-table-wrap">
+          <table class="data-table sensor-summary-table"><thead id="sensorTableHead"></thead><tbody id="sensorTableRows"></tbody></table>
+        </div>
+      </section>
+
+    </section>
+
+    <aside class="all-stations-drawer" id="allStationsDrawer" aria-hidden="true" aria-label="รายการ CCTV ทั้งหมดตามตัวกรอง">
+      <header><div><p>ALL CCTV IN BASIN</p><h2>รายการ CCTV ทั้งหมด</h2><span id="allStationSummary">16 จุด · เรียงตามความเสี่ยง</span></div><button id="closeAllStations" type="button" aria-label="ปิดรายการทั้งหมด">×</button></header>
+      <div class="table-wrap all-stations-table-wrap"><table class="data-table all-stations-table"><thead><tr><th>อันดับ</th><th>CCTV / สถานี</th><th>ระดับ</th><th>เกินเกณฑ์</th><th>แนวโน้ม</th><th>สถานะ</th></tr></thead><tbody id="allStationRows"></tbody></table></div>
+    </aside>
+    <div class="drawer-backdrop all-stations-backdrop" id="allStationsBackdrop"></div>
+
+    <aside class="camera-drawer" id="cameraDrawer" aria-hidden="true" aria-label="ข้อมูลสถานีและกล้อง CCTV">
+      <header class="station-popup-head">
+        <div class="station-popup-brand"><i aria-hidden="true">⌁</i><span><b>ข้อมูลสถานี</b><small>รายละเอียดสถานีและกล้องวงจรปิด</small></span></div>
+        <button id="closeDrawer" type="button" aria-label="ปิดรายละเอียด">×</button>
+      </header>
+      <section class="station-neighbours" aria-label="สถานีก่อนหน้าและถัดไป">
+        <div><b>เลือกสถานี "ก่อนหน้า"</b><span id="drawerPreviousStation">ไม่มีรายการก่อนหน้า</span></div>
+        <div class="current"><b>สถานี "ที่ดูอยู่"</b><span><i></i><strong id="drawerStation">NAN01 - สะพานปอน</strong></span></div>
+        <div><b>เลือกสถานี "ถัดไป"</b><span id="drawerNextStation"><i></i>NAN02 - สะพานบ้านโรงเรียนไตรเขต</span></div>
+      </section>
+      <div class="drawer-camera-tabs"><span aria-hidden="true">▣</span><button class="active" type="button">กล้องตัวที่ 1</button><button type="button">กล้องตัวที่ 2</button></div>
+      <figure class="cctv-camera-frame">
+        <div class="cctv-camera-crop"><img id="drawerCameraImage" src="assets/cctv-nan01-reference.png" alt="ภาพตัวอย่างจากกล้อง CCTV"></div>
+        <span class="live-chip"><i></i> กล้องตัวที่ 1</span>
+        <figcaption><span id="drawerCameraLabel">ภาพตัวอย่างจากกล้อง CCTV</span><time id="drawerUpdated">28/08/2569 13:48</time></figcaption>
+      </figure>
+      <section class="station-identity">
+        <div><h3>▣ <span id="drawerStationHeading">NAN01 - สะพานปอน ต.ปอน อ.ทุ่งช้าง จ.น่าน</span></h3><p>ค่าระดับน้ำจะอัปเดตทุก 1 นาที | อัปเดตเมื่อ: <span id="drawerUpdatedCopy">28/08/2569 13:48</span></p></div>
+        <button type="button">ติดตามข้อมูลข่าวสาร</button>
+      </section>
+      <div class="station-warning" id="drawerWarning" hidden>⚠ ขณะนี้ระดับน้ำเข้าใกล้ระดับตลิ่ง</div>
+      <dl class="station-water-cards">
+        <div><dt>≋ ระดับน้ำ</dt><dd id="drawerWater">2.98 ม.</dd><small id="drawerWaterMsl">(348.98 ม.รทก.)</small></div>
+        <div><dt>⚑ ระดับตลิ่ง</dt><dd id="drawerBank">1.69 ม.</dd><small id="drawerBankMsl">(347.69 ม.รทก.)</small></div>
+      </dl>
+      <h4 class="station-detail-title">▤ รายละเอียดสถานี</h4>
+      <dl class="station-detail-grid">
+        <div><dt>◉ สถานที่ตั้ง</dt><dd id="drawerLocation">ต.ปอน อ.ทุ่งช้าง จ.น่าน</dd></div>
+        <div><dt>♙ หน่วยงานผู้ดูแล</dt><dd id="drawerAgency">ปภ.จ.น่าน</dd></div>
+        <div><dt>▯ เบอร์โทรศัพท์</dt><dd id="drawerPhone">0659360537</dd></div>
+        <div><dt>◈ พิกัด</dt><dd id="drawerCoordinates">19.518800, 100.927400</dd></div>
+      </dl>
+      <button class="station-more-button" type="button">ดูรายละเอียดเพิ่มเติม</button>
+      <div class="mini-chart" hidden><div class="chart-head"><b>ระดับน้ำย้อนหลัง 6 ชั่วโมง</b><span>เมตร</span></div><svg viewBox="0 0 360 110" preserveAspectRatio="none"><path class="chart-area" d="M0 98 C46 94 57 83 91 79 C126 75 146 67 181 62 C219 56 244 47 277 34 C310 22 332 15 360 8 L360 110 L0 110 Z"/><path class="chart-line" d="M0 98 C46 94 57 83 91 79 C126 75 146 67 181 62 C219 56 244 47 277 34 C310 22 332 15 360 8"/></svg></div>
+      <section class="drawer-analysis" id="drawerAnalysis" hidden>
+        <div><small>ผลวิเคราะห์ระดับน้ำ</small><b id="analysisStatus">สูงกว่าระดับตลิ่ง</b></div>
+        <p id="analysisCopy">ระดับน้ำมีแนวโน้มเพิ่มขึ้นและอยู่เหนือระดับตลิ่ง ควรติดตามภาพจากกล้องและข้อมูลสถานีอย่างต่อเนื่อง</p>
+      </section>
+    </aside>
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <nav class="footer-navigation surface" aria-label="เมนูหลัก">
+      <a href="index.html"><span>⌂</span><b>หน้าหลัก</b></a>
+      <a class="active" href="basin.html" aria-current="page"><span>♒</span><b>เส้นทางน้ำ</b></a>
+      <a href="monitor.html"><span>◕</span><b>มอนิเตอร์</b></a>
+    </nav>
+  </main>
+  <script src="data/onwr-basins-22.js"></script>
+  <script src="data/dpm-provinces-basin09.js"></script>
+  <script src="data/cctv-markers.js"></script>
+  <script src="https://js.arcgis.com/4.31/"></script>
+  <script src="app.js"></script>
+</body>
+</html>

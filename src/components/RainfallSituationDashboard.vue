@@ -104,7 +104,7 @@ function toggleTheme() {
     </header>
 
     <section class="page-head">
-      <div><span>MOCKUP · DASHBOARD เฝ้าระวังภัย</span><h1>ภาพรวมสถานการณ์ตามพื้นที่</h1><p>เริ่มจากลุ่มน้ำหรือจังหวัด แล้วเจาะลงไปดูสาเหตุ แนวโน้ม และ Sensor ต้นทาง</p></div>
+      <div><span>DASHBOARD สถานการณ์น้ำฝน</span><h1>ภาพรวมสถานการณ์ตามพื้นที่</h1><p>เริ่มจากลุ่มน้ำหรือจังหวัด แล้วเจาะลงไปดูแนวโน้ม สถานีที่ต้องติดตาม และ Sensor ต้นทาง</p></div>
       <div class="head-time"><b>ข้อมูลล่าสุด 11:00 น.</b><span>อัปเดตทุก 15 นาที</span></div>
     </section>
 
@@ -113,13 +113,13 @@ function toggleTheme() {
       <div class="overview-grid">
         <div class="area-list">
           <button v-for="item in currentAreas" :key="item.id" type="button" :class="['area-row', item.tone, {active:selectedArea.id===item.id}]" @click="selectedAreaId=item.id">
-            <span class="severity">{{ item.score }}</span><span class="area-name"><b>{{ item.name }}</b><small>{{ item.sub }}</small></span><span class="area-signal"><b>{{ item.status }}</b><small>{{ item.alerts }} สัญญาณเตือน</small></span><span class="area-trend"><b>{{ item.trendIcon }} {{ item.trend }}</b><small>ฝนสูงสุด {{ item.rain }}</small></span>
+            <span class="severity">{{ item.score }}</span><span class="area-name"><b>{{ item.name }}</b><small>{{ item.sub }}</small></span><span class="area-signal"><b>{{ item.status }}</b><small>{{ item.alerts }} สถานีต้องติดตาม</small></span><span class="area-trend"><b>{{ item.trendIcon }} {{ item.trend }}</b><small>ฝนสูงสุด {{ item.rain }}</small></span>
           </button>
         </div>
         <article :class="['area-summary', selectedArea.tone]">
           <header><span>{{ groupMode==='basin'?'ลุ่มน้ำที่เลือก':'จังหวัดที่เลือก' }}</span><b>{{ selectedArea.status }}</b></header>
           <h2>{{ selectedArea.name }}</h2><p>{{ selectedArea.headline }}</p>
-          <div class="summary-kpis"><div><span>สัญญาณเตือน</span><b>{{ selectedArea.alerts }}</b></div><div><span>สถานีพร้อมใช้</span><b>{{ selectedArea.stations }}</b></div><div><span>แนวโน้ม</span><b>{{ selectedArea.trendIcon }} {{ selectedArea.trend }}</b></div></div>
+          <div class="summary-kpis"><div><span>สถานีต้องติดตาม</span><b>{{ selectedArea.alerts }}</b></div><div><span>สถานีพร้อมใช้</span><b>{{ selectedArea.stations }}</b></div><div><span>แนวโน้ม</span><b>{{ selectedArea.trendIcon }} {{ selectedArea.trend }}</b></div></div>
           <div class="source-chips"><span>ประเภทที่ทำให้เตือน</span><b v-for="source in selectedArea.sources" :key="source">{{ source }}</b></div>
           <section class="trend-stations" aria-label="สถานีที่ทำให้แนวโน้มเพิ่มขึ้น">
             <header><div><b>สถานีที่ค่าฝนเพิ่มขึ้น</b><small>เปรียบเทียบกับค่าก่อนหน้า 3 ชั่วโมง</small></div><span>{{ selectedTrendStations.length }} สถานี</span></header>
@@ -149,7 +149,7 @@ function toggleTheme() {
         </article>
 
         <aside class="warning-causes">
-          <header><span class="kicker">ที่มาของการเตือน</span><h3>{{ alertSources.length }} ค่าที่ต้องติดตาม</h3></header>
+          <header><span class="kicker">ข้อมูลที่ต้องติดตาม</span><h3>{{ alertSources.length }} ค่าเฝ้าระวัง</h3></header>
           <button v-for="item in alertSources" :key="item.key" type="button" :class="[item.tone,{active:selectedMetric===item.key}]" @click="selectedMetric=item.key">
             <i></i><span><b>{{ item.type }} · {{ item.status }}</b><small>{{ item.code }} · {{ item.station }}</small></span><strong>{{ item.value }}<small>{{ item.unit }}</small></strong>
           </button>

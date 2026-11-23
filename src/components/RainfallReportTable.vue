@@ -1,10 +1,38 @@
 <script setup>
 import { computed } from 'vue';
-import { RAINFALL_REPORT_COLUMNS, formatRainfall } from '../rainfall-report.js';
-const props = defineProps({ rows: { type:Array, default:()=>[] }, referenceDate: { type:String, required:true } });
-const headers = computed(() => { const d=new Date(`${props.referenceDate}T00:00:00`); const label=offset=>{const x=new Date(d);x.setDate(x.getDate()+offset);return new Intl.DateTimeFormat('th-TH',{day:'2-digit',month:'short'}).format(x);}; return [RAINFALL_REPORT_COLUMNS[0],RAINFALL_REPORT_COLUMNS[1],label(-2),label(-1),label(0),RAINFALL_REPORT_COLUMNS[5]]; });
+import { formatRainfall } from '../rainfall-report.js';
+const props = defineProps({ rows:{type:Array,default:()=>[]}, referenceDate:{type:String,required:true}, selectedIds:{type:Array,default:()=>[]}, selectable:{type:Boolean,default:false}, visibleColumns:{type:Array,default:()=>['code','name','agency','tambon','amphoe','province','rain0','rain1','rain2','total']} });
+const emit = defineEmits(['toggle']);
+const selected = computed(() => new Set(props.selectedIds));
+const headers = computed(() => { const origin=new Date(`${props.referenceDate}T00:00:00`); const label=(offset)=>{const date=new Date(origin);date.setDate(date.getDate()+offset);return new Intl.DateTimeFormat('th-TH',{day:'2-digit',month:'short'}).format(date);}; return [label(-2),label(-1),label(0)]; });
+const allColumns = Object.freeze(['code','name','agency','tambon','amphoe','province','rain0','rain1','rain2','total']);
+const columns = computed(() => allColumns.filter(column => props.visibleColumns.includes(column)));
+function label(column){ return ({code:'รหัสสถานี',name:'สถานี',agency:'หน่วยงาน',tambon:'ตำบล',amphoe:'อำเภอ',province:'จังหวัด',rain0:headers.value[0],rain1:headers.value[1],rain2:headers.value[2],total:'ฝนสะสม 3 วัน'})[column]; }
+function value(row,column){ if(column==='rain0') return formatRainfall(row.rain[0]); if(column==='rain1') return formatRainfall(row.rain[1]); if(column==='rain2') return formatRainfall(row.rain[2]); if(column==='total') return formatRainfall(row.total); return row[column]; }
+const groups = computed(() => {
+  const byProvince = new Map();
+  props.rows.forEach((row) => { if(!byProvince.has(row.province)) byProvince.set(row.province,[]); byProvince.get(row.province).push(row); });
+  return [...byProvince.entries()].map(([province, rows]) => {
+    const sorted=[...rows].sort((a,b)=>(b.total ?? -Infinity)-(a.total ?? -Infinity)||a.name.localeCompare(b.name,'th'));
+    return { province, rows:sorted, maximum:sorted.find(row=>row.total!==null)?.total ?? null };
+  }).sort((a,b)=>(b.maximum ?? -Infinity)-(a.maximum ?? -Infinity)||a.province.localeCompare(b.province,'th'));
+});
 </script>
-<template><section class="excel-preview" aria-label="ตัวอย่างไฟล์ Excel"><header><span class="excel-icon">▦</span><div><b>ตัวอย่างไฟล์ Excel</b><small>ชีต: ฝน 3 วัน · โครงสร้างตามแม่แบบ สสน (1).xlsx</small></div></header><div class="table-wrap"><table class="rain-table"><caption>ฝนสะสม 3 วัน (สสน.)</caption><thead><tr><th v-for="header in headers" :key="header">{{header}}</th></tr></thead><tbody><tr v-for="row in rows" :key="row.id"><td>{{row.amphoe}}</td><td>{{row.province}}</td><td>{{formatRainfall(row.rain[0])}}</td><td>{{formatRainfall(row.rain[1])}}</td><td>{{formatRainfall(row.rain[2])}}</td><td :class="{missing:row.total===null}">{{formatRainfall(row.total)}}</td></tr><tr v-if="!rows.length"><td colspan="6" class="empty">ยังไม่ได้เลือกสถานีสำหรับรายงาน</td></tr></tbody></table></div></section></template>
+<template>
+  <div class="report-table-wrap"><table class="report-table"><thead><tr><th v-if="selectable" class="select-cell">เลือก</th><th v-for="column in columns" :key="column" :class="{rain:column.startsWith('rain') || column==='total'}">{{label(column)}}<small v-if="column.startsWith('rain')">(24 ชม.)</small></th></tr></thead><tbody><template v-for="group in groups" :key="group.province"><tr class="province-row"><td :colspan="columns.length + (selectable ? 1 : 0)"><b>จังหวัด{{group.province}}</b><span>{{group.rows.length}} สถานี · ค่าสูงสุด {{formatRainfall(group.maximum)}} มม.</span></td></tr><tr v-for="row in group.rows" :key="row.id"><td v-if="selectable" class="select-cell"><input :checked="selected.has(row.id)" type="checkbox" :aria-label="'เลือก '+row.name" @change="emit('toggle',row.id)"></td><td v-for="column in columns" :key="column" :class="[{missing:column==='total'&&row.total===null,station:column==='name'}, {rain:column.startsWith('rain') || column==='total'}]"><template v-if="column==='name'"><b>{{row.name}}</b></template><b v-else-if="column==='total'">{{value(row,column)}}</b><template v-else>{{value(row,column)}}</template></td></tr></template><tr v-if="!rows.length"><td :colspan="Math.max(columns.length + (selectable ? 1 : 0),1)" class="empty">ไม่พบสถานีตามเงื่อนไขที่กำหนด</td></tr></tbody></table></div>
+</template>
 <style scoped>
-.excel-preview{margin-top:16px;border:1px solid #aeb8c8;border-radius:8px;overflow:hidden;background:#f8fafc;box-shadow:0 8px 20px #0003}.excel-preview>header{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid #cbd5e1;background:#eef2f7;color:#1f2937}.excel-icon{display:grid;place-items:center;width:25px;height:25px;border-radius:4px;background:#217346;color:#fff;font-weight:700}.excel-preview header b,.excel-preview header small{display:block}.excel-preview header b{font-size:13px}.excel-preview header small{font-size:11px;color:#64748b}.table-wrap{overflow:auto}.rain-table{width:100%;min-width:620px;border-collapse:collapse;color:#172033;background:#fff;font-family:Arial,'Leelawadee UI',sans-serif;font-size:13px}.rain-table caption{caption-side:top;padding:14px;border:1px solid #d1d5db;border-width:0 0 1px;background:#fff;color:#111827;text-align:left;font-size:16px;font-weight:700}.rain-table th{padding:10px 12px;border:1px solid #b8c2d1;background:#d9e2f3;color:#172033;text-align:center;font-weight:700;white-space:nowrap}.rain-table td{padding:9px 12px;border:1px solid #d0d7e2;background:#fff;color:#172033}.rain-table td:nth-child(n+3){text-align:right;font-variant-numeric:tabular-nums}.rain-table tr:nth-child(even) td{background:#f8fafc}.missing{color:#b45309!important;font-style:italic}.empty{text-align:center;color:#64748b}
+.report-table-wrap{overflow:auto;border:1px solid var(--rr-line);border-radius:8px}.report-table{width:100%;min-width:1120px;border-collapse:collapse;background:var(--rr-panel);color:var(--rr-text);font:13px/1.4 Sarabun,'Leelawadee UI',sans-serif}.report-table th{padding:9px 10px;background:var(--rr-panel-2);border-bottom:1px solid var(--rr-line);text-align:left;font-weight:700;white-space:nowrap}.report-table th:nth-last-child(-n+4),.report-table td:nth-last-child(-n+4){text-align:right;font-variant-numeric:tabular-nums}.report-table th small{display:block;color:var(--rr-muted);font-weight:400}.report-table td{padding:9px 10px;border-bottom:1px solid var(--rr-line);vertical-align:middle}.report-table tbody tr:not(.province-row):hover{background:var(--rr-accent-soft)}.station-cell{display:flex;align-items:flex-start;gap:8px;min-width:210px}.station-cell input{margin-top:4px;width:16px;height:16px;accent-color:var(--rr-accent)}.station-cell b,.station-cell small{display:block}.station-cell small{color:var(--rr-muted);font-size:11px}.province-row td{padding:8px 10px;background:var(--rr-panel-2);color:var(--rr-text);text-align:left!important;font-variant-numeric:normal!important}.province-row td>b{display:inline-flex;align-items:center}.province-row td>span{margin-left:10px;color:var(--rr-muted);font-size:12px}.missing{color:#f59e0b}.empty{padding:28px!important;text-align:center;color:var(--rr-muted)}
+.report-table .rain{text-align:right;font-variant-numeric:tabular-nums}.report-table .station{min-width:210px}.report-table .select-cell{width:46px;padding-inline:10px;text-align:center}.report-table .select-cell input{width:16px;height:16px;margin:0;accent-color:var(--rr-accent)}
+</style>
+<style scoped>
+.report-table-wrap{max-height:min(520px,calc(100dvh - 260px));overscroll-behavior:contain}
+.report-table thead th{position:sticky;top:0;z-index:3;box-shadow:0 1px 0 var(--rr-line)}
+.report-table{font-size:12px;line-height:1.3}
+.report-table th{padding:7px 10px}
+.report-table td{padding:6px 10px}
+.province-row td{padding:5px 10px}
+.station-cell{gap:7px}
+.station-cell input{margin-top:2px}
+.station-cell small{line-height:1.2}
 </style>

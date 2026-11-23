@@ -82,7 +82,11 @@ export function validWarning(values,count) {
 export function activeWarning(code,levels,options={}) {
   if(warningSettings.error)throw Error('โหลดข้อมูลเกณฑ์ไม่สำเร็จ');
   const own=warningSettings.stations?.[code];
-  const source=separateDailyWindows(own?.values||warningSettings.central||warningDefault(levels));
+  // A stale central record must never stop the map/dashboard from rendering.
+  // Custom records still fail validation so an edit cannot silently overwrite
+  // a station-specific rule whose level definition has changed.
+  let source=separateDailyWindows(own?.values||warningSettings.central||warningDefault(levels));
+  if(!own&&!validWarning(source,levels.length)) source=warningDefault(levels);
   const values={};
   for(const period of Object.keys(WARNING_PERIODS)){
     const names=warningMaster(period);
